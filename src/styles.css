@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+@import "css/bootstrap-grid.css";
+@import "css/icons.css";
+@import "css/animate.min.css";
+@import "css/style.css";
+@import "css/responsive.css";
+@import "css/chosen.css";
+@import "css/colors/colors.css";
+@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css";
+
+body{
+    overflow: hidden;
+} 
