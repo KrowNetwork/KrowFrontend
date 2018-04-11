@@ -10,7 +10,7 @@ export class ProfileInfoComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
-  updateInfo(event) {
+  updateInfo(children) {
     // Test vatiable, get userId from login
     var userId = "SAMPLEAPPLICANT"
 
@@ -20,30 +20,38 @@ export class ProfileInfoComponent implements OnInit {
     // Get current Data
     this.http.get(url).subscribe(
       data => {
-        // Get element id that triggered event
-        var valueToChange = event.target.id.toString();
+        for(var i = 0; i < children.length; i++){
+          var event = children[i].children[1].children[0];
 
-        // Check for empty entry
-        if(event.target.value == ""){
-          console.log("Empty Entry");
-          // Return to old state
-          event.target.value = data[valueToChange];
-          return;
-        }
-        
-        // Check if url
-        if(valueToChange.slice(0, 3) == "url"){
-          var urls = ["F","T","L","W"];
-          var index = urls.indexOf(valueToChange[3]);
-          //TODO: index
-          // Change data value
-          data[valueToChange] = event.target.value;
-          console.log(index);
-          return;
-        }
-        else{
-          // Change data value
-          data[valueToChange] = event.target.value;
+          // Get element id that triggered event
+          var valueToChange = event.attributes[1].value;
+
+          // Value of element
+          var elValue = event.value;    
+
+          // Check if values match, in which case, do nothing
+          if(data[valueToChange] != elValue){
+
+            // Check for empty entry
+            if(elValue == ""){
+              //TODO: Make color slightly change to show that entry is empty
+            }
+            
+            // Check if url, in which case, map as json
+            else if(valueToChange.slice(0, 3) == "url"){
+              var urls = ["F","T","L","W"];
+              var index = urls.indexOf(valueToChange[3]);
+              //TODO: Make it work after backend is finished
+              if(index == 4){
+                // Change data value
+                data[valueToChange] = elValue;
+              }
+            }
+            else{
+              // Change data value
+              data[valueToChange] = elValue;
+            }
+          }
         }
 
         // Get timestamp and change data timestamp
@@ -53,7 +61,6 @@ export class ProfileInfoComponent implements OnInit {
         // Update entry
         this.http.put(url, data).subscribe(
           data => {
-            console.log(data[valueToChange]);
           }, // Catch Errors
           (err: HttpErrorResponse) => {
             if (err.error instanceof Error) {
@@ -73,6 +80,16 @@ export class ProfileInfoComponent implements OnInit {
       }
     );
   };
+
+  buttonPressed(event){
+    event.target.closest("div").style = "display:none";
+    var children = event.target.closest("form").children[0].children;
+    this.updateInfo(children);
+  }
+
+  changeHandler(event){
+    event.target.closest("form").children[1].style = "display:show";
+  }
 
   ngOnInit() {
     // Test Id, get from login in the future
