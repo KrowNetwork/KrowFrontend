@@ -50,6 +50,7 @@ export class ProfileInfoComponent implements OnInit {
             else{
               // Change data value
               data[valueToChange] = elValue;
+              console.log(data[valueToChange]);
             }
           }
         }
