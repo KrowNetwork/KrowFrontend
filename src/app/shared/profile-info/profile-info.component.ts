@@ -109,7 +109,7 @@ export class ProfileInfoComponent implements OnInit {
           document.getElementById("country").attributes[4].value = data["country"];
           document.getElementById("phoneNumber").attributes[4].value = data["phoneNumber"];
           document.getElementById("email").attributes[4].value = data["email"];
-          document.getElementById("url").attributes[4].value = data["url"];
+          document.getElementById("urlW").attributes[4].value = data["url"];
 
           // Test: Log Class
           console.log(data["$class"].split(".")[3].toUpperCase());
