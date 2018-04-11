@@ -39,10 +39,6 @@ import { ResumeAffiliationsComponent } from './applicant/applicant-resume/resume
 // Create nested Routing path
 const appRoutes: Routes = [
   { 
-    path: '', 
-    component: TestComponent 
-  },
-  { 
     path: 'app-employer-profile', 
     component: EmployerProfileComponent, 
     children: [
