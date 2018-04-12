@@ -6,16 +6,24 @@ import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
   templateUrl: './profile-info.component.html',
   styleUrls: ['./profile-info.component.css']
 })
+
 export class ProfileInfoComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
   updateInfo(children) {
+    // Create objects to be pushed on new input
+    var jsonDataUrl = [];
+    var jsonDataAddress = [];
+    var jsonDataInfo = [];
+
     // Test vatiable, get userId from login
-    var userId = "SAMPLEAPPLICANT"
+    var test = document.getElementById("test-ID");
+    var ID = test.attributes[3].value;
+    var id = ID.toString()[6].toString() + ID.slice(7).toLowerCase().toString();
 
     // Url to API
-    var url = "http://18.220.46.51:3000/api/Applicant/" + userId;
+    var url = "http://18.220.46.51:3000/api/" + id + "/" + ID;
 
     // Get current Data
     this.http.get(url).subscribe(
@@ -34,16 +42,29 @@ export class ProfileInfoComponent implements OnInit {
 
             // Check for empty entry
             if(elValue == ""){
-              //TODO: Redirect to post
-              //TODO: Make color slightly change to show that entry is empty
             }
             
             // Check if url, in which case, map as json
             else if(valueToChange.slice(0, 3) == "url"){
+              var updated = false;
+              // Loop through current links looking for a match to update
               for(var k = 0; k < data["links"].length; k++){
                 if(data["links"][k]["type"][0] == valueToChange[3]){
                   data["links"][k]["url"] = elValue;
+                  updated = true;
                 }
+              }
+              // If no matches are found, create new instance
+              if(updated == false){
+                var currUrl = elValue;
+                var type = valueToChange.slice(3);
+                jsonDataUrl.push(
+                  {
+                    $class: "network.krow.participants.Link",
+                    url: currUrl,
+                    type: type,
+                  }
+                )
               }
             }
             else{
@@ -56,6 +77,15 @@ export class ProfileInfoComponent implements OnInit {
         // Get timestamp and change data timestamp
         var timestamp = new Date();
         data["lastUpdated"] = timestamp;
+
+        // Add new entries
+        if(jsonDataUrl.length != 0){
+          for(var i = 0; i < jsonDataUrl.length; i++){
+            data["links"].push(jsonDataUrl[i]);
+          } 
+        }
+        if(jsonDataAddress.length != 0){}
+        if(jsonDataInfo.length != 0){}
 
         // Update entry
         this.http.put(url, data).subscribe(
@@ -124,6 +154,8 @@ export class ProfileInfoComponent implements OnInit {
       this.http.get("http://18.220.46.51:3000/api/Employer/" + ID).subscribe(
         data => {
 
+        console.log(data);
+
           //TODO: Figure out multiple "url" links and dividing them up
           // Display data fetched from API
           employerName.children[1].children[0].attributes[4].value = data["employerName"];
@@ -138,16 +170,16 @@ export class ProfileInfoComponent implements OnInit {
           for(var i = 0; i < data["links"].length; i++){
             var curr = data["links"][i];
             if(curr["type"] == "FACEBOOK"){
-              document.getElementById("urlF").attributes[4].value = curr["url"];
+              document.getElementById("urlFACEBOOK").attributes[4].value = curr["url"];
             }
             else if(curr["type"] == "TWITTER"){
-              document.getElementById("urlT").attributes[4].value = curr["url"];
+              document.getElementById("urlTWITTER").attributes[4].value = curr["url"];
             }
             else if(curr["type"] == "LINKEDIN"){
-              document.getElementById("urlL").attributes[4].value = curr["url"];
+              document.getElementById("urlLINKEDIN").attributes[4].value = curr["url"];
             }
             else if(curr["type"] == "WEBSITE"){
-              document.getElementById("urlW").attributes[4].value = curr["url"];
+              document.getElementById("urlWEBSITE").attributes[4].value = curr["url"];
             }
           }
 
@@ -185,6 +217,7 @@ export class ProfileInfoComponent implements OnInit {
       this.http.get("http://18.220.46.51:3000/api/Applicant/" + ID).subscribe(
         data => {
 
+          console.log(data);
           //TODO: Figure out multiple "url" links and dividing them up
           // Display data fetched from API
           firstName.children[1].children[0].attributes[4].value = data["firstName"];
@@ -199,16 +232,16 @@ export class ProfileInfoComponent implements OnInit {
           for(var i = 0; i < data["links"].length; i++){
             var curr = data["links"][i];
             if(curr["type"] == "FACEBOOK"){
-              document.getElementById("urlF").attributes[4].value = curr["url"];
+              document.getElementById("urlFACEBOOK").attributes[4].value = curr["url"];
             }
             else if(curr["type"] == "TWITTER"){
-              document.getElementById("urlT").attributes[4].value = curr["url"];
+              document.getElementById("urlTWITTER").attributes[4].value = curr["url"];
             }
             else if(curr["type"] == "LINKEDIN"){
-              document.getElementById("urlL").attributes[4].value = curr["url"];
+              document.getElementById("urlLINKEDIN").attributes[4].value = curr["url"];
             }
             else if(curr["type"] == "WEBSITE"){
-              document.getElementById("urlW").attributes[4].value = curr["url"];
+              document.getElementById("urlWEBSITE").attributes[4].value = curr["url"];
             }
           }
 
