@@ -15,6 +15,7 @@ import { TestComponent } from './test/test.component';
 // Main components
 import { LoginComponent } from './main/login/login.component';
 import { RegisterComponent } from './main/register/register.component';
+import { PageNotFoundComponent } from './main/page-not-found/page-not-found.component';
 
 // Employer components
 import { EmployerProfileComponent } from './employer/employer-profile/employer-profile.component';
@@ -35,9 +36,14 @@ import { ResumeSkillsComponent } from './applicant/applicant-resume/resume-skill
 import { ResumeExperienceComponent } from './applicant/applicant-resume/resume-experience/resume-experience.component';
 import { ResumeAchievementsComponent } from './applicant/applicant-resume/resume-achievements/resume-achievements.component';
 import { ResumeAffiliationsComponent } from './applicant/applicant-resume/resume-affiliations/resume-affiliations.component';
+import { ComingSoonComponent } from './shared/coming-soon/coming-soon.component';
 
 // Create nested Routing path
 const appRoutes: Routes = [
+  { 
+    path: '',
+    component: LoginComponent
+  },
   { 
     path: 'app-employer-profile', 
     component: EmployerProfileComponent, 
@@ -54,27 +60,32 @@ const appRoutes: Routes = [
       },
       { 
         path: 'app-employer-post-jobs', 
-        component: EmployerPostJobsComponent, 
+        //component: EmployerPostJobsComponent, 
+        component: ComingSoonComponent,
         outlet: "testing-employer"  
       },
       { 
         path: 'app-completed-jobs', 
-        component: CompletedJobsComponent, 
+        //component: CompletedJobsComponent, 
+        component: ComingSoonComponent,
         outlet: "testing-employer"  
       },
       { 
         path: 'app-terminated-jobs', 
-        component: TerminatedJobsComponent, 
+        //component: TerminatedJobsComponent, 
+        component: ComingSoonComponent,
         outlet: "testing-employer"  
       },
       { 
         path: 'app-in-progress-jobs', 
-        component: InProgressJobsComponent, 
+        //component: InProgressJobsComponent, 
+        component: ComingSoonComponent,
         outlet: "testing-employer"  
       },
       { 
         path: 'app-available-jobs', 
-        component: AvailableJobsComponent, 
+        //component: AvailableJobsComponent, 
+        component: ComingSoonComponent,
         outlet: "testing-employer"  
       }
     ]
@@ -96,26 +107,31 @@ const appRoutes: Routes = [
       { 
         path: 'app-applicant-resume', 
         component: ApplicantResumeComponent, 
+        //component: ComingSoonComponent,
         outlet: "testing-applicant"  
       },
       { 
         path: 'app-completed-jobs', 
-        component: CompletedJobsComponent, 
+        //component: CompletedJobsComponent, 
+        component: ComingSoonComponent,
         outlet: "testing-applicant"  
       },
       { 
         path: 'app-terminated-jobs', 
-        component: TerminatedJobsComponent, 
+        //component: TerminatedJobsComponent, 
+        component: ComingSoonComponent,
         outlet: "testing-applicant"  
       },
       { 
         path: 'app-in-progress-jobs', 
-        component: InProgressJobsComponent, 
+        //component: InProgressJobsComponent, 
+        component: ComingSoonComponent,
         outlet: "testing-applicant"  
       },
       { 
         path: 'app-available-jobs', 
-        component: AvailableJobsComponent, 
+        //component: AvailableJobsComponent, 
+        component: ComingSoonComponent,
         outlet: "testing-applicant"  
       }
     ]
@@ -141,6 +157,10 @@ const appRoutes: Routes = [
   {
     path: 'app-register',
     component: RegisterComponent
+  },
+  { 
+    path: '**', 
+    component: PageNotFoundComponent 
   }
 ];
 
@@ -163,7 +183,9 @@ const appRoutes: Routes = [
     ResumeSkillsComponent,
     ResumeExperienceComponent,
     ResumeAchievementsComponent,
-    ResumeAffiliationsComponent
+    ResumeAffiliationsComponent,
+    ComingSoonComponent,
+    PageNotFoundComponent
   ],
   imports: [
     RouterModule.forRoot(

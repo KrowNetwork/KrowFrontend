@@ -15,11 +15,14 @@
 				<div class="btn-extars">
 					<a [routerLink]="[{ outlets: { 'testing-applicant': ['app-applicant-resume'] } }]" routerLinkActive="active" class="post-job-btn"><i class="fa fa-file-text"></i>Resume</a>
 					<ul class="account-btns">
-						<li><a title=""><i class="la la-external-link-square"></i> Log Out</a></li>
+						<li><a title=""><i class="la la-external-link-square"></i> LogOut</a></li>
 					</ul>
 				</div><!-- Btn Extras -->
 				<nav>
 					<ul>
+						<li>
+							<a [routerLink]="[{ outlets: { 'testing-applicant': ['app-profile-info'] } }]" routerLinkActive="active">Profile</a>
+						</li>
 						<li class="menu-item-has-children">
 							<a>Jobs</a>
 							<ul>
@@ -29,9 +32,6 @@
 								<li><a [routerLink]="[{ outlets: { 'testing-applicant': ['app-available-jobs'] } }]" routerLinkActive="active">Available Jobs</a></li>
 							</ul>
             			</li>
-						<li>
-							<a [routerLink]="[{ outlets: { 'testing-applicant': ['app-profile-info'] } }]" routerLinkActive="active">Profile</a>
-						</li>
 					</ul>
 				</nav><!-- Menus -->
 			</div>
@@ -65,8 +65,8 @@
 										<a [routerLink]="[{ outlets: { 'testing-applicant': ['app-profile-info'] } }]" routerLinkActive="active"><i class="la la-briefcase"></i>Profile</a>
 									</li>
 				 					<li class="inner-child">
-				 						<a title=""><i class="la la-reorder"></i>Jobs</a>
-				 						<ul>
+				 						<a title="" (click)="openJobs($event)" id="somestupidshit"><i class="la la-reorder"></i>Jobs</a>
+				 						<ul style="display: none">
 											<li><a [routerLink]="[{ outlets: { 'testing-applicant': ['app-completed-jobs'] } }]" routerLinkActive="active">Completed Jobs</a></li>
 											<li><a [routerLink]="[{ outlets: { 'testing-applicant': ['app-terminated-jobs'] } }]" routerLinkActive="active">Terminated Jobs</a></li>
 											<li><a [routerLink]="[{ outlets: { 'testing-applicant': ['app-in-progress-jobs'] } }]" routerLinkActive="active">In-Progress Jobs</a></li>
@@ -77,7 +77,7 @@
 				 						<a [routerLink]="[{ outlets: { 'testing-applicant': ['app-applicant-resume'] } }]" routerLinkActive="active"><i class="la la-file-text"></i>Resume</a>
 				 					</li>
 				 					<li class="inner-child">
-										<a><i class="la la-unlink"></i>Logout</a>
+										<a><i class="la la-unlink"></i>LogOut</a>
 									</li>
 				 				</ul>
 				 			</div>

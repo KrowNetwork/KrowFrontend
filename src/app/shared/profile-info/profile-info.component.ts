@@ -34,23 +34,21 @@ export class ProfileInfoComponent implements OnInit {
 
             // Check for empty entry
             if(elValue == ""){
+              //TODO: Redirect to post
               //TODO: Make color slightly change to show that entry is empty
             }
             
             // Check if url, in which case, map as json
             else if(valueToChange.slice(0, 3) == "url"){
-              var urls = ["F","T","L","W"];
-              var index = urls.indexOf(valueToChange[3]);
-              //TODO: Make it work after backend is finished
-              if(index == 4){
-                // Change data value
-                data[valueToChange] = elValue;
+              for(var k = 0; k < data["links"].length; k++){
+                if(data["links"][k]["type"][0] == valueToChange[3]){
+                  data["links"][k]["url"] = elValue;
+                }
               }
             }
             else{
               // Change data value
               data[valueToChange] = elValue;
-              console.log(data[valueToChange]);
             }
           }
         }
@@ -80,12 +78,21 @@ export class ProfileInfoComponent implements OnInit {
         }
       }
     );
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve('resolved');
+      }, 500);
+    });
   };
 
-  buttonPressed(event){
-    event.target.closest("div").style = "display:none";
+  async buttonPressed(event){
+    event.target.attributes[2].value = true;
+    event.target.style = "float:right; background-color:gray; border-color: gray; opacity=0.8";
     var children = event.target.closest("form").children[0].children;
-    this.updateInfo(children);
+    var result = await this.updateInfo(children);
+    event.target.style = "background-color: #fb236a; border-color: #fb236a; float: right";
+    event.target.closest("div").style = "display: none;";
+    event.target.attributes[2].value = false;
   }
 
   changeHandler(event){
@@ -127,7 +134,22 @@ export class ProfileInfoComponent implements OnInit {
           document.getElementById("country").attributes[4].value = data["country"];
           document.getElementById("phoneNumber").attributes[4].value = data["phoneNumber"];
           document.getElementById("email").attributes[4].value = data["email"];
-          document.getElementById("urlW").attributes[4].value = data["url"];
+
+          for(var i = 0; i < data["links"].length; i++){
+            var curr = data["links"][i];
+            if(curr["type"] == "FACEBOOK"){
+              document.getElementById("urlF").attributes[4].value = curr["url"];
+            }
+            else if(curr["type"] == "TWITTER"){
+              document.getElementById("urlT").attributes[4].value = curr["url"];
+            }
+            else if(curr["type"] == "LINKEDIN"){
+              document.getElementById("urlL").attributes[4].value = curr["url"];
+            }
+            else if(curr["type"] == "WEBSITE"){
+              document.getElementById("urlW").attributes[4].value = curr["url"];
+            }
+          }
 
           // Test: Log Class
           console.log(data["$class"].split(".")[3].toUpperCase());
@@ -173,7 +195,22 @@ export class ProfileInfoComponent implements OnInit {
           document.getElementById("country").attributes[4].value = data["country"];
           document.getElementById("phoneNumber").attributes[4].value = data["phoneNumber"];
           document.getElementById("email").attributes[4].value = data["email"];
-          document.getElementById("urlW").attributes[4].value = data["url"];
+
+          for(var i = 0; i < data["links"].length; i++){
+            var curr = data["links"][i];
+            if(curr["type"] == "FACEBOOK"){
+              document.getElementById("urlF").attributes[4].value = curr["url"];
+            }
+            else if(curr["type"] == "TWITTER"){
+              document.getElementById("urlT").attributes[4].value = curr["url"];
+            }
+            else if(curr["type"] == "LINKEDIN"){
+              document.getElementById("urlL").attributes[4].value = curr["url"];
+            }
+            else if(curr["type"] == "WEBSITE"){
+              document.getElementById("urlW").attributes[4].value = curr["url"];
+            }
+          }
 
           // Test: Log Class
           console.log(data["$class"].split(".")[3].toUpperCase());
