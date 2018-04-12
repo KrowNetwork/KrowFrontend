@@ -12,7 +12,6 @@ export class ApplicantResumeComponent implements OnInit {
   handleClicked(event){
     var currTarget = event.target.parentElement.children[1];
     var currStyle = currTarget.style;
-    console.log(currStyle);
     if(currStyle.display == "none"){
       currTarget.style = "display: inline";
     }

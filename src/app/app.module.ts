@@ -37,6 +37,9 @@ import { ResumeExperienceComponent } from './applicant/applicant-resume/resume-e
 import { ResumeAchievementsComponent } from './applicant/applicant-resume/resume-achievements/resume-achievements.component';
 import { ResumeAffiliationsComponent } from './applicant/applicant-resume/resume-affiliations/resume-affiliations.component';
 import { ComingSoonComponent } from './shared/coming-soon/coming-soon.component';
+import { RequestedJobsComponent } from './shared/requested-jobs/requested-jobs.component';
+import { HireRequestsComponent } from './shared/hire-requests/hire-requests.component';
+import { JobSearchComponent } from './shared/job-search/job-search.component';
 
 // Create nested Routing path
 const appRoutes: Routes = [
@@ -87,6 +90,12 @@ const appRoutes: Routes = [
         //component: AvailableJobsComponent, 
         component: ComingSoonComponent,
         outlet: "testing-employer"  
+      },
+      { 
+        path: 'app-job-search', 
+        //component: JobSearchComponent, 
+        component: ComingSoonComponent,
+        outlet: "testing-applicant"  
       }
     ]
   },
@@ -129,8 +138,20 @@ const appRoutes: Routes = [
         outlet: "testing-applicant"  
       },
       { 
-        path: 'app-available-jobs', 
-        //component: AvailableJobsComponent, 
+        path: 'app-requested-jobs', 
+        //component: RequestedJobsComponent, 
+        component: ComingSoonComponent,
+        outlet: "testing-applicant"  
+      },
+      { 
+        path: 'app-hire-requests', 
+        //component: HireRequestsComponent, 
+        component: ComingSoonComponent,
+        outlet: "testing-applicant"  
+      },
+      { 
+        path: 'app-job-search', 
+        //component: JobSearchComponent, 
         component: ComingSoonComponent,
         outlet: "testing-applicant"  
       }
@@ -185,7 +206,10 @@ const appRoutes: Routes = [
     ResumeAchievementsComponent,
     ResumeAffiliationsComponent,
     ComingSoonComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    RequestedJobsComponent,
+    HireRequestsComponent,
+    JobSearchComponent
   ],
   imports: [
     RouterModule.forRoot(

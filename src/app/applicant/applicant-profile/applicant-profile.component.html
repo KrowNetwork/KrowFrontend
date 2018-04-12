@@ -13,7 +13,7 @@
 					<a href="https://www.krow.network/" target="_blank" title=""><img src="{{KROW_HEADER_2}}" alt="" /></a>
 				</div><!-- Logo -->
 				<div class="btn-extars">
-					<a [routerLink]="[{ outlets: { 'testing-applicant': ['app-applicant-resume'] } }]" routerLinkActive="active" class="post-job-btn"><i class="fa fa-file-text"></i>Resume</a>
+					<a [routerLink]="[{ outlets: { 'testing-applicant': ['app-job-search'] } }]" routerLinkActive="active" class="post-job-btn"><i class="fa fa-search-plus"></i>Find Job</a>
 					<ul class="account-btns">
 						<li><a title=""><i class="la la-external-link-square"></i> LogOut</a></li>
 					</ul>
@@ -29,9 +29,13 @@
 								<li><a [routerLink]="[{ outlets: { 'testing-applicant': ['app-completed-jobs'] } }]" routerLinkActive="active">Completed Jobs</a></li>
 								<li><a [routerLink]="[{ outlets: { 'testing-applicant': ['app-terminated-jobs'] } }]" routerLinkActive="active">Terminated Jobs</a></li>
 								<li><a [routerLink]="[{ outlets: { 'testing-applicant': ['app-in-progress-jobs'] } }]" routerLinkActive="active">In-Progress Jobs</a></li>
-								<li><a [routerLink]="[{ outlets: { 'testing-applicant': ['app-available-jobs'] } }]" routerLinkActive="active">Available Jobs</a></li>
+								<li><a [routerLink]="[{ outlets: { 'testing-applicant': ['app-requested-jobs'] } }]" routerLinkActive="active">Requested Jobs</a></li>
+								<li><a [routerLink]="[{ outlets: { 'testing-applicant': ['app-hire-requests'] } }]" routerLinkActive="active">Hire Requests</a></li>
 							</ul>
             			</li>
+						<li>
+							<a [routerLink]="[{ outlets: { 'testing-applicant': ['app-applicant-resume'] } }]" routerLinkActive="active">Resume</a>
+						</li>
 					</ul>
 				</nav><!-- Menus -->
 			</div>
@@ -57,7 +61,7 @@
 		<div class="block no-padding">
 			<div class="container">
 				 <div class="row no-gape">
-				 	<aside class="col-lg-3 column border-right">
+				 	<aside class="col-lg-3 column border-right" id="disappear">
 				 		<div class="widget">
 				 			<div class="tree_widget-sec">
 				 				<ul>
@@ -66,15 +70,19 @@
 									</li>
 				 					<li class="inner-child">
 				 						<a title="" (click)="openJobs($event)" id="somestupidshit"><i class="la la-reorder"></i>Jobs</a>
-				 						<ul style="display: none">
+				 						<ul style="display: none;">
 											<li><a [routerLink]="[{ outlets: { 'testing-applicant': ['app-completed-jobs'] } }]" routerLinkActive="active">Completed Jobs</a></li>
 											<li><a [routerLink]="[{ outlets: { 'testing-applicant': ['app-terminated-jobs'] } }]" routerLinkActive="active">Terminated Jobs</a></li>
 											<li><a [routerLink]="[{ outlets: { 'testing-applicant': ['app-in-progress-jobs'] } }]" routerLinkActive="active">In-Progress Jobs</a></li>
-											<li><a [routerLink]="[{ outlets: { 'testing-applicant': ['app-available-jobs'] } }]" routerLinkActive="active">Available Jobs</a></li>
+											<li><a [routerLink]="[{ outlets: { 'testing-applicant': ['app-requested-jobs'] } }]" routerLinkActive="active">Requested Jobs</a></li>
+											<li><a [routerLink]="[{ outlets: { 'testing-applicant': ['app-hire-requests'] } }]" routerLinkActive="active">Hire Requests</a></li>
 				 						</ul>
 				 					</li>
 				 					<li class="inner-child">
 				 						<a [routerLink]="[{ outlets: { 'testing-applicant': ['app-applicant-resume'] } }]" routerLinkActive="active"><i class="la la-file-text"></i>Resume</a>
+				 					</li>
+				 					<li class="inner-child">
+				 						<a [routerLink]="[{ outlets: { 'testing-applicant': ['app-job-search'] } }]" routerLinkActive="active"><i class="fa fa-search-plus"></i>Find Job</a>
 				 					</li>
 				 					<li class="inner-child">
 										<a><i class="la la-unlink"></i>LogOut</a>

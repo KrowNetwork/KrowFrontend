@@ -15,15 +15,15 @@ export class ApplicantProfileComponent implements OnInit {
     var el = event.target.parentElement.children[1];
     var currStyle = el.attributes[1].value;
     console.log(currStyle);
-    if(currStyle == "display: block"){
+    if(currStyle == "display: block;"){
       console.log(1);
-      event.target.parentElement[1].value = "inner-child";
-      el.style = "display: none";
+      event.target.parentElement.attributes[1].value = "inner-child";
+      el.style = "display: none;";
       console.log(el.style);
     }
-    else if(currStyle == "display: none"){      
+    else if(currStyle == "display: none;"){      
       console.log(2);
-      el.style = "display: block";
+      el.style = "display: block;";
       console.log(el.style);
     }
   }
