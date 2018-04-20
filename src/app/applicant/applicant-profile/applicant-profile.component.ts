@@ -37,5 +37,4 @@ export class ApplicantProfileComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

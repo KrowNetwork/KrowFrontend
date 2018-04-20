@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ComponentFactoryResolver } from '@angular/core';
+import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 
 @Component({
   selector: 'app-applicant-resume',
@@ -20,7 +21,8 @@ export class ApplicantResumeComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  ngOnInit(){
+    
   }
 
 }

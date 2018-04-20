@@ -7,10 +7,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 
 // Router imports
-import { RouterModule, Routes } from '@angular/router';
-
-// Test
-import { TestComponent } from './test/test.component';
+import { RouterModule, Routes, DefaultUrlSerializer } from '@angular/router';
 
 // Main components
 import { LoginComponent } from './main/login/login.component';
@@ -31,14 +28,34 @@ import { AvailableJobsComponent } from './shared/available-jobs/available-jobs.c
 import { CompletedJobsComponent } from './shared/completed-jobs/completed-jobs.component';
 import { TerminatedJobsComponent } from './shared/terminated-jobs/terminated-jobs.component';
 import { InProgressJobsComponent } from './shared/in-progress-jobs/in-progress-jobs.component';
+
+import { UpdateResumeService } from './shared/update-resume.service';
+
 import { ResumeEducationComponent } from './applicant/applicant-resume/resume-education/resume-education.component';
+  import { EducationDirective } from './applicant/applicant-resume/resume-education/education.directive';
+  import { EducationMainComponent } from './applicant/applicant-resume/resume-education/education-main.component'; 
+
 import { ResumeSkillsComponent } from './applicant/applicant-resume/resume-skills/resume-skills.component';
+  import { SkillsMainComponent } from './applicant/applicant-resume/resume-skills/skills-main.component';
+
 import { ResumeExperienceComponent } from './applicant/applicant-resume/resume-experience/resume-experience.component';
+  import { ExperienceDirective } from './applicant/applicant-resume/resume-experience/experience.directive';
+  import { ExperienceMainComponent } from './applicant/applicant-resume/resume-experience/experience-main.component';
+
 import { ResumeAchievementsComponent } from './applicant/applicant-resume/resume-achievements/resume-achievements.component';
+  import { AchievementDirective } from './applicant/applicant-resume/resume-achievements/achievement.directive';
+  import { AchievementsMainComponent } from './applicant/applicant-resume/resume-achievements/achievements-main.component';
+
 import { ResumeAffiliationsComponent } from './applicant/applicant-resume/resume-affiliations/resume-affiliations.component';
+  import { AffiliationsDirective } from './applicant/applicant-resume/resume-affiliations/affiliations.directive';
+  import { AffiliationsMainComponent } from './applicant/applicant-resume/resume-affiliations/affiliations-main.component';
+
 import { ComingSoonComponent } from './shared/coming-soon/coming-soon.component';
+
 import { RequestedJobsComponent } from './shared/requested-jobs/requested-jobs.component';
+
 import { HireRequestsComponent } from './shared/hire-requests/hire-requests.component';
+
 import { JobSearchComponent } from './shared/job-search/job-search.component';
 
 // Create nested Routing path
@@ -48,135 +65,103 @@ const appRoutes: Routes = [
     component: LoginComponent
   },
   { 
-    path: 'app-employer-profile', 
+    path: 'employer-profile', 
     component: EmployerProfileComponent, 
     children: [
       { 
         path: '', 
-        component: ProfileInfoComponent, 
-        outlet: "testing-employer" 
+        component: ProfileInfoComponent
       },
       { 
-        path: 'app-profile-info',
-        component: ProfileInfoComponent,
-        outlet: "testing-employer"
+        path: 'profile-info',
+        component: ProfileInfoComponent
       },
       { 
-        path: 'app-employer-post-jobs', 
+        path: 'employer-post-jobs', 
         //component: EmployerPostJobsComponent, 
-        component: ComingSoonComponent,
-        outlet: "testing-employer"  
+        component: ComingSoonComponent 
       },
       { 
-        path: 'app-completed-jobs', 
+        path: 'completed-jobs', 
         //component: CompletedJobsComponent, 
-        component: ComingSoonComponent,
-        outlet: "testing-employer"  
+        component: ComingSoonComponent
       },
       { 
-        path: 'app-terminated-jobs', 
+        path: 'terminated-jobs', 
         //component: TerminatedJobsComponent, 
-        component: ComingSoonComponent,
-        outlet: "testing-employer"  
+        component: ComingSoonComponent
       },
       { 
-        path: 'app-in-progress-jobs', 
+        path: 'in-progress-jobs', 
         //component: InProgressJobsComponent, 
-        component: ComingSoonComponent,
-        outlet: "testing-employer"  
+        component: ComingSoonComponent
       },
       { 
-        path: 'app-available-jobs', 
+        path: 'available-jobs', 
         //component: AvailableJobsComponent, 
-        component: ComingSoonComponent,
-        outlet: "testing-employer"  
+        component: ComingSoonComponent
       },
       { 
-        path: 'app-job-search', 
+        path: 'job-search', 
         //component: JobSearchComponent, 
-        component: ComingSoonComponent,
-        outlet: "testing-applicant"  
+        component: ComingSoonComponent
       }
     ]
   },
   {
-    path: 'app-applicant-profile', 
+    path: 'applicant-profile', 
     component: ApplicantProfileComponent, 
     children: [
       { 
         path: '', 
-        component: ProfileInfoComponent, 
-        outlet: "testing-applicant" 
+        component: ProfileInfoComponent
       },
       { 
-        path: 'app-profile-info',
-        component: ProfileInfoComponent,
-        outlet: "testing-applicant"
+        path: 'profile-info',
+        component: ProfileInfoComponent
       },
       { 
-        path: 'app-applicant-resume', 
-        component: ApplicantResumeComponent, 
-        //component: ComingSoonComponent,
-        outlet: "testing-applicant"  
+        path: 'applicant-resume', 
+        component: ApplicantResumeComponent
       },
       { 
-        path: 'app-completed-jobs', 
+        path: 'completed-jobs', 
         //component: CompletedJobsComponent, 
-        component: ComingSoonComponent,
-        outlet: "testing-applicant"  
+        component: ComingSoonComponent
       },
       { 
-        path: 'app-terminated-jobs', 
+        path: 'terminated-jobs', 
         //component: TerminatedJobsComponent, 
-        component: ComingSoonComponent,
-        outlet: "testing-applicant"  
+        component: ComingSoonComponent
       },
       { 
-        path: 'app-in-progress-jobs', 
+        path: 'in-progress-jobs', 
         //component: InProgressJobsComponent, 
-        component: ComingSoonComponent,
-        outlet: "testing-applicant"  
+        component: ComingSoonComponent 
       },
       { 
-        path: 'app-requested-jobs', 
+        path: 'requested-jobs', 
         //component: RequestedJobsComponent, 
-        component: ComingSoonComponent,
-        outlet: "testing-applicant"  
+        component: ComingSoonComponent 
       },
       { 
-        path: 'app-hire-requests', 
+        path: 'hire-requests', 
         //component: HireRequestsComponent, 
-        component: ComingSoonComponent,
-        outlet: "testing-applicant"  
+        component: ComingSoonComponent
       },
       { 
-        path: 'app-job-search', 
+        path: 'job-search', 
         //component: JobSearchComponent, 
-        component: ComingSoonComponent,
-        outlet: "testing-applicant"  
-      }
-    ]
-  },
-  { 
-    path: 'app-test', 
-    component: TestComponent,
-    children: [
-      { 
-        path: 'app-applicant-profile', 
-        component: ApplicantProfileComponent
-      },
-      {
-        path: 'app-employer-profile', 
-        component: EmployerProfileComponent
+        component: ComingSoonComponent
       }
     ]
   },
   {
-    path: 'app-login',
+    path: 'login',
     component: LoginComponent
   },
   {
-    path: 'app-register',
+    path: 'register',
     component: RegisterComponent
   },
   { 
@@ -189,7 +174,6 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     EmployerProfileComponent,
-    TestComponent,
     EmployerPostJobsComponent,
     ApplicantProfileComponent,
     AvailableJobsComponent,
@@ -204,12 +188,21 @@ const appRoutes: Routes = [
     ResumeSkillsComponent,
     ResumeExperienceComponent,
     ResumeAchievementsComponent,
-    ResumeAffiliationsComponent,
+    ResumeAffiliationsComponent, 
     ComingSoonComponent,
     PageNotFoundComponent,
     RequestedJobsComponent,
     HireRequestsComponent,
-    JobSearchComponent
+    JobSearchComponent,
+    AchievementsMainComponent,
+    AchievementDirective,
+    AffiliationsDirective,
+    EducationMainComponent,
+    EducationDirective,
+    ExperienceMainComponent,
+    ExperienceDirective,
+    AffiliationsMainComponent,
+    SkillsMainComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -219,7 +212,19 @@ const appRoutes: Routes = [
     BrowserModule,
     HttpClientModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  entryComponents: [ 
+    ExperienceMainComponent,
+    AffiliationsMainComponent,
+    SkillsMainComponent,
+    EducationMainComponent,
+    AchievementsMainComponent
+  ],
+  providers: [ 
+    DefaultUrlSerializer, 
+    UpdateResumeService 
+  ],
+  bootstrap: [ 
+    AppComponent 
+  ]
 })
 export class AppModule { }

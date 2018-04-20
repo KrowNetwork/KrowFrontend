@@ -1,9 +1,29 @@
-<div class="col-lg-12" style="padding-left: 30px; padding-right: 0px">
-  <p>
-    resume-skills works!
-  </p>
-  <div class="col-lg-12" style="padding: 0">
-    <i class="la la-plus-circle"></i>
-    <a class="post-job-btn" style="display: none">UPDATE</a>
+<div class="col-lg-12"  class="resumeContainer">
+  <div class="col-lg-12">
+    <div class="pf-field no-margin">
+      <ul class="tags" id="ulTags">
+        <li class="addedTag" style="margin-top: 5px">
+          <i class="endorsement" style="margin-right: 10px; color:rgba(16, 204, 16, 0.932)">
+            >9000
+          </i>
+          Web Deisgn
+          <span onclick="$(this).parent().remove();" class="tagRemove">
+            x
+          </span>
+          <input type="hidden" name="tags[]" value="Web Deisgn">
+        </li>
+        <li class="tagAdd taglist" id="lastNode" style="margin-top: 5px">
+          <input 
+            type="text" 
+            id="search-field" 
+            placeholder="Soon to come!" 
+            (keydown)="changeHandler($event)"
+            (keyup)="$event.keyCode == 13 ? submitHandler($event) : null">
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-lg-12">
+    <a class="post-job-btn" style="display: none" (click)="updateResume($event)">UPDATE Coming Soon!</a>
   </div>
 </div>

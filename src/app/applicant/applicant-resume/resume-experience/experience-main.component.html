@@ -1,0 +1,60 @@
+<div class="social-edit" id="sn">
+    <form style="padding-left:0px; border-style: solid;
+        border-width: 1px;
+        border-color: #edeff7;
+        border-radius: 8px;
+        margin-bottom: 15px">
+        <div class="col-lg-12">
+            <div class="del-resume" onclick="$(this).closest('.social-edit').remove();" style="float: right; margin-top: 10px">
+                <a>
+                    <i class="la la-trash-o"></i>
+                </a>
+            </div>
+        </div>
+        <div class="edu-history-sec">
+            <div class="edu-history">
+                <i class="la la-briefcase" style="padding-top: 30px"></i>
+                <div class="edu-hisinfo">
+                    <div class="row" style="padding:15px; padding-bottom:0px">
+                        <div class="col-lg-12">
+                            <span class="pf-title" style="margin-top:0px">Company</span>
+                            <div class="pf-field">
+                                <input (keydown)="changeHandler($event)" type="text" placeholder="Creative Company Name" secret="title" value={{data.title}}/>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <span class="pf-title" style="margin-top:0px">Position</span>
+                            <div class="pf-field">
+                                <input (keydown)="changeHandler($event)" type="text" placeholder="What You Did" secret="position" value={{data.position}}/>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <span class="pf-title" style="margin-top:0px">Type</span>
+                            <div class="pf-field">
+                                <input (keydown)="changeHandler($event)" type="text" placeholder="Proffesional? Hobby? Startup?" secret="type" value={{data.type}}/>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <span class="pf-title" style="margin-top:0px">Description</span>
+                            <div class="pf-field">
+                                <input (keydown)="changeHandler($event)" type="text" placeholder="Details" secret="description" value={{data.description}}/>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <span class="pf-title" style="margin-top:0px">Start date</span> 
+                            <div class="pf-field">
+                                <input (keydown)="changeHandler($event)" type="text" placeholder="From" secret="startDate" value={{data.startDate}}/>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <span class="pf-title" style="margin-top:0px">End date</span> 
+                            <div class="pf-field">
+                                <input (keydown)="changeHandler($event)" type="text" placeholder="To" secret="endDate" value={{data.endDate}}/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -12,11 +12,6 @@ export class ProfileInfoComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   updateInfo(children) {
-    // Create objects to be pushed on new input
-    var jsonDataUrl = [];
-    var jsonDataAddress = [];
-    var jsonDataInfo = [];
-
     // Test vatiable, get userId from login
     var test = document.getElementById("test-ID");
     var ID = test.attributes[3].value;
@@ -28,6 +23,7 @@ export class ProfileInfoComponent implements OnInit {
     // Get current Data
     this.http.get(url).subscribe(
       data => {
+        var change = false;
         for(var i = 0; i < children.length; i++){
           var event = children[i].children[1].children[0];
 
@@ -42,63 +38,62 @@ export class ProfileInfoComponent implements OnInit {
 
             // Check for empty entry
             if(elValue == ""){
+              continue;
             }
             
             // Check if url, in which case, map as json
             else if(valueToChange.slice(0, 3) == "url"){
-              var updated = false;
+              var found = false;
               // Loop through current links looking for a match to update
               for(var k = 0; k < data["links"].length; k++){
                 if(data["links"][k]["type"][0] == valueToChange[3]){
-                  data["links"][k]["url"] = elValue;
-                  updated = true;
+                  if(data["links"][k]["url"] != elValue){
+                    data["links"][k]["url"] = elValue;
+                    change = true;
+                  }
+                  found = true;
                 }
               }
               // If no matches are found, create new instance
-              if(updated == false){
-                var currUrl = elValue;
+              if(found == false){
                 var type = valueToChange.slice(3);
-                jsonDataUrl.push(
+                data["links"].push(
                   {
                     $class: "network.krow.participants.Link",
-                    url: currUrl,
+                    url: elValue,
                     type: type,
                   }
                 )
+                change = true;
               }
             }
             else{
               // Change data value
               data[valueToChange] = elValue;
+              change = true;
             }
           }
         }
 
-        // Get timestamp and change data timestamp
-        var timestamp = new Date();
-        data["lastUpdated"] = timestamp;
+        if(change != false){
 
-        // Add new entries
-        if(jsonDataUrl.length != 0){
-          for(var i = 0; i < jsonDataUrl.length; i++){
-            data["links"].push(jsonDataUrl[i]);
-          } 
-        }
-        if(jsonDataAddress.length != 0){}
-        if(jsonDataInfo.length != 0){}
+          // Get timestamp and change data timestamp
+          var timestamp = new Date();
+          data["lastUpdated"] = timestamp;
 
-        // Update entry
-        this.http.put(url, data).subscribe(
-          data => {
-          }, // Catch Errors
-          (err: HttpErrorResponse) => {
-            if (err.error instanceof Error) {
-              console.log("Client-side error occured.");
-            } else {
-              console.log("Server-side error occured.");
+          // Update entry
+          this.http.put(url, data).subscribe(
+            data => {
+            }, // Catch Errors
+            (err: HttpErrorResponse) => {
+              if (err.error instanceof Error) {
+                console.log("Client-side error occured.");
+              } else {
+                console.log("Server-side error occured.");
+              }
             }
-          }
-        );
+          );
+        }
       }, // Catch Errors
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -150,13 +145,14 @@ export class ProfileInfoComponent implements OnInit {
       description.children[1].children[0].attributes[2].value = "Company Description";
       description.children[1].children[0].attributes[1].value = "description";
 
+      var url = "http://18.220.46.51:3000/api/Employer/" + ID;
+
       // Get Data
-      this.http.get("http://18.220.46.51:3000/api/Employer/" + ID).subscribe(
+      this.http.get(url).subscribe(
         data => {
 
         console.log(data);
 
-          //TODO: Figure out multiple "url" links and dividing them up
           // Display data fetched from API
           employerName.children[1].children[0].attributes[4].value = data["employerName"];
           description.children[1].children[0].attributes[4].value = data["description"];
@@ -213,12 +209,13 @@ export class ProfileInfoComponent implements OnInit {
       lastName.children[1].children[0].attributes[2].value = "Smith";
       lastName.children[1].children[0].attributes[1].value = "lastName";
 
+      var url = "http://18.220.46.51:3000/api/Applicant/" + ID;
+
       // Get Data
-      this.http.get("http://18.220.46.51:3000/api/Applicant/" + ID).subscribe(
+      this.http.get(url).subscribe(
         data => {
 
           console.log(data);
-          //TODO: Figure out multiple "url" links and dividing them up
           // Display data fetched from API
           firstName.children[1].children[0].attributes[4].value = data["firstName"];
           lastName.children[1].children[0].attributes[4].value = data["lastName"];
