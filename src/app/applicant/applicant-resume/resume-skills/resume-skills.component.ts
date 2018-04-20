@@ -35,11 +35,9 @@ export class ResumeSkillsComponent implements OnInit {
     if(event.target.value == ""){
       return;
     }
-    console.log("new");
     var list = new Array<ItemType>();
     list.push(
       new ItemType(SkillsMainComponent, {
-        endorsementRating: "0",
         skill: event.target.value,
       })
     );
@@ -49,27 +47,12 @@ export class ResumeSkillsComponent implements OnInit {
 
   createNew(skill){
     var node = document.createElement("li"); 
-    console.log(skill);
     node.setAttribute("class", "addedTag");
     node.setAttribute("style", "margin-bottom: 5px; margin-top: 5px");
-    var endorsement = skill.data.endorsementRating;
-    var endorsementStyle = "color:rgba(16, 204, 16, 0.932)";
-    if(parseInt(endorsement) > 0){
-      if(parseInt(endorsement) > 9000){
-        endorsement = ">9000";
-      }
-      else{
-        endorsement = "+" + endorsement;
-      }
-    }
-    else if(parseInt(endorsement) == 0){
-      endorsementStyle = "color: #f1c40f"
-    }
-    var img = "<i class='endorsement' style='margin-right: 10px; " + endorsementStyle + "'>" + endorsement + "</i>";
     var data = skill.data.skill.toString();
     var span = "<span onclick='$(this).parent().remove();' class='tagRemove'>x</span>";
     var input = "<input type='hidden' name='tags[]' value='" + data + "'>";
-    node.innerHTML = (img + data + span + input);
+    node.innerHTML = (data + span + input);
     var ul = document.getElementById("ulTags");
     ul.insertBefore(node, document.getElementById("lastNode"));
   }

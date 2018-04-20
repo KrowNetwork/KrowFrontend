@@ -11,6 +11,10 @@ export class EmployerProfileComponent implements OnInit {
 
   constructor() { }
 
+  scrollup(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   // IMAGES
   LOADER = require("../../../images/loader.gif");
   LOGO1 = require("../../../images/icon.png");

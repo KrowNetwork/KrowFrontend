@@ -11,6 +11,8 @@ export class ApplicantProfileComponent implements OnInit {
 
   constructor() { }
 
+  window: any = window;
+
   openJobs(event) {
     var el = event.target.parentElement.children[1];
     var currStyle = el.attributes[1].value;
@@ -26,6 +28,10 @@ export class ApplicantProfileComponent implements OnInit {
       el.style = "display: block;";
       console.log(el.style);
     }
+  }
+  
+  scrollup(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // IMAGES
