@@ -27,7 +27,7 @@ export class ResumeAffiliationsComponent implements OnInit {
   }
   
   loadComponent(affiliations) {
-    if(!affiliations){
+    if(affiliations == "empty"){
       affiliations = new Array<ItemType>();
       affiliations.push(
         new ItemType(AffiliationsMainComponent, {

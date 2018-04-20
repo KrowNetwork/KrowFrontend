@@ -27,7 +27,7 @@ export class ResumeEducationComponent implements OnInit {
   }
   
   loadComponent(educations) {
-    if(!educations){
+    if(educations == "empty"){
       educations = new Array<ItemType>();
       educations.push(
         new ItemType(EducationMainComponent, {

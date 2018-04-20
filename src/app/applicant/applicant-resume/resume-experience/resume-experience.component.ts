@@ -27,7 +27,7 @@ export class ResumeExperienceComponent implements OnInit {
   }
 
   loadComponent(experiences) {
-    if(!experiences){
+    if(experiences == "empty"){
       experiences = new Array<ItemType>();
       experiences.push(
         new ItemType(ExperienceMainComponent, {

@@ -28,7 +28,7 @@ export class ResumeAchievementsComponent implements OnInit {
   }
   
   loadComponent(achievements) {
-    if(!achievements){
+    if(achievements == "empty"){
       achievements = new Array<ItemType>();
       achievements.push(
         new ItemType(AchievementsMainComponent, {
