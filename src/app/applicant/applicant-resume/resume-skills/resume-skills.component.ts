@@ -22,7 +22,7 @@ export class ResumeSkillsComponent implements OnInit {
   }
 
   changeHandler(event){
-    event.target.closest(".resumeContainer").children[1].children[0].style = "margin-bottom: 30px; display: show";
+    event.target.closest(".resumeContainer").children[1].children[0].style = "margin-bottom: 15px; display: show";
   }
 
   loadComponent(skillList) {
@@ -54,7 +54,7 @@ export class ResumeSkillsComponent implements OnInit {
     var input = "<input type='hidden' name='tags[]' value='" + data + "'>";
     node.innerHTML = (data + span + input);
     node.children[0].addEventListener("click", function(){
-      this.closest(".resumeContainer").children[1].children[0].style = "margin-bottom: 30px; display: show";
+      this.closest(".resumeContainer").children[1].children[0].style = "margin-bottom: 15px; display: show";
       this.parentNode.remove();
     })
     var ul = document.getElementById("ulTags");

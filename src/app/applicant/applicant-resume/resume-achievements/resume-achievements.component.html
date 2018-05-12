@@ -3,7 +3,7 @@
     <ng-template achievements-host></ng-template>
   </div>
   <div class="col-lg-12">
-    <i class="la la-plus-circle" (click)="loadComponent('empty')" style="margin-bottom:15px"></i>
+    <i class="la la-plus-circle" (mouseenter) ="$event.target.style.color='#fb236a'" (mouseleave) ="$event.target.style.color='rgb(85, 85, 85)'" (click)="loadComponent('empty')" style="margin-bottom:15px"></i>
     <a class="post-job-btn" style="display: none" (click)="updateResume($event)">UPDATE</a>
   </div>
 </div>

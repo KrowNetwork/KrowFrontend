@@ -33,7 +33,6 @@ export class UpdateResumeService {
                     }
                     else {
                         var currType = input.attributes[1].value;
-                        console.log(currAttribute);
                         if(currAttribute == "experience" && currType == "type"){
                             value = "PROFESSIONALWORK";
                         }
@@ -48,7 +47,7 @@ export class UpdateResumeService {
                 }
             }
             if(i == componentsList.length - 1){
-                this.updateData(json, currAttribute);
+                this.updateData(dom.children[0].children[1].children[1], json, currAttribute);
             }
         }
         for(var j = 0; j < componentsList.length; j++){
@@ -67,7 +66,12 @@ export class UpdateResumeService {
         }
     }
 
-    updateData(jsonData, attribute){
+    removeUpdateButton(){
+
+    }
+
+    updateData(updateButton, jsonData, attribute){
+        updateButton.innerText = "Updating...";
         var url = "http://18.220.46.51:3000/api/Applicant/SAMPLEAPPLICANT";
 
         this.http.get(url).subscribe(
@@ -101,7 +105,10 @@ export class UpdateResumeService {
 
                 // Update entry
                 this.http.put(url, data).subscribe(
-                    data => {console.log("Updated")}, // Catch Errors
+                    data => {
+                        updateButton.innerText = "UPDATE";
+                        updateButton.setAttribute("style", "display: none");
+                    }, // Catch Errors
                     (err: HttpErrorResponse) => {
                         if (err.error instanceof Error) {
                             console.log("Client-side error occured.");
@@ -133,6 +140,6 @@ export class UpdateResumeService {
             };
             objArray.push(obj);
         }
-        this.updateData(objArray, attribute);
+        this.updateData(dom.children[0].children[1].children[0], objArray, attribute);
     }
 }
