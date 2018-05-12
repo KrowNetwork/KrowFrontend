@@ -50,26 +50,19 @@ export class ResumeAffiliationsComponent implements OnInit {
       (<InterfaceComponent>componentRef.instance).data = affiliationItem.data;
     }
   }
-
-  dateFormat(string){
-    var a = string.slice(0, 15);
-    return a;
-  }
-
+  
   ngOnInit() {
     this.http.get("http://18.220.46.51:3000/api/Applicant/SAMPLEAPPLICANT").subscribe(
       data => {
         var resumeAffiliations = data["resume"]["affiliations"];
-        var startDate = this.dateFormat(new Date(resumeAffiliations[0]["startDate"]).toString());
-        var endDate = this.dateFormat(new Date(resumeAffiliations[0]["endDate"]).toString());
         var affiliations = new Array<ItemType>();
-        for(var i = 0; i < resumeAffiliations.length; i++){
+        for(var k = 0; k < resumeAffiliations.length; k++){
           affiliations.push(
             new ItemType(AffiliationsMainComponent, {
-              title: resumeAffiliations[0]["title"],  
-              description: resumeAffiliations[0]["description"],
-              startDate: startDate,
-              endDate: endDate,
+              title: resumeAffiliations[k]["title"],
+              description: resumeAffiliations[k]["description"],
+              startDate: new Date(resumeAffiliations[k]["startDate"]).toString().slice(0, 15),
+              endDate: new Date(resumeAffiliations[k]["endDate"]).toString().slice(0, 15),
             })
           );
         }

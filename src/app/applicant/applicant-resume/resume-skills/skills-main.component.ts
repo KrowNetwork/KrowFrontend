@@ -5,11 +5,8 @@ import { InterfaceComponent } from '../../../shared/interface-component.componen
 @Component({
   template: `
     <li class="addedTag">
-        <i class="endorsement" style="margin-right: 10px; color:rgba(16, 204, 16, 0.932)">
-            {{data.endorsementRating}}
-        </i>
         {{data.skill}}
-        <span onclick="$(this).parent().remove();" class="tagRemove">
+        <span (click)="removeSkill($event)" class="tagRemove">
             x
         </span>
         <input type="hidden" name="tags[]" value="{{data.skill}}">
@@ -18,4 +15,10 @@ import { InterfaceComponent } from '../../../shared/interface-component.componen
 })
 export class SkillsMainComponent implements InterfaceComponent {
   @Input() data: any;
+
+  removeSkill(event){
+    console.log("hi");
+    event.target.closest(".resumeContainer").children[1].children[0].style = "margin-bottom: 30px; display: show";
+    event.target.parentNode.remove();
+  }
 }

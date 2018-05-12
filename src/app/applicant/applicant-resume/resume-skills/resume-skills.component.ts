@@ -50,9 +50,13 @@ export class ResumeSkillsComponent implements OnInit {
     node.setAttribute("class", "addedTag");
     node.setAttribute("style", "margin-bottom: 5px; margin-top: 5px");
     var data = skill.data.skill.toString();
-    var span = "<span onclick='$(this).parent().remove();' class='tagRemove'>x</span>";
+    var span = "<span class='tagRemove'>x</span>";
     var input = "<input type='hidden' name='tags[]' value='" + data + "'>";
     node.innerHTML = (data + span + input);
+    node.children[0].addEventListener("click", function(){
+      this.closest(".resumeContainer").children[1].children[0].style = "margin-bottom: 30px; display: show";
+      this.parentNode.remove();
+    })
     var ul = document.getElementById("ulTags");
     ul.insertBefore(node, document.getElementById("lastNode"));
   }
@@ -65,8 +69,7 @@ export class ResumeSkillsComponent implements OnInit {
         for(var i = 0; i < skills.length; i++){
           skillList.push(
             new ItemType(SkillsMainComponent, {
-              endorsementRating: skills[0]["endorsementRating"],
-              skill: skills[0]["skill"],
+              skill: skills[i]["skill"],
             })
           );
         }

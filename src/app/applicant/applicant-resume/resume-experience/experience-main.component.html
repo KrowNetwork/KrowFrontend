@@ -5,7 +5,7 @@
         border-radius: 8px;
         margin-bottom: 15px">
         <div class="col-lg-12">
-            <div class="del-resume" onclick="$(this).closest('.social-edit').remove();" style="float: right; margin-top: 10px">
+            <div class="del-resume" (click)="deleteItem($event)" style="float: right; margin-top: 10px">
                 <a>
                     <i class="la la-trash-o"></i>
                 </a>
@@ -28,6 +28,12 @@
                                 <input (keydown)="changeHandler($event)" type="text" placeholder="What You Did" secret="position" value={{data.position}}/>
                             </div>
                         </div>
+                        <!-- <div class="col-lg-6">
+                            <span class="pf-title" style="margin-top:0px">Type</span>
+                            <div class="pf-field">
+                                <input (click)="displayDropdown($event)"/>
+                            </div>
+                        </div> -->
                         <div class="col-lg-6">
                             <span class="pf-title" style="margin-top:0px">Type</span>
                             <div class="pf-field">

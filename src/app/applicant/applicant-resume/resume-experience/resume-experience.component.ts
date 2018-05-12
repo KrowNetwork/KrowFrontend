@@ -52,27 +52,20 @@ export class ResumeExperienceComponent implements OnInit {
     }
   }
 
-  dateFormat(string){
-    var a = string.slice(0, 15);
-    return a;
-  }
-
   ngOnInit() {
     this.http.get("http://18.220.46.51:3000/api/Applicant/SAMPLEAPPLICANT").subscribe(
       data => {
         var resumeExperiences = data["resume"]["experience"];
-        var startDate = this.dateFormat(new Date(resumeExperiences[0]["startDate"]).toString());
-        var endDate = this.dateFormat(new Date(resumeExperiences[0]["endDate"]).toString());
         var experiences = new Array<ItemType>();
-        for(var i = 0; i < resumeExperiences.length; i++){
+        for(var k = 0; k < resumeExperiences.length; k++){
           experiences.push(
             new ItemType(ExperienceMainComponent, {
-              type: resumeExperiences[0]["type"],
-              position: resumeExperiences[0]["position"],
-              title: resumeExperiences[0]["title"],
-              description: resumeExperiences[0]["description"],
-              startDate: startDate,
-              endDate: endDate,
+              type: resumeExperiences[k]["type"],
+              position: resumeExperiences[k]["position"],
+              title: resumeExperiences[k]["title"],
+              description: resumeExperiences[k]["description"],
+              startDate: new Date(resumeExperiences[k]["startDate"]).toString().slice(0, 15),
+              endDate: new Date(resumeExperiences[k]["endDate"]).toString().slice(0, 15),
             })
           );
         }

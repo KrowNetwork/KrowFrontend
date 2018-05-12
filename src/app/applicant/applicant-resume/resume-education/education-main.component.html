@@ -6,7 +6,7 @@
         border-radius: 8px;
         margin-bottom: 15px">
         <div class="col-lg-12">
-            <div class="del-resume" onclick="$(this).closest('.social-edit').remove();" style="float: right; margin-top: 10px">
+            <div class="del-resume" (click)="deleteItem($event)" style="float: right; margin-top: 10px">
                 <a>
                     <i class="la la-trash-o"></i>
                 </a>

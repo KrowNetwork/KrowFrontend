@@ -11,7 +11,7 @@ export class ApplicantResumeComponent implements OnInit {
   constructor() { }
 
   handleClicked(event){
-    var currTarget = event.target.parentElement.children[1];
+    var currTarget = event.target.closest(".social-edit").children[1];
     var currStyle = currTarget.style;
     if(currStyle.display == "none"){
       currTarget.style = "display: inline";

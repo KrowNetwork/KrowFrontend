@@ -221,7 +221,7 @@ const appRoutes: Routes = [
   ],
   providers: [ 
     DefaultUrlSerializer, 
-    UpdateResumeService 
+    UpdateResumeService,
   ],
   bootstrap: [ 
     AppComponent 
