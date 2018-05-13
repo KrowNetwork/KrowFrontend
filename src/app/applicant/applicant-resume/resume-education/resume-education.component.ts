@@ -66,7 +66,12 @@ export class ResumeEducationComponent implements OnInit {
             })
           );
         }
-        this.loadComponent(educations);
+        if(educations.length == 0){
+          this.loadComponent("empty");
+        }
+        else{
+          this.loadComponent(educations);
+        }
       }, // Catch Errors
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {

@@ -69,7 +69,12 @@ export class ResumeExperienceComponent implements OnInit {
             })
           );
         }
-        this.loadComponent(experiences);
+        if(experiences.length == 0){
+          this.loadComponent("empty");
+        }
+        else{
+          this.loadComponent(experiences);
+        }
       }, // Catch Errors
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {

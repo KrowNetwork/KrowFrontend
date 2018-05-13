@@ -1,14 +1,11 @@
-import { Component, OnInit, Input, ViewChild, ComponentFactoryResolver } from '@angular/core';
-import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-applicant-resume',
   templateUrl: './applicant-resume.component.html',
   styleUrls: ['./applicant-resume.component.css']
 })
-export class ApplicantResumeComponent implements OnInit {
-
-  constructor() { }
+export class ApplicantResumeComponent {
 
   handleClicked(event){
     var currTarget = event.target.closest(".social-edit").children[1];
@@ -20,9 +17,5 @@ export class ApplicantResumeComponent implements OnInit {
       currTarget.style = "display: none";
     }
   }
-
-  ngOnInit(){
-    
-  }
-
+  
 }

@@ -68,7 +68,12 @@ export class ResumeAchievementsComponent implements OnInit {
 					})
 				);
 			}
-			this.loadComponent(achievements);
+			if(achievements.length == 0){
+				this.loadComponent("empty");
+			}
+			else{
+				this.loadComponent(achievements);
+			}
 	  }, // Catch Errors
 	  (err: HttpErrorResponse) => {
 	    if (err.error instanceof Error) {

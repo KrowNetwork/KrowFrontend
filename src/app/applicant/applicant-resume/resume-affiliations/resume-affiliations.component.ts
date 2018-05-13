@@ -66,7 +66,12 @@ export class ResumeAffiliationsComponent implements OnInit {
             })
           );
         }
-        this.loadComponent(affiliations);
+        if(affiliations.length == 0){
+          this.loadComponent("empty");
+        }
+        else{
+          this.loadComponent(affiliations);
+        }
       }, // Catch Errors
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {

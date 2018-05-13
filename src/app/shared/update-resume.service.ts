@@ -66,14 +66,13 @@ export class UpdateResumeService {
         }
     }
 
-    removeUpdateButton(){
-
-    }
-
     updateData(updateButton, jsonData, attribute){
         updateButton.innerText = "Updating...";
         var url = "http://18.220.46.51:3000/api/Applicant/SAMPLEAPPLICANT";
 
+        //var ID = "SAMPLEAPPLICANT";
+
+        ///var urlUpdate = "http://18.220.46.51:3000/api/UpdateResume?filter=%7B%22applicant%22%3A%20%22resource%3Anetwork.krow.participants.Applicant%23" + ID + "%22%7D";
         this.http.get(url).subscribe(
             data => {
                 if(attribute == "skills"){
@@ -103,20 +102,24 @@ export class UpdateResumeService {
                 data["lastUpdated"] = timestamp;
                 data["resume"]["lastUpdated"] = timestamp;
 
-                // Update entry
-                this.http.put(url, data).subscribe(
-                    data => {
-                        updateButton.innerText = "UPDATE";
-                        updateButton.setAttribute("style", "display: none");
-                    }, // Catch Errors
-                    (err: HttpErrorResponse) => {
-                        if (err.error instanceof Error) {
-                            console.log("Client-side error occured.");
-                        } else {
-                            console.log("Server-side error occured.");
-                        }
-                    }
-                );
+                this.postData(data, url, updateButton);
+            }, // Catch Errors
+            (err: HttpErrorResponse) => {
+                if (err.error instanceof Error) {
+                    console.log("Client-side error occured.");
+                } else {
+                    console.log("Server-side error occured.");
+                }
+            }
+        );
+    }
+
+    postData(data, url, updateButton){
+        // Update entry
+        this.http.put(url, data).subscribe(
+            data => {
+                updateButton.innerText = "UPDATE";
+                updateButton.setAttribute("style", "display: none");
             }, // Catch Errors
             (err: HttpErrorResponse) => {
                 if (err.error instanceof Error) {
