@@ -77,6 +77,7 @@ export class ResumeExperienceComponent implements OnInit {
         }
       }, // Catch Errors
       (err: HttpErrorResponse) => {
+        this.loadComponent("empty");
         if (err.error instanceof Error) {
           console.log("Client-side error occured.");
         } else {

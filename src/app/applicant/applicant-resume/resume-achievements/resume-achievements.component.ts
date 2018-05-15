@@ -24,7 +24,6 @@ export class ResumeAchievementsComponent implements OnInit {
 	) {}
 
 	updateResume(event){
-		event.target.style = "display: none";
 		this.updateResumeService.updateMain(event.target.closest("app-resume-achievements"));
 	}
   
@@ -76,6 +75,7 @@ export class ResumeAchievementsComponent implements OnInit {
 			}
 	  }, // Catch Errors
 	  (err: HttpErrorResponse) => {
+			this.loadComponent("empty");
 	    if (err.error instanceof Error) {
 	      console.log("Client-side error occured.");
 	    } else {

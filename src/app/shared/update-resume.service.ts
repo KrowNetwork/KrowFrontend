@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ItemType } from './item-type-constructor';
-import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class UpdateResumeService {
@@ -9,6 +8,7 @@ export class UpdateResumeService {
     async updateMain(dom){
         var currAttribute = dom.localName.slice(11);
         var componentsList = dom.children[0].children[0].children;
+        var updateButton = dom.children[0].children[1].children[1];
         var json = {data: []};
         for(var i = 0; i < componentsList.length; i++){
             var currentComponent = componentsList[i].children[0].children[0];
@@ -30,6 +30,7 @@ export class UpdateResumeService {
                             input.target.setAttribute("style", "background-color: #fff; -webkit-text-fill-color: #101010");
                         });
                         existsEmpty = true;
+                        updateButton.innerText = "UPDATE";
                     }
                     else {
                         var currType = input.attributes[1].value;
@@ -45,9 +46,12 @@ export class UpdateResumeService {
                 if(existsEmpty != true){
                     json.data.push(currJson);
                 }
+                else{
+                    return;
+                }
             }
             if(i == componentsList.length - 1){
-                this.updateData(dom.children[0].children[1].children[1], json, currAttribute);
+                this.updateData(updateButton, json, currAttribute);
             }
         }
         for(var j = 0; j < componentsList.length; j++){
@@ -70,9 +74,9 @@ export class UpdateResumeService {
         updateButton.innerText = "Updating...";
         var url = "http://18.220.46.51:3000/api/Applicant/SAMPLEAPPLICANT";
 
-        //var ID = "SAMPLEAPPLICANT";
+        // var ID = "SAMPLEAPPLICANT";
 
-        ///var urlUpdate = "http://18.220.46.51:3000/api/UpdateResume?filter=%7B%22applicant%22%3A%20%22resource%3Anetwork.krow.participants.Applicant%23" + ID + "%22%7D";
+        // var urlUpdate = "http://18.220.46.51:3000/api/UpdateResume?filter=%7B%22applicant%22%3A%20%22resource%3Anetwork.krow.participants.Applicant%23" + ID + "%22%7D";
         this.http.get(url).subscribe(
             data => {
                 if(attribute == "skills"){
@@ -105,6 +109,8 @@ export class UpdateResumeService {
                 this.postData(data, url, updateButton);
             }, // Catch Errors
             (err: HttpErrorResponse) => {
+                alert("Could not get data!");
+                updateButton.innerText = "UPDATE";
                 if (err.error instanceof Error) {
                     console.log("Client-side error occured.");
                 } else {
@@ -122,6 +128,8 @@ export class UpdateResumeService {
                 updateButton.setAttribute("style", "display: none");
             }, // Catch Errors
             (err: HttpErrorResponse) => {
+                alert("Could not post data!");
+                updateButton.innerText = "UPDATE";
                 if (err.error instanceof Error) {
                     console.log("Client-side error occured.");
                 } else {
@@ -133,6 +141,7 @@ export class UpdateResumeService {
 
     updateSkills(dom){
         var attribute = "skills";
+        var updateButton = dom.children[0].children[1].children[0];
         var objArray = [];
         var childrenElements = dom.children[0].children[0].children[0].children[0].children;
         for(var i = 0; i < childrenElements.length - 1; i++){
@@ -143,6 +152,6 @@ export class UpdateResumeService {
             };
             objArray.push(obj);
         }
-        this.updateData(dom.children[0].children[1].children[0], objArray, attribute);
+        this.updateData(updateButton, objArray, attribute);
     }
 }
