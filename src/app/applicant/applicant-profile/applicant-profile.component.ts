@@ -1,15 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserLoginService } from '../../service/user-login.service';
 
 declare var require: any;
 
 @Component({
   selector: 'app-applicant-profile',
   templateUrl: './applicant-profile.component.html',
-  styleUrls: ['./applicant-profile.component.css']
 })
 export class ApplicantProfileComponent implements OnInit {
 
-  constructor() { }
+  constructor(public router: Router, public userService: UserLoginService) {
+    this.userService.isAuthenticated(this);
+    console.log("Applicant Component: constructor");
+  }
+
+  isLoggedIn(message: string, isLoggedIn: boolean) {
+      if (!isLoggedIn) {
+          this.router.navigate(['/login']);
+      }
+  }
 
   window: any = window;
 

@@ -5,12 +5,12 @@ import { ItemType } from '../../../shared/item-type-constructor';
 import { EducationMainComponent } from './education-main.component';
 import { EducationDirective } from '../resume-education/education.directive';
 import { InterfaceComponent } from '../../../shared/interface-component.component';
-import { UpdateResumeService } from '../../../shared/update-resume.service';
+import { UpdateResumeService } from '../../../service/update-resume.service';
 
 @Component({
   selector: 'app-resume-education',
   templateUrl: './resume-education.component.html',
-  styleUrls: ['./resume-education.component.css']
+  styleUrls: ['../resume-elements.component.css']
 })
 export class ResumeEducationComponent implements OnInit {
 
@@ -52,7 +52,8 @@ export class ResumeEducationComponent implements OnInit {
   }
   
   ngOnInit() {
-    this.http.get("http://18.220.46.51:3000/api/Applicant/SAMPLEAPPLICANT").subscribe(
+    var user = localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser");
+    this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
       data => {
         var resumeEducations = data["resume"]["education"];
         var educations = new Array<ItemType>();

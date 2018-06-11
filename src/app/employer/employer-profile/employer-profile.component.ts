@@ -1,15 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserLoginService } from '../../service/user-login.service';
 
 declare var require: any;
 
 @Component({
   selector: 'app-employer-profile',
   templateUrl: './employer-profile.component.html',
-  styleUrls: ['./employer-profile.component.css']
 })
 export class EmployerProfileComponent implements OnInit {
 
-  constructor() { }
+  constructor(public router: Router, public userService: UserLoginService) {
+    this.userService.isAuthenticated(this);
+    console.log("Employer Component: constructor");
+  }
+
+  isLoggedIn(message: string, isLoggedIn: boolean) {
+      if (!isLoggedIn) {
+          this.router.navigate(['/login']);
+      }
+  }
 
   scrollup(){
     window.scrollTo({ top: 0, behavior: 'smooth' });

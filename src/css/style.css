@@ -1011,6 +1011,24 @@ label::after {
     color: #1da1f2;
     border-color: #1da1f2;
 }
+.login-social a.git-login {
+    color: #24292e;
+    border-color: #24292e;
+}
+.login-social a.git-login:hover{
+    background: #24292e;
+    border-color: #24292e;  
+    color: #ffffff;
+}
+.login-social a.goo-login {
+    color: #d62d20;
+    border-color: #d62d20;
+}
+.login-social a.goo-login:hover{
+    background: #d62d20;
+    border-color: #d62d20;  
+    color: #ffffff;
+}
 
 .login-social a {
     font-size: 16px;

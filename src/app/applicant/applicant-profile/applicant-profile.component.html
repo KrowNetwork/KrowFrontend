@@ -3,28 +3,34 @@
 	<span>Loading...</span>
 </div> -->
 
-<p id="test-ID" value="SAMPLEAPPLICANT" style="display:none"></p>
+<p id="test-ID" value="Applicant" style="display:none"></p>
 
 <div class="theme-layout" id="scrollup">
 	<header class="stick-top">
 		<div class="menu-sec">
 			<div class="container">
 				<div class="logo">
-					<a href="https://www.krow.network/" target="_blank" title=""><img src="{{KROW_HEADER_2}}" alt="" /></a>
+					<a href="https://www.krow.network/" target="_blank" title="">
+						<!-- <img src="{{KROW_HEADER_2}}" alt="" /> -->
+						<img src="http://placehold.it/178x40" alt="Krow Network Logo" />
+					</a>
 				</div><!-- Logo -->
 				<div class="btn-extars">
 					<a [routerLink]="['job-search']" routerLinkActive="active" class="post-job-btn"><i class="fa fa-search-plus"></i>Find Job</a>
 					<ul class="account-btns">
-						<li><a [routerLink]="['']" routerLinkActive="active" title=""><i class="la la-external-link-square"></i> LogOut</a></li>
+						<li><a [routerLink]="['/logout']" routerLinkActive="active" title=""><i class="la la-external-link-square"></i> LogOut</a></li>
 					</ul>
 				</div><!-- Btn Extras -->
 				<nav>
 					<ul>
 						<li>
+							<a [routerLink]="['/secureHome']" routerLinkActive="active">Home</a>
+						</li>
+						<li>
 							<a [routerLink]="['profile-info']" routerLinkActive="active">Profile</a>
 						</li>
-						<li class="menu-item-has-children">
-							<a>Jobs</a>
+						<li>
+							<a style="color: #ffffff">Jobs</a>
 							<ul>
 								<li><a [routerLink]="['completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
 								<li><a [routerLink]="['terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
@@ -48,8 +54,7 @@
 			<div class="container fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<div class="inner-header" style="padding-top:120px" id="responsive-title">
-							<h3>Welcome To The Krow Network</h3>
+						<div class="inner-header" style="padding-top:90px" id="responsive-title">
 						</div>
 					</div>
 				</div>
@@ -61,53 +66,28 @@
 		<div class="block no-padding">
 			<div class="container">
 				 <div class="row no-gape">
-				 	<aside class="col-lg-3 column border-right" id="disappear">
-				 		<div class="widget">
-				 			<div class="tree_widget-sec">
-				 				<ul>
-									<li class="inner-child">
-										<a [routerLink]="['profile-info']" routerLinkActive="active"><i class="la la-briefcase"></i>Profile</a>
-									</li>
-				 					<li class="inner-child">
-				 						<a title="" (click)="openJobs($event)" id="somestupidshit"><i class="la la-reorder"></i>Jobs</a>
-				 						<ul style="display: none;">
-											<li><a [routerLink]="['completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
-											<li><a [routerLink]="['terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
-											<li><a [routerLink]="['in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
-											<li><a [routerLink]="['requested-jobs']" routerLinkActive="active">Requested Jobs</a></li>
-											<li><a [routerLink]="['hire-requests']" routerLinkActive="active">Hire Requests</a></li>
-				 						</ul>
-				 					</li>
-				 					<li class="inner-child">
-				 						<a [routerLink]="['applicant-resume']" routerLinkActive="active"><i class="la la-file-text"></i>Resume</a>
-				 					</li>
-				 					<li class="inner-child">
-				 						<a [routerLink]="['job-search']" routerLinkActive="active"><i class="fa fa-search-plus"></i>Find Job</a>
-				 					</li>
-				 					<li class="inner-child">
-										<a><i class="la la-unlink"></i>LogOut</a>
-									</li>
-				 				</ul>
-				 			</div>
-				 		</div>
-					</aside>
-					<div class="col-lg-9 column">
+					<div class="col-lg-1 column"></div>
+					<div class="col-lg-10 column">
 						<router-outlet ></router-outlet>
 					</div>
+					<div class="col-lg-1 column"></div>
 				 </div>
 			</div>
 		</div>
 	</section>
 
 	<footer style="margin-top: 15px">
-		<div class="block">
+		<div class="block" style="padding-bottom: 0; padding-top: 25px">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-3 column">
 						<div class="widget">
 							<div class="about_widget">
 								<div class="logo">
-									<a href="https://www.krow.network/" target="_blank" title=""><img src="{{KROW_HEADER_2}}" alt="" /></a>
+									<a href="https://www.krow.network/" target="_blank" title="">
+										<!-- <img src="{{KROW_HEADER_2}}" alt="" /> -->
+										<img src="http://placehold.it/178x40" alt="Krow Network Logo" />
+									</a>
 								</div>
 								<div class="social">
 									<a href="https://www.facebook.com/KrowNetwork/" 				   target="_blank" title=""><i class="fa fa-facebook"	 ></i></a>
@@ -158,7 +138,9 @@
 		</div>
 		<div class="bottom-line">
 			<span>© 2018 Jobhunt All rights reserved. Design by Creative Layers</span>
-			<a class="scrollup" title="" id="my-cool-button" (click)="scrollup()"><i class="la la-arrow-up"></i></a>
+			<a class="scrollup" title="" id="my-cool-button" (click)="scrollup()" style="bottom: 12px; right: 12px">
+				<i class="la la-arrow-up"></i>
+			</a>
 		</div>
 	</footer>
 </div>

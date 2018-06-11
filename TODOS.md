@@ -1,99 +1,74 @@
-APPLICANT
----------
---
-Resume
+TODOs
+-----
+---
+Major 
 ------
+Application Design:
+-------------------
 --
-1. Update resume items
-2. Find an API to Parse an existing Resume or build our own logic
---
-Jobs
-----
---
-0. (Fix) Jobs dropdown (Swap employer, applicant)
-1. Display Completed Jobs (Added in Resume under affiliations)
-2. Display Terminated Jobs (Added in Resume under affiliations)
-3. Display In-Progress Jobs
-4. Display Requested Jobs
-5. Display Available Jobs
-6. View Employer Profile from any Job link
---
-Available Jobs
---------------
---
-1. Job Description, Employer Profile, etc.
-2. List of jobs to scroll through (Find a Job button landing)
-3. Search (tags, categories, etc. [filters])
-4. Recommended
-5. Request Job
---
-Requested Jobs
---------------
---
-1. Job Description, Employer Profile, etc.
-2. List of Applications
-3. Withdraw Application
-4. Accept Hire 
---
-In-Progress Jobs
-----------------
---
-1. Job Description, Employer Profile, etc.
-2. Resign Job
-3. Complete Job / Unrequest Complete Job
----
-
-EMPLOYER
+Resumes:
 --------
+* Remove resume updating
+* Remove Achievements or alternatively make Achievement Challenges job category on the platform to complete
+* Include function to upload proof of education, which upon being verified is added to the resume
+* Achievements, Education, Skills, Experience, Affiliations submitted for approval on completion of job, reviewed by employer, then if endorsed by employer, added to resume
+* Otherwise if empty upon viewing resume suggest ‘find a job’ worded user friendly with search query internship/entry level
 --
-Jobs
-----
+Jobs:
+-----
+* Employer publishing of jobs and all the functions and user agreements, contracts, etc. around that
+* Employer viewing of past and active jobs
+* Employer search for jobs?
+* Applicant job component load job full description
+    * Add ‘see more’ at the bottom of the first 10 entries
 --
-0. (Fix) Jobs dropdown (Swap employer, applicant)
-1. Display Terminated Jobs
-2. Display In-Progress Jobs
-3. Display Posted Jobs
-4. Display Available Jobs
-5. Post Job (Post Jobs landing)
---
-Available Jobs
---------------
---
-1. Job Description, Employer Profile, etc.
-2. List of jobs to scroll through
-3. Search (tags, categories, etc. [filters])
---
-Posted Jobs
---------------
---
-1. Job Description (edit, delete)
-2. List of Applications submitted for said job
-3. Remove Job
-4. Hire Applicant / Unrequest Hire Applicant
-5. Deny Applicant
---
-In-Progress Jobs
+Notification System
+-------------------
+---
+Major (cont.)
+------
+Responsiveness: 
+---------------
+* Media Queries for mobile and tablet layouts, completely responsive.
+* Rework Template CSS
+* Krow icons, and images
+* FAQ Page redirects 
+---
+Major (cont.)
+------
+User Agreements:
 ----------------
---
-1. Job Description, Applicant Profile, etc.
-2. Terminate Job / Fire Applicant
-3. Complete Job / Unrequest Complete Job
+* Design our policies 
+* Write user agreements on/before creation of applicant/employer account 
+* Write user agreements on posting/completion of job
+* Save agreement status somewhere, if seen but not accepted, move back to agreement on load of any page (Add to authentication check so as to execute simultaneously)
 ---
-
-GENERAL
+Major (cont.)
+-----
+Contracts:
+----------
+* On accepting job
+* On hiring an employee 
+---
+Major (cont.)
+-----
+Browser Tests with Selenium:
+----------------------------
+* Set up browser tests and automation using Selenium 
+* Test every function end case scenario and button
+---
+Design: 
 -------
-1. Krow Pictures and logos
-2. Favicon
-3. FAQ
-4. Social icons
-5. Implement login / register / logout (focus on security)
-6. About Page
-7. Settings page (Change login information)
-8. Contract page
+* Decide on what information and how should it be shown on each small job component
+* Make side bar scroll with page or remove completely
+* Use the AngularJS Material UI Component framework for date pickers, dropdowns, etc.
+* Implement Facebook, Google, GitHub, LinkedIn, Indeed logins 
 ---
-
-BUGS/TODOS/FIXES
-----
-1. On delete of last item, add new button stops functioning
-2. Figure out UpdateResume function inputs
-3. Experience -> Type/Types 
+Reworks + Bug Fixes 
+-------------------
+(Less important for now):
+-------------------------
+* Rework Modules for Lazy Loading:
+    * Split up the modules and routers to enable lazy loading
+* Delete job components on new search, add more on ‘see more’
+* (Fix) Employer logout button

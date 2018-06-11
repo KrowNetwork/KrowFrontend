@@ -4,7 +4,6 @@ import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 @Component({
   selector: 'app-completed-jobs',
   templateUrl: './completed-jobs.component.html',
-  styleUrls: ['./completed-jobs.component.css']
 })
 export class CompletedJobsComponent implements OnInit {
 

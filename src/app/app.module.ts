@@ -1,18 +1,30 @@
 // Main imports
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from "@angular/forms";
 import { AppComponent } from './app.component';
+
+// UI Materials
+/*
+  VIVEK
+*/
 
 // Enable Http to get data from server
 import { HttpClientModule } from '@angular/common/http';
 
 // Router imports
-import { RouterModule, Routes, DefaultUrlSerializer } from '@angular/router';
+import { routing } from './app.routes';
 
 // Main components
 import { LoginComponent } from './main/login/login.component';
 import { RegisterComponent } from './main/register/register.component';
 import { PageNotFoundComponent } from './main/page-not-found/page-not-found.component';
+import { ComingSoonComponent } from './shared/coming-soon/coming-soon.component';
+import { NewPasswordComponent } from './main/newpassword/newpassword.component';
+import { RegistrationConfirmationComponent, LogoutComponent } from './main/confirm/confirmRegistration.component';
+import { HomeComponent } from './main/home/home.component';
+import { ForgotPassword2Component, ForgotPasswordStep1Component } from './main/forgot/forgotPassword.component';
+import { ResendCodeComponent } from './main/resend/resendCode.component';
 
 // Employer components
 import { EmployerProfileComponent } from './employer/employer-profile/employer-profile.component';
@@ -21,6 +33,26 @@ import { EmployerPostJobsComponent } from './employer/employer-post-jobs/employe
 // Applicant components
 import { ApplicantProfileComponent } from './applicant/applicant-profile/applicant-profile.component';
 import { ApplicantResumeComponent } from './applicant/applicant-resume/applicant-resume.component';
+import { RequestedJobsComponent } from './shared/requested-jobs/requested-jobs.component';
+import { HireRequestsComponent } from './shared/hire-requests/hire-requests.component';
+import { JobSearchComponent } from './shared/job-search/job-search.component';
+  import { JobSearchMainComponent } from './shared/job-search/job-search-main.component';
+
+// Resume components
+import { ResumeEducationComponent } from './applicant/applicant-resume/resume-education/resume-education.component';
+  import { EducationMainComponent } from './applicant/applicant-resume/resume-education/education-main.component'; 
+
+import { ResumeSkillsComponent } from './applicant/applicant-resume/resume-skills/resume-skills.component';
+  import { SkillsMainComponent } from './applicant/applicant-resume/resume-skills/skills-main.component';
+
+import { ResumeExperienceComponent } from './applicant/applicant-resume/resume-experience/resume-experience.component';
+  import { ExperienceMainComponent } from './applicant/applicant-resume/resume-experience/experience-main.component';
+
+import { ResumeAchievementsComponent } from './applicant/applicant-resume/resume-achievements/resume-achievements.component';
+  import { AchievementsMainComponent } from './applicant/applicant-resume/resume-achievements/achievements-main.component';
+
+import { ResumeAffiliationsComponent } from './applicant/applicant-resume/resume-affiliations/resume-affiliations.component';
+  import { AffiliationsMainComponent } from './applicant/applicant-resume/resume-affiliations/affiliations-main.component';
 
 // Shared components
 import { ProfileInfoComponent } from './shared/profile-info/profile-info.component';
@@ -28,150 +60,27 @@ import { AvailableJobsComponent } from './shared/available-jobs/available-jobs.c
 import { CompletedJobsComponent } from './shared/completed-jobs/completed-jobs.component';
 import { TerminatedJobsComponent } from './shared/terminated-jobs/terminated-jobs.component';
 import { InProgressJobsComponent } from './shared/in-progress-jobs/in-progress-jobs.component';
+import { BasicInfoCollectorComponent } from './shared/basic-info-collector/basic-info-collector.component';
 
-import { UpdateResumeService } from './shared/update-resume.service';
+// Services
+import { UpdateResumeService } from './service/update-resume.service';
+import { CognitoUtil } from './service/cognito.service';
+import { AwsUtil } from './service/aws.service';
+import { UserLoginService } from './service/user-login.service';
+import { UserParametersService } from './service/user-parameters.service';
+import { UserRegistrationService } from './service/user-registration.service';
+import { CreateUserService } from './service/create-user.service';
 
-import { ResumeEducationComponent } from './applicant/applicant-resume/resume-education/resume-education.component';
-  import { EducationDirective } from './applicant/applicant-resume/resume-education/education.directive';
-  import { EducationMainComponent } from './applicant/applicant-resume/resume-education/education-main.component'; 
-
-import { ResumeSkillsComponent } from './applicant/applicant-resume/resume-skills/resume-skills.component';
-  import { SkillsMainComponent } from './applicant/applicant-resume/resume-skills/skills-main.component';
-
-import { ResumeExperienceComponent } from './applicant/applicant-resume/resume-experience/resume-experience.component';
-  import { ExperienceDirective } from './applicant/applicant-resume/resume-experience/experience.directive';
-  import { ExperienceMainComponent } from './applicant/applicant-resume/resume-experience/experience-main.component';
-
-import { ResumeAchievementsComponent } from './applicant/applicant-resume/resume-achievements/resume-achievements.component';
-  import { AchievementDirective } from './applicant/applicant-resume/resume-achievements/achievement.directive';
-  import { AchievementsMainComponent } from './applicant/applicant-resume/resume-achievements/achievements-main.component';
-
-import { ResumeAffiliationsComponent } from './applicant/applicant-resume/resume-affiliations/resume-affiliations.component';
-  import { AffiliationsDirective } from './applicant/applicant-resume/resume-affiliations/affiliations.directive';
-  import { AffiliationsMainComponent } from './applicant/applicant-resume/resume-affiliations/affiliations-main.component';
-
-import { ComingSoonComponent } from './shared/coming-soon/coming-soon.component';
-
-import { RequestedJobsComponent } from './shared/requested-jobs/requested-jobs.component';
-
-import { HireRequestsComponent } from './shared/hire-requests/hire-requests.component';
-
-import { JobSearchComponent } from './shared/job-search/job-search.component';
-
-// Create nested Routing path
-const appRoutes: Routes = [
-  { 
-    path: '',
-    component: LoginComponent
-  },
-  { 
-    path: 'employer-profile', 
-    component: EmployerProfileComponent, 
-    children: [
-      { 
-        path: '', 
-        component: ProfileInfoComponent
-      },
-      { 
-        path: 'profile-info',
-        component: ProfileInfoComponent
-      },
-      { 
-        path: 'employer-post-jobs', 
-        //component: EmployerPostJobsComponent, 
-        component: ComingSoonComponent 
-      },
-      { 
-        path: 'completed-jobs', 
-        //component: CompletedJobsComponent, 
-        component: ComingSoonComponent
-      },
-      { 
-        path: 'terminated-jobs', 
-        //component: TerminatedJobsComponent, 
-        component: ComingSoonComponent
-      },
-      { 
-        path: 'in-progress-jobs', 
-        //component: InProgressJobsComponent, 
-        component: ComingSoonComponent
-      },
-      { 
-        path: 'available-jobs', 
-        //component: AvailableJobsComponent, 
-        component: ComingSoonComponent
-      },
-      { 
-        path: 'job-search', 
-        //component: JobSearchComponent, 
-        component: ComingSoonComponent
-      }
-    ]
-  },
-  {
-    path: 'applicant-profile', 
-    component: ApplicantProfileComponent, 
-    children: [
-      { 
-        path: '', 
-        component: ProfileInfoComponent
-      },
-      { 
-        path: 'profile-info',
-        component: ProfileInfoComponent
-      },
-      { 
-        path: 'applicant-resume', 
-        component: ApplicantResumeComponent
-      },
-      { 
-        path: 'completed-jobs', 
-        //component: CompletedJobsComponent, 
-        component: ComingSoonComponent
-      },
-      { 
-        path: 'terminated-jobs', 
-        //component: TerminatedJobsComponent, 
-        component: ComingSoonComponent
-      },
-      { 
-        path: 'in-progress-jobs', 
-        //component: InProgressJobsComponent, 
-        component: ComingSoonComponent 
-      },
-      { 
-        path: 'requested-jobs', 
-        //component: RequestedJobsComponent, 
-        component: ComingSoonComponent 
-      },
-      { 
-        path: 'hire-requests', 
-        //component: HireRequestsComponent, 
-        component: ComingSoonComponent
-      },
-      { 
-        path: 'job-search', 
-        //component: JobSearchComponent, 
-        component: ComingSoonComponent
-      }
-    ]
-  },
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'register',
-    component: RegisterComponent
-  },
-  { 
-    path: '**', 
-    component: PageNotFoundComponent 
-  }
-];
+// Directives
+import { EducationDirective } from './applicant/applicant-resume/resume-education/education.directive';
+import { ExperienceDirective } from './applicant/applicant-resume/resume-experience/experience.directive';
+import { AchievementDirective } from './applicant/applicant-resume/resume-achievements/achievement.directive';
+import { AffiliationsDirective } from './applicant/applicant-resume/resume-affiliations/affiliations.directive';
+import { JobSearchDirective } from './shared/job-search/job-search.directive';
 
 @NgModule({
   declarations: [
+    // VIVEK (Add module declarations here, I'll worry about splitting it up later)
     AppComponent,
     EmployerProfileComponent,
     EmployerPostJobsComponent,
@@ -194,6 +103,8 @@ const appRoutes: Routes = [
     RequestedJobsComponent,
     HireRequestsComponent,
     JobSearchComponent,
+    JobSearchDirective,
+    JobSearchMainComponent,
     AchievementsMainComponent,
     AchievementDirective,
     AffiliationsDirective,
@@ -202,26 +113,38 @@ const appRoutes: Routes = [
     ExperienceMainComponent,
     ExperienceDirective,
     AffiliationsMainComponent,
-    SkillsMainComponent
+    SkillsMainComponent,
+    NewPasswordComponent,
+    RegistrationConfirmationComponent,
+    LogoutComponent,
+    HomeComponent,
+    ForgotPassword2Component,
+    ForgotPasswordStep1Component,
+    ResendCodeComponent,
+    BasicInfoCollectorComponent
   ],
   imports: [
-    RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
-    ),
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    routing,
   ],
   entryComponents: [ 
     ExperienceMainComponent,
     AffiliationsMainComponent,
     SkillsMainComponent,
     EducationMainComponent,
-    AchievementsMainComponent
+    AchievementsMainComponent,
+    JobSearchMainComponent,
   ],
   providers: [ 
-    DefaultUrlSerializer, 
     UpdateResumeService,
+    CognitoUtil,
+    AwsUtil,
+    UserLoginService,
+    UserParametersService,
+    UserRegistrationService,
+    CreateUserService,
   ],
   bootstrap: [ 
     AppComponent 

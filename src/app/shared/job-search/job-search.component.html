@@ -1,3 +1,24 @@
-<p>
-  job-search works!
-</p>
+<div class="social-edit" id="sn">
+  <form style="padding-left:0px">
+    <div class="edu-history-sec" style="padding-left: 0px">
+      <div class="edu-history">
+        <div class="edu-hisinfo">
+          <div class="row" style="padding:20px; padding-bottom:0px">
+            <div class="col-lg-10">
+              <div class="pf-field">
+                <input type="text" placeholder="Search" style="margin-bottom: 0"
+                  [(ngModel)]="searchUserQuery" [ngModelOptions]="{standalone: true}"/>
+              </div>
+            </div>
+            <div class="col-lg-2" style="padding: 3px 20px 0px 20px;">
+              <a class="post-job-btn" style="color: #FFFFFF; margin: auto" (click)="submitSearchQuery()">Search</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="social-edit">
+  <ng-template job-search-host></ng-template>
+</div> 

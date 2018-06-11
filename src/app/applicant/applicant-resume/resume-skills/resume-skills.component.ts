@@ -1,5 +1,5 @@
 import { Component, OnInit, ComponentFactoryResolver, ViewChild } from '@angular/core';
-import { UpdateResumeService } from '../../../shared/update-resume.service';
+import { UpdateResumeService } from '../../../service/update-resume.service';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { ItemType } from '../../../shared/item-type-constructor';
 import { SkillsMainComponent } from './skills-main.component';
@@ -7,7 +7,7 @@ import { SkillsMainComponent } from './skills-main.component';
 @Component({
   selector: 'app-resume-skills',
   templateUrl: './resume-skills.component.html',
-  styleUrls: ['./resume-skills.component.css']
+  styleUrls: ['../resume-elements.component.css']
 })
 export class ResumeSkillsComponent implements OnInit {
   
@@ -17,12 +17,14 @@ export class ResumeSkillsComponent implements OnInit {
     private componentFactoryResolver: ComponentFactoryResolver
   ) { }
 
+  update = false;
+
   updateResume(event){
     this.updateResumeService.updateSkills(event.target.closest("app-resume-skills"));
   }
 
   changeHandler(event){
-    event.target.closest(".resumeContainer").children[1].children[0].style = "margin-bottom: 15px; display: show";
+    this.update = true;
   }
 
   loadComponent(skillList) {
@@ -62,7 +64,8 @@ export class ResumeSkillsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get("http://18.220.46.51:3000/api/Applicant/SAMPLEAPPLICANT").subscribe(
+    var user = localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser");
+    this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
       data => {
         var skills = data["resume"]["skills"];
         var skillList = new Array<ItemType>();

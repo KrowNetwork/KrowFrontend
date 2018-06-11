@@ -1,0 +1,35 @@
+<section>
+    <div class="block remove-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="account-popup-area signin-popup-box static">
+                        <div class="account-popup">	
+                            <h1 style="color: #141f72; font-weight: 700">Krow Network</h1>	
+                            <h3>Confirm Registration</h3>
+                            <div *ngIf="errorMessage!=null" class="alert alert-danger" style="color: #fb236a">
+                                {{ errorMessage }}
+                            </div>
+                            <form class="form-signin" method="POST" action="#" role="form">
+                                <div class="cfield" *ngIf="email===null">
+                                    <input id="email" type="email" placeholder="Email" class="form-control"
+                                            [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
+                                </div>
+                                <div class="cfield">
+                                    <input id="confirmationCode" type="text" placeholder="Confirmation Code" class="form-control"
+                                            [(ngModel)]="confirmationCode" [ngModelOptions]="{standalone: true}">
+                                </div>
+                                <button (click)="onConfirmRegistration()">
+                                    Confirm
+                                </button>
+                                <p>Can't find your code? 
+                                    <a [routerLink]="['/resendCode']"> <i class="fa fa-fw fa-group"></i> Resend Code</a>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

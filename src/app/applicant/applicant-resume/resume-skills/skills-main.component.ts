@@ -18,7 +18,7 @@ export class SkillsMainComponent implements InterfaceComponent {
 
   removeSkill(event){
     console.log("hi");
-    event.target.closest(".resumeContainer").children[1].children[0].style = "margin-bottom: 15px; display: show";
+    event.target.closest(".resumeContainer").children[1].children[0].style = "margin-bottom: 15px; display: show; color: #FFFFFF";
     event.target.parentNode.remove();
   }
 }

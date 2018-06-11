@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
+import { CreateUserService } from '../../service/create-user.service';
 
 @Component({
   selector: 'app-profile-info',
@@ -9,16 +10,33 @@ import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 
 export class ProfileInfoComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private createUser: CreateUserService
+  ) { }
+
+  user: string;
+  first: string;
+  second: string;
+  address: string;
+  city: string;
+  state: string; 
+  country: string;
+  phoneNumber: string;
+  email: string; 
+  urlFACEBOOK: string;
+  urlTWITTER: string;
+  urlLINKEDIN: string;
+  urlWEBSITE: string;
 
   updateInfo(children) {
-    // Test vatiable, get userId from login
-    var test = document.getElementById("test-ID");
-    var ID = test.attributes[3].value;
-    var id = ID.toString()[6].toString() + ID.slice(7).toLowerCase().toString();
+    this.user = localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser");
+    // Test Id, get from login in the future
+    var hidden = document.getElementById("test-ID");
+    var profileType = hidden.attributes["value"].value;
 
     // Url to API
-    var url = "http://18.220.46.51:3000/api/" + id + "/" + ID;
+    var url = "http://18.220.46.51:3000/api/" + profileType + "/" + this.user;
 
     // Get current Data
     this.http.get(url).subscribe(
@@ -125,10 +143,11 @@ export class ProfileInfoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.user = localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser");
     // Test Id, get from login in the future
-    var test = document.getElementById("test-ID");
-    var ID = test.attributes[3].value;
-    if(ID == "SAMPLEEMPLOYER"){
+    var hidden = document.getElementById("test-ID");
+    var profileType = hidden.attributes["value"].value;
+    if(profileType == "Employer"){
 
       // Set Company/Name 
       document.getElementById("app-responsive-component-profile").innerText = "Company";
@@ -145,42 +164,37 @@ export class ProfileInfoComponent implements OnInit {
       description.children[1].children[0].attributes[2].value = "Company Description";
       description.children[1].children[0].attributes[1].value = "description";
 
-      var url = "http://18.220.46.51:3000/api/Employer/" + ID;
+      var url = "http://18.220.46.51:3000/api/Employer/" + this.user;
 
       // Get Data
       this.http.get(url).subscribe(
         data => {
-
-        console.log(data);
-
           // Display data fetched from API
-          employerName.children[1].children[0].attributes[4].value = data["employerName"];
-          description.children[1].children[0].attributes[4].value = data["description"];
-          document.getElementById("address").attributes[4].value = data["address"];
-          document.getElementById("city").attributes[4].value = data["city"];
-          document.getElementById("state").attributes[4].value = data["state"];
-          document.getElementById("country").attributes[4].value = data["country"];
-          document.getElementById("phoneNumber").attributes[4].value = data["phoneNumber"];
-          document.getElementById("email").attributes[4].value = data["email"];
+          this.first = data["employerName"];
+          this.second = data["description"];
+          this.address = data["address"];
+          this.city = data["city"];
+          this.state = data["state"];
+          this.country = data["country"];
+          this.phoneNumber = data["phoneNumber"];
+          this.email = data["email"];
 
+          // Split url links
           for(var i = 0; i < data["links"].length; i++){
             var curr = data["links"][i];
             if(curr["type"] == "FACEBOOK"){
-              document.getElementById("urlFACEBOOK").attributes[4].value = curr["url"];
+              this.urlFACEBOOK = curr["url"];
             }
             else if(curr["type"] == "TWITTER"){
-              document.getElementById("urlTWITTER").attributes[4].value = curr["url"];
+              this.urlTWITTER = curr["url"];
             }
             else if(curr["type"] == "LINKEDIN"){
-              document.getElementById("urlLINKEDIN").attributes[4].value = curr["url"];
+              this.urlLINKEDIN = curr["url"];
             }
             else if(curr["type"] == "WEBSITE"){
-              document.getElementById("urlWEBSITE").attributes[4].value = curr["url"];
+              this.urlWEBSITE = curr["url"];
             }
           }
-
-          // Test: Log Class
-          console.log(data["$class"].split(".")[3].toUpperCase());
         }, // Catch Errors
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -191,7 +205,7 @@ export class ProfileInfoComponent implements OnInit {
         }
       );
     }
-    else if(ID == "SAMPLEAPPLICANT"){
+    else if(profileType == "Applicant"){
 
       // Set Company/Name 
       document.getElementById("app-responsive-component-profile").innerText = "Name";
@@ -209,41 +223,37 @@ export class ProfileInfoComponent implements OnInit {
       lastName.children[1].children[0].attributes[2].value = "Smith";
       lastName.children[1].children[0].attributes[1].value = "lastName";
 
-      var url = "http://18.220.46.51:3000/api/Applicant/" + ID;
+      var url = "http://18.220.46.51:3000/api/Applicant/" + this.user;
 
       // Get Data
       this.http.get(url).subscribe(
         data => {
-
-          console.log(data);
           // Display data fetched from API
-          firstName.children[1].children[0].attributes[4].value = data["firstName"];
-          lastName.children[1].children[0].attributes[4].value = data["lastName"];
-          document.getElementById("address").attributes[4].value = data["address"];
-          document.getElementById("city").attributes[4].value = data["city"];
-          document.getElementById("state").attributes[4].value = data["state"];
-          document.getElementById("country").attributes[4].value = data["country"];
-          document.getElementById("phoneNumber").attributes[4].value = data["phoneNumber"];
-          document.getElementById("email").attributes[4].value = data["email"];
+          this.first = data["firstName"];
+          this.second = data["lastName"];
+          this.address = data["address"];
+          this.city = data["city"];
+          this.state = data["state"];
+          this.country = data["country"];
+          this.phoneNumber = data["phoneNumber"];
+          this.email = data["email"];
 
+          // Split url links
           for(var i = 0; i < data["links"].length; i++){
             var curr = data["links"][i];
             if(curr["type"] == "FACEBOOK"){
-              document.getElementById("urlFACEBOOK").attributes[4].value = curr["url"];
+              this.urlFACEBOOK = curr["url"];
             }
             else if(curr["type"] == "TWITTER"){
-              document.getElementById("urlTWITTER").attributes[4].value = curr["url"];
+              this.urlTWITTER = curr["url"];
             }
             else if(curr["type"] == "LINKEDIN"){
-              document.getElementById("urlLINKEDIN").attributes[4].value = curr["url"];
+              this.urlLINKEDIN = curr["url"];
             }
             else if(curr["type"] == "WEBSITE"){
-              document.getElementById("urlWEBSITE").attributes[4].value = curr["url"];
+              this.urlWEBSITE = curr["url"];
             }
           }
-
-          // Test: Log Class
-          console.log(data["$class"].split(".")[3].toUpperCase());
         }, // Catch Errors
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {

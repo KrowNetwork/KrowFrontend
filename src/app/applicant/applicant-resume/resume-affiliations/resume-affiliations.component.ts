@@ -5,12 +5,12 @@ import { ItemType } from '../../../shared/item-type-constructor';
 import { AffiliationsMainComponent } from './affiliations-main.component';
 import { AffiliationsDirective } from '../resume-affiliations/affiliations.directive';
 import { InterfaceComponent } from '../../../shared/interface-component.component';
-import { UpdateResumeService } from '../../../shared/update-resume.service';
+import { UpdateResumeService } from '../../../service/update-resume.service';
 
 @Component({
   selector: 'app-resume-affiliations',
   templateUrl: './resume-affiliations.component.html',
-  styleUrls: ['./resume-affiliations.component.css']
+  styleUrls: ['../resume-elements.component.css']
 })
 export class ResumeAffiliationsComponent implements OnInit {
 
@@ -52,7 +52,8 @@ export class ResumeAffiliationsComponent implements OnInit {
   }
   
   ngOnInit() {
-    this.http.get("http://18.220.46.51:3000/api/Applicant/SAMPLEAPPLICANT").subscribe(
+    var user = localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser");
+    this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
       data => {
         var resumeAffiliations = data["resume"]["affiliations"];
         var affiliations = new Array<ItemType>();

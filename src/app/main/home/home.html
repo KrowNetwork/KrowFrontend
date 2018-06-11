@@ -1,0 +1,26 @@
+<section *ngIf="user!=''">
+    <div class="block remove-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="account-popup-area signin-popup-box static">
+                        <div class="account-popup">		
+                            <h1 style="color: #fb236a">Welcome to the Krow Network Experience!</h1>
+                            <h4>Are you looking for a job?</h4>
+                            <div class="extra-login" style="margin-top: 0; margin-bottom: 0;">
+                                <span style="color: #141f72">Or</span>
+                            </div>
+                            <h4 style = "display: -webkit-inline-box; margin-top: 20px;">Are you looking to hire?</h4>
+                            <form style="margin-top:0">
+                                <h5>I am an...</h5>
+                                <button (click)="initializeApplicant()">Applicant</button>
+                                <button (click)="initializeEmployer()">Employer</button>
+                                <a [routerLink]="['/logout']" title="">Logout</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
