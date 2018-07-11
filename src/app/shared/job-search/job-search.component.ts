@@ -32,23 +32,13 @@ export class JobSearchComponent implements OnInit {
   }
 
   getSearchQueryData(){
-    // var sampleData = {
-    //   "jobID": "9128391082afyuas",
-    //   "title": "Web Developer",
-    //   "description": "Some Angular job",
-    //   "tags": ["CS", "Angular", "HTML"],
-    //   "payment": 10000,
-    //   "employerID": "EID8239rw98sdfi29"
-    // }
-    // this.displayResults(sampleData)
-    // return;
     console.log("Loading new data for query: " + this.searchUserQuery);
     // Submit string to server to get a list of job ids
     var url = "http://18.220.46.51:4200/search?key=42fc1e42-5eb8-4a8f-8904-7c58529f0f58";
     this.http.get(url, {params: {"term": this.searchUserQuery}}).subscribe(
       data => {
         console.log(data);
-        this.displayResults(data);
+        this.clearPrevious(data);
       }, // Catch Errors  
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -70,6 +60,22 @@ export class JobSearchComponent implements OnInit {
     }
   }
 
+  clearPrevious(data){
+    var myNode = document.getElementById("serchQueryResults");
+    if(myNode.firstChild){
+      while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+        if(!myNode.firstChild){
+          this.displayResults(data);
+          break;
+        }
+      }
+    }
+    else{
+      this.displayResults(data);
+    }
+  }
+
   loadComponent(jobItem) {
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory(jobItem.component);
     let viewContainerRef = this.achievementHost.viewContainerRef;
@@ -81,7 +87,9 @@ export class JobSearchComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.searchUserQuery = params['search'];
       console.log(params['search']);
-      this.getSearchQueryData();
+      if(params['search']){
+        this.getSearchQueryData();
+      }
     });
   }
 }

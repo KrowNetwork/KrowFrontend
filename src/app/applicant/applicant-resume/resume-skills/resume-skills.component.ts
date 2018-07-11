@@ -48,6 +48,10 @@ export class ResumeSkillsComponent implements OnInit {
   }
 
   createNew(skill){
+    if(/\S/.test(skill.data.skill.toString())){
+      console.log("found something");
+      return;
+    }
     var node = document.createElement("li"); 
     node.setAttribute("class", "addedTag");
     node.setAttribute("style", "margin-bottom: 5px; margin-top: 5px");

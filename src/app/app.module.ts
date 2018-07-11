@@ -121,7 +121,7 @@ import { JobSearchDirective } from './shared/job-search/job-search.directive';
     ForgotPassword2Component,
     ForgotPasswordStep1Component,
     ResendCodeComponent,
-    BasicInfoCollectorComponent
+    BasicInfoCollectorComponent,
   ],
   imports: [
     BrowserModule,

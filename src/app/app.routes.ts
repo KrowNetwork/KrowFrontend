@@ -153,8 +153,7 @@ const secureHome: Routes = [
             },
             { 
                 path: 'employer-post-jobs', 
-                //component: EmployerPostJobsComponent, 
-                component: ComingSoonComponent 
+                component: EmployerPostJobsComponent,
             },
             { 
                 path: 'completed-jobs', 
