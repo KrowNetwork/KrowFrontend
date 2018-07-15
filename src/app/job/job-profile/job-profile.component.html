@@ -16,7 +16,7 @@
 					</a>
 				</div><!-- Logo -->
 				<div class="btn-extars">
-					<a [routerLink]="['employer-post-jobs']" routerLinkActive="active" class="post-job-btn"><i class="la la-plus"></i>Post Jobs</a>
+					<!-- <a [routerLink]="['employer-post-jobs']" routerLinkActive="active" class="post-job-btn"><i class="la la-plus"></i>Post Jobs</a> -->
 					<ul class="account-btns">
 						<li><a [routerLink]="['/logout']" routerLinkActive="active"  title=""><i class="la la-external-link-square"></i>LogOut</a></li>
 					</ul>
@@ -27,7 +27,8 @@
 							<a [routerLink]="['/secureHome']" routerLinkActive="active">Home</a>
 						</li>
 						<li>
-							<a [routerLink]="['profile-info']" routerLinkActive="active">Profile</a>
+							<a [routerLink]="['/applicant/profile-info']" routerLinkActive="active">My Applicant Profile</a>
+							<a [routerLink]="['/employer/profile-info']" routerLinkActive="active">My Employer Profile</a>
 						</li>
 						<li class="menu-item-has-children">
 							<a>Jobs</a>
