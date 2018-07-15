@@ -11,7 +11,7 @@ import { ActivatedRoute, Router, NavigationError } from '@angular/router';
   templateUrl: './job-search.component.html',
 })
 export class JobSearchComponent implements OnInit {
-  
+  res = [];
 	@ViewChild(JobSearchDirective) achievementHost: JobSearchDirective;
 
   constructor(
@@ -38,8 +38,9 @@ export class JobSearchComponent implements OnInit {
     this.http.get(url, {params: {"term": this.searchUserQuery}}).subscribe(
       data => {
         console.log(data);
-        this.clearPrevious(data);
+        this.display(this.parse(data))
       }, // Catch Errors  
+      
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           console.log("Client-side error occured.");
@@ -51,36 +52,45 @@ export class JobSearchComponent implements OnInit {
     );
   }
 
-  displayResults(results){
-    for(var k = 0; k < 20; k++){
-      var jobItem = new ItemType(JobSearchMainComponent, {
-        id: results[k],
-      });
-      this.loadComponent(jobItem);
+  parse(results){
+    // console.log(results)
+    var jobs = [];
+    for(var k = 0; k < 10; k++){
+      jobs.push(JSON.parse(results[k]))
     }
+    return jobs
+
   }
 
-  clearPrevious(data){
-    var myNode = document.getElementById("serchQueryResults");
-    if(myNode.firstChild){
-      while (myNode.firstChild) {
-        myNode.removeChild(myNode.firstChild);
-        if(!myNode.firstChild){
-          this.displayResults(data);
-          break;
-        }
-      }
-    }
-    else{
-      this.displayResults(data);
-    }
+  display(data) {
+    this.res = data;
   }
+
+  // clearPrevious(data){
+  //   var myNode = document.getElementById("serchQueryResults");
+  //   this.final_results = this.parse(data)
+  //   // data 
+
+  //   // if(myNode.firstChild){
+  //   //   while (myNode.firstChild) {
+  //   //     myNode.removeChild(myNode.firstChild);
+  //   //     if(!myNode.firstChild){
+  //   //       this.displayResults(data);
+  //   //       break;
+  //   //     }
+  //   //   }
+  //   // }
+  //   // else{
+  //   //   this.displayResults(data);
+  //   // }
+  // }
 
   loadComponent(jobItem) {
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory(jobItem.component);
     let viewContainerRef = this.achievementHost.viewContainerRef;
     let componentRef = viewContainerRef.createComponent(componentFactory);
     (<InterfaceComponent>componentRef.instance).data = jobItem.data;
+
 	}
 
   ngOnInit() {

@@ -30,6 +30,11 @@ import { ResendCodeComponent } from './main/resend/resendCode.component';
 import { EmployerProfileComponent } from './employer/employer-profile/employer-profile.component';
 import { EmployerPostJobsComponent } from './employer/employer-post-jobs/employer-post-jobs.component';
 
+// Job components
+import { JobProfileComponent } from './job/job-profile/job-profile.component';
+import { JobDetailsComponent } from './shared/job-details/job-details.component';
+
+
 // Applicant components
 import { ApplicantProfileComponent } from './applicant/applicant-profile/applicant-profile.component';
 import { ApplicantResumeComponent } from './applicant/applicant-resume/applicant-resume.component';
@@ -78,6 +83,8 @@ import { AchievementDirective } from './applicant/applicant-resume/resume-achiev
 import { AffiliationsDirective } from './applicant/applicant-resume/resume-affiliations/affiliations.directive';
 import { JobSearchDirective } from './shared/job-search/job-search.directive';
 
+
+
 @NgModule({
   declarations: [
     // VIVEK (Add module declarations here, I'll worry about splitting it up later)
@@ -122,6 +129,8 @@ import { JobSearchDirective } from './shared/job-search/job-search.directive';
     ForgotPasswordStep1Component,
     ResendCodeComponent,
     BasicInfoCollectorComponent,
+    JobProfileComponent,
+    JobDetailsComponent,
   ],
   imports: [
     BrowserModule,

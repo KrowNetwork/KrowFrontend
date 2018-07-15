@@ -19,6 +19,15 @@
     </div>
   </form>
 </div>
-<div class="social-edit" id="serchQueryResults">
-  <ng-template job-search-host></ng-template>
+<div class="social-edit" id="serchQueryResults" ng-controller="cardsListController">
+  <!-- <ng-template job-search-host></ng-template> -->
+  <!-- <li ng-repeat="x in final_results"><p>{{x}}</p></li> -->
+  <!-- <p ng-repeat="x in res">{{x}}</p> -->
+  <ul class="results">
+    <li *ngFor="let item of res; let myIndex = index">
+      Title: {{res[myIndex].title}} <br />
+      Description: {{res[myIndex].description}} <br />
+      ID: {{res[myIndex].jobID}} <br />
+    </li>
+  </ul>
 </div> 

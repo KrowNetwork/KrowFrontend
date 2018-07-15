@@ -1,0 +1,111 @@
+<div class="padding-left">
+  <div class="social-edit"  id="sn">
+    <h3 id="app-responsive-component-profile"></h3>
+    <form>
+      <div class="row">
+        <div id="app-responsive-component-profile-first" class="col-lg-6">
+          <span class="pf-title"></span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="" id=""
+              [(ngModel)]="title" [ngModelOptions]="{standalone: true}"/>
+            <i class="la la-user"></i>
+          </div>
+        </div>
+        <div id="app-responsive-component-profile-second" class="col-lg-12">
+          <span class="pf-title"></span> 
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="" id=""
+              [(ngModel)]="description" [ngModelOptions]="{standalone: true}"/>
+            <i class="la la-users"></i>
+          </div>
+        </div>
+        <div id="app-responsive-component-profile-third" class="col-lg-12">
+          <span class="pf-title"></span> 
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="" id=""
+              [(ngModel)]="tags" [ngModelOptions]="{standalone: true}"/>
+            <i class="la la-users"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12" style="display:none; padding:0">
+        <a (click)="buttonPressed($event)" class="post-job-btn" style="float:right" ng-disabled="false">UPDATE</a>
+      </div>
+    </form>
+  </div>
+  <div class="social-edit"  id="sn">
+    <form>
+      <div class="row">
+        <div class="col-lg-6">
+          <span class="pf-title">Location</span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="4632 1/2 Hollywood Boulevard" 
+              [(ngModel)]="location" [ngModelOptions]="{standalone: true}" id="location"/>
+            <i class="la la-map-marker"></i>   
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12" style="display:none; padding:0">
+        <a (click)="buttonPressed($event)" class="post-job-btn" style="float:right" ng-disabled="false">UPDATE</a>
+      </div>
+    </form>
+  </div>
+  <div class="social-edit"  id="sn">
+    <h3>Dates</h3>
+    <form>
+      <div class="row" id="app-responsive-social-div">
+        <div class="col-lg-6">
+          <span class="pf-title">Facebook</span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="www.facebook.com/sample"
+              id="urlFACEBOOK" [(ngModel)]="urlFACEBOOK" [ngModelOptions]="{standalone: true}"/>
+            <i class="la la-facebook"></i>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <span class="pf-title">Twitter</span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="www.twitter.com/sample" 
+              id="urlTWITTER" [(ngModel)]="urlTWITTER" [ngModelOptions]="{standalone: true}"/>
+            <i class="la la-twitter"></i>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <span class="pf-title">Linkedin</span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="www.linkedin.com/sample" 
+              id="urlLINKEDIN" [(ngModel)]="urlLINKEDIN" [ngModelOptions]="{standalone: true}"/>
+            <i class="la la-linkedin"></i>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <span class="pf-title">Website</span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="www.myDomain.com/sample" 
+              id="urlWEBSITE" [(ngModel)]="urlWEBSITE" [ngModelOptions]="{standalone: true}"/>
+            <i class="la la-external-link-square"></i>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <span class="pf-title">Phone</span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="+1 609 963 5896" 
+              id="phoneNumber" [(ngModel)]="phoneNumber" [ngModelOptions]="{standalone: true}"/>
+            <i class="la la-phone"></i>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <span class="pf-title">Mail</span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="mail@mail.com" 
+              id="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"/>
+            <i class="la la-envelope"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12" style="display:none; padding:0">
+        <a (click)="buttonPressed($event)" class="post-job-btn" style="float:right" ng-disabled="false">UPDATE</a>
+      </div>
+    </form>
+  </div>
+</div>

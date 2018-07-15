@@ -2,8 +2,8 @@ import { Component, OnInit, Input, ViewChild, ComponentFactoryResolver } from '@
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 
 import { ItemType } from '../../../shared/item-type-constructor';
-import { ExperienceMainComponent } from '../../applicant-resume/resume-experience/experience-main.component';
-import { ExperienceDirective } from '../resume-experience/experience.directive';
+import { ExperienceMainComponent } from './experience-main.component';
+import { ExperienceDirective } from './experience.directive';
 import { InterfaceComponent } from '../../../shared/interface-component.component';
 import { UpdateResumeService } from '../../../service/update-resume.service';
 

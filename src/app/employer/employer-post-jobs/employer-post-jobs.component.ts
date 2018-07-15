@@ -94,7 +94,7 @@ export class EmployerPostJobsComponent implements OnInit {
     var ulTags = document.getElementById("ulTags");
     var childrenElements = ulTags.children;
     for(var i = 0; i < childrenElements.length - 1; i++){
-        var currentElementValue = childrenElements[i].children[1].value;
+        var currentElementValue = childrenElements[i].children[1];
         this.jobObject.newJob.tags.push(currentElementValue);
     }
 

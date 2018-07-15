@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 
 import { ItemType } from '../../../shared/item-type-constructor';
 import { AffiliationsMainComponent } from './affiliations-main.component';
-import { AffiliationsDirective } from '../resume-affiliations/affiliations.directive';
+import { AffiliationsDirective } from './affiliations.directive';
 import { InterfaceComponent } from '../../../shared/interface-component.component';
 import { UpdateResumeService } from '../../../service/update-resume.service';
 
