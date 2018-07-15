@@ -137,14 +137,14 @@ export class JobDetailsComponent implements OnInit {
 
     // Change First input value, id, title to match employer name
     var employerName = document.getElementById("app-responsive-component-profile-first");
-    employerName.children[0].innerHTML = "Company Name";
-    employerName.children[1].children[0].attributes[2].value = "Company Name";
-    employerName.children[1].children[0].attributes[1].value = "employerName";
+    employerName.children[0].innerHTML = "Job Title";
+    employerName.children[1].children[0].attributes[2].value = "Job Title";
+    employerName.children[1].children[0].attributes[1].value = "jobTitle";
 
     // Change Second input value, id, title to match description
     var description = document.getElementById("app-responsive-component-profile-second");
     description.children[0].innerHTML = "Description";
-    description.children[1].children[0].attributes[2].value = "Company Description";
+    description.children[1].children[0].attributes[2].value = "Job Description";
     description.children[1].children[0].attributes[1].value = "description";
 
     var tags = document.getElementById("app-responsive-component-profile-third");

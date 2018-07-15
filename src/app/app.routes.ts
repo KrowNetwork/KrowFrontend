@@ -187,13 +187,13 @@ const secureHome: Routes = [
         ]
     },
     { 
-        path: 'job/:jobID', 
-        component: JobDetailsComponent, 
-        // children: [
-        //     { 
-        //         path: ':jobID', 
-        //         component: 
-        //     },
+        path: 'job', 
+        component: JobProfileComponent, 
+        children: [
+            { 
+                path: ':jobID', 
+                component: JobDetailsComponent
+            }
             // { 
             //     path: 'profile-info',
             //     component: ProfileInfoComponent
@@ -226,7 +226,7 @@ const secureHome: Routes = [
             //     path: 'job-search', 
             //     component: JobSearchComponent, 
             // }
-        // ]
+        ]
     },
     {
         path: 'logout',
