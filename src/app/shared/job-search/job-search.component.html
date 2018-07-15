@@ -25,9 +25,13 @@
   <!-- <p ng-repeat="x in res">{{x}}</p> -->
   <ul class="results">
     <li *ngFor="let item of res; let myIndex = index">
-      Title: <a [routerLink]="['/job/', res[myIndex].jobID]" routerLinkActive="active">{{res[myIndex].title}}</a> <br />
+      Title: {{res[myIndex].title}}<br />
       Description: {{res[myIndex].description}} <br />
       ID: {{res[myIndex].jobID}} <br />
+
+      <form [routerLink]="['/job/', res[myIndex].jobID]" routerLinkActive="active" >
+        <input type="submit" value="View"/>
+      </form>
     </li>
   </ul>
 </div> 
