@@ -107,7 +107,7 @@ export class JobDetailsComponent implements OnInit {
           var timestamp = new Date();
           data["lastUpdated"] = timestamp;
 
-          data["tags"] = data['tags'].split(",")
+          data["tags"] = data['tags'].toString().split(",")
           // Update entry
           this.http.put(this.url, data).subscribe(
             data => {
