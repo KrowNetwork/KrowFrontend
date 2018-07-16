@@ -3,6 +3,7 @@ TODOs
 ---
 Major 
 ------
+* Distinguish between applicant and employer
 Application Design:
 -------------------
 --
