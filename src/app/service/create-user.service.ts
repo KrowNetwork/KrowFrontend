@@ -32,7 +32,7 @@ export class CreateUserService {
         obj["city"] = "";
         obj["address"] = "";
         obj["email"] = userObj.email;
-        obj["phoneNumber"] = "";
+        obj["phoneNumber"] = userObj.phoneNumber;
         obj["links"] = [];
         obj["created"] = new Date();
         obj["lastUpdated"] = new Date();

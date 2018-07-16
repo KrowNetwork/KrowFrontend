@@ -1472,11 +1472,11 @@ label::after {
 
 /* Job Listing */
 .job-listings-sec {
-    float: center;
+    float: left;
     width: 100%;
 }
 .job-listing {
-    float: center;
+    float: left;
     width: 100%;
     display: table;
     border-bottom: 1px solid #e8ecec;
@@ -1489,7 +1489,6 @@ label::after {
     display: table-cell;
     vertical-align: middle;
     width: 60%;
-    padding-left: 25px;
 }
 .c-logo {
     float: left;

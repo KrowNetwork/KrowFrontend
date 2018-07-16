@@ -20,7 +20,8 @@ export class AvailableJobsComponent implements OnInit {
   ngOnInit() {
     this.employer = localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser");
     // Test Id, get from login in the future
-    var hidden = document.getElementById("test-ID");
+    var hidden = sessionStorage.getItem("accountType")
+    // var hidden = document.getElementById("test-ID");
     var url = "http://18.220.46.51:3000/api/employer/" + this.employer;
     console.log("yur")
     var IDs = []

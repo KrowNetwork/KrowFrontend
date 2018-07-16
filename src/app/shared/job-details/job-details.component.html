@@ -1,5 +1,6 @@
 <div class="padding-left">
     <a (click)="buttonPressed($event)" class="post-job-btn" id="top" [hidden]="show_button()">Edit</a>
+    <a (click)="apply($event)" class="post-job-btn" id="top" [hidden]="show_apply_button()">Apply</a>
     <h3 id="app-responsive-component-profile"></h3>
   <div class="social-edit"  id="sn">
       
@@ -110,4 +111,14 @@
       </div>
     </form>
   </div>
+  <div class="social-edit"  id="sn" *ngIf="show_applicants">
+      <h3>Applicants</h3>
+      <ul class="applicants">
+          <li *ngFor="let item of applicants; let myIndex = index" class="job-listing">
+            <!-- <a  > -->
+              <p class="job-title-sec" >Title: {{applicants[myIndex]}}</p>
+
+          </li>
+        </ul>
+    </div>
 </div>

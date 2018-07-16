@@ -56,6 +56,12 @@ export class AwsUtil {
                 appTitle: "aws-cognito-angular2-quickstart"
             };
 
+            // var options = {
+            //     appId: '2qoli7lchurj7h3uvhtfcsfqk2',
+            //     appTitle: "krow-client"
+            // };
+
+
             // TODO: The mobile Analytics client needs some work to handle Typescript. Disabling for the time being.
             // var mobileAnalyticsClient = new AMA.Manager(options);
             // mobileAnalyticsClient.submitEvents();

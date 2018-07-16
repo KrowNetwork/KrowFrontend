@@ -33,6 +33,6 @@ export class EmployerProfileComponent implements OnInit {
   KROW_HEADER_2 = require("../../../images/krow-header-2.png");
   
   ngOnInit() {
-
+    sessionStorage.setItem("accountType", "Employer")
   }
 }

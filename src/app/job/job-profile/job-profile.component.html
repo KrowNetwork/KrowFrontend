@@ -27,7 +27,13 @@
 							<a [routerLink]="['/secureHome']" routerLinkActive="active">Home</a>
 						</li>
 						<li>
-							<a [routerLink]="['/applicant/profile-info']" routerLinkActive="active">Switch to Applicant</a>
+							<a role="button" (click)="switchSession()">Switch to {{switchTo}}</a>
+						</li>
+						<li>
+							<a role="button" (click)="goToProfile()">Profile</a>
+						</li>
+						<li>
+							<a (click)="bigBtn()" class="post-job-btn"><i class="fa fa-search-plus"></i>{{btnText}}</a>
 						</li>
 					</ul>
 				</nav><!-- Menus -->

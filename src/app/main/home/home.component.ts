@@ -34,6 +34,7 @@ export class HomeComponent implements OnInit {
     }
 
     initializeApplicant(){
+        sessionStorage.setItem("accountType", "Applicant")
         this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).subscribe(
             data => {
                 console.log("User has an applicant account");
@@ -52,6 +53,7 @@ export class HomeComponent implements OnInit {
     }
 
     initializeEmployer(){
+        sessionStorage.setItem("accountType", "Applicant")
         this.http.head("http://18.220.46.51:3000/api/Employer/" + this.user).subscribe(
             data => {
                 console.log("User has an employer account");

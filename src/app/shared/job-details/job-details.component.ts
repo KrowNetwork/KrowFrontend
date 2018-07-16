@@ -9,13 +9,13 @@ import { CreateUserService } from '../../service/create-user.service';
   styleUrls: ['./job-details.component.css']
 })
 export class JobDetailsComponent implements OnInit {
-
+  show_applicants = false;
   constructor(
     private http: HttpClient,
     private createUser: CreateUserService,
     private activatedRoute: ActivatedRoute
   ) { }
-
+  jobID: string;
   title: string;
   description: string;
   location: string;
@@ -31,8 +31,8 @@ export class JobDetailsComponent implements OnInit {
   employerID: string;
   disabled = true;
   url: string;
-  hidden = document.getElementById("test-ID");
-  profileType = this.hidden.attributes["value"].value;
+  applicants = [];
+  profileType = sessionStorage.getItem("accountType")
 
   updateInfo(children) {
     // this.user = localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser");
@@ -174,6 +174,8 @@ export class JobDetailsComponent implements OnInit {
         this.lastUpdated = data["lastUpdated"];
         this.startDate = data["startDate"];
         this.employerID = data["employerID"];
+        this.jobID = data["jobID"]
+        this.applicants = data["applicantRequests"]
 
         // title: string;
         // description: string;
@@ -218,13 +220,18 @@ export class JobDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => this.load(params["jobID"]));
-    
+    this.hide_applicants()
   }
   is_disabled(){
     return this.disabled
   }
   always_disabled(){
+    if (sessionStorage.getItem("accountType") == "Employer" && localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser") == this.employerID) {
+      return false
+    }
+    this.disabled = true;
     return true
+    
   }
 
   async buttonPressed(event){
@@ -250,10 +257,61 @@ export class JobDetailsComponent implements OnInit {
   }
 
   show_button() {
-    if (this.profileType != "Employer"){
-      return true
+    if (sessionStorage.getItem("accountType") == "Employer" && localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser") == this.employerID) {
+      return false
     }
-    return false
+    return true
+  }
+
+  show_apply_button() {
+    if (sessionStorage.getItem("accountType") == "Applicant") {
+      return false
+    }
+    return true
+  }
+
+  hide_applicants() {
+    if (this.applicants !== undefined) {
+      this.show_applicants = true
+    }
+  }
+
+  async apply(event){
+    console.log(this.profileType)
+    var url = "http://18.220.46.51:3000/api/RequestJob"
+    var data = {
+      "applicant": localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser"),
+      "job": this.jobID
+    }
+    this.http.post(url, data).subscribe(
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+          console.log(err);
+        }
+      }
+    )
+      
+    // if (this.disabled == true) {
+
+    //   this.disabled = false
+    //   // event.target.style = "float:right; background-color:gray; border-color: gray; opacity=0.8";
+      
+    //   // 
+    //   event.target.style = "background-color: #fb236a; border-color: #fb236a; float: right";
+    //   // event.target.closest("div").style = "display: none;";
+    //   event.target.attributes[2].value = false;
+    // } else {
+    //   this.disabled = true
+    //   event.target.innerHTML="Edit"
+    //   var inputs = document.getElementsByTagName("input")
+    //   console.log(inputs)
+    //   var result = await this.updateInfo(inputs);
+    // }
+    // event.target.attributes[2].value = true;
+    
   }
 
 }
