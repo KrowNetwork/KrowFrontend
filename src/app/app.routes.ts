@@ -177,8 +177,8 @@ const secureHome: Routes = [
             },
             { 
                 path: 'available-jobs', 
-                //component: AvailableJobsComponent, 
-                component: ComingSoonComponent
+                component: AvailableJobsComponent, 
+                // component: ComingSoonComponent
             },
             { 
                 path: 'job-search', 

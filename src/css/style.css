@@ -1472,11 +1472,11 @@ label::after {
 
 /* Job Listing */
 .job-listings-sec {
-    float: left;
+    float: center;
     width: 100%;
 }
 .job-listing {
-    float: left;
+    float: center;
     width: 100%;
     display: table;
     border-bottom: 1px solid #e8ecec;
@@ -1489,6 +1489,7 @@ label::after {
     display: table-cell;
     vertical-align: middle;
     width: 60%;
+    padding-left: 25px;
 }
 .c-logo {
     float: left;
@@ -1591,7 +1592,7 @@ label::after {
     border-color: #26ae61;
 }
 .job-listing:hover {
-    border-left-color: #8b91dd;
+    /* border-left-color: #8b91dd; */
     
     -webkit-box-shadow: 0px 0px 30px rgba(0,0,0,0.1);
     -moz-box-shadow: 0px 0px 30px rgba(0,0,0,0.1);

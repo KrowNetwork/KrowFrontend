@@ -102,4 +102,8 @@ export class JobSearchComponent implements OnInit {
       }
     });
   }
+
+  getJob(item) {
+    this.router.navigate(['/job/', item.jobID])
+  }
 }

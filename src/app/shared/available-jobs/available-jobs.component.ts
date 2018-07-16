@@ -1,14 +1,57 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
+import { CreateUserService } from '../../service/create-user.service';
 
 @Component({
   selector: 'app-available-jobs',
   templateUrl: './available-jobs.component.html',
+  styleUrls: ['./available-jobs.component.css']
+
 })
 export class AvailableJobsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+    private createUser: CreateUserService
+  ) { }
 
+  employer: string;
+  available_jobs = []
   ngOnInit() {
+    this.employer = localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser");
+    // Test Id, get from login in the future
+    var hidden = document.getElementById("test-ID");
+    var url = "http://18.220.46.51:3000/api/employer/" + this.employer;
+    console.log("yur")
+    var IDs = []
+    this.available_jobs = []
+    this.http.get(url).subscribe(
+      data => { 
+        // var available_jobs = this.http.get(data["availableJobs"].split("")
+        for (var i = 0; i < data["availableJobs"].length; i++){
+
+          var id = data["availableJobs"][i].split("#")[1].toString()
+          var n_url = "http://18.220.46.51:3000/api/Job/" + id 
+          this.http.get(n_url).subscribe(
+            n_data => {
+              if (n_data["applicantRequests"] !== undefined) {
+                n_data["num_applicants"] = n_data["applicantRequests"].length
+              } else {
+                n_data["num_applicants"] = 0
+              }
+              
+              this.available_jobs.push(n_data)
+            })
+        }
+        
+      })
+    console.log(this.available_jobs)
+    
+    //   this.http.get(url).subscribe(
+    //     data => {jsons.push(data)})
+    // }
+    // console.log(jsons[0].jobID)
+    
   }
 
 }

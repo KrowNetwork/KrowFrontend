@@ -1,13 +1,15 @@
 <div class="padding-left">
-  <div class="social-edit"  id="sn">
+    <a (click)="buttonPressed($event)" class="post-job-btn" id="top" [hidden]="show_button()">Edit</a>
     <h3 id="app-responsive-component-profile"></h3>
+  <div class="social-edit"  id="sn">
+      
     <form>
       <div class="row">
         <div id="app-responsive-component-profile-first" class="col-lg-6">
           <span class="pf-title"></span>
           <div class="pf-field">
-            <input (keydown)="changeHandler($event)" type="text" placeholder="" id=""
-              [(ngModel)]="title" [ngModelOptions]="{standalone: true}"/>
+            <input (keydown)="changeHandler($event)" type="text" placeholder="" id="text"
+              [(ngModel)]="title" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-user"></i>
           </div>
         </div>
@@ -15,7 +17,7 @@
           <span class="pf-title"></span> 
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="" id=""
-              [(ngModel)]="description" [ngModelOptions]="{standalone: true}"/>
+              [(ngModel)]="description" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-users"></i>
           </div>
         </div>
@@ -23,7 +25,7 @@
           <span class="pf-title"></span> 
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="" id=""
-              [(ngModel)]="tags" [ngModelOptions]="{standalone: true}"/>
+              [(ngModel)]="tags" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-users"></i>
           </div>
         </div>
@@ -40,7 +42,7 @@
           <span class="pf-title">Location</span>
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="4632 1/2 Hollywood Boulevard" 
-              [(ngModel)]="location" [ngModelOptions]="{standalone: true}" id="location"/>
+              [(ngModel)]="location" [ngModelOptions]="{standalone: true}" id="location" [disabled]="is_disabled()"/>
             <i class="la la-map-marker"></i>   
           </div>
         </div>
@@ -55,10 +57,10 @@
     <form>
       <div class="row" id="app-responsive-social-div">
         <div class="col-lg-6">
-          <span class="pf-title">Facebook</span>
+          <span class="pf-title">Date Posted</span>
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="www.facebook.com/sample"
-              id="urlFACEBOOK" [(ngModel)]="urlFACEBOOK" [ngModelOptions]="{standalone: true}"/>
+              id="urlFACEBOOK" [(ngModel)]="urlFACEBOOK" [ngModelOptions]="{standalone: true}" [disabled]="always_disabled()"/>
             <i class="la la-facebook"></i>
           </div>
         </div>
@@ -66,7 +68,7 @@
           <span class="pf-title">Twitter</span>
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="www.twitter.com/sample" 
-              id="urlTWITTER" [(ngModel)]="urlTWITTER" [ngModelOptions]="{standalone: true}"/>
+              id="urlTWITTER" [(ngModel)]="urlTWITTER" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-twitter"></i>
           </div>
         </div>
@@ -74,7 +76,7 @@
           <span class="pf-title">Linkedin</span>
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="www.linkedin.com/sample" 
-              id="urlLINKEDIN" [(ngModel)]="urlLINKEDIN" [ngModelOptions]="{standalone: true}"/>
+              id="urlLINKEDIN" [(ngModel)]="urlLINKEDIN" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-linkedin"></i>
           </div>
         </div>
@@ -82,7 +84,7 @@
           <span class="pf-title">Website</span>
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="www.myDomain.com/sample" 
-              id="urlWEBSITE" [(ngModel)]="urlWEBSITE" [ngModelOptions]="{standalone: true}"/>
+              id="urlWEBSITE" [(ngModel)]="urlWEBSITE" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-external-link-square"></i>
           </div>
         </div>
@@ -90,7 +92,7 @@
           <span class="pf-title">Phone</span>
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="+1 609 963 5896" 
-              id="phoneNumber" [(ngModel)]="phoneNumber" [ngModelOptions]="{standalone: true}"/>
+              id="phoneNumber" [(ngModel)]="phoneNumber" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-phone"></i>
           </div>
         </div>
@@ -98,7 +100,7 @@
           <span class="pf-title">Mail</span>
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="mail@mail.com" 
-              id="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"/>
+              id="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-envelope"></i>
           </div>
         </div>
