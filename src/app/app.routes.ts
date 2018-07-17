@@ -49,7 +49,7 @@ import { JobDetailsComponent } from './shared/job-details/job-details.component'
 const appRoutes: Routes = [
     {
         path: '',
-        redirectTo: '/login',
+        // redirectTo: '/login',
         pathMatch: 'full'
     },
     {
