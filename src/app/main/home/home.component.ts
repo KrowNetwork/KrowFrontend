@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         var user = localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser");
+        console.log(user)
         if(!user){
             this.router.navigate(['/login']);
         }
