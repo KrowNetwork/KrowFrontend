@@ -352,10 +352,10 @@ export class JobDetailsComponent implements OnInit {
             }
           }
         )
-      }
+      },
 
     )
-      }
+      },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           console.log("Client-side error occured.");
@@ -396,10 +396,7 @@ export class JobDetailsComponent implements OnInit {
   }
 
   confirmUserType() {
-    return this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).pipe(map((res: Response) => {
-
-      this.x = res.json();
-      return this.x}));
+    return this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user)
   }
 
 }

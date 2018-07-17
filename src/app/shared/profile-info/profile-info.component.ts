@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { CreateUserService } from '../../service/create-user.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
-import { splitAtColon } from '../../../../node_modules/@angular/compiler/src/util';
+// import { splitAtColon } from '../../../../node_modules/@angular/compiler/src/util';
 // import { log } from 'util';
 import { subscribeOn } from '../../../../node_modules/rxjs/operators';
 import { log } from 'util';
 import { routerNgProbeToken } from '../../../../node_modules/@angular/router/src/router_module';
-import { splitAtColon } from '../../../../node_modules/@angular/compiler/src/util';
+// import { splitAtColon } from '../../../../node_modules/@angular/compiler/src/util';
 
 @Component({
   selector: 'app-profile-info',
@@ -319,8 +319,8 @@ export class ProfileInfoComponent implements OnInit {
     var data =
     {
       "applicant": this.id,
-      "employer": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
-      "job": sessionStorage.getItem("fromJob"),
+      "employer": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
+      "job": sessionStorage.getItem("fromJob")
     }
 
           // jobData.tags = jobData.toString().split(",")
@@ -329,7 +329,7 @@ export class ProfileInfoComponent implements OnInit {
     this.http.post(url, data).subscribe(
       data => {
         alert("Success! The applicant has been notified!")
-      }
+      },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           console.log("Client-side error occured.");
@@ -339,7 +339,7 @@ export class ProfileInfoComponent implements OnInit {
           alert ("You have already requested to hire this applicant")
         }
       }
-  })
+  )
     
     
    
@@ -349,6 +349,6 @@ export class ProfileInfoComponent implements OnInit {
     //   }
     // )
     // console.log(data)
-    
+
   }
 }
