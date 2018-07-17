@@ -213,7 +213,7 @@ export class ProfileInfoComponent implements OnInit {
       if (this.user == this.id) {
       // if (sessionStorage.getItem("view") !== undefined && sessionStorage.getItem("view") == "potApplicant") {
         
-        this.disabled = false
+        this.disabled = true
       } else {
         this.disabled = false
       }
