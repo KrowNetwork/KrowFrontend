@@ -114,10 +114,10 @@
   <div class="social-edit"  id="sn" *ngIf="show_applicants">
       <h3>Applicants</h3>
       <ul class="applicants">
-          <li *ngFor="let item of applicants; let myIndex = index" class="job-listing">
+          <li *ngFor="let item of applicant_data; let myIndex = index" class="job-listing">
             <!-- <a  > -->
-              <p class="job-title-sec" >Title: {{applicants[myIndex]}}</p>
-
+              <p class="job-title-sec" >Applicant Name: {{applicant_data[myIndex].firstName}} {{applicant_data[myIndex].lastName}}</p>
+              <button (click)="goToProfile(applicant_data[myIndex].applicantID)">View Profile</button>
           </li>
         </ul>
     </div>

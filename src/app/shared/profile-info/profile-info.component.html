@@ -7,7 +7,7 @@
           <span class="pf-title"></span>
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="" id=""
-              [(ngModel)]="first" [ngModelOptions]="{standalone: true}"/>
+              [(ngModel)]="first" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-user"></i>
           </div>
         </div>
@@ -15,7 +15,7 @@
           <span class="pf-title"></span> 
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="" id=""
-              [(ngModel)]="second" [ngModelOptions]="{standalone: true}"/>
+              [(ngModel)]="second" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-users"></i>
           </div>
         </div>
@@ -33,7 +33,7 @@
           <span class="pf-title">Address</span>
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="4632 1/2 Hollywood Boulevard" 
-              [(ngModel)]="address" [ngModelOptions]="{standalone: true}" id="address"/>
+              [(ngModel)]="address" [ngModelOptions]="{standalone: true}" id="address" [disabled]="is_disabled()"/>
             <i class="la la-map-marker"></i>   
           </div>
         </div>
@@ -41,7 +41,7 @@
           <span class="pf-title">City</span>
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="Los Angeles" 
-              [(ngModel)]="city" [ngModelOptions]="{standalone: true}"id="city"/>
+              [(ngModel)]="city" [ngModelOptions]="{standalone: true}"id="city" [disabled]="is_disabled()"/>
             <i class="la la-map-marker"></i>
           </div>
         </div>
@@ -49,7 +49,7 @@
           <span class="pf-title">State</span>
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="California"
-              [(ngModel)]="state" [ngModelOptions]="{standalone: true}" id="state"/>
+              [(ngModel)]="state" [ngModelOptions]="{standalone: true}" id="state" [disabled]="is_disabled()"/>
             <i class="la la-map-o"></i>
           </div>
         </div>
@@ -57,7 +57,7 @@
           <span class="pf-title">Country</span>
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="USA"
-              [(ngModel)]="country" [ngModelOptions]="{standalone: true}" id="country"/>
+              [(ngModel)]="country" [ngModelOptions]="{standalone: true}" id="country" [disabled]="is_disabled()"/>
             <i class="la la-flag-o"></i>
           </div>
         </div>
@@ -75,7 +75,7 @@
           <span class="pf-title">Facebook</span>
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="www.facebook.com/sample"
-              id="urlFACEBOOK" [(ngModel)]="urlFACEBOOK" [ngModelOptions]="{standalone: true}"/>
+              id="urlFACEBOOK" [(ngModel)]="urlFACEBOOK" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-facebook"></i>
           </div>
         </div>
@@ -83,7 +83,7 @@
           <span class="pf-title">Twitter</span>
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="www.twitter.com/sample" 
-              id="urlTWITTER" [(ngModel)]="urlTWITTER" [ngModelOptions]="{standalone: true}"/>
+              id="urlTWITTER" [(ngModel)]="urlTWITTER" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-twitter"></i>
           </div>
         </div>
@@ -91,7 +91,7 @@
           <span class="pf-title">Linkedin</span>
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="www.linkedin.com/sample" 
-              id="urlLINKEDIN" [(ngModel)]="urlLINKEDIN" [ngModelOptions]="{standalone: true}"/>
+              id="urlLINKEDIN" [(ngModel)]="urlLINKEDIN" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-linkedin"></i>
           </div>
         </div>
@@ -99,7 +99,7 @@
           <span class="pf-title">Website</span>
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="www.myDomain.com/sample" 
-              id="urlWEBSITE" [(ngModel)]="urlWEBSITE" [ngModelOptions]="{standalone: true}"/>
+              id="urlWEBSITE" [(ngModel)]="urlWEBSITE" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-external-link-square"></i>
           </div>
         </div>
@@ -107,7 +107,7 @@
           <span class="pf-title">Phone</span>
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="+1 609 963 5896" 
-              id="phoneNumber" [(ngModel)]="phoneNumber" [ngModelOptions]="{standalone: true}"/>
+              id="phoneNumber" [(ngModel)]="phoneNumber" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-phone"></i>
           </div>
         </div>
@@ -115,7 +115,7 @@
           <span class="pf-title">Mail</span>
           <div class="pf-field">
             <input (keydown)="changeHandler($event)" type="text" placeholder="mail@mail.com" 
-              id="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"/>
+              id="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-envelope"></i>
           </div>
         </div>

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { CreateUserService } from '../../service/create-user.service';
+// import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-job-details',
@@ -13,7 +15,8 @@ export class JobDetailsComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private createUser: CreateUserService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) { }
   jobID: string;
   title: string;
@@ -32,6 +35,7 @@ export class JobDetailsComponent implements OnInit {
   disabled = true;
   url: string;
   applicants = [];
+  applicant_data = [];
   profileType = sessionStorage.getItem("accountType")
 
   updateInfo(children) {
@@ -139,7 +143,7 @@ export class JobDetailsComponent implements OnInit {
   };
   
   load(jobID) {
-    this.url = "http://18.220.46.51:3000/api/job" + "/" + jobID
+    this.url = "http://18.220.46.51:3000/api/Job/" + this.jobID
     // Set Company/Name 
     document.getElementById("app-responsive-component-profile").innerText = "Job";
 
@@ -174,8 +178,36 @@ export class JobDetailsComponent implements OnInit {
         this.lastUpdated = data["lastUpdated"];
         this.startDate = data["startDate"];
         this.employerID = data["employerID"];
-        this.jobID = data["jobID"]
-        this.applicants = data["applicantRequests"]
+        this.jobID = data["jobID"];
+        this.applicants = data["applicantRequests"];
+
+        if (this.applicants !== undefined) {
+          this.show_applicants = true
+          console.log(this.applicants[0])
+          console.log("t")
+          // console.log(this.applicants[0])
+          for (var i = 0; i <= this.applicants.length; i++){
+            console.log(this.applicants[i].toString().split("#")[1])
+
+            var url = "http://18.220.46.51:3000/api/Applicant/" + this.applicants[i].toString().split("#")[1]
+            console.log(url)
+            this.http.get(url).subscribe(
+              data => {
+                console.log(data)
+                this.applicant_data.push(data)
+            },
+            (err: HttpErrorResponse) => {
+              if (err.error instanceof Error) {
+                console.log("Client-side error occured.");
+              } else {
+                console.log("Server-side error occured.");
+              }
+            })
+          }
+        }
+
+        // console.log(data["applicantRequests"])
+        // console.log(this.applicants)
 
         // title: string;
         // description: string;
@@ -216,11 +248,13 @@ export class JobDetailsComponent implements OnInit {
         }
       }
     );
+    // this.applicants = sessionStorage.getItem("applicants")
   }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => this.load(params["jobID"]));
-    this.hide_applicants()
+    this.activatedRoute.params.subscribe(params => {this.jobID = params["jobID"]});
+    console.log(this.jobID)
+    this.load(this.jobID)
   }
   is_disabled(){
     return this.disabled
@@ -270,6 +304,7 @@ export class JobDetailsComponent implements OnInit {
     return true
   }
 
+
   hide_applicants() {
     if (this.applicants !== undefined) {
       this.show_applicants = true
@@ -312,6 +347,11 @@ export class JobDetailsComponent implements OnInit {
     // }
     // event.target.attributes[2].value = true;
     
+  }
+
+  goToProfile(id) {
+    sessionStorage.setItem("view", "potApplicant")
+    this.router.navigate(["applicant/profile-info/" + id])
   }
 
 }

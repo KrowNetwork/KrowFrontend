@@ -109,6 +109,10 @@ const secureHome: Routes = [
                 component: ProfileInfoComponent
             },
             { 
+                path: 'profile-info/:applicantID',
+                component: ProfileInfoComponent
+            },
+            { 
                 path: 'applicant-resume', 
                 component: ApplicantResumeComponent
             },

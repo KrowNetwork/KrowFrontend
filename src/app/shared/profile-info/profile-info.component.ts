@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { CreateUserService } from '../../service/create-user.service';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 
 @Component({
   selector: 'app-profile-info',
@@ -12,7 +13,8 @@ export class ProfileInfoComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private createUser: CreateUserService
+    private createUser: CreateUserService,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   user: string;
@@ -28,7 +30,8 @@ export class ProfileInfoComponent implements OnInit {
   urlTWITTER: string;
   urlLINKEDIN: string;
   urlWEBSITE: string;
-
+  disabled = undefined;
+  id: string;
   updateInfo(children) {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser");
     // Test Id, get from login in the future
@@ -206,6 +209,14 @@ export class ProfileInfoComponent implements OnInit {
       );
     }
     else if(profileType == "Applicant"){
+      this.activatedRoute.params.subscribe(params => {this.id = params["applicantID"]});
+      if (this.user == this.id) {
+      // if (sessionStorage.getItem("view") !== undefined && sessionStorage.getItem("view") == "potApplicant") {
+        
+        this.disabled = false
+      } else {
+        this.disabled = false
+      }
 
       // Set Company/Name 
       document.getElementById("app-responsive-component-profile").innerText = "Name";
@@ -264,5 +275,8 @@ export class ProfileInfoComponent implements OnInit {
         }
       );
     }
+  }
+  is_disabled() {
+    return this.disabled
   }
 }
