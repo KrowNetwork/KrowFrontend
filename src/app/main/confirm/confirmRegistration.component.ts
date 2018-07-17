@@ -9,7 +9,7 @@ import {LoggedInCallback} from "../../service/cognito.service";
     template: ''
 })
 export class LogoutComponent implements LoggedInCallback {
-
+    
     constructor(public router: Router,
                 public userService: UserLoginService) {
         this.userService.isAuthenticated(this)
@@ -35,7 +35,7 @@ export class RegistrationConfirmationComponent implements OnInit, OnDestroy {
     email: string;
     errorMessage: string;
     private sub: any;
-
+    radioData = {type: "yeet"};
     constructor(
         public regService: UserRegistrationService, 
         public router: Router, 
@@ -59,7 +59,12 @@ export class RegistrationConfirmationComponent implements OnInit, OnDestroy {
             return;
         }
         this.errorMessage = null;
-        this.regService.confirmRegistration(this.email, this.confirmationCode, this);
+        console.log(this.radioData)
+        this.regService.confirmRegistration(this.email, this.confirmationCode, this.radioData, this);
+    }
+
+    onSelectionChange(value) {
+        this.radioData.type = value;
     }
 
     cognitoCallback(message: string, result: any) {
@@ -75,7 +80,7 @@ export class RegistrationConfirmationComponent implements OnInit, OnDestroy {
             // Implementation of AngularJS Material is up to you. Do mind,
             // this in context is RegistrationConfirmationComponent, 
             // router comes from the constructor public router: Router therefore is a property of this
-            console.log("Moving to securehome");
+            console.log("Moving to collect basic info");
             this.router.navigate(['/secureHome']);
         }
     }

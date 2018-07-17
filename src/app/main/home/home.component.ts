@@ -24,12 +24,24 @@ export class HomeComponent implements OnInit {
     user: string;
 
     ngOnInit() {
-        var user = localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser");
+        var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
         console.log(user)
         if(!user){
             this.router.navigate(['/login']);
         }
         else{
+            this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
+            data => {
+                // console.log("User has an applicant account");
+                sessionStorage.setItem("accountType", "applicant")
+                this.router.navigate(['/applicant']);
+            })
+            this.http.head("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
+                data => {
+                    // console.log("User has an applicant account");
+                    sessionStorage.setItem("accountType", "employer")
+                    this.router.navigate(['/employer']);
+            })// Catch Errors
             this.user = user;
         }
     }
@@ -54,7 +66,7 @@ export class HomeComponent implements OnInit {
     }
 
     initializeEmployer(){
-        sessionStorage.setItem("accountType", "Applicant")
+        sessionStorage.setItem("accountType", "Employer")
         this.http.head("http://18.220.46.51:3000/api/Employer/" + this.user).subscribe(
             data => {
                 console.log("User has an employer account");

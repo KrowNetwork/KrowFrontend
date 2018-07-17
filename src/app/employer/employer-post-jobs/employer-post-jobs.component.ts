@@ -126,7 +126,7 @@ export class EmployerPostJobsComponent implements OnInit {
   }
 
   ngOnInit() {
-    var user = localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser");
+    var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     this.jobObject = {
       $class: "network.krow.transactions.employer.NewJob",
       employer: user,

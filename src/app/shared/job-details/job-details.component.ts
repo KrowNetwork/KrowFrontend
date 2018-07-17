@@ -36,10 +36,13 @@ export class JobDetailsComponent implements OnInit {
   url: string;
   applicants = [];
   applicant_data = [];
+
+  // show_apply_button = false
+
   profileType = sessionStorage.getItem("accountType")
 
   updateInfo(children) {
-    // this.user = localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser");
+    // this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     this.activatedRoute.params.subscribe(params => console.log(params));
     // Test Id, get from login in the future
     
@@ -255,12 +258,18 @@ export class JobDetailsComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {this.jobID = params["jobID"]});
     console.log(this.jobID)
     this.load(this.jobID)
+    this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
+    this.x = this.confirmUserType()
+    console.log(this.x)
+    if (this.x.subscribe(this.x == this.user)) {
+      this.show_apply = true
+    }
   }
   is_disabled(){
     return this.disabled
   }
   always_disabled(){
-    if (sessionStorage.getItem("accountType") == "Employer" && localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser") == this.employerID) {
+    if (sessionStorage.getItem("accountType") == "Employer" && localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") == this.employerID) {
       return false
     }
     this.disabled = true;
@@ -291,16 +300,15 @@ export class JobDetailsComponent implements OnInit {
   }
 
   show_button() {
-    if (sessionStorage.getItem("accountType") == "Employer" && localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser") == this.employerID) {
+    if (sessionStorage.getItem("accountType") == "Employer" && localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") == this.employerID) {
       return false
     }
     return true
   }
 
   show_apply_button() {
-    if (sessionStorage.getItem("accountType") == "Applicant") {
-      return false
-    }
+    if (sessionStorage.getItem("accountType") == "applicant")
+      return false 
     return true
   }
 
@@ -315,7 +323,7 @@ export class JobDetailsComponent implements OnInit {
     console.log(this.profileType)
     var url = "http://18.220.46.51:3000/api/RequestJob"
     var data = {
-      "applicant": localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser"),
+      "applicant": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
       "job": this.jobID
     }
     this.http.post(url, data).subscribe(
@@ -352,6 +360,13 @@ export class JobDetailsComponent implements OnInit {
   goToProfile(id) {
     sessionStorage.setItem("view", "potApplicant")
     this.router.navigate(["applicant/profile-info/" + id])
+  }
+
+  confirmUserType() {
+    return this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).pipe(map((res: Response) =>
+
+      this.x = res.json();
+      return this.x))
   }
 
 }

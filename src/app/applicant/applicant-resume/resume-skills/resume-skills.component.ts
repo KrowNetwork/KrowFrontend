@@ -68,7 +68,7 @@ export class ResumeSkillsComponent implements OnInit {
   }
 
   ngOnInit() {
-    var user = localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser");
+    var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
       data => {
         var skills = data["resume"]["skills"];

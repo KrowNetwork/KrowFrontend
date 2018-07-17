@@ -20,7 +20,7 @@ export class CreateUserService {
             ["affiliations"]: [],
             ["biography"]: "",
             ["lastUpdated"]: new Date(),
-            ["id"]: ""
+            // ["id"]: ""
         };
         obj["completedJobs"] = [];
         obj["terminatedJobs"] = [];
@@ -32,7 +32,7 @@ export class CreateUserService {
         obj["city"] = "";
         obj["address"] = "";
         obj["email"] = userObj.email;
-        obj["phoneNumber"] = userObj.phoneNumber;
+        obj["phoneNumber"] = "";
         obj["links"] = [];
         obj["created"] = new Date();
         obj["lastUpdated"] = new Date();

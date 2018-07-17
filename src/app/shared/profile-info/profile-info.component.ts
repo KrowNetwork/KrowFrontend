@@ -14,7 +14,8 @@ export class ProfileInfoComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private createUser: CreateUserService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) { }
 
   user: string;
@@ -33,7 +34,7 @@ export class ProfileInfoComponent implements OnInit {
   disabled = undefined;
   id: string;
   updateInfo(children) {
-    this.user = localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser");
+    this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     // Test Id, get from login in the future
     var hidden = document.getElementById("test-ID");
     var profileType = hidden.attributes["value"].value;
@@ -146,11 +147,12 @@ export class ProfileInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser");
+    this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     // Test Id, get from login in the future
     var hidden = document.getElementById("test-ID");
     var profileType = hidden.attributes["value"].value;
-    if(profileType == "Employer"){
+    console.log(this.router.url)
+    if(this.router.url.startsWith("/employer")){
 
       // Set Company/Name 
       document.getElementById("app-responsive-component-profile").innerText = "Company";
@@ -208,15 +210,19 @@ export class ProfileInfoComponent implements OnInit {
         }
       );
     }
-    else if(profileType == "Applicant"){
+    else if(this.router.url.startsWith("/applicant")){
       this.activatedRoute.params.subscribe(params => {this.id = params["applicantID"]});
-      if (this.user == this.id) {
+      console.log(this.id)
+      if (this.user == this.id || this.id === undefined) {
       // if (sessionStorage.getItem("view") !== undefined && sessionStorage.getItem("view") == "potApplicant") {
-        
-        this.disabled = true
-      } else {
+        // this.id = this.user
         this.disabled = false
+        this.id = this.user
+        
+      } else {
+        this.disabled = true
       }
+      console.log(this.id)
 
       // Set Company/Name 
       document.getElementById("app-responsive-component-profile").innerText = "Name";
@@ -234,7 +240,7 @@ export class ProfileInfoComponent implements OnInit {
       lastName.children[1].children[0].attributes[2].value = "Smith";
       lastName.children[1].children[0].attributes[1].value = "lastName";
 
-      var url = "http://18.220.46.51:3000/api/Applicant/" + this.user;
+      var url = "http://18.220.46.51:3000/api/Applicant/" + this.id;
 
       // Get Data
       this.http.get(url).subscribe(

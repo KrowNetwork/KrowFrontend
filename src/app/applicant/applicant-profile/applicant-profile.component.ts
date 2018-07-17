@@ -56,4 +56,8 @@ export class ApplicantProfileComponent implements OnInit {
       sessionStorage.setItem("accountType", "Applicant")
     
   }
+
+  // goToProfile() {
+
+  // }
 }

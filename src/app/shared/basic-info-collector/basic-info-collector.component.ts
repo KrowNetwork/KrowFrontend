@@ -5,6 +5,7 @@ import { CreateUserService } from '../../service/create-user.service';
 @Component({
     selector: 'basic-info-collector',
     templateUrl: './basic-info-collector.component.html',
+    // template: '<p>test</p>',
 })
 export class BasicInfoCollectorComponent implements OnInit {
 
@@ -28,7 +29,7 @@ export class BasicInfoCollectorComponent implements OnInit {
                 // Defaults to 0 if no query param provided.
                 this.intent = params.as;
             });
-        this.user = localStorage.getItem("CognitoIdentityServiceProvider.682kbp7jv1l5a01lojmehrm2a2.LastAuthUser");
+        this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     }
 
     submitInfo(){

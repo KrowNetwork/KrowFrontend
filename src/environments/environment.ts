@@ -22,7 +22,7 @@ export const environment = {
 
   // identityPoolId: 'us-east-1:c91da654-3704-45e0-8614-2b8f4b00a4e7',
   // userPoolId: 'us-east-1_ZdXOmrRsu',
-  // clientId: '682kbp7jv1l5a01lojmehrm2a2',
+  // clientId: '7tvb9q2vkudvr2a2q18ib0o5qt',
 
   // rekognitionBucket: 'rekognition-pics',
   // albumName: "usercontent",

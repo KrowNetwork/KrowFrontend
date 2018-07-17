@@ -3,12 +3,15 @@ import { CognitoCallback, CognitoUtil } from "./cognito.service";
 import { AuthenticationDetails, CognitoUser, CognitoUserAttribute } from "amazon-cognito-identity-js";
 import { RegistrationUser } from "../main/register/register.component";
 import { NewPasswordUser } from "../main/newpassword/newpassword.component";
+import { CreateUserService } from "./create-user.service";
+import { ActivatedRoute, Router, NavigationError } from '@angular/router';
+
 import * as AWS from "aws-sdk/global";
 
 @Injectable()
 export class UserRegistrationService {
 
-    constructor(@Inject(CognitoUtil) public cognitoUtil: CognitoUtil) {
+    constructor(@Inject(CognitoUtil) public cognitoUtil: CognitoUtil, private router: Router,) {
 
     }
 
@@ -43,7 +46,7 @@ export class UserRegistrationService {
 
     }
 
-    confirmRegistration(username: string, confirmationCode: string, callback: CognitoCallback): void {
+    confirmRegistration(username: string, confirmationCode: string, accountType: {type: string;}, callback: CognitoCallback): void {
 
         let userData = {
             Username: username,
@@ -57,8 +60,10 @@ export class UserRegistrationService {
                 callback.cognitoCallback(err.message, null);
             } else {
                 callback.cognitoCallback(null, result);
+                
             }
         });
+        this.router.navigate(['/basicInfo?as=' + accountType.type])
     }
 
     resendCode(username: string, callback: CognitoCallback): void {

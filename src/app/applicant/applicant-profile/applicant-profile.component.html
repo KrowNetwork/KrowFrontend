@@ -28,7 +28,8 @@
 						</li>
 						<li>
 								<!-- <a [routerLink]="['/applicant/profile-info']" routerLinkActive="active">My Applicant Profile</a> -->
-								<a [routerLink]="['/employer/profile-info']" routerLinkActive="active">Switch to Employer</a>
+								<!-- <a [routerLink]="['/employer/profile-info']" routerLinkActive="active">Switch to Employer</a> -->
+								<a (click)="goToProfile()" routerLinkActive="active">Profile</a>
 						</li>
 						<li>
 							<a style="color: #ffffff">Jobs</a>
