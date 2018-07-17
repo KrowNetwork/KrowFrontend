@@ -338,7 +338,7 @@ export class JobDetailsComponent implements OnInit {
           to: data["email"],
           job_name: this.title
         }
-        this.http.post("http://52.15.219.10:3000/applicant-request", email_data).subscribe(
+        this.http.post("http://52.15.219.10:4200/applicant-request", email_data).subscribe(
           data => {
             alert("Congratulations! You've successfully applied!")
             console.log("Success")
