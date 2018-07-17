@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { CreateUserService } from '../../service/create-user.service';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
+import { splitAtColon } from '../../../../node_modules/@angular/compiler/src/util';
+// import { log } from 'util';
+import { subscribeOn } from '../../../../node_modules/rxjs/operators';
+import { log } from 'util';
+import { routerNgProbeToken } from '../../../../node_modules/@angular/router/src/router_module';
+import { splitAtColon } from '../../../../node_modules/@angular/compiler/src/util';
 
 @Component({
   selector: 'app-profile-info',
@@ -12,7 +18,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 export class ProfileInfoComponent implements OnInit {
 
   constructor(
-    private http: HttpClient,
+    public http: HttpClient,
     private createUser: CreateUserService,
     private activatedRoute: ActivatedRoute,
     private router: Router
@@ -33,6 +39,7 @@ export class ProfileInfoComponent implements OnInit {
   urlWEBSITE: string;
   disabled = undefined;
   id: string;
+  lockResume = false;
   updateInfo(children) {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     // Test Id, get from login in the future
@@ -148,6 +155,9 @@ export class ProfileInfoComponent implements OnInit {
 
   ngOnInit() {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+    this.id = this.router.url.split("/")[3]
+    // console.log(this.id)
+    // console.log("x")
     // Test Id, get from login in the future
     var hidden = document.getElementById("test-ID");
     var profileType = hidden.attributes["value"].value;
@@ -210,15 +220,15 @@ export class ProfileInfoComponent implements OnInit {
         }
       );
     }
-    else if(this.router.url.startsWith("/applicant")){
-      this.activatedRoute.params.subscribe(params => {this.id = params["applicantID"]});
+    else if(this.router.url.startsWith("/applicant")) {
+      // this.activatedRoute.params.subscribe(params => {this.id = params["applicantID"]});
       console.log(this.id)
       if (this.user == this.id || this.id === undefined) {
       // if (sessionStorage.getItem("view") !== undefined && sessionStorage.getItem("view") == "potApplicant") {
         // this.id = this.user
         this.disabled = false
         this.id = this.user
-        
+        this.lockResume = true
       } else {
         this.disabled = true
       }
@@ -284,5 +294,61 @@ export class ProfileInfoComponent implements OnInit {
   }
   is_disabled() {
     return this.disabled
+  }
+
+  viewUserResume() {
+    this.router.navigate(["applicant/applicant-resume/" + this.id])
+  }
+
+  
+
+  requestToHire() {
+    // console.log(this.profileType)
+    var url = "http://18.220.46.51:3000/api/RequestHireApplicant"
+    console.log(this.id )
+    // var applicantUrl = "http://18.220.46.51:3000/api/Applicant/" + this.id 
+    // var jobUrl = "http://18.220.46.51:3000/api/Job/" + sessionStorage.getItem("fromJob")
+    // var employerUrl = "http://18.220.46.51:3000/api/Employer/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
+
+    // console.log(applicantUrl)
+    // console.log(jobUrl)
+    // console.log(employerUrl)
+    
+    
+
+    var data =
+    {
+      "applicant": this.id,
+      "employer": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
+      "job": sessionStorage.getItem("fromJob"),
+    }
+
+          // jobData.tags = jobData.toString().split(",")
+          
+
+    this.http.post(url, data).subscribe(
+      data => {
+        alert("Success! The applicant has been notified!")
+      }
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+          console.log(err);
+          alert ("You have already requested to hire this applicant")
+        }
+      }
+  })
+    
+    
+   
+
+    //           }
+    //       }
+    //   }
+    // )
+    // console.log(data)
+    
   }
 }

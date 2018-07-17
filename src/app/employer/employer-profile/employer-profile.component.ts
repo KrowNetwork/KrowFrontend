@@ -37,3 +37,4 @@ export class EmployerProfileComponent implements OnInit {
       this.router.navigate(["/applicant"])
   }
 }
+}

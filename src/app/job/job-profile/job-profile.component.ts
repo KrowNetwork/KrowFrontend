@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserLoginService } from '../../service/user-login.service';
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { map } from 'rxjs/operators/map';
 
 declare var require: any;
@@ -44,10 +44,10 @@ scrollup(){
 
   
   confirmUserType() {
-    return this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).pipe(map((res: Response) =>
+    return this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).pipe(map((res: Response) => {
 
       this.x = res.json();
-      return this.x))
+      return this.x }));
   }
   goToProfile() {
     this.router.navigate([sessionStorage.getItem("accountType").toLowerCase() + "/profile-info"])

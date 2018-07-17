@@ -117,6 +117,10 @@ const secureHome: Routes = [
                 component: ApplicantResumeComponent
             },
             { 
+                path: 'applicant-resume/:applicantID', 
+                component: ApplicantResumeComponent
+            },
+            { 
                 path: 'completed-jobs', 
                 //component: CompletedJobsComponent, 
                 component: ComingSoonComponent

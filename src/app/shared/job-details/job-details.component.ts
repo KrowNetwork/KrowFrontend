@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { CreateUserService } from '../../service/create-user.service';
+import { subscribeOn } from '../../../../node_modules/rxjs/operators';
 // import { Router } from '@angular/router';
 
 
@@ -36,7 +37,9 @@ export class JobDetailsComponent implements OnInit {
   url: string;
   applicants = [];
   applicant_data = [];
-
+  x = undefined;
+  user = undefined;
+  show_apply = false;
   // show_apply_button = false
 
   profileType = sessionStorage.getItem("accountType")
@@ -320,13 +323,39 @@ export class JobDetailsComponent implements OnInit {
   }
 
   async apply(event){
-    console.log(this.profileType)
+    // console.log(this.profileType)
     var url = "http://18.220.46.51:3000/api/RequestJob"
     var data = {
       "applicant": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
       "job": this.jobID
     }
     this.http.post(url, data).subscribe(
+      data => {
+        this.http.get("http://18.220.46.51:3000/api/Applicant/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
+      data => {
+        var email_data = {
+          "applicant_name": data["firstName"] + " " + data["lastName"],
+          to: data["email"],
+          job_name: this.title
+        }
+        this.http.post("http://52.15.219.10:3000/applicant-request", email_data).subscribe(
+          data => {
+            alert("Congratulations! You've successfully applied!")
+            console.log("Success")
+          },
+          (err: HttpErrorResponse) => {
+            if (err.error instanceof Error) {
+              console.log("Client-side error occured.");
+            } else {
+              console.log("Server-side error occured.");
+              console.log(err);
+            }
+          }
+        )
+      }
+
+    )
+      }
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           console.log("Client-side error occured.");
@@ -336,6 +365,9 @@ export class JobDetailsComponent implements OnInit {
         }
       }
     )
+
+    
+    
       
     // if (this.disabled == true) {
 
@@ -359,14 +391,15 @@ export class JobDetailsComponent implements OnInit {
 
   goToProfile(id) {
     sessionStorage.setItem("view", "potApplicant")
+    sessionStorage.setItem("fromJob", this.jobID)
     this.router.navigate(["applicant/profile-info/" + id])
   }
 
   confirmUserType() {
-    return this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).pipe(map((res: Response) =>
+    return this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).pipe(map((res: Response) => {
 
       this.x = res.json();
-      return this.x))
+      return this.x}));
   }
 
 }
