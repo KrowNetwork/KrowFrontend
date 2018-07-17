@@ -52,8 +52,8 @@ export class ApplicantProfileComponent implements OnInit {
   KROW_HEADER_2 = require("../../../images/krow-header-2.png");
 
   ngOnInit() {
-    if (sessionStorage.getItem("view") === undefined)
-      sessionStorage.setItem("accountType", "Applicant")
+    if (sessionStorage.getItem("accountType") == "employer") {
+      this.router.navigate(["/employer"])
     
   }
 
