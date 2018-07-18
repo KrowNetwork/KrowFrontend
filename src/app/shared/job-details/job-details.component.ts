@@ -333,28 +333,33 @@ export class JobDetailsComponent implements OnInit {
       data => {
         this.http.get("http://18.220.46.51:3000/api/Employer/" + this.employerID).subscribe(
       data => {
-        var email_data = {
-          "applicant_name": data["firstName"] + " " + data["lastName"],
-          to: data["email"],
-          job_name: this.title
-        }
-        this.http.post("http://52.15.219.10:4200/applicant-request", email_data).subscribe(
-          data => {
-            alert("Congratulations! You've successfully applied!")
-            console.log("Success")
-          },
-          (err: HttpErrorResponse) => {
-            if (err.error instanceof Error) {
-              console.log("Client-side error occured.");
-            } else {
-              console.log("Server-side error occured.");
-              console.log(err);
-            }
-          }
-        )
-      },
+        this.http.get("http://18.220.46.51:3000/api/Applicant/" +localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") ).subscribe(
+        appdata => {
 
+        
+          var email_data = {
+            "applicant_name": appdata["firstName"] + " " + appdata["lastName"],
+            to: data["email"],
+            job_name: this.title
+          }
+          this.http.post("http://52.15.219.10:4200/applicant-request", email_data).subscribe(
+            data => {
+              alert("Congratulations! You've successfully applied!")
+              console.log("Success")
+            },
+            (err: HttpErrorResponse) => {
+              if (err.error instanceof Error) {
+                console.log("Client-side error occured.");
+              } else {
+                console.log("Server-side error occured.");
+                console.log(err);
+              }
+            }
+        )
+        )},
+    }
     )
+  })
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
