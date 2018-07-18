@@ -261,12 +261,13 @@ export class JobDetailsComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {this.jobID = params["jobID"]});
     console.log(this.jobID)
     this.load(this.jobID)
-    this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
-    this.x = this.confirmUserType()
-    console.log(this.x)
-    if (this.x.subscribe(this.x == this.user)) {
-      this.show_apply = true
-    }
+    // this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
+    // this.x = this.confirmUserType()
+    // console.log(this.x)
+    // if (this.confirmUserType() == true)) {
+    //   this.show_apply = true
+    // }
+    this.show_apply = this.confirmUserType()
   }
   is_disabled(){
     return this.disabled
@@ -375,7 +376,9 @@ export class JobDetailsComponent implements OnInit {
   }
 
   confirmUserType() {
-    return this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).pipe(data => {this.x = data})
+    if (sessionStorage.getItem("accountType") == "applicant")
+      return true 
+    return false
   }
 
 }
