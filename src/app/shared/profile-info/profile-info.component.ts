@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { CreateUserService } from '../../service/create-user.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
+import { subscribeOn } from '../../../../node_modules/rxjs/operators';
+import { subscribeOn } from '../../../../node_modules/rxjs/operators';
 // import { splitAtColon } from '../../../../node_modules/@angular/compiler/src/util';
 // import { log } from 'util';
 import { subscribeOn } from '../../../../node_modules/rxjs/operators';
@@ -328,7 +330,49 @@ export class ProfileInfoComponent implements OnInit {
 
     this.http.post(url, data).subscribe(
       data => {
-        alert("Success! The applicant has been notified!")
+        alert("Success!")
+        this.http.get("http://18.220.46.51:3000/api/Employer/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
+          emp_data => {
+            this.http.get("http://18.220.46.51:3000/api/Job/" + sessionStorage.getItem("fromJob")).subscribe(
+              job_data => {
+                var mailData = {
+                  to: this.email,
+                  comp_name: emp_data["employerName"],
+                  job_name: job_data["title"]
+                }
+                this.http.post("http://52/15/219.10:4200/hire-request", mailData).subscribe(
+                  data => {
+                    alert("The applicant has been notified!")
+                  }, 
+                  (err: HttpErrorResponse) => {
+                    if (err.error instanceof Error) {
+                      console.log("Client-side error occured.");
+                    } else {
+                      console.log("Server-side error occured.");
+                      console.log(err);
+                    alert (err)
+                    }
+                  }) // closing email
+              },
+              (err: HttpErrorResponse) => {
+                if (err.error instanceof Error) {
+                  console.log("Client-side error occured.");
+                } else {
+                  console.log("Server-side error occured.");
+                  console.log(err);
+                alert (err)
+                }
+              }) //closing job_data
+          },
+          (err: HttpErrorResponse) => {
+            if (err.error instanceof Error) {
+              console.log("Client-side error occured.");
+            } else {
+              console.log("Server-side error occured.");
+              console.log(err);
+            alert (err)
+            }
+          }) // closing emp_data
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -339,6 +383,7 @@ export class ProfileInfoComponent implements OnInit {
           alert ("You have already requested to hire this applicant")
         }
       }
+    
   )
     
     

@@ -305,7 +305,7 @@ export class JobDetailsComponent implements OnInit {
   }
 
   show_button() {
-    if (sessionStorage.getItem("accountType") == "Employer" && localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") == this.employerID) {
+    if (sessionStorage.getItem("accountType") == "employer" && localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") == this.employerID) {
       return false
     }
     return true
@@ -380,6 +380,25 @@ export class JobDetailsComponent implements OnInit {
     if (sessionStorage.getItem("accountType") == "applicant")
       return true 
     return false
+  }
+
+  delete() {
+    var url = "http://18.220.46.51:3000/api/DeleteJob"
+    var data = {
+      job: this.jobID
+    }
+    this.http.post(url, data).subscribe(
+      data =>{
+        alert("deletion successful")
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error occured.");
+      } else {
+        console.log("Server-side error occured.");
+        console.log(err);
+      }
+    })
   }
 
 }
