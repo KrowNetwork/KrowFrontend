@@ -16,6 +16,7 @@ export class JobProfileComponent implements OnInit {
   btnText: string;
   user: string;
   x = undefined
+  show_hire_requests = false
   
   constructor(public router: Router, public userService: UserLoginService, public http: HttpClient) {
     
@@ -35,29 +36,42 @@ scrollup(){
 
   ngOnInit() {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
-    this.x = this.confirmUserType()
-    console.log(this.x)
-    if (this.x.subscribe(this.x == this.user)) {
-      this.btnText = "Find Job"
+    if (this.isApplicant() == true) {
+      this.show_hire_requests = true
     }
+    console.log(this.show_hire_requests)
+    console.log(this.show_hire_requests)
+    // console.log(this.x)
+    // if (this.x.subscribe(this.x == this.user)) {
+    //   this.btnText = "Find Job"
+    // }
   }
 
   
-  confirmUserType() {
-    return this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).pipe(map((res: Response) => {
-
-      this.x = res.json();
-      return this.x }));
+  isApplicant() {
+    if (sessionStorage.getItem("accountType") == "applicant") {
+      return true 
+    }
+    return false
   }
   goToProfile() {
     this.router.navigate([sessionStorage.getItem("accountType").toLowerCase() + "/profile-info"])
   }
+
+  // hide_hire_requests_fn() {
+  //   return this.hide_hire_requests
+  // }
 
   bigBtn() {
     if (this.btnText == "Find Job")
       this.router.navigate(["applicant/job-search"])
     else
       this.router.navigate(["employer/post-job"])      
+  }
+
+  goToAvailableJobs() {
+    this.router.navigate(["employer/available-jobs"])
+    // [routerLink]="['#/employer/available-jobs']"
   }
 
 }
