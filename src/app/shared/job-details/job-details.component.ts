@@ -329,37 +329,33 @@ export class JobDetailsComponent implements OnInit {
       "applicant": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
       "job": this.jobID
     }
+
     this.http.post(url, data).subscribe(
       data => {
         this.http.get("http://18.220.46.51:3000/api/Employer/" + this.employerID).subscribe(
-      data => {
-        this.http.get("http://18.220.46.51:3000/api/Applicant/" +localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") ).subscribe(
-        appdata => {
-
-        
-          var email_data = {
-            "applicant_name": appdata["firstName"] + " " + appdata["lastName"],
-            to: data["email"],
-            job_name: this.title
-          }
-          this.http.post("http://52.15.219.10:4200/applicant-request", email_data).subscribe(
-            data => {
-              alert("Congratulations! You've successfully applied!")
-              console.log("Success")
-            },
-            (err: HttpErrorResponse) => {
-              if (err.error instanceof Error) {
-                console.log("Client-side error occured.");
-              } else {
-                console.log("Server-side error occured.");
-                console.log(err);
-              }
-            }
-        )
-        )},
-    }
-    )
-  })
+          data => {
+            this.http.get("http://18.220.46.51:3000/api/Applicant/" +localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") ).subscribe(
+              appData => {
+                var email_data = {
+                  "applicant_name": appData["firstName"] + " " + appData["lastName"],
+                  to: data["email"],
+                  job_name: this.title
+                }
+                this.http.post("http://52.15.219.10:4200/applicant-request", email_data).subscribe(
+                  data => {
+                    alert("Congratulations! You've successfully applied!")
+                    console.log("Success")
+                  },
+                  (err: HttpErrorResponse) => {
+                    if (err.error instanceof Error) {
+                      console.log("Client-side error occured.");
+                    } else {
+                      console.log("Server-side error occured.");
+                      console.log(err);
+                    }
+                  })
+              })
+          })
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -370,28 +366,6 @@ export class JobDetailsComponent implements OnInit {
         }
       }
     )
-
-    
-    
-      
-    // if (this.disabled == true) {
-
-    //   this.disabled = false
-    //   // event.target.style = "float:right; background-color:gray; border-color: gray; opacity=0.8";
-      
-    //   // 
-    //   event.target.style = "background-color: #fb236a; border-color: #fb236a; float: right";
-    //   // event.target.closest("div").style = "display: none;";
-    //   event.target.attributes[2].value = false;
-    // } else {
-    //   this.disabled = true
-    //   event.target.innerHTML="Edit"
-    //   var inputs = document.getElementsByTagName("input")
-    //   console.log(inputs)
-    //   var result = await this.updateInfo(inputs);
-    // }
-    // event.target.attributes[2].value = true;
-    
   }
 
   goToProfile(id) {
@@ -401,7 +375,7 @@ export class JobDetailsComponent implements OnInit {
   }
 
   confirmUserType() {
-    return this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user)
+    return this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).pipe(data => {this.x = data})
   }
 
 }
