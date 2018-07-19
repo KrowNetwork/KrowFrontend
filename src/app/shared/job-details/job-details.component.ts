@@ -13,12 +13,6 @@ import { subscribeOn } from '../../../../node_modules/rxjs/operators';
 })
 export class JobDetailsComponent implements OnInit {
   show_applicants = false;
-  constructor(
-    private http: HttpClient,
-    private createUser: CreateUserService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
-  ) { }
   jobID: string;
   title: string;
   description: string;
@@ -39,7 +33,34 @@ export class JobDetailsComponent implements OnInit {
   applicant_data = [];
   x = undefined;
   user = undefined;
-  show_apply = false;
+  hide_employer_buttons = true;
+  hide_apply = true;
+  hide_accept = false;
+
+  constructor(
+    private http: HttpClient,
+    private createUser: CreateUserService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) { 
+    if (sessionStorage.getItem("accountType") == "applicant") {
+      if (sessionStorage.getItem("canAcceptJob") == "true") {
+        console.log("yass")
+        this.hide_accept = false
+        this.hide_apply = true
+      } else {
+        this.hide_accept = true
+        this.hide_apply = false 
+      }
+      
+    } else {
+      this.hide_accept = true
+      this.hide_employer_buttons = true
+      this.hide_apply = true
+    }
+  }
+  
+
   // show_apply_button = false
 
   profileType = sessionStorage.getItem("accountType")
@@ -258,6 +279,7 @@ export class JobDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.activatedRoute.params.subscribe(params => {this.jobID = params["jobID"]});
     console.log("Current job:")
     console.log(this.jobID)
@@ -268,7 +290,6 @@ export class JobDetailsComponent implements OnInit {
     // if (this.confirmUserType() == true)) {
     //   this.show_apply = true
     // }
-    this.show_apply = this.confirmUserType()
   }
   is_disabled(){
     return this.disabled
@@ -278,6 +299,7 @@ export class JobDetailsComponent implements OnInit {
       return false
     }
     this.disabled = true;
+    
     return true
     
   }
@@ -369,18 +391,13 @@ export class JobDetailsComponent implements OnInit {
       }
     )
   }
-
   goToProfile(id) {
     sessionStorage.setItem("view", "potApplicant")
     sessionStorage.setItem("fromJob", this.jobID)
     this.router.navigate(["applicant/profile-info/" + id])
   }
 
-  confirmUserType() {
-    if (sessionStorage.getItem("accountType") == "applicant")
-      return true 
-    return false
-  }
+ 
 
   delete() {
     var url = "http://18.220.46.51:3000/api/DeleteJob"
@@ -390,6 +407,27 @@ export class JobDetailsComponent implements OnInit {
     this.http.post(url, data).subscribe(
       data =>{
         alert("deletion successful")
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error occured.");
+      } else {
+        console.log("Server-side error occured.");
+        console.log(err);
+      }
+    })
+  }
+
+  acceptJob() {
+    var url = "http://18.220.46.51:3000/api/AcceptHire"
+    var data = {
+      job: this.jobID,
+      applicant: localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
+    }
+    this.http.post(url, data).subscribe(
+      data =>{
+        alert("Congratulations! You have successfully accepted the job!")
+        sessionStorage.removeItem("canAcceptJob")
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {

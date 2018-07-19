@@ -1,7 +1,8 @@
 <div class="padding-left">
-    <a (click)="buttonPressed($event)" class="post-job-btn" id="top" [hidden]="show_button()">Edit</a>
-    <a (click)="apply($event)" class="post-job-btn" id="top" [hidden]="show_apply_button()">Apply</a>
-    <a (click)="delete()" class="post-job-btn" id="top" [hidden]="show_button()">Delete Job</a>
+    <a (click)="buttonPressed($event)" class="post-job-btn" id="top" [hidden]="hide_employer_buttons">Edit</a>
+    <a (click)="apply($event)" class="post-job-btn" id="top" [hidden]="hide_apply">Apply</a>
+    <a (click)="delete()" class="post-job-btn" id="top" [hidden]="hide_employer_buttons">Delete Job</a>
+    <a (click)="acceptJob()" class="post-job-btn" id="top" [hidden]="hide_accept">Accept Job</a>
     <h3 id="app-responsive-component-profile"></h3>
   <div class="social-edit"  id="sn">
       
