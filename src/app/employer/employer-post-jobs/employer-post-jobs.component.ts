@@ -26,6 +26,7 @@ export class EmployerPostJobsComponent implements OnInit {
   jobType: string;
   jobObject: any;
   errorMessage: string;
+  msg = undefined;
 
   submitHandler(event){
     if(event.target.value == ""){
@@ -106,12 +107,21 @@ export class EmployerPostJobsComponent implements OnInit {
     this.jobObject.newJob.jobType = this.jobType;
 
     this.postJob();
+    
+    
   }
 
   postJob(){
+    this.msg = "Please wait"
     var url = "http://18.220.46.51:3000/api/NewJob";
     this.http.post(url, this.jobObject).subscribe(
-      data => {}, // Catch Errors
+      data => {
+        this.msg = "Completed. Redirecting"
+        setTimeout(() => 
+        {
+          this.router.navigate(["/employer/available-jobs"])
+        }, 3000);
+      }, // Catch Errors
       (err: HttpErrorResponse) => {
           alert("Could not post job!");
           if (err.error instanceof Error) {
@@ -121,8 +131,8 @@ export class EmployerPostJobsComponent implements OnInit {
           }
       }
     );
-    alert("Job posted!");
-    this.router.navigate(['/employer/profile-info']);
+    
+    // this.router.navigate(['/employer/profile-info']);
   }
 
   ngOnInit() {
@@ -142,5 +152,9 @@ export class EmployerPostJobsComponent implements OnInit {
       }
     }
   }
+
+  delay(ms) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+} 
 
 }

@@ -36,6 +36,7 @@ export class JobDetailsComponent implements OnInit {
   hide_employer_buttons = true;
   hide_apply = true;
   hide_accept = false;
+  msg = undefined;
 
   constructor(
     private http: HttpClient,
@@ -55,7 +56,7 @@ export class JobDetailsComponent implements OnInit {
       
     } else {
       this.hide_accept = true
-      this.hide_employer_buttons = true
+      this.hide_employer_buttons = false
       this.hide_apply = true
     }
   }
@@ -353,7 +354,7 @@ export class JobDetailsComponent implements OnInit {
       "applicant": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
       "job": this.jobID
     }
-
+    this.msg = "Please wait"
     this.http.post(url, data).subscribe(
       data => {
         this.http.get("http://18.220.46.51:3000/api/Employer/" + this.employerID).subscribe(
@@ -367,7 +368,8 @@ export class JobDetailsComponent implements OnInit {
                 }
                 this.http.post("http://52.15.219.10:4200/applicant-request", email_data).subscribe(
                   data => {
-                    alert("Congratulations! You've successfully applied!")
+                    // alert("Congratulations! You've successfully applied!")
+                    this.msg = "Congratulations! You've successfully applied!"
                     console.log("Success")
                   },
                   (err: HttpErrorResponse) => {
@@ -377,6 +379,7 @@ export class JobDetailsComponent implements OnInit {
                       console.log("Server-side error occured.");
                       console.log(err);
                     }
+                    this.msg = "There was an error. Please try again"
                   })
               })
           })
@@ -388,6 +391,7 @@ export class JobDetailsComponent implements OnInit {
           console.log("Server-side error occured.");
           console.log(err);
         }
+        this.msg = "There was an error. Please try again"
       }
     )
   }
@@ -404,9 +408,10 @@ export class JobDetailsComponent implements OnInit {
     var data = {
       job: this.jobID
     }
+    this.msg = "Please wait"
     this.http.post(url, data).subscribe(
       data =>{
-        alert("deletion successful")
+        this.msg = "Deletion Successful"
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
@@ -415,6 +420,7 @@ export class JobDetailsComponent implements OnInit {
         console.log("Server-side error occured.");
         console.log(err);
       }
+      this.msg = "There was an error. Please try again"
     })
   }
 
@@ -424,9 +430,11 @@ export class JobDetailsComponent implements OnInit {
       job: this.jobID,
       applicant: localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
     }
+    this.msg = "Please wait"
     this.http.post(url, data).subscribe(
       data =>{
-        alert("Congratulations! You have successfully accepted the job!")
+        this.msg = "Congratulations! You've successfully appaccepted the job!"
+        // alert("Congratulations! You have successfully accepted the job!")
         sessionStorage.removeItem("canAcceptJob")
     },
     (err: HttpErrorResponse) => {
@@ -436,6 +444,7 @@ export class JobDetailsComponent implements OnInit {
         console.log("Server-side error occured.");
         console.log(err);
       }
+      this.msg = "There was an error. Please try again"
     })
   }
 

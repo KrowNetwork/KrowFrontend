@@ -179,6 +179,10 @@
                             <form style="margin-top: 0; width: 100%">
                                 <button (click)="submitJob()" style="margin-top: 0">POST JOB</button>
                             </form>
+                            <div *ngIf="msg!==undefined" class="alert">
+                                <i class="la la-exclamation"></i>
+                                {{ msg }}
+                            </div>	
                         </div>
                     </div>
                 </div>
