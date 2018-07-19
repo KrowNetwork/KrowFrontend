@@ -21,7 +21,7 @@ export class ResumeAffiliationsComponent implements OnInit {
   constructor(
     private http: HttpClient, 
     private componentFactoryResolver: ComponentFactoryResolver,
-    private updateResumeService: UpdateResumeService
+    private updateResumeService: UpdateResumeService,
     private router: Router
   ) {}
   

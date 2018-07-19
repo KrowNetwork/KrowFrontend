@@ -9,6 +9,8 @@ declare var require: any;
   templateUrl: './employer-profile.component.html',
 })
 export class EmployerProfileComponent implements OnInit {
+  hide_applicant_links = false
+  hide_employer_links = false
 
   constructor(public router: Router, public userService: UserLoginService) {
     this.userService.isAuthenticated(this);

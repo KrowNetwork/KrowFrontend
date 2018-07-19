@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import { log } from 'util';
-import { splitAtColon } from '../../../../node_modules/@angular/compiler/src/util';
-import { log } from 'util';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 
@@ -10,11 +7,14 @@ import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
   templateUrl: './applicant-resume.component.html',
   styleUrls: ['./applicant-resume.component.css']
 })
-export class ApplicantResumeComponent  implements OnInit{
-  hide_job_data = true
-  completed_jobs = []
-  terminated_jobs = []
-  inProgress = []
+export class ApplicantResumeComponent {
+  hide_job_data = false;
+  completed_jobs = [];
+  terminated_jobs = [];
+  inProgress = [];
+  user: string;
+  id: string;
+
   constructor(
 		private http: HttpClient, 
     private router: Router
@@ -40,9 +40,7 @@ export class ApplicantResumeComponent  implements OnInit{
     }
   }
   
-  ngOnInit() {
-    
-  }
+
 
   loadJobs() {
     var url = "http://18.220.46.51:3000/api/Applicant/" + this.id 

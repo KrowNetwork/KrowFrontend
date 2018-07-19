@@ -16,7 +16,7 @@ export class ResumeSkillsComponent implements OnInit {
   constructor( 
     private updateResumeService: UpdateResumeService,
     private http: HttpClient,
-    private componentFactoryResolver: ComponentFactoryResolver
+    private componentFactoryResolver: ComponentFactoryResolver,
     private router: Router
 
   ) { }

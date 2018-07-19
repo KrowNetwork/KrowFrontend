@@ -9,7 +9,12 @@ import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
   templateUrl: './hire-requests.component.html',
 })
 export class HireRequestsComponent implements OnInit {
+  accountType: string;
+  applicant:  string;
+  jobs = [];
+  available_jobs = [];
 
+  
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -24,7 +29,6 @@ export class HireRequestsComponent implements OnInit {
       // var hidden = document.getElementById("test-ID");
       var url = "http://18.220.46.51:3000/api/applicant/" + this.applicant;
       var IDs = []
-      this.jobs = []
       this.http.get(url).subscribe(
         data => { 
           // var available_jobs = this.http.get(data["availableJobs"].split("")
@@ -43,11 +47,11 @@ export class HireRequestsComponent implements OnInit {
     }
   
     } 
-
+ 
   
   viewJob(id) {
     if (this.accountType == "applicant") {
-      sessionStorage.setItem("canAcceptJob", true)
+      sessionStorage.setItem("canAcceptJob", "true")
     } 
     this.router.navigate(["/job/" + id])
   }  
