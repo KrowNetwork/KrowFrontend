@@ -31,7 +31,7 @@
 								<!-- <a [routerLink]="['/employer/profile-info']" routerLinkActive="active">Switch to Employer</a> -->
 								<a (click)="goToProfile()" routerLinkActive="active">Profile</a>
 						</li>
-						<li>
+						<!-- <li>
 							<a style="color: #ffffff">Jobs</a>
 							<ul>
 								<li><a [routerLink]="['completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
@@ -40,7 +40,25 @@
 								<li><a [routerLink]="['requested-jobs']" routerLinkActive="active">Requested Jobs</a></li>
 								<li><a [routerLink]="['hire-requests']" routerLinkActive="active">Hire Requests</a></li>
 							</ul>
-            			</li>
+						</li> -->
+						<li>
+							<a style="color: #ffffff">Jobs</a>
+							<ul [hidden]="hide_applicant_links">
+								<li><a [routerLink]="['/applicant/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
+								<li><a [routerLink]="['/applicant/terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
+								<li><a [routerLink]="['/applicant/in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
+								<!-- <li><a [routerLink]="['/employer/available-jobs']">Available Jobs</a></li> -->
+								<li><a [routerLink]="['/applicant/requested-jobs']" routerLinkActive="active">Requested Jobs</a></li>
+								<li><a [routerLink]="['/applicant/hire-requests']" routerLinkActive="active">Hire Requests</a></li>
+
+							</ul>
+							<ul [hidden]="hide_employer_links">
+								<li><a [routerLink]="['/employer/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
+								<li><a [routerLink]="['/employer/terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
+								<li><a [routerLink]="['/employer/in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
+								<li><a [routerLink]="['/employer/available-jobs']" routerLinkActive="active">Available Jobs</a></li>
+							</ul>
+						</li>
 						<li>
 							<a [routerLink]="['applicant-resume']" routerLinkActive="active">Resume</a>
 						</li>

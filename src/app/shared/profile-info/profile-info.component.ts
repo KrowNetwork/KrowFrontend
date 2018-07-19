@@ -153,6 +153,10 @@ export class ProfileInfoComponent implements OnInit {
   ngOnInit() {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     this.id = this.router.url.split("/")[3]
+    if (this.id === undefined) {
+      this.id = this.user
+      this.lockResume = true
+    }
     // console.log(this.id)
     // console.log("x")
     // Test Id, get from login in the future
@@ -160,6 +164,7 @@ export class ProfileInfoComponent implements OnInit {
     var profileType = hidden.attributes["value"].value;
     console.log(this.router.url)
     if(this.router.url.startsWith("/employer")){
+      
 
       // Set Company/Name 
       document.getElementById("app-responsive-component-profile").innerText = "Company";

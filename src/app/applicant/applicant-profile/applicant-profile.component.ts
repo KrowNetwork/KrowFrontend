@@ -13,6 +13,13 @@ export class ApplicantProfileComponent implements OnInit {
   constructor(public router: Router, public userService: UserLoginService) {
     this.userService.isAuthenticated(this);
     console.log("Applicant Component: constructor");
+    if (sessionStorage.getItem("accountType") == "applicant") {
+      this.hide_applicant_links = false
+      this.hide_employer_links = true
+    } else {
+      this.hide_applicant_links = true
+      this.hide_employer_links = false
+    }
   }
 
   isLoggedIn(message: string, isLoggedIn: boolean) {

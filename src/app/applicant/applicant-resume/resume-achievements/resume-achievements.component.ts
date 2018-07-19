@@ -1,9 +1,12 @@
 import { Component, OnInit, Input, ViewChild, ComponentFactoryResolver } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {Router, ActivatedRoute, Params} from '@angular/router';
+
 
 import { ItemType } from '../../../shared/item-type-constructor';
 import { AchievementsMainComponent } from './achievements-main.component';
 import { AchievementDirective } from '../resume-achievements/achievement.directive';
+import { splitAtColon } from '../../../../../node_modules/@angular/compiler/src/util';
 import { InterfaceComponent } from '../../../shared/interface-component.component';
 import { UpdateResumeService } from '../../../service/update-resume.service';
 
@@ -21,6 +24,8 @@ export class ResumeAchievementsComponent implements OnInit {
 		private http: HttpClient, 
 		private componentFactoryResolver: ComponentFactoryResolver,
 		private updateResumeService: UpdateResumeService
+		private router: Router
+
 	) {}
 
 	updateResume(event){
@@ -53,7 +58,12 @@ export class ResumeAchievementsComponent implements OnInit {
 	}
 	
 	ngOnInit() {
-		var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+		if (sessionStorage.getItem("accountType") == "employer") {
+			var user = this.router.url.split("/")[3]
+		} else {
+			var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+		}
+		
 		this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
 			data => {
 				var resumeAchievements = data["resume"]["achievements"];

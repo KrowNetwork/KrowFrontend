@@ -16,12 +16,20 @@ export class JobProfileComponent implements OnInit {
   btnText: string;
   user: string;
   x = undefined
-  show_hire_requests = false
+  hide_applicant_links = false
+  hide_employer_links = false
   
   constructor(public router: Router, public userService: UserLoginService, public http: HttpClient) {
     
     this.userService.isAuthenticated(this);
     console.log("Job Component: constructor");
+    if (sessionStorage.getItem("accountType") == "applicant") {
+      this.hide_applicant_links = false
+      this.hide_employer_links = true
+    } else {
+      this.hide_applicant_links = true
+      this.hide_employer_links = false
+    }
   }
 
   isLoggedIn(message: string, isLoggedIn: boolean) {
@@ -36,11 +44,9 @@ scrollup(){
 
   ngOnInit() {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
-    if (this.isApplicant() == true) {
-      this.show_hire_requests = true
-    }
-    console.log(this.show_hire_requests)
-    console.log(this.show_hire_requests)
+    
+    // console.log(this.show_hire_requests)
+    // console.log(this.show_hire_requests)
     // console.log(this.x)
     // if (this.x.subscribe(this.x == this.user)) {
     //   this.btnText = "Find Job"

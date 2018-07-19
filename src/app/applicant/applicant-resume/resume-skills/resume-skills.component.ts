@@ -3,6 +3,8 @@ import { UpdateResumeService } from '../../../service/update-resume.service';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { ItemType } from '../../../shared/item-type-constructor';
 import { SkillsMainComponent } from './skills-main.component';
+import {Router, ActivatedRoute, Params} from '@angular/router';
+
 
 @Component({
   selector: 'app-resume-skills',
@@ -15,6 +17,8 @@ export class ResumeSkillsComponent implements OnInit {
     private updateResumeService: UpdateResumeService,
     private http: HttpClient,
     private componentFactoryResolver: ComponentFactoryResolver
+    private router: Router
+
   ) { }
 
   update = false;
@@ -68,7 +72,11 @@ export class ResumeSkillsComponent implements OnInit {
   }
 
   ngOnInit() {
-    var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+    if (sessionStorage.getItem("accountType") == "employer") {
+			var user = this.router.url.split("/")[3]
+		} else {
+			var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+		}
     this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
       data => {
         var skills = data["resume"]["skills"];

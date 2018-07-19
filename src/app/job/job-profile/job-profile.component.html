@@ -34,14 +34,20 @@
 						</li>
 						<li>
 							<a style="color: #ffffff">Jobs</a>
-							<ul>
-								<li><a [routerLink]="['completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
-								<li><a [routerLink]="['terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
-								<li><a [routerLink]="['in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
-								<li [hidden]="show_hire_requests == true"><a [hidden]="show_hire_requests == true"(click)="goToAvailableJobs()" routerLinkActive="active">Available Jobs</a></li>
-								<li><a [routerLink]="['requested-jobs']" routerLinkActive="active">Requested Jobs</a></li>
-								<li [hidden]="show_hire_requests == false"><a [hidden]="show_hire_requests == false" [routerLink]="['hire-requests']" routerLinkActive="active">Hire Requests</a></li>
+							<ul [hidden]="hide_applicant_links">
+								<li><a [routerLink]="['/applicant/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
+								<li><a [routerLink]="['/applicant/terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
+								<li><a [routerLink]="['/applicant/in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
+								<!-- <li><a [routerLink]="['/employer/available-jobs']">Available Jobs</a></li> -->
+								<li><a [routerLink]="['/applicant/requested-jobs']" routerLinkActive="active">Requested Jobs</a></li>
+								<li><a [routerLink]="['/applicant/hire-requests']" routerLinkActive="active">Hire Requests</a></li>
 
+							</ul>
+							<ul [hidden]="hide_employer_links">
+								<li><a [routerLink]="['/employer/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
+								<li><a [routerLink]="['/employer/terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
+								<li><a [routerLink]="['/employer/in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
+								<li><a [routerLink]="['/employer/available-jobs']" routerLinkActive="active">Available Jobs</a></li>
 							</ul>
 						</li>
 						<li>
