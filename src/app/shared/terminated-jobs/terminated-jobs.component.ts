@@ -41,7 +41,7 @@ export class TerminatedJobsComponent implements OnInit {
             n_data => {
               this.terminated_jobs.push(
                 {
-                  title: n_data["title"]
+                  title: n_data["title"],
                   jobID: n_data["jobID"]
                 }
               )

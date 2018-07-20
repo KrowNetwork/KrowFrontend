@@ -43,7 +43,7 @@ export class InProgressJobsComponent implements OnInit {
             n_data => {
               this.in_progress_jobs.push(
                 {
-                  title: n_data["title"]
+                  title: n_data["title"],
                   jobID: n_data["jobID"]
                 }
                 

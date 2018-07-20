@@ -82,7 +82,7 @@ const appRoutes: Routes = [
     {
         path: 'resendCode',
         component: ResendCodeComponent
-    }
+    },
     {
         path: "help",
         component: HelpComponent

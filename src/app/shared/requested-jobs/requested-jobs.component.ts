@@ -41,7 +41,7 @@ export class RequestedJobsComponent implements OnInit {
             n_data => {
               this.requested_jobs.push(
                 {
-                  title: n_data["title"]
+                  title: n_data["title"],
                   jobID: n_data["jobID"]
                 }
               )
