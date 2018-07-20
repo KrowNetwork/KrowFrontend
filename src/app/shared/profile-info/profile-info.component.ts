@@ -13,13 +13,15 @@ import { routerNgProbeToken } from '../../../../node_modules/@angular/router/src
 })
 
 export class ProfileInfoComponent implements OnInit {
-
   constructor(
     public http: HttpClient,
     private createUser: CreateUserService,
     private activatedRoute: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {
+    console.log("constructor created")
+
+   }
 
   user: string;
   first: string;
@@ -37,11 +39,19 @@ export class ProfileInfoComponent implements OnInit {
   disabled = undefined;
   id: string;
   lockResume = false;
+
+
+
   updateInfo(children) {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     // Test Id, get from login in the future
-    var hidden = document.getElementById("test-ID");
-    var profileType = hidden.attributes["value"].value;
+    var type = sessionStorage.getItem("accountType")
+    if (type == "applicant") {
+      var profileType = "Applicant"
+    } else {
+      var profileType = "Employer"
+    }
+    
 
     // Url to API
     var url = "http://18.220.46.51:3000/api/" + profileType + "/" + this.user;
@@ -162,8 +172,7 @@ export class ProfileInfoComponent implements OnInit {
     // Test Id, get from login in the future
     var hidden = document.getElementById("test-ID");
     var profileType = hidden.attributes["value"].value;
-    console.log(this.router.url)
-    if(this.router.url.startsWith("/employer")){
+    if(sessionStorage.getItem("accountType") == "employer"){
       
 
       // Set Company/Name 
@@ -222,9 +231,8 @@ export class ProfileInfoComponent implements OnInit {
         }
       );
     }
-    else if(this.router.url.startsWith("/applicant")) {
-      // this.activatedRoute.params.subscribe(params => {this.id = params["applicantID"]});
-      console.log(this.id)
+    else if(sessionStorage.getItem("accountType") == "applicant") {
+
       if (this.user == this.id || this.id === undefined) {
       // if (sessionStorage.getItem("view") !== undefined && sessionStorage.getItem("view") == "potApplicant") {
         // this.id = this.user
@@ -234,7 +242,6 @@ export class ProfileInfoComponent implements OnInit {
       } else {
         this.disabled = true
       }
-      console.log(this.id)
 
       // Set Company/Name 
       document.getElementById("app-responsive-component-profile").innerText = "Name";
@@ -293,6 +300,7 @@ export class ProfileInfoComponent implements OnInit {
         }
       );
     }
+    
   }
   is_disabled() {
     return this.disabled

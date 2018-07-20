@@ -30,6 +30,9 @@ export class BasicInfoCollectorComponent implements OnInit {
                 this.intent = params.as;
             });
         this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+
+        sessionStorage.setItem("accountType", this.intent.toString().toLowerCase())
+        
     }
 
     submitInfo(){
@@ -54,7 +57,7 @@ export class BasicInfoCollectorComponent implements OnInit {
     }
 
     activate(intent: string, user: string, router){
-        var path = "/" + intent;
-        router.navigate([path], { queryParams: { user: user } });
+        // var path = "/" + intent;
+        router.navigate(["/" + intent + "/profile-info"]);
     }
 }

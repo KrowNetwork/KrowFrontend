@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserLoginService } from '../../service/user-login.service';
+import { SELECT_ITEM_HEIGHT_EM } from '../../../../node_modules/@angular/material';
+import { log } from 'util';
+import { log } from 'util';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 
 
@@ -11,8 +14,8 @@ declare var require: any;
   templateUrl: './employer-profile.component.html',
 })
 export class EmployerProfileComponent implements OnInit {
-  hide_applicant_links = false
-  hide_employer_links = false
+  hide_applicant_links:boolean;
+  hide_employer_links:boolean;
   user: string;
   isApplicant = false; 
 
@@ -21,20 +24,9 @@ export class EmployerProfileComponent implements OnInit {
     console.log("Employer Component: constructor");
 
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
-
+    userService.verifyUserType(this.user)
     // isApplicant = false 
-    this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).subscribe(
-      data => {
-        this.isApplicant = true
-      }
-    )
-
-    if (this.isApplicant) {
-      sessionStorage.setItem("accountType", "applicant")
-    } else {
-      sessionStorage.setItem("accountType", "employer")
-    }
-
+    
     if (sessionStorage.getItem("accountType") == "applicant") {
       this.hide_applicant_links = false
       this.hide_employer_links = true
@@ -42,10 +34,13 @@ export class EmployerProfileComponent implements OnInit {
       this.hide_applicant_links = true
       this.hide_employer_links = false
     }
+    console.log(this.hide_applicant_links)
+    
   }
 
   isLoggedIn(message: string, isLoggedIn: boolean) {
       if (!isLoggedIn) {
+        sessionStorage.setItem("redirectBack", this.router.url)
           this.router.navigate(['/login']);
       }
   }
@@ -62,8 +57,6 @@ export class EmployerProfileComponent implements OnInit {
   KROW_HEADER_2 = require("../../../images/krow-header-2.png");
   
   ngOnInit() {
-    if (sessionStorage.getItem("accountType") == "applicant") {
-      this.router.navigate(["/applicant"])
+  
   }
-}
 }

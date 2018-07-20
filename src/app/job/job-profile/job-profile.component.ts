@@ -28,18 +28,7 @@ export class JobProfileComponent implements OnInit {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
 
     // isApplicant = false 
-    this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).subscribe(
-      data => {
-        this.isApplicant_ = true
-      }
-    )
-
-    if (this.isApplicant_) {
-      sessionStorage.setItem("accountType", "applicant")
-    } else {
-      sessionStorage.setItem("accountType", "employer")
-    }
-
+    userService.verifyUserType(this.user)
 
     if (sessionStorage.getItem("accountType") == "applicant") {
       this.hide_applicant_links = false
@@ -49,10 +38,12 @@ export class JobProfileComponent implements OnInit {
       this.hide_employer_links = false
     }
 
+
   }
 
   isLoggedIn(message: string, isLoggedIn: boolean) {
     if (!isLoggedIn) {
+      sessionStorage.setItem("redirectBack", this.router.url)
         this.router.navigate(['/login']);
     }
 }

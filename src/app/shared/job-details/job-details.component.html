@@ -88,6 +88,16 @@
       </div>
     </form>
   </div>
+  <div class="social-edit"  id="sn" *ngIf="show_employee">
+      <h3>Employee</h3>
+      <ul class="applicants">
+          <li class="job-listing">
+            <!-- <a  > -->
+              <p class="job-title-sec" >Employee Name: {{employee.firstName}} {{employee.lastName}}</p>
+              <button (click)="goToProfile(employee.applicantID)">View Profile</button>
+          </li>
+        </ul>
+    </div>
   <div class="social-edit"  id="sn" *ngIf="show_applicants">
       <h3>Applicants</h3>
       <ul class="applicants">
@@ -95,6 +105,16 @@
             <!-- <a  > -->
               <p class="job-title-sec" >Applicant Name: {{applicant_data[myIndex].firstName}} {{applicant_data[myIndex].lastName}}</p>
               <button (click)="goToProfile(applicant_data[myIndex].applicantID)">View Profile</button>
+          </li>
+        </ul>
+    </div>
+  <div class="social-edit"  id="sn" *ngIf="show_denied_applicants">
+      <h3>Denied Applicants</h3>
+      <ul class="deniedApplicants">
+          <li *ngFor="let item of denied_applicant_data; let myIndex = index" class="job-listing">
+            <!-- <a  > -->
+              <p class="job-title-sec" >Applicant Name: {{denied_applicant_data[myIndex].firstName}} {{denied_applicant_data[myIndex].lastName}}</p>
+              <button (click)="goToProfile(denied_applicant_data[myIndex].applicantID)">View Profile</button>
           </li>
         </ul>
     </div>

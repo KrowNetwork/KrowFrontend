@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { CreateUserService } from '../../service/create-user.service';
+import { post } from '../../../../node_modules/@types/selenium-webdriver/http';
+// import { splitAtColon } from '../../../../node_modules/@angular/compiler/src/util';
 import { subscribeOn } from '../../../../node_modules/rxjs/operators';
 // import { Router } from '@angular/router';
 
@@ -29,8 +31,14 @@ export class JobDetailsComponent implements OnInit {
   employerID: string;
   disabled = true;
   url: string;
+
   applicants = [];
   applicant_data = [];
+  nameOfApplicants: string;
+  employee: {};
+  deniedApplicants = [];
+  show_denied_applicants = false;
+
   x = undefined;
   user = undefined;
   hide_employer_buttons = true;
@@ -38,6 +46,7 @@ export class JobDetailsComponent implements OnInit {
   hide_accept = false;
   msg = undefined;
   hide_view_employer = true
+  show_employee = false
 
   constructor(
     private http: HttpClient,
@@ -234,12 +243,61 @@ export class JobDetailsComponent implements OnInit {
         this.employerID = data["employerID"];
         this.jobID = data["jobID"];
         this.applicants = data["applicantRequests"];
+        var employeeID = data["employee"].split("#")[1]
+        this.deniedApplicants = data["deniedApplicants"]
 
-
+        // employee
+        if (employeeID !== undefined && this.id == this.employerID) {
+          
+          this.show_employee = true
+          console.log(employeeID)
+          // console.log(this.applicants[0])
+          // for (var i = 0; i <= this.applicants.length; i++){
+            var url = "http://18.220.46.51:3000/api/Applicant/" + employeeID
+            this.http.get(url).subscribe(
+              data => {
+                this.employee = {
+                  firstName: data["firstName"],
+                  lastName: data["lastName"],
+                  applicantID: data["applicantID"]
+                }
+            },
+            (err: HttpErrorResponse) => {
+              if (err.error instanceof Error) {
+                console.log("Client-side error occured.");
+              } else {
+                console.log("Server-side error occured.");
+              }
+            })
+          }
+        // }
         
-
-        if (this.applicants !== undefined && this.id == this.employerID) {
+        // console.log(this.employerID)
+        // console.log(this.id)
+        if (this.applicants !== undefined && this.id == this.employerID && this.applicants.length != 0) {
+          
           this.show_applicants = true
+          // console.log(this.applicants[0])
+          for (var i = 0; i <= this.applicants.length; i++){
+            var url = "http://18.220.46.51:3000/api/Applicant/" + this.applicants[i].toString().split("#")[1]
+            this.http.get(url).subscribe(
+              data => {
+                this.applicant_data.push(data)
+            },
+            (err: HttpErrorResponse) => {
+              if (err.error instanceof Error) {
+                console.log("Client-side error occured.");
+              } else {
+                console.log("Server-side error occured.");
+              }
+            })
+          }
+        }
+
+        // denied applicants
+        if (this.deniedApplicants !== undefined && this.id == this.employerID && this.deniedApplicants.length != 0) {
+          
+          this.show_denied_applicants = true
           // console.log(this.applicants[0])
           for (var i = 0; i <= this.applicants.length; i++){
             var url = "http://18.220.46.51:3000/api/Applicant/" + this.applicants[i].toString().split("#")[1]
@@ -420,7 +478,7 @@ export class JobDetailsComponent implements OnInit {
     )
   }
   goToProfile(id) {
-    sessionStorage.setItem("view", "potApplicant")
+    sessionStorage.setItem("canViewResume", "true")
     sessionStorage.setItem("fromJob", this.jobID)
     this.router.navigate(["applicant/profile-info/" + id])
   }
@@ -457,9 +515,41 @@ export class JobDetailsComponent implements OnInit {
     this.msg = "Please wait"
     this.http.post(url, data).subscribe(
       data =>{
-        this.msg = "Congratulations! You've successfully appaccepted the job!"
+        this.msg = "Congratulations! You've successfully accepted the job!"
         // alert("Congratulations! You have successfully accepted the job!")
-        sessionStorage.removeItem("canAcceptJob")
+        // mailData = {
+        //   applicant_name: 
+        // }
+        this.http.get("http://18.220.46.51:3000/api/Applicant/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
+          applicantData => {
+            mailData = {
+              applicant_name: applicantData["firstName"] + " " + applicantData["lastName"],
+              job_name: this.title
+            }
+
+            this.http.post("http://52.15.219.10:3000/accept-hire", mailData).subscribe(
+              x => {
+                console.log("success")
+            },
+            (err: HttpErrorResponse) => {
+              if (err.error instanceof Error) {
+                console.log("Client-side error occured.");
+              } else {
+                console.log("Server-side error occured.");
+                console.log(err);
+              }
+              this.msg = "There was an error. Please try again"})
+          },
+          (err: HttpErrorResponse) => {
+            if (err.error instanceof Error) {
+              console.log("Client-side error occured.");
+            } else {
+              console.log("Server-side error occured.");
+              console.log(err);
+            }
+            this.msg = "There was an error. Please try again"
+          })
+        
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {

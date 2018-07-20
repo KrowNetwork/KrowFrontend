@@ -21,11 +21,14 @@ export class ApplicantResumeComponent {
 	) {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
     this.id = this.router.url.split("/")[3]
-
-    if (this.id !== undefined) {
-      this.hide_job_data = false
-      this.loadJobs()
+    if (this.id === undefined) {
+      this.id = this.user
     }
+    this.loadJobs()
+    // if (this.id !== undefined) {
+    //   this.hide_job_data = false
+    //   this.loadJobs()
+    // }
 
   }
 
