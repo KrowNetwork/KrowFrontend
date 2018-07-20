@@ -10,6 +10,9 @@ declare var require: any;
 })
 export class ApplicantProfileComponent implements OnInit {
 
+  hide_applicant_links = false 
+  hide_employer_links = false
+
   constructor(public router: Router, public userService: UserLoginService) {
     this.userService.isAuthenticated(this);
     console.log("Applicant Component: constructor");

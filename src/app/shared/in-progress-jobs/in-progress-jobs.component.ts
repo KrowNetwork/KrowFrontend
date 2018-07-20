@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
+// import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { CreateUserService } from '../../service/create-user.service';
 
