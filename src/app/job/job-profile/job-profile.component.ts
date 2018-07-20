@@ -18,11 +18,29 @@ export class JobProfileComponent implements OnInit {
   x = undefined
   hide_applicant_links = false
   hide_employer_links = false
-  
+  isApplicant_ = false
+
   constructor(public router: Router, public userService: UserLoginService, public http: HttpClient) {
     
     this.userService.isAuthenticated(this);
     console.log("Job Component: constructor");
+
+    this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
+
+    // isApplicant = false 
+    this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).subscribe(
+      data => {
+        this.isApplicant_ = true
+      }
+    )
+
+    if (this.isApplicant_) {
+      sessionStorage.setItem("accountType", "applicant")
+    } else {
+      sessionStorage.setItem("accountType", "employer")
+    }
+
+
     if (sessionStorage.getItem("accountType") == "applicant") {
       this.hide_applicant_links = false
       this.hide_employer_links = true
@@ -30,6 +48,7 @@ export class JobProfileComponent implements OnInit {
       this.hide_applicant_links = true
       this.hide_employer_links = false
     }
+
   }
 
   isLoggedIn(message: string, isLoggedIn: boolean) {

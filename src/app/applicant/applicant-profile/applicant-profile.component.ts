@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserLoginService } from '../../service/user-login.service';
+import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
+
 
 declare var require: any;
 
@@ -12,10 +14,28 @@ export class ApplicantProfileComponent implements OnInit {
 
   hide_applicant_links = false 
   hide_employer_links = false
+  user: string;
+  isApplicant = false
 
-  constructor(public router: Router, public userService: UserLoginService) {
+  constructor(public router: Router, public userService: UserLoginService, public http: HttpClient) {
     this.userService.isAuthenticated(this);
     console.log("Applicant Component: constructor");
+
+    this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
+
+    // isApplicant = false 
+    this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).subscribe(
+      data => {
+        this.isApplicant = true
+      }
+    )
+
+    if (this.isApplicant) {
+      sessionStorage.setItem("accountType", "applicant")
+    } else {
+      sessionStorage.setItem("accountType", "employer")
+    }
+
     if (sessionStorage.getItem("accountType") == "applicant") {
       this.hide_applicant_links = false
       this.hide_employer_links = true
