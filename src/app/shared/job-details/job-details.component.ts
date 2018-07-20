@@ -37,6 +37,7 @@ export class JobDetailsComponent implements OnInit {
   hide_apply = true;
   hide_accept = false;
   msg = undefined;
+  hide_view_employer = true
 
   constructor(
     private http: HttpClient,
@@ -53,11 +54,13 @@ export class JobDetailsComponent implements OnInit {
         this.hide_accept = true
         this.hide_apply = false 
       }
+      this.hide_view_employer = false
       
     } else {
       this.hide_accept = true
       this.hide_employer_buttons = false
       this.hide_apply = true
+      this.hide_view_employer = true
     }
   }
   
@@ -170,6 +173,17 @@ export class JobDetailsComponent implements OnInit {
     });
   };
   
+  formatDate(date) {
+    var month = '' + (date.getMonth() + 1)
+    var day = '' + date.getDate().toString()
+    var year = date.getFullYear()
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return  [year, month, day].join("-")
+  }
+
   load(jobID) {
     this.url = "http://18.220.46.51:3000/api/Job/" + this.jobID
     // Set Company/Name 
@@ -202,12 +216,27 @@ export class JobDetailsComponent implements OnInit {
         this.description = data["description"];
         this.location = data["location"];
         this.tags = data["tags"];
-        this.created = data["created"];
-        this.lastUpdated = data["lastUpdated"];
-        this.startDate = data["startDate"];
+        this.created = this.formatDate(new Date(data["created"]));
+        // this.lastUpdated = this.formatDate(new Date(data["lastUpdated"]));
+        // if (data["startDate"] !== undefined) {
+        //   this.startDate = this.formatDate(new Date(data["startDate"]));
+        // } else {
+        //   this.startDate = "0000-00-00"
+        // }
+
+        if (data["lastUpdated"] !== undefined) {
+          this.lastUpdated = this.formatDate(new Date(data["lastUpdated"]));
+        } else {
+          this.lastUpdated = this.created
+        }
+        // console.log(this.lastUpdated)
+        
         this.employerID = data["employerID"];
         this.jobID = data["jobID"];
         this.applicants = data["applicantRequests"];
+
+
+        
 
         if (this.applicants !== undefined && this.id == this.employerID) {
           this.show_applicants = true
@@ -441,6 +470,10 @@ export class JobDetailsComponent implements OnInit {
       }
       this.msg = "There was an error. Please try again"
     })
+  }
+
+  viewEmployer() {
+    this.router.navigate(["/employer/profile-info/" + this.employerID])
   }
 
 }
