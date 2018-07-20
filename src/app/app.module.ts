@@ -82,6 +82,8 @@ import { ExperienceDirective } from './applicant/applicant-resume/resume-experie
 import { AchievementDirective } from './applicant/applicant-resume/resume-achievements/achievement.directive';
 import { AffiliationsDirective } from './applicant/applicant-resume/resume-affiliations/affiliations.directive';
 import { JobSearchDirective } from './shared/job-search/job-search.directive';
+import { BottomBarComponent } from './shared/bottom-bar/bottom-bar.component';
+import { HelpComponent } from './shared/help/help.component';
 
 
 
@@ -131,6 +133,8 @@ import { JobSearchDirective } from './shared/job-search/job-search.directive';
     BasicInfoCollectorComponent,
     JobProfileComponent,
     JobDetailsComponent,
+    BottomBarComponent,
+    HelpComponent,
   ],
   imports: [
     BrowserModule,

@@ -19,11 +19,6 @@ export class HomeComponent implements OnInit {
     ) {
         console.log("Secure Home Component: constructor");
         this.userService.isAuthenticated(this)
-    }
-
-    user: string;
-
-    ngOnInit() {
         var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
         console.log(user)
         if(!user){
@@ -44,6 +39,12 @@ export class HomeComponent implements OnInit {
             })// Catch Errors
             this.user = user;
         }
+    }
+
+    user: string;
+
+    ngOnInit() {
+        
     }
 
     initializeApplicant(){

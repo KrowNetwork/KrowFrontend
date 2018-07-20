@@ -45,6 +45,9 @@ import { TerminatedJobsComponent } from './shared/terminated-jobs/terminated-job
 import { InProgressJobsComponent } from './shared/in-progress-jobs/in-progress-jobs.component';
 import { JobDetailsComponent } from './shared/job-details/job-details.component';
 
+import { HelpComponent } from './shared/help/help.component';
+
+
 
 const appRoutes: Routes = [
     {
@@ -79,6 +82,10 @@ const appRoutes: Routes = [
     {
         path: 'resendCode',
         component: ResendCodeComponent
+    }
+    {
+        path: "help",
+        component: HelpComponent
     }
 ];
 
@@ -122,23 +129,23 @@ const secureHome: Routes = [
             },
             { 
                 path: 'completed-jobs', 
-                //component: CompletedJobsComponent, 
-                component: ComingSoonComponent
+                component: CompletedJobsComponent, 
+                // component: ComingSoonComponent
             },
             { 
                 path: 'terminated-jobs', 
-                //component: TerminatedJobsComponent, 
-                component: ComingSoonComponent
+                component: TerminatedJobsComponent, 
+                // component: ComingSoonComponent
             },
             { 
                 path: 'in-progress-jobs', 
-                //component: InProgressJobsComponent, 
-                component: ComingSoonComponent 
+                component: InProgressJobsComponent, 
+                // component: ComingSoonComponent 
             },
             { 
                 path: 'requested-jobs', 
-                //component: RequestedJobsComponent, 
-                component: ComingSoonComponent 
+                component: RequestedJobsComponent, 
+                // component: ComingSoonComponent 
             },
             { 
                 path: 'hire-requests', 
@@ -170,18 +177,18 @@ const secureHome: Routes = [
             },
             { 
                 path: 'completed-jobs', 
-                //component: CompletedJobsComponent, 
-                component: ComingSoonComponent
+                component: CompletedJobsComponent, 
+                // component: ComingSoonComponent
             },
             { 
                 path: 'terminated-jobs', 
-                //component: TerminatedJobsComponent, 
-                component: ComingSoonComponent
+                component: TerminatedJobsComponent, 
+                // component: ComingSoonComponent
             },
             { 
                 path: 'in-progress-jobs', 
-                //component: InProgressJobsComponent, 
-                component: ComingSoonComponent
+                component: InProgressJobsComponent, 
+                // component: ComingSoonComponent
             },
             { 
                 path: 'available-jobs', 

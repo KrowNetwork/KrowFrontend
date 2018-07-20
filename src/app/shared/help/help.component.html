@@ -16,7 +16,7 @@
 					</a>
 				</div><!-- Logo -->
 				<div class="btn-extars">
-					<a [routerLink]="['employer-post-jobs']" routerLinkActive="active" class="post-job-btn"><i class="la la-plus"></i>Post Jobs</a>
+					<!-- <a [routerLink]="['employer-post-jobs']" routerLinkActive="active" class="post-job-btn"><i class="la la-plus"></i>Post Jobs</a> -->
 					<ul class="account-btns">
 						<li><a [routerLink]="['/logout']" routerLinkActive="active"  title=""><i class="la la-external-link-square"></i>LogOut</a></li>
 					</ul>
@@ -25,27 +25,6 @@
 					<ul>
 						<li>
 							<a [routerLink]="['/secureHome']" routerLinkActive="active">Home</a>
-						</li>
-						<li>
-								<a [routerLink]="['/employer/profile-info']" routerLinkActive="active">Profile</a>
-						</li>
-						<li>
-							<a style="color: #ffffff">Jobs</a>
-							<ul [hidden]="hide_applicant_links">
-								<li><a [routerLink]="['/applicant/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
-								<li><a [routerLink]="['/applicant/terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
-								<li><a [routerLink]="['/applicant/in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
-								<!-- <li><a [routerLink]="['/employer/available-jobs']">Available Jobs</a></li> -->
-								<li><a [routerLink]="['/applicant/requested-jobs']" routerLinkActive="active">Requested Jobs</a></li>
-								<li><a [routerLink]="['/applicant/hire-requests']" routerLinkActive="active">Hire Requests</a></li>
-
-							</ul>
-							<ul [hidden]="hide_employer_links">
-								<li><a [routerLink]="['/employer/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
-								<li><a [routerLink]="['/employer/terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
-								<li><a [routerLink]="['/employer/in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
-								<li><a [routerLink]="['/employer/available-jobs']" routerLinkActive="active">Available Jobs</a></li>
-							</ul>
 						</li>
 					</ul>
 				</nav><!-- Menus -->
@@ -80,6 +59,6 @@
 			</div>
 		</div>
 	</section>
-
+		<h1>Just email us help@krow.network</h1>
 	<app-bottom-bar></app-bottom-bar>
 </div>

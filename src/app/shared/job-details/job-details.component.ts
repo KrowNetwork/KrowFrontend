@@ -209,19 +209,13 @@ export class JobDetailsComponent implements OnInit {
         this.jobID = data["jobID"];
         this.applicants = data["applicantRequests"];
 
-        if (this.applicants !== undefined) {
+        if (this.applicants !== undefined && this.id == this.employerID) {
           this.show_applicants = true
-          console.log(this.applicants[0])
-          console.log("t")
           // console.log(this.applicants[0])
           for (var i = 0; i <= this.applicants.length; i++){
-            console.log(this.applicants[i].toString().split("#")[1])
-
             var url = "http://18.220.46.51:3000/api/Applicant/" + this.applicants[i].toString().split("#")[1]
-            console.log(url)
             this.http.get(url).subscribe(
               data => {
-                console.log(data)
                 this.applicant_data.push(data)
             },
             (err: HttpErrorResponse) => {
@@ -278,10 +272,11 @@ export class JobDetailsComponent implements OnInit {
     );
     // this.applicants = sessionStorage.getItem("applicants")
   }
-
+  id: string;
   ngOnInit() {
 
     this.activatedRoute.params.subscribe(params => {this.jobID = params["jobID"]});
+    this.id = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
     console.log("Current job:")
     console.log(this.jobID)
     this.load(this.jobID)

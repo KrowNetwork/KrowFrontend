@@ -17,6 +17,7 @@ export class AvailableJobsComponent implements OnInit {
 
   employer: string;
   available_jobs = []
+  has_jobs = true
   ngOnInit() {
     this.employer = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     // Test Id, get from login in the future
@@ -28,6 +29,9 @@ export class AvailableJobsComponent implements OnInit {
     this.available_jobs = []
     this.http.get(url).subscribe(
       data => { 
+        if (data["availableJobs"].length == 0 || data["availableJobs"] === undefined) {
+          this.has_jobs = false
+        }
         // var available_jobs = this.http.get(data["availableJobs"].split("")
         for (var i = 0; i < data["availableJobs"].length; i++){
 
@@ -46,8 +50,7 @@ export class AvailableJobsComponent implements OnInit {
         }
         
       })
-    console.log(this.available_jobs)
-    
+
     //   this.http.get(url).subscribe(
     //     data => {jsons.push(data)})
     // }
