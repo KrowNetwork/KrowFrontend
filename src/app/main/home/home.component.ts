@@ -32,34 +32,46 @@ export class HomeComponent implements OnInit {
             this.router.navigate(['/login']);
         }
         else{
+            
             this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
             data => {
-                // console.log("User has an applicant account");
+                console.log("User has an applicant account");
                 sessionStorage.setItem("accountType", "applicant")
-                console.log("NAVIGATE TO APPLICANT")
-                console.log(sessionStorage.getItem("accountType"))
-                this.router.navigate(['/applicant/profile-info']);
-            },
-            (err: HttpErrorResponse) => {
-                // this.loadComponent("empty");
-                console.log("http err")
-				sessionStorage.setItem("accountType", "employer")
-                console.log("NAVIGATE TO EMPLOYER")
-                console.log(sessionStorage.getItem("accountType"))
-                this.router.navigate(['/employer/profile-info']);
-			})
-            
-            // console.log("User has an applicant account");
-            
-          
-            this.user = user;
+                this.router.navigate(['/applicant']);
+            }, // Catch Errors
+            (err = HttpErrorResponse) => {
+                if (err.error instanceof Error) {
+                    console.log("Client-side error occured.");
+                } else {
+                    console.log("Server-side error occured.");
+                }
+                console.log("User does not have an applicant account");
+                // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
+            }
+        );
+        this.http.head("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
+            data => {
+                console.log("User has an employer account");
+                sessionStorage.setItem("accountType", "employer")
+                this.router.navigate(['/employer']);
+            }, // Catch Errors
+            (err = HttpErrorResponse) => {
+                if (err.error instanceof Error) {
+                    console.log("Client-side error occured.");
+                } else {
+                    console.log("Server-side error occured.");
+                }
+                console.log("User does not have an employer account");
+                // this.router.navigate(['/basicInfo'], { queryParams: { as: "Employer" } });
+            }
+        );
         }
     }
 
     initializeApplicant(){
-        sessionStorage.setItem("accountType", "applicant")
         this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).subscribe(
             data => {
+                sessionStorage.setItem("accountType", "applicant")
                 console.log("User has an applicant account");
                 this.router.navigate(['/applicant']);
             }, // Catch Errors
@@ -73,6 +85,7 @@ export class HomeComponent implements OnInit {
                 this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
             }
         );
+
     }
 
     initializeEmployer(){

@@ -134,6 +134,7 @@ app.post("/hire-request", (req, res, next) => {
 })
 
 app.post("/accept-hire", (req, res, next) => {
+    console.log("accept-hire")
     console.log(req.body)
     var body = ""
     req.on("data", function(chunk) {

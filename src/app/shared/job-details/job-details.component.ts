@@ -56,10 +56,15 @@ export class JobDetailsComponent implements OnInit {
   canDeApply = false;
   confirmResign = false;
   canAcceptJob = false
+  hasEmp = false
+
+  confirmFire = false;
 
   isOwner = false
 
   id: string;
+
+  // msg = undefined
 
   constructor(
     private http: HttpClient,
@@ -115,10 +120,10 @@ export class JobDetailsComponent implements OnInit {
 
           // jobData.tags = jobData.toString().split(",")
           
-
+    this.msg = "Please Wait"
     this.http.post(url, data).subscribe(
       data => {
-        alert("Success!")
+        // alert("Success!")
         this.http.get("http://18.220.46.51:3000/api/Employer/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
           emp_data => {
             this.http.get("http://18.220.46.51:3000/api/Applicant/" + applicant).subscribe(
@@ -130,7 +135,7 @@ export class JobDetailsComponent implements OnInit {
                 }
                 this.http.post("http://52.15.219.10:4200/hire-request", mailData).subscribe(
                   data => {
-                    alert("The applicant has been notified!")
+                    this.msg = "Congratulations! The applicant has been notified!"
                   }, 
                   (err: HttpErrorResponse) => {
                     if (err.error instanceof Error) {
@@ -168,7 +173,7 @@ export class JobDetailsComponent implements OnInit {
         } else {
           console.log("Server-side error occured.");
           console.log(err);
-          alert ("You have already requested to hire this applicant")
+          this.msg = "You have already requested to hire this applicant"
         }
       })
     }
@@ -373,19 +378,25 @@ export class JobDetailsComponent implements OnInit {
         }
 
         // employee
-        if (employeeID !== undefined) {
+        if (employeeID !== undefined && employeeID != "") {
           
-          this.show_employee = true
-          console.log(employeeID)
+          // this.show_employee = true
+          // console.log(employeeID)
+          this.hasEmp = true
           // console.log(this.applicants[0])
           // for (var i = 0; i <= this.applicants.length; i++){
             var url = "http://18.220.46.51:3000/api/Applicant/" + employeeID
             this.http.get(url).subscribe(
               data => {
-                this.employee.firstName = data["firstName"]
-                this.employee.lastName = data["lastName"]
-                this.employee.applicantID = data["applicantID"]
-                console.log(this.employee)
+                this.employee = {
+                  firstName: data['firstName'],
+                  lastName: data['lastName'],
+                  applicantID: data["applicantID"]
+                }
+                // this.employee.firstName = data["firstName"]
+                // this.employee.lastName = data["lastName"]
+                // this.employee.applicantID = data["applicantID"]
+                // console.log(this.employee)
             },
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
@@ -578,9 +589,9 @@ export class JobDetailsComponent implements OnInit {
                   data => {
                     // alert("Congratulations! You've successfully applied!")
                     this.msg = "Congratulations! You've successfully applied!"
-                    console.log("Success")
                     this.canApply = false 
-                    this.camDeApply = true
+                    this.canDeApply = true
+                    // location.reload()
                   },
                   (err: HttpErrorResponse) => {
                     if (err.error instanceof Error) {
@@ -630,7 +641,7 @@ export class JobDetailsComponent implements OnInit {
                     this.msg = "You've successfully removed your application"
                     console.log("Success")
                     this.canApply = true 
-                    this.camDeApply = false
+                    this.canDeApply = false
                   },
                   (err: HttpErrorResponse) => {
                     if (err.error instanceof Error) {
@@ -671,12 +682,17 @@ export class JobDetailsComponent implements OnInit {
     var data = {
       "applicant": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
       "job": this.jobID,
-      "reason": document.getElementById('reason').valu
+      "reason": document.getElementById('reason')["value"]
     }
     console.log(data)
+    this.msg = "Please wait"
     this.http.post(url, data).subscribe(
       data => {
-        console.log("success")
+        this.msg = "The employer has been notified of your resigning"
+        setTimeout(function() { 
+          console.log("shleep")
+        }, 2000);
+        this.router.navigate(["/applicant/profile-info/"])
       },
 
     (err: HttpErrorResponse) => {
@@ -707,23 +723,31 @@ export class JobDetailsComponent implements OnInit {
         // }
         this.http.get("http://18.220.46.51:3000/api/Applicant/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
           applicantData => {
-            var mailData = {
-              applicant_name: applicantData["firstName"] + " " + applicantData["lastName"],
-              job_name: this.title
-            }
+            this.http.get("http://18.220.46.51:3000/api/Employer/" + this.employerID).subscribe(
+              empdata => {
+                var mailData = {
+                  applicant_name: applicantData["firstName"] + " " + applicantData["lastName"],
+                  job_name: this.title,
+                  to: empdata["email"]
+                }
+                this.http.post("http://52.15.219.10:4200/accept-hire", mailData).subscribe(
+                  x => {
+                    console.log("success")
+                  },
+                  (err: HttpErrorResponse) => {
+                    if (err.error instanceof Error) {
+                      console.log("Client-side error occured.");
+                    } else {
+                      console.log("Server-side error occured.");
+                      console.log(err);
+                    }
+                    this.msg = "There was an error. Please try again"})
 
-            this.http.post("http://52.15.219.10:3000/accept-hire", mailData).subscribe(
-              x => {
-                console.log("success")
-            },
-            (err: HttpErrorResponse) => {
-              if (err.error instanceof Error) {
-                console.log("Client-side error occured.");
-              } else {
-                console.log("Server-side error occured.");
-                console.log(err);
-              }
-              this.msg = "There was an error. Please try again"})
+              },
+            )
+            
+
+            
           },
           (err: HttpErrorResponse) => {
             if (err.error instanceof Error) {
@@ -745,6 +769,42 @@ export class JobDetailsComponent implements OnInit {
       }
       this.msg = "There was an error. Please try again"
     })
+  }
+
+  firep1() {
+    this.confirmFire = true
+  }
+
+  firep2() {
+    var url = "http://18.220.46.51:3000/api/FireApplicant"
+    // console.log(this.employee)
+    var data = {
+      "applicant": this.employee["applicantID"],
+      "job": this.jobID,
+      "employer":localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
+      "reason": document.getElementById('reason')["value"]
+    }
+    console.log(data)
+    this.msg = "Please wait"
+    this.http.post(url, data).subscribe(
+      data => {
+        this.msg = "The applicant has been notified of your firing"
+        setTimeout(function() { 
+          console.log("shleep")
+        }, 2000);
+        this.router.navigate(["/employer/profile-info/"])
+      },
+
+    (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+          console.log(err);
+        }
+        this.msg = "There was an error. Please try again"
+      }
+    )
   }
   
 }

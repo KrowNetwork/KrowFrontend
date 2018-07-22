@@ -29,6 +29,7 @@
     "core-js": "^2.5.7",
     "jquery": "^2.1.4",
     "modernizr": "^3.6.0",
+    "ngclipboard": "^2.0.0",
     "ngstorage": "^0.3.11",
     "rxjs": "^6.2.2",
     "rxjs-compat": "^6.2.2",

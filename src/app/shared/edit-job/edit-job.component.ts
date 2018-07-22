@@ -143,7 +143,7 @@ export class EditJobComponent implements OnInit {
         }
 
         if(change != false){
-          var c = document.getElementById("description").value
+          var c = document.getElementById("description")["value"]
           data["description"] = c
           // Get timestamp and change data timestamp
           var timestamp = new Date();

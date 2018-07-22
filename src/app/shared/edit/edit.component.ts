@@ -180,6 +180,7 @@ export class EditComponent implements OnInit {
     var type = sessionStorage.getItem("accountType")
     if (type == "applicant") {
       this.profileType = "Applicant"
+      this.userType = "applicant"
     } else {
       this.profileType = "Employer"
     }

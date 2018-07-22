@@ -29,6 +29,8 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
   urlLINKEDIN: string;
   urlWEBSITE: string;
 
+  id: string;
+
   education = [];
   experience = [];
   cityState: string;
@@ -36,6 +38,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
   in_progress_jobs = [];
   completed_jobs = [];
   terminated_jobs = [];
+  terminate_reasons = [];
 
   curr_emp = false
 
@@ -70,6 +73,15 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
         this.first = data["firstName"]
         this.last = data["lastName"]
         this.name = this.first + " " + this.last
+        for (var i = 0; i < data["terminateReasons"].length; i ++) {
+          var x = data["terminateReasons"][i].split("|")
+          if (x[0] == 'Resign') {
+            this.terminate_reasons.push("Reason for resigning: " + x[1])
+          } else {
+            this.terminate_reasons.push("Reason for being fired: " + x[1])
+          }
+          // this.terminate_reasons.push(data["terminateReasons"][i])
+        }
 
         if (data["email"] == "") {
           this.email = "No Email Provided"
@@ -147,14 +159,14 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           this.experience = []
           for (var i = 0; i < data["resume"]["experience"].length; i ++) {
             var element = data["resume"]["experience"][i]
-            element["startDate"] = new Date(element["startDate"])
-            element["startDate"] = (element["startDate"].getMonth().toString() + 1) + '/' + element["startDate"].getDate().toString() + '/' +  element["startDate"].getFullYear().toString()
+            var s = new Date(element["startDate"])
+            element["startDate"] = (s.getMonth() + 1).toString() + '/' + s.getDate().toString() + '/' +  s.getFullYear().toString()
             
-            element["endDate"] = new Date(element["endDate"])
-            element["endDate"] = (element["endDate"].getMonth().toString().toString() + 1) + '/' + element["endDate"].getDate().toString() + '/' +  element["endDate"].getFullYear().toString()
+            var e = new Date(element["endDate"])
+            element["endDate"] = (e.getMonth() + 1).toString() + '/' + e.getDate().toString() + '/' +  e.getFullYear().toString()
             this.experience.push(element)
           }
-
+        }
           // JOBS
 
           // in progress
@@ -203,31 +215,49 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           }
 
           // terminated
+          console.log(data["terminatedJobs"].length)
           for (var i = 0; i < data["terminatedJobs"].length; i++){
-
             var id = data["terminatedJobs"][i].split("#")[1].toString()
+            // console.log("id" + id)
+            // console.log(data["terminateReasons"][i])
             var n_url = "http://18.220.46.51:3000/api/Job/" + id 
             this.http.get(n_url).subscribe(
               n_data => {
+                // console.log(n_data)
                 var start = new Date(n_data["startDate"])
                 var end = new Date(n_data["endDate"])
                 var nstart = (start.getMonth() + 1) + '/' + start.getDate() + '/' +  start.getFullYear()
                 var nend = (end.getMonth() + 1) + '/' + end.getDate() + '/' +  end.getFullYear()
+
+                console.log(n_data["startDate"])
+                // console.log(data["terminateReasons"][i])
                 this.terminated_jobs.push(
                   {
                     title: n_data["title"],
                     jobID: n_data["jobID"],
                     startDate: nstart,
-                    endDate: nend
+                    endDate: nend,
+                    // reason: this.terminate_reasons[i]
                   }
                   
                 )
                 
               })
           }
+          // console.log(this.terminated_jobs)
+          // console.log(this.terminated_jobs[0])
+          // var nterm = []
+          // var c = 0
+          // this.terminated_jobs.forEach(element => {
+          //   element.reason = this.terminate_reasons[c]
+          //   console.log(element)
+          //   nterm.push(element)
+          //   c += 1
+          // });
+          // console.log(this.terminate_reasons[0])
 
           // console.log(this.experience)
-        }
+        
       }
     )
   

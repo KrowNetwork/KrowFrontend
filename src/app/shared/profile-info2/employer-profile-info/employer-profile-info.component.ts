@@ -15,6 +15,7 @@ export class EmployerProfileInfoComponent implements OnInit {
   // vars 
   user: string;
   companyName: string;
+  empId: string;
   desc: string;
   name: string;
   bio: string;
@@ -36,6 +37,7 @@ export class EmployerProfileInfoComponent implements OnInit {
   in_progress_jobs = [];
   completed_jobs = [];
   terminated_jobs = [];
+  available_jobs = []
 
   display_edit = false
 
@@ -80,6 +82,8 @@ export class EmployerProfileInfoComponent implements OnInit {
         } else {
           this.phone = data["phoneNumber"]
         }
+
+        this.empId = data["employerID"]
 
 
         // this.cityState = data["city"] + ", " + data["state"]
@@ -147,26 +151,28 @@ export class EmployerProfileInfoComponent implements OnInit {
 
     //       // JOBS
 
-    //       // in progress
-    //       for (var i = 0; i < data["inprogressJobs"].length; i++){
+    //       // availalbe
+          for (var i = 0; i < data["availableJobs"].length; i++){
 
-    //         var id = data["inprogressJobs"][i].split("#")[1].toString()
-    //         var n_url = "http://18.220.46.51:3000/api/Job/" + id 
-    //         this.http.get(n_url).subscribe(
-    //           n_data => {
-    //             var start = new Date(n_data["startDate"])
-    //             start = (start.getMonth() + 1) + '/' + start.getDate() + '/' +  start.getFullYear()
-    //             this.in_progress_jobs.push(
-    //               {
-    //                 title: n_data["title"],
-    //                 jobID: n_data["jobID"],
-    //                 startDate: start
-    //               }
+            var id = data["availableJobs"][i].split("#")[1].toString()
+            var n_url = "http://18.220.46.51:3000/api/Job/" + id 
+            this.http.get(n_url).subscribe(
+              n_data => {
+                var s = new Date(n_data["created"])
+                var start = (s.getMonth() + 1) + '/' + s.getDate() + '/' +  s.getFullYear()
+                console.log(n_data["location"])
+                this.available_jobs.push(
+                  {
+                    title: n_data["title"],
+                    jobID: n_data["jobID"],
+                    location: n_data["location"],
+                    created: start
+                  }
                   
-    //             )
+                )
                 
-    //           })
-    //       }
+              })
+          }
 
     //       // completed
     //       for (var i = 0; i < data["completedJobs"].length; i++){
@@ -230,4 +236,36 @@ export class EmployerProfileInfoComponent implements OnInit {
     }
 
 }
+  copyUrl() {
+
+    var TextAreaElement = document.createElement("textarea");
+  
+    // Place in outside of the visible area of the screen regardless of scroll position.
+    TextAreaElement.style.position = 'absolute';
+    TextAreaElement.style.top = "-100";
+    TextAreaElement.style.left = "0";
+    
+    // add text to the textbox
+    TextAreaElement.value = "http://krownetwork.com/employer/profile-info/" + this.empId;
+
+    // append TextAreaElement to document
+    document.body.appendChild(TextAreaElement);
+
+    // select the content
+    TextAreaElement.select();
+
+    try {
+        var successful = document.execCommand('copy');
+        // var msg = successful ? 'successful' : 'unsuccessful';
+        // console.log('Copying text "' + text + '" to clipboard was ' + msg);
+    } catch (err) {
+        console.log('Cannot copy to clipboard');
+    }
+
+    // remove the TextAreaElement from the document
+    document.body.removeChild(TextAreaElement);
+
+    // unload
+    TextAreaElement = undefined;
+  } 
 }
