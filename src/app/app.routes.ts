@@ -39,6 +39,8 @@ import { BasicInfoCollectorComponent } from './shared/basic-info-collector/basic
 
 // Profile components (shared)
 import { ProfileInfoComponent } from './shared/profile-info/profile-info.component';
+import { ProfileInfo2Component } from './shared/profile-info2/profile-info2.component';
+
 import { AvailableJobsComponent } from './shared/available-jobs/available-jobs.component';
 import { CompletedJobsComponent } from './shared/completed-jobs/completed-jobs.component';
 import { TerminatedJobsComponent } from './shared/terminated-jobs/terminated-jobs.component';
@@ -46,6 +48,9 @@ import { InProgressJobsComponent } from './shared/in-progress-jobs/in-progress-j
 import { JobDetailsComponent } from './shared/job-details/job-details.component';
 
 import { HelpComponent } from './shared/help/help.component';
+import { EditComponent } from "./shared/edit/edit.component"
+
+import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-profile-info/employer-profile-info.component'
 
 
 
@@ -109,15 +114,15 @@ const secureHome: Routes = [
         children: [
             { 
                 path: '', 
-                component: ProfileInfoComponent
+                component: ProfileInfo2Component
             },
             { 
                 path: 'profile-info',
-                component: ProfileInfoComponent
+                component: ProfileInfo2Component
             },
             { 
                 path: 'profile-info/:applicantID',
-                component: ProfileInfoComponent
+                component: ProfileInfo2Component
             },
             { 
                 path: 'applicant-resume', 
@@ -156,6 +161,11 @@ const secureHome: Routes = [
                 path: 'job-search', 
                 component: JobSearchComponent
                 //component: ComingSoonComponent
+            },
+            { 
+                path: 'edit', 
+                component: EditComponent
+                //component: ComingSoonComponent
             }
         ]
     },
@@ -165,11 +175,11 @@ const secureHome: Routes = [
         children: [
             { 
                 path: '', 
-                component: ProfileInfoComponent
+                component: EmployerProfileInfoComponent
             },
             { 
                 path: 'profile-info',
-                component: ProfileInfoComponent
+                component: EmployerProfileInfoComponent
             },
             { 
                 path: 'employer-post-jobs', 
@@ -198,6 +208,10 @@ const secureHome: Routes = [
             { 
                 path: 'job-search', 
                 component: JobSearchComponent, 
+            },
+            {
+                path: "edit",
+                component: EditComponent,
             }
         ]
     },

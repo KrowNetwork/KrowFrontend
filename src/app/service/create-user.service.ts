@@ -18,7 +18,7 @@ export class CreateUserService {
             ["experience"]: [],
             ["achievements"]: [],
             ["affiliations"]: [],
-            ["biography"]: "",
+            ["biography"]: userObj.bio,
             ["lastUpdated"]: new Date(),
             // ["id"]: ""
         };

@@ -20,6 +20,7 @@ export class BasicInfoCollectorComponent implements OnInit {
     first: string;
     second: string;
     email: string;
+    bio: string;
     errorMessage: string;
   
     ngOnInit() {
@@ -46,12 +47,23 @@ export class BasicInfoCollectorComponent implements OnInit {
         }
         else{
             this.errorMessage = "";
-            var obj = {
-                user: this.user,
-                first: this.first,
-                second: this.second,
-                email: this.email,
+            if (this.intent == "Applicant") {
+                var obj = {
+                    user: this.user,
+                    first: this.first,
+                    second: this.second,
+                    email: this.email,
+                    bio: this.bio
+                }
+            } else {
+                var obj = {
+                    user: this.user,
+                    first: this.first,
+                    second: this.second,
+                    email: this.email,
+                }
             }
+            
             this.initializeUser.initializeUser(obj, this.intent, this.activate, this.router);
         }
     }

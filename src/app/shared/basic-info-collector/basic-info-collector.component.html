@@ -26,6 +26,11 @@
                                         [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
                                     <i class="la la-envelope"></i>
                                 </div>
+                                <div class="cfield">                                
+                                    <textarea id="biaBio" required type="text" placeholder="Short Bio. Don't worry, you can change it later" class="form-control"
+                                        [(ngModel)]="bio" [ngModelOptions]="{standalone: true}"></textarea>
+                                    <i class="la la-envelope"></i>
+                                </div>
                                 <button (click)="submitInfo()">
                                     Let's get started!
                                 </button>

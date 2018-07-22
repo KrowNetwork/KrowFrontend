@@ -84,6 +84,10 @@ import { AffiliationsDirective } from './applicant/applicant-resume/resume-affil
 import { JobSearchDirective } from './shared/job-search/job-search.directive';
 import { BottomBarComponent } from './shared/bottom-bar/bottom-bar.component';
 import { HelpComponent } from './shared/help/help.component';
+import { ProfileInfo2Component } from './shared/profile-info2/profile-info2.component';
+import { ApplicantProfileInfoPrivateComponent } from './shared/profile-info2/applicant-profile-info/applicant-profile-info.component';
+import { EditComponent } from "./shared/edit/edit.component";
+import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-profile-info/employer-profile-info.component'
 
 
 
@@ -135,6 +139,10 @@ import { HelpComponent } from './shared/help/help.component';
     JobDetailsComponent,
     BottomBarComponent,
     HelpComponent,
+    ProfileInfo2Component,
+    ApplicantProfileInfoPrivateComponent,
+    EditComponent,
+    EmployerProfileInfoComponent,
   ],
   imports: [
     BrowserModule,

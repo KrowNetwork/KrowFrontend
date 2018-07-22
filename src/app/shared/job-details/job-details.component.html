@@ -1,9 +1,9 @@
 <div class="padding-left">
-    <a (click)="buttonPressed($event)" class="post-job-btn" id="top" [hidden]="hide_employer_buttons">Edit</a>
-    <a (click)="apply($event)" class="post-job-btn" id="top" [hidden]="hide_apply">Apply</a>
-    <a (click)="delete()" class="post-job-btn" id="top" [hidden]="hide_employer_buttons">Delete Job</a>
-    <a (click)="acceptJob()" class="post-job-btn" id="top" [hidden]="hide_accept">Accept Job</a>
-    <a (click)="viewEmployer()" class="post-job-btn" id="top" [hidden]="hide_view_employer">View Employer</a>
+    <button (click)="buttonPressed($event)"  id="top" [hidden]="hide_employer_buttons">Edit</button>
+    <button (click)="apply($event)"  id="top" [hidden]="hide_apply">Apply</button>
+    <button (click)="delete()"  id="top" [hidden]="hide_employer_buttons">Delete Job</button>
+    <button (click)="acceptJob()"  id="top" [hidden]="hide_accept">Accept Job</button>
+    <button (click)="viewEmployer()"  id="top" [hidden]="hide_view_employer">View Employer</button>
     <div *ngIf="msg!==undefined" class="alert">
         <i class="la la-exclamation"></i>
         {{ msg }}

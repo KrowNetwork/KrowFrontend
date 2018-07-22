@@ -6,6 +6,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 import { ItemType } from '../../../shared/item-type-constructor';
 import { EducationMainComponent } from './education-main.component';
 import { EducationDirective } from '../resume-education/education.directive';
+import { log } from 'util';
 import { InterfaceComponent } from '../../../shared/interface-component.component';
 import { UpdateResumeService } from '../../../service/update-resume.service';
 
@@ -27,10 +28,12 @@ export class ResumeEducationComponent implements OnInit {
   ) {}
 
   updateResume(event){
+    console.log(event.target.closest("app-resume-education"))
     this.updateResumeService.updateMain(event.target.closest("app-resume-education"));
   }
   
   loadComponent(educations) {
+    // console.log()
     if(educations == "empty"){
       educations = new Array<ItemType>();
       educations.push(
@@ -63,6 +66,7 @@ export class ResumeEducationComponent implements OnInit {
 		}
     this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
       data => {
+        
         var resumeEducations = data["resume"]["education"];
         var educations = new Array<ItemType>();
         for(var k = 0; k < resumeEducations.length; k++){

@@ -1,0 +1,172 @@
+<div class="padding-left">
+    <a (click)="viewUserResume()" class="post-job-btn" id="top" [hidden]="lockResume">View Resume</a>
+    <a (click)="requestToHire()" class="post-job-btn" id="top" [hidden]="lockResume">Request to hire</a>
+
+  <div class="social-edit"  id="sn">
+    <h3 id="app-responsive-component-profile"></h3>
+    <form>
+      <div class="row">
+        <div id="app-responsive-component-profile-first" class="col-lg-6">
+          <span class="pf-title"></span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="" id=""
+              [(ngModel)]="first" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
+            <i class="la la-user"></i>
+          </div>
+        </div>
+
+
+        <div id="app-responsive-component-profile-second" class="col-lg-12" >
+          <span class="pf-title"></span> 
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="" id=""
+              [(ngModel)]="second" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
+            <i class="la la-users"></i>
+          </div>
+        </div>
+
+        <!-- <div id="app-responsive-component-profile-second" class="col-lg-12" *ngIf="profileType == 'Employer'">
+            <span class="pf-title"></span> 
+            <div class="pf-field">
+              <input (keydown)="changeHandler($event)" type="textarea" placeholder="" id=""
+                [(ngModel)]="second" [ngModelOptions]="{standalone: true}" class="ta" [disabled]="is_disabled()"/>
+              <i class="la la-users"></i>
+            </div>
+          </div> -->
+
+
+      </div>
+      <div class="col-lg-12" style="display:none; padding:0">
+        <a (click)="buttonPressed($event)" class="post-job-btn" style="float:right" ng-disabled="false">UPDATE</a>
+      </div>
+    </form>
+  </div>
+  <!-- Applicant ONLY -->
+  <div class="social-edit"  id="sn" *ngIf="profileType == 'Applicant'">
+      <h3>Bio</h3>
+      <form>
+        <div class="row">
+          <div class="col-lg-12">
+            <span class="pf-title">Bio</span>
+            <div class="pf-field">
+              <textarea (keydown)="changeHandler($event)" type="text" placeholder="Some cool stuff about me" 
+                [(ngModel)]="bio" [ngModelOptions]="{standalone: true}" id="bio" [disabled]="is_disabled()"></textarea>
+              <i class="la la-user"></i>   
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12" style="display:none; padding:0">
+            <a (click)="buttonPressed($event)" class="post-job-btn" style="float:right" ng-disabled="false">UPDATE</a>
+          </div>
+      </form>
+    </div>
+
+  <div class="social-edit"  id="sn">
+    <h3>Address</h3>
+    <form>
+      <div class="row">
+        <div class="col-lg-6">
+          <span class="pf-title">Address</span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="4632 1/2 Hollywood Boulevard" 
+              [(ngModel)]="address" [ngModelOptions]="{standalone: true}" id="address" [disabled]="is_disabled()"/>
+            <i class="la la-map-marker"></i>   
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <span class="pf-title">City</span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="Los Angeles" 
+              [(ngModel)]="city" [ngModelOptions]="{standalone: true}"id="city" [disabled]="is_disabled()"/>
+            <i class="la la-map-marker"></i>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <span class="pf-title">State</span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="California"
+              [(ngModel)]="state" [ngModelOptions]="{standalone: true}" id="state" [disabled]="is_disabled()"/>
+            <i class="la la-map-o"></i>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <span class="pf-title">Country</span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="USA"
+              [(ngModel)]="country" [ngModelOptions]="{standalone: true}" id="country" [disabled]="is_disabled()"/>
+            <i class="la la-flag-o"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12" style="display:none; padding:0">
+        <a (click)="buttonPressed($event)" class="post-job-btn" style="float:right" ng-disabled="false">UPDATE</a>
+      </div>
+    </form>
+  </div>
+  <div class="social-edit"  id="sn">
+    <h3>Social</h3>
+    <form>
+      <div class="row" id="app-responsive-social-div">
+        <div class="col-lg-6">
+          <span class="pf-title">Facebook</span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="www.facebook.com/sample"
+              id="urlFACEBOOK" [(ngModel)]="urlFACEBOOK" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
+            <i class="la la-facebook"></i>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <span class="pf-title">Twitter</span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="www.twitter.com/sample" 
+              id="urlTWITTER" [(ngModel)]="urlTWITTER" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
+            <i class="la la-twitter"></i>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <span class="pf-title">Linkedin</span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="www.linkedin.com/sample" 
+              id="urlLINKEDIN" [(ngModel)]="urlLINKEDIN" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
+            <i class="la la-linkedin"></i>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <span class="pf-title">Website</span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="www.myDomain.com/sample" 
+              id="urlWEBSITE" [(ngModel)]="urlWEBSITE" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
+            <i class="la la-external-link-square"></i>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <span class="pf-title">Phone</span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="+1 609 963 5896" 
+              id="phoneNumber" [(ngModel)]="phoneNumber" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
+            <i class="la la-phone"></i>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <span class="pf-title">Mail</span>
+          <div class="pf-field">
+            <input (keydown)="changeHandler($event)" type="text" placeholder="mail@mail.com" 
+              id="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
+            <i class="la la-envelope"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12" style="display:none; padding:0">
+        <a (click)="buttonPressed($event)" class="post-job-btn" style="float:right" ng-disabled="false">UPDATE</a>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="social-edit"  id="sn" *ngIf="userType == 'applicant'">
+  <h3>Education</h3>
+  <app-resume-education></app-resume-education>
+</div>
+<div class="social-edit"  id="sn" *ngIf="userType == 'applicant'">
+  <h3>Experience</h3>
+  <app-resume-experience></app-resume-experience>
+</div>
