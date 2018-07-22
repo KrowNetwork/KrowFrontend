@@ -133,7 +133,7 @@ app.post("/hire-request", (req, res, next) => {
     res.send({"response": "success"})
 })
 
-app.post("/aceept-hire", (req, res, next) => {
+app.post("/accept-hire", (req, res, next) => {
     console.log(req.body)
     var body = ""
     req.on("data", function(chunk) {

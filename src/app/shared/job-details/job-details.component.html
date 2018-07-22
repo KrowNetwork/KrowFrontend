@@ -22,6 +22,7 @@
                   </div>
                   <div class="col-lg-4">
                     <a *ngIf="canEdit" class="apply-thisjob" (click)="goToEdit()" title="" style="margin-top: 5px;"><i class="la la-pencil"></i>Edit this job</a>
+                    <a *ngIf="canAcceptJob" class="apply-thisjob" (click)="acceptJob()" title="" style="margin-top: 5px;"><i class="la la-check"></i>Accept this job</a>
                     <a *ngIf="!canEdit && canApply" class="apply-thisjob" (click)="apply($event)" title="" style="margin-top: 5px;"><i class="la la-paper-plane"></i>Apply for job</a>
                     <a *ngIf="!canEdit && canDeApply" class="apply-thisjob" (click)="deapply($event)" title="" style="margin-top: 5px;"><i class="la la-close"></i>Remove Application</a>
                     <a class="apply-thisjob" (click)="viewEmp()" title="" style="margin-top: 5px; margin-bottom: 5px"><i class="la la-eye"></i>View Employer</a>
@@ -47,7 +48,8 @@
                       <span><i class="la la-file-text"></i><strong>300-500</strong> Application</span>
                       <span><i class="la la-search-plus"></i><strong>35697</strong> Displayed</span>
                     </div>
-                    <div class="social-edit" id=sn>
+
+                    <div class="social-edit" id=sn *ngIf="!canApply">
                       <h3>Employee</h3>
                     <div class="job-list-modern">
                         <div class="job-listings-sec no-border">
@@ -69,6 +71,53 @@
                         </div>
                     </div>
                   </div>
+
+                  <div class="social-edit" id=sn *ngIf="isOwner">
+                      <h3>Applicants</h3>
+                    <div class="job-list-modern">
+                        <div class="job-listings-sec no-border">
+                          <div class="job-listing wtabs" *ngFor="let app of applicant_data; let i = index">
+                            <div class="job-title-sec" >
+
+                              <h3><a href="#" title="">{{ app.firstName }} {{ app.lastName }}</a></h3>
+
+                              <div class="job-style-bx btn-group">
+
+                                  <button [routerLink]="['/applicant/profile-info/', app.applicantID]">View</button>
+                                  <button style="display: inline; padding: 10px; " (click)="requestToHire(app.applicantID)"><i class="la la-check"></i></button>
+                                  <button style="display: inline; padding: 10px; " (click)="requestToHire()"><i class="la la-close"></i></button>
+                                </div> 
+                            </div>
+                                  
+                            
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+
+                  <div class="social-edit" id=sn *ngIf="isOwner">
+                      <h3>Hire Requests</h3>
+                    <div class="job-list-modern">
+                        <div class="job-listings-sec no-border">
+                          <div class="job-listing wtabs" *ngFor="let app of h_data; let i = index">
+                            <div class="job-title-sec" >
+
+                              <h3><a href="#" title="">{{ app.firstName }} {{ app.lastName }}</a></h3>
+
+                              <div class="job-style-bx btn-group">
+
+                                  <button [routerLink]="['/applicant/profile-info/', app.applicantID]">View</button>
+                                  <!-- <button style="display: inline; padding: 10px; " (click)="requestToHire(app.applicantID)"><i class="la la-check"></i></button>
+                                  <button style="display: inline; padding: 10px; " (click)="requestToHire()"><i class="la la-close"></i></button> -->
+                                </div> 
+                            </div>
+                                  
+                            
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+
                   </div>
                   <div class="col-lg-4 column">
                     <div class="job-overview">

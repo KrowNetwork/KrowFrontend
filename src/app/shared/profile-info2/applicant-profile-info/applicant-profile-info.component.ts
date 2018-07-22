@@ -37,6 +37,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
   completed_jobs = [];
   terminated_jobs = [];
 
+  curr_emp = false
 
 
   constructor(
@@ -54,8 +55,16 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
   
   ngOnInit() {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+    if (this.router.url.split("/")[3] != undefined) {
+      this.id = this.router.url.split("/")[3]
+      if (sessionStorage.getItem("accountType") == "employer") {
+        this.curr_emp = true
+      }
+    } else {
+      this.id = this.user
+    }
     
-    this.http.get("http://18.220.46.51:3000/api/Applicant/" + this.user).subscribe(
+    this.http.get("http://18.220.46.51:3000/api/Applicant/" + this.id).subscribe(
       data => {
         console.log(data)
         this.first = data["firstName"]
