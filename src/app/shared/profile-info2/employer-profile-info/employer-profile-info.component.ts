@@ -37,6 +37,8 @@ export class EmployerProfileInfoComponent implements OnInit {
   completed_jobs = [];
   terminated_jobs = [];
 
+  display_edit = false
+
   constructor(
     public http: HttpClient,
     private userService: UserLoginService,
@@ -49,7 +51,13 @@ export class EmployerProfileInfoComponent implements OnInit {
     
    }
   ngOnInit() {
-    this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+    if (this.router.url.split("/")[3] !== undefined) {
+      this.user = this.router.url.split("/")[3]
+    } else {
+      this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+      this.display_edit = true
+    } 
+    
     
     this.http.get("http://18.220.46.51:3000/api/Employer/" + this.user).subscribe(
       data => {

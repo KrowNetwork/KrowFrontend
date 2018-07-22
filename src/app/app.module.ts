@@ -87,7 +87,8 @@ import { HelpComponent } from './shared/help/help.component';
 import { ProfileInfo2Component } from './shared/profile-info2/profile-info2.component';
 import { ApplicantProfileInfoPrivateComponent } from './shared/profile-info2/applicant-profile-info/applicant-profile-info.component';
 import { EditComponent } from "./shared/edit/edit.component";
-import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-profile-info/employer-profile-info.component'
+import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-profile-info/employer-profile-info.component';
+import { EditJobComponent } from './shared/edit-job/edit-job.component'
 
 
 
@@ -143,6 +144,7 @@ import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-pr
     ApplicantProfileInfoPrivateComponent,
     EditComponent,
     EmployerProfileInfoComponent,
+    EditJobComponent,
   ],
   imports: [
     BrowserModule,

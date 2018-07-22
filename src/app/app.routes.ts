@@ -23,6 +23,10 @@ import { HireRequestsComponent } from './shared/hire-requests/hire-requests.comp
 // Job components
 import { JobProfileComponent } from './job/job-profile/job-profile.component';
 
+
+import { EditJobComponent } from './shared/edit-job/edit-job.component'
+
+
 // Applicant components
 import { ApplicantProfileComponent } from './applicant/applicant-profile/applicant-profile.component';
 import { ApplicantResumeComponent } from './applicant/applicant-resume/applicant-resume.component';
@@ -182,6 +186,10 @@ const secureHome: Routes = [
                 component: EmployerProfileInfoComponent
             },
             { 
+                path: 'profile-info/:employerID',
+                component: EmployerProfileInfoComponent
+            },
+            { 
                 path: 'employer-post-jobs', 
                 component: EmployerPostJobsComponent,
             },
@@ -222,6 +230,10 @@ const secureHome: Routes = [
             { 
                 path: ':jobID', 
                 component: JobDetailsComponent
+            },
+            {
+                path: ":jobID/edit",
+                component: EditJobComponent
             }
             // { 
             //     path: 'profile-info',

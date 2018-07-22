@@ -74,11 +74,15 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           this.phone = data["phoneNumber"]
         }
 
+        var bioTag = document.getElementById("bio")
+        
         if (data["resume"]["biography"] == "") {
           this.bio = "No Bio Provided"
         } else {
           this.bio = data["resume"]["biography"]
         }
+
+        bioTag.innerHTML = this.bio
 
         this.cityState = data["city"] + ", " + data["state"]
 

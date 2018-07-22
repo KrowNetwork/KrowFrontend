@@ -1,121 +1,119 @@
-<div class="padding-left">
-    <button (click)="buttonPressed($event)"  id="top" [hidden]="hide_employer_buttons">Edit</button>
-    <button (click)="apply($event)"  id="top" [hidden]="hide_apply">Apply</button>
-    <button (click)="delete()"  id="top" [hidden]="hide_employer_buttons">Delete Job</button>
-    <button (click)="acceptJob()"  id="top" [hidden]="hide_accept">Accept Job</button>
-    <button (click)="viewEmployer()"  id="top" [hidden]="hide_view_employer">View Employer</button>
-    <div *ngIf="msg!==undefined" class="alert">
-        <i class="la la-exclamation"></i>
-        {{ msg }}
+<section>
+    <div class="block">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 column">
+            <div class="job-single-sec style3">
+              <div class="job-head-wide">
+                <div class="row">
+                  <div class="col-lg-8">
+                    <div class="job-single-head3">
+                      <!-- <div class="job-thumb"> <img src="http://placehold.it/120x95" alt="" /><span>12 Open Position</span> </div> -->
+                      <div class="job-single-info3">
+                        <h3>{{ title }}</h3>
+                        <span><i class="la la-map-marker"></i>{{ locaction }}</span>
+                        <ul class="tags-jobs">
+                          <!-- <li><i class="la la-file-text"></i> Applications 1</li> -->
+                          <li><i class="la la-calendar-o"></i> Post Date: {{ created }}</li>
+                          <!-- <li><i class="la la-eye"></i> Views 5683</li> -->
+                        </ul>
+                      </div>
+                    </div><!-- Job Head -->
+                  </div>
+                  <div class="col-lg-4">
+                    <a *ngIf="canEdit" class="apply-thisjob" (click)="goToEdit()" title="" style="margin-top: 5px;"><i class="la la-pencil"></i>Edit this job</a>
+                    <a *ngIf="!canEdit && canApply" class="apply-thisjob" (click)="apply($event)" title="" style="margin-top: 5px;"><i class="la la-paper-plane"></i>Apply for job</a>
+                    <a *ngIf="!canEdit && canDeApply" class="apply-thisjob" (click)="deapply($event)" title="" style="margin-top: 5px;"><i class="la la-close"></i>Remove Application</a>
+                    <a class="apply-thisjob" (click)="viewEmp()" title="" style="margin-top: 5px; margin-bottom: 5px"><i class="la la-eye"></i>View Employer</a>
+                    <!-- <div class="apply-alternative">
+                      <a href="#" title=""><i class="la la-linkedin"></i> Apply with Linkedin</a>
+                      <span><i class="la la-heart-o"></i> Shortlist</span>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+              <div class="job-wide-devider">                
+                <div class="row">
+                  <div class="col-lg-8 column">		
+                    <div class="job-details">
+                      <h3>Job Description</h3>
+                      <span id="job-details"></span>
+                    </div>
+                    <div class="share-bar">
+                      <span>Share</span><a href="#" title="" class="share-fb"><i class="fa fa-facebook"></i></a><a href="#" title="" class="share-twitter"><i class="fa fa-twitter"></i></a>
+                    </div>
+                    <div class="extra-job-info">
+                      <span><i class="la la-clock-o"></i><strong>35</strong> Days</span>
+                      <span><i class="la la-file-text"></i><strong>300-500</strong> Application</span>
+                      <span><i class="la la-search-plus"></i><strong>35697</strong> Displayed</span>
+                    </div>
+                    <div class="social-edit" id=sn>
+                      <h3>Employee</h3>
+                    <div class="job-list-modern">
+                        <div class="job-listings-sec no-border">
+                          <div *ngIf="!canApply" class="job-listing wtabs">
+                            <div class="job-title-sec" >
+                              <!-- <div class="c-logo"> <img src="http://placehold.it/98x51" alt="" /> </div> -->
+                              <h3><a href="#" title="">{{ employee.firstName }} {{ employee.lastName }}</a></h3>
+                              <!-- <span>{{ item.employerName }}</span> -->
+                              <!-- <div class="job-lctn"><i class="la la-map-marker"></i>{{  }}</div> -->
+                            </div>
+                                  
+                            <div class="job-style-bx">
+                              <!-- <span class="job-is ft ">Full time</span>
+                              <span class="fav-job"><i class="la la-heart-o"></i></span>
+                              <i>5 months ago</i> -->
+                              <button [routerLink]="['/applicant/profile-info/', employee.applicantID]">View</button>
+                            </div> 
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                  </div>
+                  <div class="col-lg-4 column">
+                    <div class="job-overview">
+                      <h3>Job Overview</h3>
+                      <ul>
+                        <li><i class="la la-money"></i><h3>Offerd Salary</h3><span>${{ payment }} {{ paymentType }}</span></li>
+                        <!-- <li><i class="la la-mars-double"></i><h3>Gender</h3><span>Female</span></li> -->
+                        <li><i class="la la-thumb-tack"></i><h3>Job Level</h3><span>{{ jobType }}</span></li>
+                        <!-- <li><i class="la la-puzzle-piece"></i><h3>Industry</h3><span>Management</span></li> -->
+                        <!-- <li><i class="la la-shield"></i><h3>Experience</h3><span>2 Years</span></li> -->
+                        <!-- <li><i class="la la-line-chart "></i><h3>Qualification</h3><span>Bachelor Degree</span></li> -->
+                      </ul>
+                    </div><!-- Job Overview -->
+                    <div *ngIf="isTheApplicant">
+                          <a  class="apply-thisjob check" (click)="requestComplete()" title="" style="margin-top: 5px;"><i class="la la-check"></i>Request Completion</a>
+                          <a  class="apply-thisjob cclose" (click)="resignp1()" title="" style="margin-top: 5px;"><i class="la la-close"></i>Resign Job</a>
+                          <div *ngIf="confirmResign" class="pf-field">
+                              <input type="text" placeholder="Reason" id="reason"
+                              [(ngModel)]="reason" [ngModelOptions]="{standalone: true}"/>
+                              <button (click)="resignp2()">Confirm</button>
+                          </div>
+                          
+                          <!-- <a class="apply-thisjob" (click)="viewEmp()" title="" style="margin-top: 5px; margin-bottom: 5px;"><i class="la la-eye"></i>View Employer</a> -->
+                    </div>
+                    <div class="quick-form-job">
+                      <h3>Contact</h3>
+                      <form>
+                        <input type="text" placeholder="Enter your Name *" />
+                        <input type="text" placeholder="Email Address*" />
+                        <input type="text" placeholder="Phone Number" />
+                        <textarea placeholder="Message should have more than 50 characters"></textarea>
+                        <button class="submit">Send Email</button>
+                        <span>You accepts our <a href="#" title="">Terms and Conditions</a></span>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <h3 id="app-responsive-component-profile"></h3>
-  <div class="social-edit"  id="sn">
-      
-    <form>
-      <div class="row">
-        <div id="app-responsive-component-profile-first" class="col-lg-6">
-          <span class="pf-title"></span>
-          <div class="pf-field">
-            <input (keydown)="changeHandler($event)" type="text" placeholder="" id="text"
-              [(ngModel)]="title" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
-            <i class="la la-user"></i>
-          </div>
-        </div>
-        <div id="app-responsive-component-profile-second" class="col-lg-12">
-          <span class="pf-title"></span> 
-          <div class="pf-field">
-            <textarea style="padding: 15px" rows="20" type="text" placeholder="Cool Description" secret="description"
-              [(ngModel)]="description" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"></textarea>
-            <!-- <input (keydown)="changeHandler($event)" type="text" placeholder="" id=""
-              [(ngModel)]="description" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/> -->
-            <i class="la la-users"></i>
-          </div>
-        </div>
-        <div id="app-responsive-component-profile-third" class="col-lg-12">
-          <span class="pf-title"></span> 
-          <div class="pf-field">
-            <input (keydown)="changeHandler($event)" type="text" placeholder="" id=""
-              [(ngModel)]="tags" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
-            <i class="la la-users"></i>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-12" style="display:none; padding:0">
-        <a (click)="buttonPressed($event)" class="post-job-btn" style="float:right" ng-disabled="false">UPDATE</a>
-      </div>
-    </form>
-  </div>
-  <div class="social-edit"  id="sn">
-    <form>
-      <div class="row">
-        <div class="col-lg-6">
-          <span class="pf-title">Location</span>
-          <div class="pf-field">
-            <input (keydown)="changeHandler($event)" type="text" placeholder="4632 1/2 Hollywood Boulevard" 
-              [(ngModel)]="location" [ngModelOptions]="{standalone: true}" id="location" [disabled]="is_disabled()"/>
-            <i class="la la-map-marker"></i>   
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-12" style="display:none; padding:0">
-        <a (click)="buttonPressed($event)" class="post-job-btn" style="float:right" ng-disabled="false">UPDATE</a>
-      </div>
-    </form>
-  </div>
-  <div class="social-edit"  id="sn">
-    <h3>Dates</h3>
-    <form>
-      <div class="row" id="app-responsive-social-div">
-        <div class="col-lg-6">
-          <span class="pf-title">Date Posted</span>
-          <div class="pf-field">
-            <input (keydown)="changeHandler($event)" type="date" 
-              id="created" [(ngModel)]="created" [ngModelOptions]="{standalone: true}" [disabled]="always_disabled()"/>
-            <i class="la la-date"></i>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <span class="pf-title">Last Updated</span>
-          <div class="pf-field">
-            <input (keydown)="changeHandler($event)" type="date" 
-              id="lastUpdated" [(ngModel)]="lastUpdated" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
-            <i class="la la-twitter"></i>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-12" style="display:none; padding:0">
-        <a (click)="buttonPressed($event)" class="post-job-btn" style="float:right" ng-disabled="false">UPDATE</a>
-      </div>
-    </form>
-  </div>
-  <div class="social-edit"  id="sn" *ngIf="show_employee">
-      <h3>Employee</h3>
-      <ul class="applicants">
-          <li class="job-listing">
-            <!-- <a  > -->
-              <p class="job-title-sec" >Employee Name: {{employee.firstName}} {{employee.lastName}}</p>
-              <button (click)="goToProfile(employee.applicantID)">View Profile</button>
-          </li>
-        </ul>
-    </div>
-  <div class="social-edit"  id="sn" *ngIf="show_applicants">
-      <h3>Applicants</h3>
-      <ul class="applicants">
-          <li *ngFor="let item of applicant_data; let myIndex = index" class="job-listing">
-            <!-- <a  > -->
-              <p class="job-title-sec" >Applicant Name: {{applicant_data[myIndex].firstName}} {{applicant_data[myIndex].lastName}}</p>
-              <button (click)="goToProfile(applicant_data[myIndex].applicantID)">View Profile</button>
-          </li>
-        </ul>
-    </div>
-  <div class="social-edit"  id="sn" *ngIf="show_denied_applicants">
-      <h3>Denied Applicants</h3>
-      <ul class="deniedApplicants">
-          <li *ngFor="let item of denied_applicant_data; let myIndex = index" class="job-listing">
-            <!-- <a  > -->
-              <p class="job-title-sec" >Applicant Name: {{denied_applicant_data[myIndex].firstName}} {{denied_applicant_data[myIndex].lastName}}</p>
-              <button (click)="goToProfile(denied_applicant_data[myIndex].applicantID)">View Profile</button>
-          </li>
-        </ul>
-    </div>
-</div>
+  </section>
+
+
+
+
