@@ -61,6 +61,7 @@ export class BasicInfoCollectorComponent implements OnInit {
                     first: this.first,
                     second: this.second,
                     email: this.email,
+                    bio: ""
                 }
             }
             

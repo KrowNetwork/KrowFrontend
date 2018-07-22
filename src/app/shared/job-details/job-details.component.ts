@@ -522,7 +522,7 @@ export class JobDetailsComponent implements OnInit {
         // }
         this.http.get("http://18.220.46.51:3000/api/Applicant/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
           applicantData => {
-            mailData = {
+            var mailData = {
               applicant_name: applicantData["firstName"] + " " + applicantData["lastName"],
               job_name: this.title
             }

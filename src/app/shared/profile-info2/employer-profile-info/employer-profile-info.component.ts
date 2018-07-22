@@ -4,7 +4,6 @@ import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { UserLoginService } from '../../../service/user-login.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { log } from 'util';
-import { routerNgProbeToken } from '../../../../node_modules/@angular/router/src/router_module';
 
 @Component({
   selector: 'app-employer-profile-info',
@@ -213,7 +212,7 @@ export class EmployerProfileInfoComponent implements OnInit {
     //     }
     //   }
     // )
-  }
+  })
 }
 
   isLoggedIn(message: string, isLoggedIn: boolean) {
@@ -222,4 +221,5 @@ export class EmployerProfileInfoComponent implements OnInit {
         this.router.navigate(['/login']);
     }
 
+}
 }

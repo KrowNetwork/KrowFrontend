@@ -4,7 +4,6 @@ import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { UserLoginService } from '../../../service/user-login.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { log } from 'util';
-import { routerNgProbeToken } from '../../../../node_modules/@angular/router/src/router_module';
 
 @Component({
   selector: 'app-applicant-profile-info',
@@ -16,7 +15,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
   // vars 
   user: string;
   first: string;
-  second: string;
+  last: string;
   name: string;
   bio: string;
   address: string;
@@ -113,10 +112,10 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           for (var i = 0; i < data["resume"]["education"].length; i ++) {
             var element = data["resume"]["education"][i]
             element["startDate"] = new Date(element["startDate"])
-            element["startDate"] = (element["startDate"].getMonth() + 1) + '/' + element["startDate"].getDate() + '/' +  element["startDate"].getFullYear()
+            element["startDate"] = (element["startDate"].getMonth().toString() + 1) + '/' + element["startDate"].getDate().toString() + '/' +  element["startDate"].getFullYear().toString()
             
             element["endDate"] = new Date(element["endDate"])
-            element["endDate"] = (element["endDate"].getMonth() + 1) + '/' + element["endDate"].getDate() + '/' +  element["endDate"].getFullYear()
+            element["endDate"] = (element["endDate"].getMonth().toString() + 1) + '/' + element["endDate"].getDate().toString() + '/' +  element["endDate"].getFullYear().toString()
             this.education.push(element)
           }
 
@@ -136,10 +135,10 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           for (var i = 0; i < data["resume"]["experience"].length; i ++) {
             var element = data["resume"]["experience"][i]
             element["startDate"] = new Date(element["startDate"])
-            element["startDate"] = (element["startDate"].getMonth() + 1) + '/' + element["startDate"].getDate() + '/' +  element["startDate"].getFullYear()
+            element["startDate"] = (element["startDate"].getMonth().toString() + 1) + '/' + element["startDate"].getDate().toString() + '/' +  element["startDate"].getFullYear().toString()
             
             element["endDate"] = new Date(element["endDate"])
-            element["endDate"] = (element["endDate"].getMonth() + 1) + '/' + element["endDate"].getDate() + '/' +  element["endDate"].getFullYear()
+            element["endDate"] = (element["endDate"].getMonth().toString().toString() + 1) + '/' + element["endDate"].getDate().toString() + '/' +  element["endDate"].getFullYear().toString()
             this.experience.push(element)
           }
 
@@ -153,12 +152,12 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
             this.http.get(n_url).subscribe(
               n_data => {
                 var start = new Date(n_data["startDate"])
-                start = (start.getMonth() + 1) + '/' + start.getDate() + '/' +  start.getFullYear()
+                var nstart = (start.getMonth() + 1).toString() + '/' + start.getDate().toString() + '/' +  start.getFullYear().toString()
                 this.in_progress_jobs.push(
                   {
                     title: n_data["title"],
                     jobID: n_data["jobID"],
-                    startDate: start
+                    startDate: nstart
                   }
                   
                 )
@@ -175,14 +174,14 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
               n_data => {
                 var start = new Date(n_data["startDate"])
                 var end = new Date(n_data["endDate"])
-                start = (start.getMonth() + 1) + '/' + start.getDate() + '/' +  start.getFullYear()
-                end = (end.getMonth() + 1) + '/' + end.getDate() + '/' +  end.getFullYear()
+                var nstart = (start.getMonth() + 1).toString() + '/' + start.getDate().toString() + '/' +  start.getFullYear().toString()
+                var nend = (end.getMonth() + 1).toString() + '/' + end.getDate().toString() + '/' +  end.getFullYear().toString()
                 this.completed_jobs.push(
                   {
                     title: n_data["title"],
                     jobID: n_data["jobID"],
-                    startDate: start,
-                    endDate: end
+                    startDate: nstart,
+                    endDate: nend
                   }
                   
                 )
@@ -199,14 +198,14 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
               n_data => {
                 var start = new Date(n_data["startDate"])
                 var end = new Date(n_data["endDate"])
-                start = (start.getMonth() + 1) + '/' + start.getDate() + '/' +  start.getFullYear()
-                end = (end.getMonth() + 1) + '/' + end.getDate() + '/' +  end.getFullYear()
+                var nstart = (start.getMonth() + 1) + '/' + start.getDate() + '/' +  start.getFullYear()
+                var nend = (end.getMonth() + 1) + '/' + end.getDate() + '/' +  end.getFullYear()
                 this.terminated_jobs.push(
                   {
                     title: n_data["title"],
                     jobID: n_data["jobID"],
-                    startDate: start,
-                    endDate: end
+                    startDate: nstart,
+                    endDate: nend
                   }
                   
                 )
