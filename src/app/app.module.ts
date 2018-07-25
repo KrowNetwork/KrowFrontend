@@ -94,8 +94,10 @@ import { FAQsComponent } from './faqs/faqs.component';
 import { UploadPicComponent } from './upload-pic/upload-pic.component'
 
 
-import { ImageCropperModule } from 'ngx-image-cropper';
-import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
+// import { ImageCropperModule } from 'ngx-image-cropper';
+// import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
+import {ImageCropperModule } from "ng2-img-cropper";
+
 
 
 
@@ -156,15 +158,16 @@ import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
     EditJobComponent,
     HomepageComponent,
     FAQsComponent,
-    UploadPicComponent,
-    ImageCropperComponent
+    UploadPicComponent
+    
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     routing,
-    ImageCropperModule,
+    ImageCropperModule 
+    // ImageCropperModule,
     
   ],
   entryComponents: [ 
