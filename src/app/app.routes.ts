@@ -55,14 +55,17 @@ import { HelpComponent } from './shared/help/help.component';
 import { EditComponent } from "./shared/edit/edit.component"
 
 import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-profile-info/employer-profile-info.component'
+import { HomepageComponent } from './homepage/homepage.component'
+import { FAQsComponent } from './faqs/faqs.component'
 
 
 
 const appRoutes: Routes = [
     {
         path: '',
-        redirectTo: '/login',
-        pathMatch: 'full'
+        // redirectTo: '/login',
+        // pathMatch: 'full'
+        component: HomepageComponent
     },
     {
         path: 'login',
@@ -95,6 +98,10 @@ const appRoutes: Routes = [
     {
         path: "help",
         component: HelpComponent
+    },
+    {
+        path: "faqs",
+        component: FAQsComponent
     }
 ];
 

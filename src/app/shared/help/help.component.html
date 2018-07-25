@@ -47,18 +47,59 @@
 	</section>
 
 	<section>
-		<div class="block no-padding">
-			<div class="container">
-				 <div class="row no-gape">
-					<div class="col-lg-1 column"></div>
-					<div class="col-lg-10 column">
-						<router-outlet></router-outlet>
-					</div>
-					<div class="col-lg-1 column"></div>
-				 </div>
+		<section>
+			<div class="block">
+				<div class="container">
+					 <div class="row">
+						 <div class="col-lg-12">
+							 <div class="contact-form">
+								 <h3>Get Help</h3>
+								 
+								 <form>
+									 <div class="row">
+										 <div class="col-lg-12">
+											 <span class="pf-title">Full Name</span>
+											 <div class="pf-field">
+												 <input type="text" placeholder="John Smith" id="name"/>
+											 </div>
+										 </div>
+										 <div class="col-lg-12">
+											 <span class="pf-title">Email</span>
+											 <div class="pf-field">
+												 <input type="text" placeholder="john.smith@email.com" id="email"/>
+											 </div>
+										 </div>
+										 <div class="col-lg-12">
+											 <span class="pf-title">Subject</span>
+											 <div class="pf-field">
+												 <input type="text" placeholder="I need help" id="subject"/>
+											 </div>
+										 </div>
+										 <div class="col-lg-12">
+											 <span class="pf-title">Message</span>
+											 <div class="pf-field">
+												 <textarea id="message"></textarea>
+											 </div>
+										 </div>
+										 <div class="col-lg-12">
+											 <button type="submit" (click)="submitHelp()">Send</button>
+											 <button [routerLink]="['/faqs']" style="margin-left: 15px">View FAQs</button>
+											</div>
+									 </div>
+								 </form>
+							 </div>
+						 </div>
+						 <!-- <div class="col-lg-6 column">
+							 <div class="contact-textinfo">
+								
+								 
+							 </div>
+						</div> -->
+					 </div>
+				</div>
 			</div>
-		</div>
+		</section>
 	</section>
-		<h1>Just email us help@krow.network</h1>
+	
 	<app-bottom-bar></app-bottom-bar>
 </div>

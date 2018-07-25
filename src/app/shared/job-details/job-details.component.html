@@ -18,6 +18,9 @@
                         <ul class="tags-jobs">
                           <!-- <li><i class="la la-file-text"></i> Applications 1</li> -->
                           <li><i class="la la-calendar-o"></i> Post Date: {{ created }}</li>
+                          <li><i *ngIf="started" class="la la-calendar-o"></i> Start Date: {{ startdate }}</li>
+                          <li><i *ngIf="ended" class="la la-calendar-o"></i> End Date: {{ enddate }}</li>
+
                           <!-- <li><i class="la la-eye"></i> Views 5683</li> -->
                         </ul>
                       </div>
@@ -62,6 +65,12 @@
                               <h3><a href="#" title="">{{ employee.firstName }} {{ employee.lastName }}</a></h3>
                               <!-- <span>{{ item.employerName }}</span> -->
                               <!-- <div class="job-lctn"><i class="la la-map-marker"></i>{{  }}</div> -->
+                              <span *ngIf="isOwner && requestCompleteB" style="color:red">The employee has requested completion on thier job</span>
+                              <div class="btn-group" *ngIf="isOwner && requestCompleteB" style="margin-top:10px">
+                                
+                                <button *ngIf="isOwner && requestCompleteB" style="display: inline; padding: 10px;" (click)="complete()">Complete</button>
+                                <button *ngIf="isOwner && requestCompleteB" style="display: inline; padding: 10px;" (click)="denyCompletion()">Deny</button>
+                              </div>
                             </div>
                                   
                             <!-- <div class="job-style-bx"> -->
@@ -71,8 +80,10 @@
                               <div class="job-style-bx btn-group">
                                   <button [routerLink]="['/applicant/profile-info/', employee.applicantID]">View</button>
                                   <!-- <button style="display: inline; padding: 10px; color:#00ff6a" (click)="requestToHire(app.applicantID)"><i class="la la-check"></i></button> -->
-                                  <button style="display: inline; padding: 10px;" (click)="firep1()">Fire</button>
-                                </div>
+                                  <button *ngIf="isOwner" style="display: inline; padding: 10px;" (click)="firep1()">Fire</button>
+                                  
+                              </div>
+                             
                                 
                             <!-- </div>  -->
                           </div>
@@ -97,12 +108,17 @@
                               <div class="job-style-bx btn-group">
                                   <button [routerLink]="['/applicant/profile-info/', app.applicantID]">View</button>
                                   <button style="display: inline; padding: 10px; color:#00ff6a" (click)="requestToHire(app.applicantID)"><i class="la la-check"></i></button>
-                                  <button style="display: inline; padding: 10px; color:#f44242" (click)="requestToHire()"><i class="la la-close"></i></button>
+                                  <button style="display: inline; padding: 10px; color:#f44242" (click)="denyApplicantp1(app.applicantID)"><i class="la la-close"></i></button>
                                 </div> 
                             </div>
                                   
                             
                           </div>
+                          <div *ngIf="confirmDeny" class="pf-field">
+                            <input type="text" placeholder="Reason" id="reason"
+                            [(ngModel)]="reason" [ngModelOptions]="{standalone: true}"/>
+                            <button (click)="denyApplicantp2()">Confirm</button>
+                        </div>
                         </div>
                     </div>
                   </div>
@@ -119,8 +135,8 @@
                               <div class="job-style-bx btn-group">
 
                                   <button [routerLink]="['/applicant/profile-info/', app.applicantID]">View</button>
-                                  <!-- <button style="display: inline; padding: 10px; " (click)="requestToHire(app.applicantID)"><i class="la la-check"></i></button>
-                                  <button style="display: inline; padding: 10px; " (click)="requestToHire()"><i class="la la-close"></i></button> -->
+                                  <button style="display: inline; padding: 10px; " (click)="unRequestHire(app.applicantID)"><i class="la la-close"></i></button>
+                                  <!-- <button style="display: inline; padding: 10px; " (click)="requestToHire()"><i class="la la-close"></i></button> -->
                                 </div> 
                             </div>
                                   
@@ -130,20 +146,50 @@
                     </div>
                   </div>
 
+                  <div class="social-edit" id=sn *ngIf="isOwner">
+                    <h3>Denied Applicants</h3>
+                  <div class="job-list-modern">
+                      <div class="job-listings-sec no-border">
+                        <div class="job-listing wtabs" *ngFor="let app of denied; let i = index">
+                          <div class="job-title-sec" >
+
+                            <h3><a href="#" title="">{{ app.firstName }} {{ app.lastName }}</a></h3>
+
+                            <div class="job-style-bx btn-group">
+
+                                <button [routerLink]="['/applicant/profile-info/', app.applicantID]">View</button>
+                                <!-- <button style="display: inline; padding: 10px; " (click)="requestToHire(app.applicantID)"><i class="la la-check"></i></button>
+                                <button style="display: inline; padding: 10px; " (click)="requestToHire()"><i class="la la-close"></i></button> -->
+                              </div> 
+                          </div>
+                                
+                          
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
                   </div>
                   <div class="col-lg-4 column">
                     <div class="job-overview">
                       <h3>Job Overview</h3>
                       <ul>
-                        <li><i class="la la-money"></i><h3>Offerd Salary</h3><span>${{ payment }} {{ paymentType }}</span></li>
+                        <li><i class="la la-money"></i><h3>Offered Salary</h3><span>${{ payment }} {{ paymentType }}</span><button *ngIf="isOwner" (click)="changeSalaryP1()">Change</button></li>
                         <!-- <li><i class="la la-mars-double"></i><h3>Gender</h3><span>Female</span></li> -->
+                        <div *ngIf="canChangeSalary" class="pf-field">
+                          <input type="text" placeholder="999.99" id="salary"
+                          [(ngModel)]="salary" [ngModelOptions]="{standalone: true}"/>
+                          <button (click)="changeSalaryP2()">Confirm</button>
+                        </div>
                         <li><i class="la la-thumb-tack"></i><h3>Job Level</h3><span>{{ jobType }}</span></li>
+                        
+                        
                         <!-- <li><i class="la la-puzzle-piece"></i><h3>Industry</h3><span>Management</span></li> -->
                         <!-- <li><i class="la la-shield"></i><h3>Experience</h3><span>2 Years</span></li> -->
                         <!-- <li><i class="la la-line-chart "></i><h3>Qualification</h3><span>Bachelor Degree</span></li> -->
                       </ul>
                     </div><!-- Job Overview -->
-                    <div *ngIf="isTheApplicant">
+                    <div *ngIf="isTheApplicant && ended == false">
                           <a  class="apply-thisjob check" (click)="requestComplete()" title="" style="margin-top: 5px;"><i class="la la-check"></i>Request Completion</a>
                           <a  class="apply-thisjob cclose" (click)="resignp1()" title="" style="margin-top: 5px;"><i class="la la-close"></i>Resign Job</a>
                           <div *ngIf="confirmResign" class="pf-field">
@@ -154,7 +200,7 @@
                           
                           <!-- <a class="apply-thisjob" (click)="viewEmp()" title="" style="margin-top: 5px; margin-bottom: 5px;"><i class="la la-eye"></i>View Employer</a> -->
                     </div>
-                    <div class="quick-form-job">
+                    <!-- <div class="quick-form-job">
                       <h3>Contact</h3>
                       <form>
                         <input type="text" placeholder="Enter your Name *" />
@@ -164,7 +210,7 @@
                         <button class="submit">Send Email</button>
                         <span>You accepts our <a href="#" title="">Terms and Conditions</a></span>
                       </form>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
                 </div>

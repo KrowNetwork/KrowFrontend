@@ -6,6 +6,10 @@ var app = express()
 var bodyParser = require("body-parser");
 
 var port = 4200
+
+
+
+
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -15,6 +19,51 @@ app.use(function(req, res, next) {
   app.use(bodyParser.urlencoded({ extended: false }))
   // parse application/json
   app.use(bodyParser.json())
+
+
+  app.post("/help", (req, res, next) => {
+    console.log(req.body)
+    var body = ""
+    req.on("data", function(chunk) {
+        body += chunk
+    })
+    console.log(body)
+    var name = req.body.name
+    var subject = req.body.subject
+    var msg =  req.body.msg
+    var email = req.body.email
+    
+
+    var sender = nodeMailer.createTransport({
+        host: "smtp.1and1.com",
+        port: 587,
+        secure: false,
+        requireTLS: true,
+        auth: {
+            user: "notifications@krow.network",
+            pass: "rfk-Coz-CJp-2Ey"
+        }
+    });
+    ejs.renderFile(__dirname + "/templates/get-help.ejs", { name: name, subject: subject, email: email, msg:msg }, function (err, data) {
+        var mailOptions = {
+            from: "Krow Network No-Reply <notifications@krow.network>",
+            to: req.body.to,
+            subject: "Help Request From " + name,
+            html: data
+        }
+        sender.sendMail(mailOptions, function (err, info) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('Message sent: ' + info.response);
+            }
+        });
+    })
+    res.send({"response": "success"})
+})
+
+
+
 
   app.post("/applicant-request", (req, res, next) => {
     console.log(req.body)

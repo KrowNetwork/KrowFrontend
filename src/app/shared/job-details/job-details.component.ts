@@ -3,6 +3,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 import { HttpClient, HttpErrorResponse, HttpBackend  } from '@angular/common/http';
 import { CreateUserService } from '../../service/create-user.service';
 import { log } from 'util';
+import { encodeUriFragment } from '../../../../node_modules/@angular/router/src/url_tree';
 // import { post } from '../../../../node_modules/@types/selenium-webdriver/http';
 // import { splitAtColon } from '../../../../node_modules/@angular/compiler/src/util';
 // import { subscribeOn } from '../../../../node_modules/rxjs/operators';
@@ -33,6 +34,8 @@ export class JobDetailsComponent implements OnInit {
   disabled = true;
   url: string;
 
+  ended = false;
+
   applicants = [];
   applicant_data = [];
   nameOfApplicants: string;
@@ -57,10 +60,21 @@ export class JobDetailsComponent implements OnInit {
   confirmResign = false;
   canAcceptJob = false
   hasEmp = false
+  denied = [];
 
   confirmFire = false;
 
   isOwner = false
+
+  confirmDeny = false;
+
+  requestCompleteB = false;
+
+  enddate: string;
+  startdate: string;
+  started = false;
+
+  appDeny = ""
 
   id: string;
 
@@ -332,6 +346,11 @@ export class JobDetailsComponent implements OnInit {
         this.paymentType = data["paymentType"]
         this.jobType = data["jobType"] 
 
+        if (data['startDate'] !== undefined && data["startDate"] != "") {
+          this.started = true 
+          this.startdate = this.formatDate(new Date(data["startDate"]))
+        }
+
         // console.log(this.payment)
 
         var details = document.getElementById("job-details")
@@ -362,7 +381,17 @@ export class JobDetailsComponent implements OnInit {
           employeeID = data["employee"].split("#")[1]
         }
         
-        console.log(employeeID)
+        // console.log(employeeID)
+        if (data["requestCompletedDate"] !== undefined && data["requestCompletedDate"] != "") {
+          this.requestCompleteB = true
+        }
+
+        if (data["endDate"] !== undefined && data['endDate'] != "") {
+          this.ended = true 
+          this.requestCompleteB = false;
+          this.enddate = this.formatDate(new Date(data['endDate']))
+
+        }
 
         if (employeeID !== undefined && employeeID != "") {
           this.canApply = false
@@ -372,6 +401,7 @@ export class JobDetailsComponent implements OnInit {
         }
 
         this.deniedApplicants = data["deniedApplicants"]
+        console.log(this.deniedApplicants)
 
         if (this.employerID == this.id) {
           this.canEdit = true
@@ -487,11 +517,12 @@ export class JobDetailsComponent implements OnInit {
           
           this.show_denied_applicants = true
           // console.log(this.applicants[0])
-          for (var i = 0; i <= this.applicants.length; i++){
-            var url = "http://18.220.46.51:3000/api/Applicant/" + this.applicants[i].toString().split("#")[1]
+          for (var i = 0; i < this.deniedApplicants.length; i++){
+
+            var url = "http://18.220.46.51:3000/api/Applicant/" + this.deniedApplicants[i].applicantID
             this.http.get(url).subscribe(
               data => {
-                this.applicant_data.push(data)
+                this.denied.push(data)
             },
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
@@ -502,6 +533,7 @@ export class JobDetailsComponent implements OnInit {
             })
           }
         }
+        console.log(this.denied)
 
         // console.log(data["applicantRequests"])
         // console.log(this.applicants)
@@ -806,6 +838,163 @@ export class JobDetailsComponent implements OnInit {
       }
     )
   }
+
+  denyApplicantp1(ID) {
+    this.confirmDeny = true
+    this.appDeny = ID
+  }
+
+  denyApplicantp2() {
+    var data = {
+      "applicant": this.appDeny,
+      "job": this.jobID,
+      "employer":localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
+      "reason": document.getElementById('reason')["value"]
+    }
+
+    this.msg = "Please wait" 
+
+    this.http.post("http://18.220.46.51:3000/api/DenyApplicant", data).subscribe(
+      ret => {
+        this.msg = "Success"
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+          console.log(err);
+        }
+        this.msg = "There was an error. Please try again"
+      }
+    )
+  }
+
+  unRequestHire(ID) {
+    var url = 'http://18.220.46.51:3000/api/UnrequestHireApplicant'
+    var data = {
+      "applicant": ID,
+      "job": this.jobID,
+      "employer":localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
+    } 
+    this.msg = "Please wait"
+    this.http.post(url, data).subscribe(
+      data=>{
+        this.msg = "Success"
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+          console.log(err);
+        }
+        this.msg = "There was an error. Please try again"
+      }
+    )
+}
+
+requestComplete() {
+  var url = "http://18.220.46.51:3000/api/RequestCompleteJob"
+  var data = {
+    "applicant": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
+    "job": this.jobID
+  }
+  this.msg = "Please wait"
+  this.http.post(url, data).subscribe(
+    data=>{
+      this.msg = "Success!"
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error occured.");
+      } else {
+        console.log("Server-side error occured.");
+        console.log(err);
+      }
+      this.msg = "There was an error. Please try again"
+    }
+  )
+}
+
+complete() {
+  var url = "http://18.220.46.51:3000/api/CompleteJob"
+  var data = {
+    "employer": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
+    "job": this.jobID
+  }
+
+  this.msg = "Please wait"
+  this.http.post(url, data).subscribe(
+    data=>{
+      this.msg = "Success! The job has been completed"
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error occured.");
+      } else {
+        console.log("Server-side error occured.");
+        console.log(err);
+      }
+      this.msg = "There was an error. Please try again"
+    }
+  )
+}
+
+denyCompletion() {
+  var url = "http://18.220.46.51:3000/api/DenyRequestCompleteJob"
+  var data = {
+    "employer": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
+    "job": this.jobID
+  }
+
+  this.msg = "Please wait"
+  this.http.post(url, data).subscribe(
+    data=>{
+      this.msg = "Success! The job has been completed"
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error occured.");
+      } else {
+        console.log("Server-side error occured.");
+        console.log(err);
+      }
+      this.msg = "There was an error. Please try again"
+    }
+  )
+}
+canChangeSalary = false
+changeSalaryP1() {
+  this.canChangeSalary = true
+}
+
+changeSalaryP2() {
+  var data = {
+    // "applicant": this.appDeny,
+    "job": this.jobID,
+    "employer":localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
+    "payment": parseFloat(document.getElementById('salary')["value"])
+  }
+
+  console.log(data)
+  this.msg = "Please wait"
+  var url = 'http://18.220.46.51:3000/api/ChangeSalary'
+  this.http.post(url, data).subscribe(
+    data=>{
+      this.msg = "Success"
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log("Client-side error occured.");
+      } else {
+        console.log("Server-side error occured.");
+        console.log(err);
+      }
+      this.msg = "There was an error. Please try again"
+    }
+  )
+}
   
 }
 

@@ -19,12 +19,12 @@
                                     <input id="confirmationCode" type="text" placeholder="Confirmation Code" class="form-control"
                                             [(ngModel)]="confirmationCode" [ngModelOptions]="{standalone: true}">
                                 </div>
-                                <div class="radio">
+                                <!-- <div class="radio">
                                         <input id="applicant" required type="radio" name="accType" (change)="onSelectionChange('Applicant')" value="applicant"/>
                                         <label for="applicant">Applicant</label>
                                         <input id="employer" required type="radio" name="accType" (change)="onSelectionChange('Applicant')" value="employer"/>
                                         <label for="employer">Employer</label>
-                                    </div>
+                                    </div> -->
                                 <button (click)="onConfirmRegistration()">
                                     Confirm
                                 </button>
