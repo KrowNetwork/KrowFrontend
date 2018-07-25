@@ -5,8 +5,8 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 
 import { ItemType } from '../../../shared/item-type-constructor';
 import { AchievementsMainComponent } from './achievements-main.component';
-import { AchievementDirective } from '../resume-achievements/achievement.directive';
-import { splitAtColon } from '../../../../../node_modules/@angular/compiler/src/util';
+import { AchievementDirective } from './achievement.directive';
+import { splitAtColon } from '@angular/compiler/src/util';
 import { InterfaceComponent } from '../../../shared/interface-component.component';
 import { UpdateResumeService } from '../../../service/update-resume.service';
 

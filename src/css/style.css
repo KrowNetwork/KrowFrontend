@@ -9118,9 +9118,9 @@ header.gradient{
     float: right;
     margin-top: 70px;
 }
-input[type="file"] {
+/* input[type="file"] {
     display: none;
-}
+} */
 .custom-file-upload
 {
       

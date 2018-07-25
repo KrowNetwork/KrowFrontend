@@ -59,7 +59,7 @@ export class RegistrationConfirmationComponent implements OnInit, OnDestroy {
             return;
         }
         this.errorMessage = null;
-        console.log(this.radioData)
+        // console.log(this.radioData)
         this.regService.confirmRegistration(this.email, this.confirmationCode, this.radioData, this);
     }
 

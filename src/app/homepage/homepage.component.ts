@@ -20,7 +20,7 @@ export class HomepageComponent implements OnInit {
     public userService: UserLoginService,
     private router: Router
   ) {
-
+    console.log("f")
     // todo - private v public
     this.userService.isAuthenticated(this);
     console.log("Applicant Component: constructor");
@@ -32,7 +32,7 @@ export class HomepageComponent implements OnInit {
       this.is_applicant = false
     }
 
-    console.log(this.is_applicant)
+    // console.log(this.is_applicant)
   
   
   }
@@ -45,6 +45,7 @@ export class HomepageComponent implements OnInit {
 }
 
   ngOnInit() {
+    console.log("c")
   }
 
   bigBtn() {

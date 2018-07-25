@@ -21,7 +21,7 @@ export class AppComponent implements OnInit, LoggedInCallback {
 
   ngOnInit() {
     console.log("AppComponent: Checking if the user is already authenticated");
-    this.userService.isAuthenticated(this);
+    // this.userService.isAuthenticated(this);
   }
 
   isLoggedIn(message: string, isLoggedIn: boolean) {

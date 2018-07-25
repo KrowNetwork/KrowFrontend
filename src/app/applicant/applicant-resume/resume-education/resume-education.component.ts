@@ -5,7 +5,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 
 import { ItemType } from '../../../shared/item-type-constructor';
 import { EducationMainComponent } from './education-main.component';
-import { EducationDirective } from '../resume-education/education.directive';
+import { EducationDirective } from './education.directive';
 import { log } from 'util';
 import { InterfaceComponent } from '../../../shared/interface-component.component';
 import { UpdateResumeService } from '../../../service/update-resume.service';
@@ -57,7 +57,16 @@ export class ResumeEducationComponent implements OnInit {
       (<InterfaceComponent>componentRef.instance).data = educationItem.data;
     }
   }
-  
+  formatDate(date) {
+    var month = '' + (date.getMonth() + 1)
+    var day = '' + date.getDate().toString()
+    var year = date.getFullYear()
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return  [year, month, day].join("-")
+  }
   ngOnInit() {
     if (sessionStorage.getItem("accountType") == "employer") {
 			var user = this.router.url.split("/")[3]
@@ -70,12 +79,15 @@ export class ResumeEducationComponent implements OnInit {
         var resumeEducations = data["resume"]["education"];
         var educations = new Array<ItemType>();
         for(var k = 0; k < resumeEducations.length; k++){
+          var sd =  this.formatDate(new Date(resumeEducations[k]["startDate"]))
+          var ed =  this.formatDate(new Date(resumeEducations[k]["endDate"]))
+
           educations.push(
             new ItemType(EducationMainComponent, {
               title: resumeEducations[k]["title"],
               description: resumeEducations[k]["description"],
-              startDate: new Date(resumeEducations[k]["startDate"]).toString().slice(0, 15),
-              endDate: new Date(resumeEducations[k]["endDate"]).toString().slice(0, 15),
+              startDate:sd,
+              endDate: ed
             })
           );
         }

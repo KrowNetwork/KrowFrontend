@@ -136,7 +136,7 @@ export class UpdateResumeService {
                 updateButton.style.pointerEvents = 'auto';
             }, // Catch Errors
             (err: HttpErrorResponse) => {
-                alert("Could not post data!");
+                // alert("Could not post data!");
                 updateButton.innerText = "UPDATE";
                 if (err.error instanceof Error) {
                     console.log("Client-side error occured.");

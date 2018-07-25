@@ -1,67 +1,71 @@
-<footer style="margin-top: 15px">
-		<div class="block" style="padding-bottom: 0; padding-top: 25px">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-3 column">
-						<div class="widget">
-							<div class="about_widget">
-								<div class="logo">
-									<a href="https://www.krow.network/" title="">
-										<!-- <img src="{{KROW_HEADER_2}}" alt="" /> -->
-										<img src="assets/images/bottom-bar-logo.png" alt="Krow Network Logo" />
-									</a>
-								</div>
-								<div class="social">
-									<a href="https://www.facebook.com/KrowNetwork/" 				   target="_blank" title=""><i class="fa fa-facebook"	 ></i></a>
-									<a href="https://twitter.com/krownetwork"                          target="_blank" title=""><i class="fa fa-twitter" 	 ></i></a>
-									<a href="https://www.reddit.com/r/Krow/" 						   target="_blank" title=""><i class="fa fa-reddit"  	 ></i></a>
-									<a href="https://www.youtube.com/channel/UCmTgljCaCHkCPIbsE3IB4cA" target="_blank" title=""><i class="fa fa-youtube" 	 ></i></a>
-									<a href="https://github.com/KrowNetwork/krowsite" 				   target="_blank" title=""><i class="fa fa-github"  	 ></i></a>
-									<a href="https://medium.com/@krownetwork"						   target="_blank" title=""><i class="fa fa-medium" 	 ></i></a>
-									<!--TODO: Figure out, and add pics for the following -->
-									<a href="https://www.t.me/thekrownetwork" 						   target="_blank" title=""><i class="fa fa-telegram"    ></i>T</a>
-									<a href="https://bitcointalk.org/index.php?topic=2891187.0"        target="_blank" title=""><i class="fa fa-bitcointalk" ></i>B</a>
-									<a href="mailto:help@krow.network?Subject=Question" 			   target="_blank" title=""><i class="fa fa-mail"        ></i>M</a>
-								</div>
-							</div><!-- About Widget -->
+	<footer>
+			<div class="block">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-3 column">
+							<div class="widget">
+								<div class="about_widget">
+									<div class="logo">
+										<a href="#" title=""><img src="assets/images/bottom-bar-logo.png" alt="" /></a>
+									</div>
+									<div class="social">
+										<a href="https://www.facebook.com/KrowNetwork/" 				   target="_blank" title=""><i class="fa fa-facebook"	 ></i></a>
+										<a href="https://twitter.com/krownetwork"                          target="_blank" title=""><i class="fa fa-twitter" 	 ></i></a>
+										<a href="https://www.reddit.com/r/Krow/" 						   target="_blank" title=""><i class="fa fa-reddit"  	 ></i></a>
+										<a href="https://www.youtube.com/channel/UCmTgljCaCHkCPIbsE3IB4cA" target="_blank" title=""><i class="fa fa-youtube" 	 ></i></a>
+										<a href="https://github.com/KrowNetwork/krowsite" 				   target="_blank" title=""><i class="fa fa-github"  	 ></i></a>
+										<a href="https://medium.com/@krownetwork"						   target="_blank" title=""><i class="fa fa-medium" 	 ></i></a>
+									</div>
+								</div><!-- About Widget -->
+							</div>
 						</div>
-					</div>
-					<div class="col-lg-6 column">
-						<div class="widget">
-							<h3 class="footer-title"></h3>
-							<div class="link_widgets">
-								<div class="row">
-                  <div class="col-lg-4">
-                    <a href="#" title="">Home</a>
-                    <a href="http://krow.network" title="">Krow Network Website</a>
-                  </div>
-                  <div class="col-lg-4">
-                    <a [routerLink]="['/faqs']" title="">FAQs</a>
-                    <a [routerLink]="['/help']" title="">Get Help</a>
-                  </div>
-                  <!-- <div class="col-lg-4">
-                    <a href="#" title="">FAQ</a>
-                    <a href="#" title="">Links</a>
-                  </div> -->
+						<div class="col-lg-4 column">
+							<div class="widget">
+								<h3 class="footer-title">FAQs</h3>
+								<div class="link_widgets">
+									<div class="row">
+										<div class="col-lg-6">
+											<a href="/faqs" title="">FAQs </a>	
+											<a href="faqs#general" title="">General FAQs </a>
+											<!-- <a href="" title="">Blockchain FAQs</a> -->
+											<a href="faqs#applicant" title="">Applicant FAQs </a>
+											<a href="faqs#employer" title="">Employer FAQs </a>
+											<a href="faqs#other" title="">Other FAQs </a>
+											
+										</div>
+										
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-lg-3 column">
-						<div class="widget">
-							<div class="download_widget">
-								<a href="#" title=""><img src="http://placehold.it/230x65" alt="" /></a>
-								<a href="#" title=""><img src="http://placehold.it/230x65" alt="" /></a>
+						<div class="col-lg-2 column">
+							<div class="widget">
+								<h3 class="footer-title">Quick Links</h3>
+								<div class="link_widgets">
+									<div class="row">
+										<div class="col-lg-12">
+											<a href="/" title="">Home </a>
+											<a href="help" title="">Help </a>	
+											<a href="http://krow.network" title="">Krow Network</a>	
+											<!-- <a href="#" title="">Emplois en Fnce</a>		 -->
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 column">
+							<div class="widget">
+								<div class="download_widget">
+
+									<span></span>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="bottom-line">
-			<span>© 2018 Krow Network LLC All rights reserved.</span>
-			<a class="scrollup" title="" id="my-cool-button" (click)="scrollup()" style="bottom: 12px; right: 12px">
-				<i class="la la-arrow-up"></i>
-			</a>
-		</div>
-	</footer>
+			<div class="bottom-line">
+				<span>© 2018 Krow Network LLC All rights reserved.</span>
+				<a href="#scrollup" class="scrollup" title=""><i class="la la-arrow-up"></i></a>
+			</div>
+		</footer>

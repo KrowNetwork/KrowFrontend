@@ -55,6 +55,17 @@ export class ResumeExperienceComponent implements OnInit {
     }
   }
 
+  formatDate(date) {
+    var month = '' + (date.getMonth() + 1)
+    var day = '' + date.getDate().toString()
+    var year = date.getFullYear()
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return  [year, month, day].join("-")
+  }
+
   ngOnInit() {
     if (sessionStorage.getItem("accountType") == "employer") {
 			var user = this.router.url.split("/")[3]
@@ -72,8 +83,8 @@ export class ResumeExperienceComponent implements OnInit {
               position: resumeExperiences[k]["position"],
               title: resumeExperiences[k]["title"],
               description: resumeExperiences[k]["description"],
-              startDate: new Date(resumeExperiences[k]["startDate"]).toString().slice(0, 15),
-              endDate: new Date(resumeExperiences[k]["endDate"]).toString().slice(0, 15),
+              startDate: this.formatDate(new Date(resumeExperiences[k]["startDate"])),
+              endDate: this.formatDate(new Date(resumeExperiences[k]["endDate"])),
             })
           );
         }

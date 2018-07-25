@@ -29,6 +29,7 @@ export class ApplicantProfileComponent implements OnInit {
     if (sessionStorage.getItem("accountType") == "applicant") {
       this.hide_applicant_links = false
       this.hide_employer_links = true
+      this.isApplicant = true;
     } else {
       this.hide_applicant_links = true
       this.hide_employer_links = false
@@ -87,6 +88,24 @@ export class ApplicantProfileComponent implements OnInit {
       
     
   }
+
+  goToProfile() {
+    if (this.isApplicant) {
+    if (this.router.url.split("/")[3] === undefined || this.router.url.split("/")[3] == "") {
+      this.router.navigate(["/applicant/profile-info"])
+    } else {
+      this.router.navigate(["/applicant/profile-info/" + this.router.url.split("/")[3]])
+    }
+  } else { 
+    if (this.router.url.split("/")[3] === undefined || this.router.url.split("/")[3] == "") {
+      this.router.navigate(["/employer/profile-info"])
+    } else {
+      this.router.navigate(["/employer/profile-info/" + this.router.url.split("/")[3]])
+    }
+  }
+  }
+
+
 
 }
 

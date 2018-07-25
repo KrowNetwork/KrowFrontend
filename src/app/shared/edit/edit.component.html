@@ -1,9 +1,9 @@
 <div class="padding-left">
-    <a (click)="viewUserResume()" class="post-job-btn" id="top" [hidden]="lockResume">View Resume</a>
-    <a (click)="requestToHire()" class="post-job-btn" id="top" [hidden]="lockResume">Request to hire</a>
 
   <div class="social-edit"  id="sn">
     <h3 id="app-responsive-component-profile"></h3>
+    <button *ngIf="profileType == 'Applicant'" [routerLink]="['/applicant/upload']">Upload Profile Picture</button>
+    <button *ngIf="profileType != 'Applicant'" [routerLink]="['/employer/upload']">Upload Profile Picture</button>
     <form>
       <div class="row">
         <div id="app-responsive-component-profile-first" class="col-lg-6">

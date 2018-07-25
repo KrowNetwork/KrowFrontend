@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { CreateUserService } from '../../service/create-user.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { log } from 'util';
-import { routerNgProbeToken } from '../../../../node_modules/@angular/router/src/router_module';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
 // import { splitAtColon } from '../../../../node_modules/@angular/compiler/src/util';
 
 @Component({

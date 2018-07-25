@@ -40,6 +40,7 @@ export class EmployerProfileInfoComponent implements OnInit {
   available_jobs = []
 
   display_edit = false
+  imgURL: string;
 
   constructor(
     public http: HttpClient,
@@ -59,6 +60,8 @@ export class EmployerProfileInfoComponent implements OnInit {
       this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
       this.display_edit = true
     } 
+
+    this.imgURL = "https://s3.us-east-2.amazonaws.com/krow-network-profile-pics/pics/" + this.user + ".png"
     
     
     this.http.get("http://18.220.46.51:3000/api/Employer/" + this.user).subscribe(

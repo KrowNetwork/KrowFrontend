@@ -3,7 +3,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 import { HttpClient, HttpErrorResponse, HttpBackend  } from '@angular/common/http';
 import { CreateUserService } from '../../service/create-user.service';
 import { log } from 'util';
-import { encodeUriFragment } from '../../../../node_modules/@angular/router/src/url_tree';
+import { encodeUriFragment } from '@angular/router/src/url_tree';
 // import { post } from '../../../../node_modules/@types/selenium-webdriver/http';
 // import { splitAtColon } from '../../../../node_modules/@angular/compiler/src/util';
 // import { subscribeOn } from '../../../../node_modules/rxjs/operators';

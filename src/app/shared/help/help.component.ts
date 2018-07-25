@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
-import { Subject } from '../../../../node_modules/rxjs';
+import { Subject } from 'rxjs';
 
 
 @Component({

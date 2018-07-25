@@ -1,0 +1,10 @@
+
+<div class="col-lg-12 block">
+    <img-cropper [image]="data" [settings]="cropperSettings" (onCrop)="cropped($event)"></img-cropper>
+    <br>
+    <!-- <span class="result" *ngIf="data.image" >
+        <img [src]="data.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+    </span> -->
+
+    <button (click)="done()">Upload</button>
+</div>

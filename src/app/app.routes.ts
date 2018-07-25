@@ -26,6 +26,7 @@ import { JobProfileComponent } from './job/job-profile/job-profile.component';
 
 import { EditJobComponent } from './shared/edit-job/edit-job.component'
 
+import { UploadPicComponent } from './upload-pic/upload-pic.component'
 
 // Applicant components
 import { ApplicantProfileComponent } from './applicant/applicant-profile/applicant-profile.component';
@@ -65,6 +66,10 @@ const appRoutes: Routes = [
         path: '',
         // redirectTo: '/login',
         // pathMatch: 'full'
+        component: HomepageComponent
+    },
+    {
+        path: 'home',
         component: HomepageComponent
     },
     {
@@ -177,6 +182,10 @@ const secureHome: Routes = [
                 path: 'edit', 
                 component: EditComponent
                 //component: ComingSoonComponent
+            },
+            {
+                path: "upload",
+                component: UploadPicComponent
             }
         ]
     },
@@ -227,6 +236,10 @@ const secureHome: Routes = [
             {
                 path: "edit",
                 component: EditComponent,
+            },
+            {
+                path: "upload",
+                component: UploadPicComponent
             }
         ]
     },
@@ -294,7 +307,7 @@ const routes: Routes = [
             ...secureHome,
             {
                 path: '',
-                component: LoginComponent,
+                component: HomepageComponent,
             }
         ]
     },

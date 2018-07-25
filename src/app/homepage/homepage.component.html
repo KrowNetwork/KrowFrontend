@@ -54,7 +54,8 @@
                 </ul>
               </li>
               <li>
-                <a (click)="bigBtn()" class="post-job-btn"><i class="fa fa-search-plus"></i>{{btnText}}</a>
+                <a *ngIf="isLoggedInB" (click)="bigBtn()" class="post-job-btn"><i class="fa fa-search-plus"></i>{{btnText}}</a>
+                <a *ngIf="!isLoggedInB" href="login" class="post-job-btn"><i class="fa fa-login"></i>Log In/Sign Up</a>
               </li>
             </ul>
           </nav><!-- Menus -->

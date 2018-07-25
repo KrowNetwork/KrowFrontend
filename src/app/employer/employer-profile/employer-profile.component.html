@@ -27,7 +27,7 @@
 							<a [routerLink]="['/secureHome']" routerLinkActive="active">Home</a>
 						</li>
 						<li>
-								<a [routerLink]="['/employer/profile-info']" routerLinkActive="active">Profile</a>
+								<a (click)="goToProfile()" routerLinkActive="active">Profile</a>
 						</li>
 						<li>
 							<a style="color: #ffffff">Jobs</a>

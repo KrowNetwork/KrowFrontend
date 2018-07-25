@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 // import { CreateUserService } from '../../../service/create-user.service';
 import { UserLoginService } from '../../../service/user-login.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
+import { S3Service } from "../../../service/s3.service"
 import { log } from 'util';
 
 @Component({
@@ -42,12 +43,18 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
 
   curr_emp = false
 
+  img: Object;
+
+  imgURL: string;
+  owner = false;
+
 
   constructor(
     public http: HttpClient,
     private userService: UserLoginService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private s3service: S3Service
   ) {
 
     this.userService.isAuthenticated(this);
@@ -65,11 +72,23 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
       }
     } else {
       this.id = this.user
+      this.owner = true
     }
+
+  
+    this.imgURL = "https://s3.us-east-2.amazonaws.com/krow-network-profile-pics/pics/" + this.id +".png"
+
+
+    // this.http.get("https://s3.us-east-2.amazonaws.com/krow-network-profile-pics/pics/352fa0c7-5921-4782-b476-43e97f9295d1.png").subscribe(
+    //   data => {
+    //     this.img = data;
+    //   }
+    
+    // )
     
     this.http.get("http://18.220.46.51:3000/api/Applicant/" + this.id).subscribe(
       data => {
-        console.log(data)
+        // console.log(data)
         this.first = data["firstName"]
         this.last = data["lastName"]
         this.name = this.first + " " + this.last
@@ -215,7 +234,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           }
 
           // terminated
-          console.log(data["terminatedJobs"].length)
+          // console.log(data["terminatedJobs"].length)
           for (var i = 0; i < data["terminatedJobs"].length; i++){
             var id = data["terminatedJobs"][i].split("#")[1].toString()
             // console.log("id" + id)
@@ -229,7 +248,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
                 var nstart = (start.getMonth() + 1) + '/' + start.getDate() + '/' +  start.getFullYear()
                 var nend = (end.getMonth() + 1) + '/' + end.getDate() + '/' +  end.getFullYear()
 
-                console.log(n_data["startDate"])
+                // console.log(n_data["startDate"])
                 // console.log(data["terminateReasons"][i])
                 this.terminated_jobs.push(
                   {
