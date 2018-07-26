@@ -35,7 +35,7 @@ app.use(function(req, res, next) {
   app.use(bodyParser.json())
 
 
-  app.get("/hckey", (req, res, next) => {
+  app.post("/hckey", (req, res, next) => {
 
     
 
