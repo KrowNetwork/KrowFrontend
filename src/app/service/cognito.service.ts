@@ -4,6 +4,7 @@ import { CognitoUserPool } from "amazon-cognito-identity-js";
 import * as AWS from "aws-sdk/global";
 import * as awsservice from "aws-sdk/lib/service";
 import * as CognitoIdentity from "aws-sdk/clients/cognitoidentity";
+import { CognitoRefreshToken } from "amazon-cognito-identity-js"
 
 export interface CognitoCallback {
     cognitoCallback(message: string, result: any): void;
@@ -42,6 +43,7 @@ export class CognitoUtil {
     };
 
     public cognitoCreds: AWS.CognitoIdentityCredentials;
+    public cog: CognitoRefreshToken;
 
     getUserPool() {
         if (environment.cognito_idp_endpoint) {
@@ -66,6 +68,38 @@ export class CognitoUtil {
     getCognitoCreds() {
         return this.cognitoCreds;
     }
+
+    newToken(user) {
+        var refreshToken = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt." + user.username + ".refreshToken")
+        console.log(refreshToken)
+        // user.getSession(function(err, session) {
+        //     // if (err) {                
+        //     //     res.send(err);
+        //     // }
+        //     // else{
+        //             /* Session Refresh */
+        //             user.refreshSession(refreshToken, (err, session) => {
+    
+        //                 if (err) {//throw err;
+        //                     console.log('In the err'+err);
+        //                 }
+        //                 else{
+        //                     var regsmar_apiKey = session.idToken.jwtToken; // will this provide new IdToken?
+        //                     localStorage.setItem('api_key',regsmar_apiKey);
+        //                 }
+        //             }); 
+        //     // }
+        // });
+
+        var token = new CognitoRefreshToken({RefreshToken: refreshToken})
+        console.log(token)
+        user.refreshSession(token, (err, session) => {
+            console.log(err)
+            console.log(session)
+        })
+    }
+
+
 
     // This method takes in a raw jwtToken and uses the global AWS config options to build a
     // CognitoIdentityCredentials object and store it for us. It also returns the object to the caller

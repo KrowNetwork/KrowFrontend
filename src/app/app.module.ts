@@ -75,6 +75,7 @@ import { UserLoginService } from './service/user-login.service';
 import { UserParametersService } from './service/user-parameters.service';
 import { UserRegistrationService } from './service/user-registration.service';
 import { CreateUserService } from './service/create-user.service';
+import { CustomHttpService } from "./service/custom-http.service";
 
 // Directives
 import { EducationDirective } from './applicant/applicant-resume/resume-education/education.directive';
@@ -186,6 +187,7 @@ import {ImageCropperModule } from "ng2-img-cropper";
     UserParametersService,
     UserRegistrationService,
     CreateUserService,
+    CustomHttpService
   ],
   bootstrap: [ 
     AppComponent 

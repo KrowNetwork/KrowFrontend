@@ -36,7 +36,7 @@ export class UserLoginService {
     private onLoginError = (callback: CognitoCallback, err) => {
         callback.cognitoCallback(err.message, null);
     }
-
+    
     constructor(
         public cognitoUtil: CognitoUtil,
         private http: HttpClient) {
@@ -123,7 +123,8 @@ export class UserLoginService {
             throw("UserLoginService: Callback in isAuthenticated() cannot be null");
 
         let cognitoUser = this.cognitoUtil.getCurrentUser();
-
+        console.log(cognitoUser)
+        var createNewToken=false;
         if (cognitoUser != null) {
             cognitoUser.getSession(function (err, session) {
                 if (err) {
@@ -132,12 +133,25 @@ export class UserLoginService {
                 }
                 else {
                     console.log("UserLoginService: Session is " + session.isValid());
+                    if (localStorage.getItem("tokenCreation") !== undefined) {
+                        var seconds = (new Date().getTime() - new Date(localStorage.getItem("tokenCreation")).getTime()) / 1000
+                        if (seconds > 60 * 30) {
+                            createNewToken = true
+                        }
+                    else {
+                        localStorage.setItem("tokenCreation", new Date().toString())
+                    }
+                    }
                     callback.isLoggedIn(err, session.isValid(), );
                 }
             });
         } else {
             console.log("UserLoginService: can't retrieve the current user");
             callback.isLoggedIn("Can't retrieve the CurrentUser", false);
+        }
+        if (createNewToken) {
+            this.cognitoUtil.newToken(cognitoUser);
+            localStorage.setItem("tokenCreation", new Date().toString())
         }
     }
 

@@ -4,8 +4,22 @@ var nodeMailer = require("nodemailer")
 var ejs = require("ejs")
 var app = express()
 var bodyParser = require("body-parser");
+var cognito = require("cognito-express")
 
 var port = 4200
+
+const cognitoExpress = new cognito({
+    region: "us-east-2",
+    cognitoUserPoolId: "us-east-2_THcotoVBG",
+    tokenUse: "access", //Possible Values: access | id
+    tokenExpiration: 1.8e6 //Up to default expiration of 1 hour (3600000 ms)
+});
+ 
+
+
+
+
+
 
 
 
@@ -19,6 +33,31 @@ app.use(function(req, res, next) {
   app.use(bodyParser.urlencoded({ extended: false }))
   // parse application/json
   app.use(bodyParser.json())
+
+
+  app.get("/hcClientID", (req, res, next) => {
+
+    var values = [10, 50, 44, 54262, 234, 346, 23,436, 657, 34623421, 412346, 3463, 5726234] // sum: 40821526
+    // required sum: 2346523453 
+    // difference: 2305701927
+    // ex: 
+
+
+    // var accessTokenFromClient = req.body.token;
+
+    // cognitoExpress.validate(accessTokenFromClient, function(err, response) {
+    //     if (err) {
+    //         res.send(401, 'Incorrect Access Token')
+    //     } else {
+    //         res.send({"clientID": "7tvb9q2vkudvr2a2q18ib0o5qt"})
+    //     }
+    // });
+  })
+
+
+
+
+
 
 
   app.post("/help", (req, res, next) => {
