@@ -14,10 +14,10 @@ export class CustomHttpService{
   constructor(private http: HttpClient) {
 
     this.apiKey = this.getKey()
-    console.log(this.apiKey)
-    console.log("c")
+    // console.log(this.apiKey)
+    // console.log("c")
 
-    console.log(this.head("http://18.200.46.51:3000/Applicant/352fa0c7-5921-4782-b476-43e97f9295d1"))
+    // console.log(this.head("http://18.200.46.51:3000/Applicant/352fa0c7-5921-4782-b476-43e97f9295d1"))
 
   }
 
@@ -27,7 +27,7 @@ export class CustomHttpService{
 
   getKey() {
     return this.http.get("http://52.15.219.10:4200/hckey?token=" + this.token)
-    .map((res: Response) => res.json())
+    .map((res: Response) => res)
       // console.log(this.apiKey)
     
   }
@@ -37,7 +37,7 @@ export class CustomHttpService{
   // }
 
   handlerFct(key) {
-    console.log(key)
+    // console.log(key)
     this.apiKey = key
   }
 
@@ -55,16 +55,24 @@ export class CustomHttpService{
 
   post(url, data) {
     this.apiKey.map((res: Response) => {
+      var x = new HttpHeaders({"x-api-key":res["api"]})
+      console.log("x")
+      console.log(x)
       return this.http.post(url, data, {
-        headers: new HttpHeaders().set("x-api-key", res["api"])
+        headers: x
       });
     })
   }
 
   head(url) {
-    this.apiKey.map((res: Response) => {
-      return this.http.head(url,  {
-        headers: new HttpHeaders().set("x-api-key", res["api"])
+    return this.apiKey.map((res: Response) => {
+      var x = new HttpHeaders()
+      x.append("x-api-key", res["api"].toString())
+      x.append("test", "yuh")
+      // console.log("x")
+      // console.log(x.get("x-api-key"))
+       this.http.head(url,  {
+        headers: x
       });
     })
   }

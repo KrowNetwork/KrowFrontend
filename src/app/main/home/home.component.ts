@@ -45,12 +45,13 @@ export class HomeComponent implements OnInit {
                 this.router.navigate(['/applicant']);
             }, // Catch Errors
             (err = HttpErrorResponse) => {
-                if (err.error instanceof Error) {
+                if (err instanceof Error) {
                     console.log("Client-side error occured.");
                 } else {
                     console.log("Server-side error occured.");
                 }
                 console.log("User does not have an applicant account");
+                console.log(err)
                 // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
             }
         );
