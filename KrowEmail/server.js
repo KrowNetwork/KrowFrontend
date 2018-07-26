@@ -35,23 +35,19 @@ app.use(function(req, res, next) {
   app.use(bodyParser.json())
 
 
-  app.get("/hcClientID", (req, res, next) => {
+  app.get("/hckey", (req, res, next) => {
 
-    var values = [10, 50, 44, 54262, 234, 346, 23,436, 657, 34623421, 412346, 3463, 5726234] // sum: 40821526
-    // required sum: 2346523453 
-    // difference: 2305701927
-    // ex: 
+    
 
+    var accessTokenFromClient = req.body.token;
 
-    // var accessTokenFromClient = req.body.token;
-
-    // cognitoExpress.validate(accessTokenFromClient, function(err, response) {
-    //     if (err) {
-    //         res.send(401, 'Incorrect Access Token')
-    //     } else {
-    //         res.send({"clientID": "7tvb9q2vkudvr2a2q18ib0o5qt"})
-    //     }
-    // });
+    cognitoExpress.validate(accessTokenFromClient, function(err, response) {
+        if (err) {
+            res.send(401, 'Incorrect Access Token')
+        } else {
+            res.send({"api": "43a444f1-1ce9-4fcc-8508-cb0cbb4272e0"})
+        }
+    });
   })
 
 

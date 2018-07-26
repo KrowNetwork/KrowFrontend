@@ -5,7 +5,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http
 export class CustomHttpService{
 
   apiKey = ""
-  token = this.token = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt." + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") + ".idToken");
+  token = this.token = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt." + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") + ".accessToken");
 
   constructor(private http: HttpClient) {
 
