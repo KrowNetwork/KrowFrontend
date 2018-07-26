@@ -35,11 +35,11 @@ app.use(function(req, res, next) {
   app.use(bodyParser.json())
 
 
-  app.post("/hckey", (req, res, next) => {
+  app.get("/hckey", (req, res, next) => {
 
     
 
-    var accessTokenFromClient = req.body.token;
+    var accessTokenFromClient = req.query.token;
 
     cognitoExpress.validate(accessTokenFromClient, function(err, response) {
         if (err) {

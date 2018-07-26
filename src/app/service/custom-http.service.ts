@@ -1,19 +1,23 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+
 
 @Injectable()
 export class CustomHttpService{
 
-  apiKey = ""
+  apiKey = undefined;
   token = this.token = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt." + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") + ".accessToken");
 
   constructor(private http: HttpClient) {
 
-    this.http.post("http://52.15.219.10:4200/hckey", {"token": this.token}).subscribe(
-      data => {
-        this.apiKey = data["api"]
-      }
-    )
+    this.apiKey = this.getKey()
+    console.log(this.apiKey)
+    console.log("c")
+
+    console.log(this.head("http://18.200.46.51:3000/Applicant/352fa0c7-5921-4782-b476-43e97f9295d1"))
 
   }
 
@@ -21,39 +25,58 @@ export class CustomHttpService{
   //   this.token = token;
   // }
 
-  createAuthorizationHeader(headers: Headers) {
-    headers.append("x-api-key", this.apiKey) 
+  getKey() {
+    return this.http.get("http://52.15.219.10:4200/hckey?token=" + this.token)
+    .map((res: Response) => res.json())
+      // console.log(this.apiKey)
+    
+  }
+
+  // createAuthorizationHeader(headers: Headers) {
+  //   headers.append("x-api-key", this.apiKey) 
+  // }
+
+  handlerFct(key) {
+    console.log(key)
+    this.apiKey = key
   }
 
   get(url) {
-    let headers = new Headers();
-    this.createAuthorizationHeader(headers);
-    return this.http.get(url, {
-      headers: new HttpHeaders().set("x-api-key", this.apiKey)
-    });
+    // let headers = new Headers();
+    return this.apiKey.subscribe(
+      data => {
+         this.http.get(url, {
+          headers: new HttpHeaders().set("x-api-key", data["api"])
+        });
+      }
+    )
+    
   }
 
   post(url, data) {
-    let headers = new Headers();
-    this.createAuthorizationHeader(headers);
-    return this.http.post(url, data, {
-      headers: new HttpHeaders().set("x-api-key", this.apiKey)
-    });
+    this.apiKey.map((res: Response) => {
+      return this.http.post(url, data, {
+        headers: new HttpHeaders().set("x-api-key", res["api"])
+      });
+    })
   }
 
   head(url) {
-    let headers = new Headers();
-    this.createAuthorizationHeader(headers);
-    return this.http.head(url, {
-      headers: new HttpHeaders().set("x-api-key", this.apiKey)
-    });
+    this.apiKey.map((res: Response) => {
+      return this.http.head(url,  {
+        headers: new HttpHeaders().set("x-api-key", res["api"])
+      });
+    })
   }
 
   put(url, data) {
-    let headers = new Headers();
-    this.createAuthorizationHeader(headers);
-    return this.http.put(url, data, {
-      headers: new HttpHeaders().set("x-api-key", this.apiKey)
-    });
+    return this.apiKey.subscribe(
+      data => {
+         this.http.put(url, data, {
+          headers: new HttpHeaders().set("x-api-key", data["api"])
+        });
+      }
+    )
   }
+  
 }
