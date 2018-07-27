@@ -45,12 +45,21 @@ app.use(function(req, res, next) {
         if (err) {
             res.send(401, 'Incorrect Access Token')
         } else {
-            res.send({"api": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"})
+            res.send({"api": "key"})
+            // qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv
         }
     });
   })
 
 
+// app.head("/head", (req, res, next) => {
+//     var url = req.query.url;
+//     delete req.query;
+//     req.head({headers:{"x-api-key": "key"}})
+//     res.send("?")
+// })
+
+  
 
 
 
