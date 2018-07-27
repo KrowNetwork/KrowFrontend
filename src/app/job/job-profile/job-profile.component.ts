@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserLoginService } from '../../service/user-login.service';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { map } from 'rxjs/operators/map';
+import { CustomHttpService } from '../../service/custom-http.service';
 
 declare var require: any;
 
@@ -20,7 +21,7 @@ export class JobProfileComponent implements OnInit {
   hide_employer_links = false
   isApplicant_ = false
 
-  constructor(public router: Router, public userService: UserLoginService, public http: HttpClient) {
+  constructor(public router: Router, public userService: UserLoginService, public http: CustomHttpService) {
     
     this.userService.isAuthenticated(this);
     console.log("Job Component: constructor");

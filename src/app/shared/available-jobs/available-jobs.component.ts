@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { CreateUserService } from '../../service/create-user.service';
+import { CustomHttpService } from '../../service/custom-http.service';
 
 @Component({
   selector: 'app-available-jobs',
@@ -11,7 +12,7 @@ import { CreateUserService } from '../../service/create-user.service';
 export class AvailableJobsComponent implements OnInit {
 
   constructor(
-    private http: HttpClient,
+    private http: CustomHttpService,
     private createUser: CreateUserService
   ) { }
 

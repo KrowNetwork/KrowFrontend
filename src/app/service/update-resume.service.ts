@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { CustomHttpService } from "./custom-http.service";
 
 @Injectable()
 export class UpdateResumeService {
-    constructor(private http: HttpClient) { }
+    constructor(private http: CustomHttpService) { }
 
     user: string;
 

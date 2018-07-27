@@ -8,6 +8,7 @@ import { AffiliationsMainComponent } from './affiliations-main.component';
 import { AffiliationsDirective } from './affiliations.directive';
 import { InterfaceComponent } from '../../../shared/interface-component.component';
 import { UpdateResumeService } from '../../../service/update-resume.service';
+import { CustomHttpService } from '../../../service/custom-http.service';
 
 @Component({
   selector: 'app-resume-affiliations',
@@ -19,7 +20,7 @@ export class ResumeAffiliationsComponent implements OnInit {
   @ViewChild(AffiliationsDirective) affiliationHost: AffiliationsDirective;
 
   constructor(
-    private http: HttpClient, 
+    private http: CustomHttpService, 
     private componentFactoryResolver: ComponentFactoryResolver,
     private updateResumeService: UpdateResumeService,
     private router: Router

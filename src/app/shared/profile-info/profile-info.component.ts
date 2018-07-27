@@ -5,6 +5,7 @@ import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { log } from 'util';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
 // import { splitAtColon } from '../../../../node_modules/@angular/compiler/src/util';
+import { CustomHttpService } from '../../service/custom-http.service';
 
 @Component({
   selector: 'app-profile-info',
@@ -14,7 +15,7 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 export class ProfileInfoComponent implements OnInit {
   constructor(
-    public http: HttpClient,
+    public http: CustomHttpService,
     private createUser: CreateUserService,
     private activatedRoute: ActivatedRoute,
     private router: Router

@@ -8,6 +8,9 @@ import { ExperienceDirective } from './experience.directive';
 import { InterfaceComponent } from '../../../shared/interface-component.component';
 import { UpdateResumeService } from '../../../service/update-resume.service';
 
+import { CustomHttpService } from '../../../service/custom-http.service';
+
+
 @Component({
   selector: 'app-resume-experience',
   templateUrl: './resume-experience.component.html',
@@ -18,7 +21,7 @@ export class ResumeExperienceComponent implements OnInit {
   @ViewChild(ExperienceDirective) achievementHost: ExperienceDirective;
 
   constructor(
-    private http: HttpClient, 
+    private http: CustomHttpService, 
     private componentFactoryResolver: ComponentFactoryResolver,
     private updateResumeService: UpdateResumeService,
     private router: Router

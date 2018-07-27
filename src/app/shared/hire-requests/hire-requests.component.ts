@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
+import { CustomHttpService } from '../../service/custom-http.service';
 
 
 
@@ -16,7 +17,7 @@ export class HireRequestsComponent implements OnInit {
 
   
   constructor(
-    private http: HttpClient,
+    private http: CustomHttpService,
     private router: Router,
   ) { }
 

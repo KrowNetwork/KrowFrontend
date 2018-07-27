@@ -9,6 +9,8 @@ import { AchievementDirective } from './achievement.directive';
 import { splitAtColon } from '@angular/compiler/src/util';
 import { InterfaceComponent } from '../../../shared/interface-component.component';
 import { UpdateResumeService } from '../../../service/update-resume.service';
+import { CustomHttpService } from '../../../service/custom-http.service';
+
 
 @Component({
 	selector: 'app-resume-achievements',
@@ -21,7 +23,7 @@ export class ResumeAchievementsComponent implements OnInit {
 	@ViewChild(AchievementDirective) achievementHost: AchievementDirective;
 
 	constructor(
-		private http: HttpClient, 
+		private http: CustomHttpService, 
 		private componentFactoryResolver: ComponentFactoryResolver,
 		private updateResumeService: UpdateResumeService,
 		private router: Router

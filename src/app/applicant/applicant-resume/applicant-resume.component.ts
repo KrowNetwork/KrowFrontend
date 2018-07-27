@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
+import { CustomHttpService } from '../../service/custom-http.service';
+
 
 @Component({
   selector: 'app-applicant-resume',
@@ -16,7 +18,7 @@ export class ApplicantResumeComponent {
   id: string;
 
   constructor(
-		private http: HttpClient, 
+		private http: CustomHttpService, 
     private router: Router
 	) {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")

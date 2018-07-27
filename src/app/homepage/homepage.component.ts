@@ -3,6 +3,8 @@ import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { CreateUserService } from '../service/create-user.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { UserLoginService } from '../service/user-login.service';
+import { CustomHttpService } from '../service/custom-http.service';
+
 
 @Component({
   selector: 'app-homepage',
@@ -14,7 +16,7 @@ export class HomepageComponent implements OnInit {
   isLoggedInB = false;
   btnText: string;
   constructor(
-    public http: HttpClient,
+    public http: CustomHttpService,
     private createUser: CreateUserService,
     private activatedRoute: ActivatedRoute,
     public userService: UserLoginService,

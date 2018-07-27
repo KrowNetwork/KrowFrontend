@@ -5,6 +5,7 @@ import { JobSearchDirective } from './job-search.directive';
 import { InterfaceComponent } from '../interface-component.component';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router, NavigationError } from '@angular/router';
+import { CustomHttpService } from '../../service/custom-http.service';
 
 @Component({
   selector: 'app-job-search',
@@ -15,7 +16,7 @@ export class JobSearchComponent implements OnInit {
 	@ViewChild(JobSearchDirective) achievementHost: JobSearchDirective;
 
   constructor(
-    private http: HttpClient,
+    private http: CustomHttpService,
     private componentFactoryResolver: ComponentFactoryResolver,
     private route: ActivatedRoute,
     private router: Router,

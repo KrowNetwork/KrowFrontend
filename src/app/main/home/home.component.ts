@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
         public router: Router, 
         public userService: UserLoginService,
         private http: CustomHttpService
-        // private http: HttpClient
+        // private http: CustomHttpService
     ) {
         console.log("Secure Home Component: constructor");
         this.userService.isAuthenticated(this)
@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
                 this.router.navigate(['/employer']);
             }, // Catch Errors
             (err = HttpErrorResponse) => {
-                if (err.error instanceof Error) {
+                if (err instanceof Error) {
                     console.log("Client-side error occured.");
                 } else {
                     console.log("Server-side error occured.");
@@ -83,7 +83,7 @@ export class HomeComponent implements OnInit {
                 this.router.navigate(['/applicant']);
             }, // Catch Errors
             (err = HttpErrorResponse) => {
-                if (err.error instanceof Error) {
+                if (err instanceof Error) {
                     console.log("Client-side error occured.");
                 } else {
                     console.log("Server-side error occured.");
@@ -103,7 +103,7 @@ export class HomeComponent implements OnInit {
                 this.router.navigate(['/employer']);
             }, // Catch Errors
             (err = HttpErrorResponse) => {
-                if (err.error instanceof Error) {
+                if (err instanceof Error) {
                     console.log("Client-side error occured.");
                 } else {
                     console.log("Server-side error occured.");

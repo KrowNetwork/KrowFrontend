@@ -4,6 +4,7 @@ import { CreateUserService } from '../../service/create-user.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { log } from 'util';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { CustomHttpService } from '../../service/custom-http.service';
 
 @Component({
   selector: 'app-edit',
@@ -13,7 +14,7 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 export class EditComponent implements OnInit {
 
   constructor(
-    public http: HttpClient,
+    public http: CustomHttpService,
     private createUser: CreateUserService,
     private activatedRoute: ActivatedRoute,
     private router: Router

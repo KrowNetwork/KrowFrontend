@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserLoginService } from '../../service/user-login.service';
 import { log } from 'util';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
+import { CustomHttpService } from '../../service/custom-http.service';
 
 
 declare var require: any;
@@ -18,7 +19,7 @@ export class ApplicantProfileComponent implements OnInit {
   user: string;
   isApplicant = false
 
-  constructor(public router: Router, public userService: UserLoginService, public http: HttpClient) {
+  constructor(public router: Router, public userService: UserLoginService, public http: CustomHttpService) {
     this.userService.isAuthenticated(this);
     console.log("Applicant Component: constructor");
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")

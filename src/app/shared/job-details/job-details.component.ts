@@ -4,6 +4,8 @@ import { HttpClient, HttpErrorResponse, HttpBackend  } from '@angular/common/htt
 import { CreateUserService } from '../../service/create-user.service';
 import { log } from 'util';
 import { encodeUriFragment } from '@angular/router/src/url_tree';
+import { CustomHttpService } from '../../service/custom-http.service';
+
 // import { post } from '../../../../node_modules/@types/selenium-webdriver/http';
 // import { splitAtColon } from '../../../../node_modules/@angular/compiler/src/util';
 // import { subscribeOn } from '../../../../node_modules/rxjs/operators';
@@ -81,7 +83,7 @@ export class JobDetailsComponent implements OnInit {
   // msg = undefined
 
   constructor(
-    private http: HttpClient,
+    private http: CustomHttpService,
     private createUser: CreateUserService,
     private activatedRoute: ActivatedRoute,
     private router: Router

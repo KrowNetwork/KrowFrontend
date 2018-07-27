@@ -5,6 +5,7 @@ import { AuthenticationDetails, CognitoUser, CognitoUserSession } from "amazon-c
 import * as AWS from "aws-sdk/global";
 import * as STS from "aws-sdk/clients/sts";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { CustomHttpService } from "./custom-http.service"
 
 @Injectable()
 export class UserLoginService {
@@ -39,7 +40,7 @@ export class UserLoginService {
     
     constructor(
         public cognitoUtil: CognitoUtil,
-        private http: HttpClient) {
+        private http: CustomHttpService) {
     }
 
     authenticate(username: string, password: string, callback: CognitoCallback) {

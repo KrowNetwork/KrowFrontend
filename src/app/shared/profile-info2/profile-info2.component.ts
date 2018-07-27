@@ -15,7 +15,7 @@ export class ProfileInfo2Component implements OnInit {
   is_applicant: boolean;
 
   constructor(
-    public http: HttpClient,
+    // public http: CustomHttpService,
     private createUser: CreateUserService,
     private activatedRoute: ActivatedRoute,
     private router: Router

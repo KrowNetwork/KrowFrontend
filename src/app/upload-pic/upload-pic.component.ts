@@ -5,6 +5,7 @@ import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { S3Service } from "../service/s3.service"
 import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
+import { CustomHttpService } from '../service/custom-http.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class UploadPicComponent implements OnInit {
   user: string;
   cropperSettings: CropperSettings;
   data: any;
-  constructor(private router: Router, public userService: UserLoginService, public http: HttpClient, public s3service: S3Service) { 
+  constructor(private router: Router, public userService: UserLoginService, public http: CustomHttpService, public s3service: S3Service) { 
     this.userService.isAuthenticated(this);
     console.log("Applicant Component: constructor");
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")

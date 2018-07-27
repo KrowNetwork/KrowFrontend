@@ -9,6 +9,8 @@ import { EducationDirective } from './education.directive';
 import { log } from 'util';
 import { InterfaceComponent } from '../../../shared/interface-component.component';
 import { UpdateResumeService } from '../../../service/update-resume.service';
+import { CustomHttpService } from '../../../service/custom-http.service';
+
 
 @Component({
   selector: 'app-resume-education',
@@ -20,7 +22,7 @@ export class ResumeEducationComponent implements OnInit {
   @ViewChild(EducationDirective) educationHost: EducationDirective;
 
   constructor(
-    private http: HttpClient, 
+    private http: CustomHttpService, 
     private componentFactoryResolver: ComponentFactoryResolver,
     private updateResumeService: UpdateResumeService,
     private router: Router

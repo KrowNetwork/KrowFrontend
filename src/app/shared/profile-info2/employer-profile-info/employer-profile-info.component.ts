@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 // import { CreateUserService } from '../../../service/create-user.service';
 import { UserLoginService } from '../../../service/user-login.service';
+import { CustomHttpService } from '../../../service/custom-http.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { log } from 'util';
 
@@ -43,7 +44,7 @@ export class EmployerProfileInfoComponent implements OnInit {
   imgURL: string;
 
   constructor(
-    public http: HttpClient,
+    public http: CustomHttpService,
     private userService: UserLoginService,
     private activatedRoute: ActivatedRoute,
     private router: Router

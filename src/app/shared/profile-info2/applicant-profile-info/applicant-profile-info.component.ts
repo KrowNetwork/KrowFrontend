@@ -4,6 +4,7 @@ import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { UserLoginService } from '../../../service/user-login.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { S3Service } from "../../../service/s3.service"
+import { CustomHttpService } from "../../../service/custom-http.service"
 import { log } from 'util';
 
 @Component({
@@ -50,7 +51,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
 
 
   constructor(
-    public http: HttpClient,
+    public http: CustomHttpService,
     private userService: UserLoginService,
     private activatedRoute: ActivatedRoute,
     private router: Router,

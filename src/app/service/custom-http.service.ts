@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import {Observable} from 'rxjs/Observable';
+
 import 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
@@ -45,43 +46,42 @@ export class CustomHttpService{
     this.apiKey = key
   }
 
-  get(url) {
+  get(url, data=undefined) {
     // let headers = new Headers();
-    return this.apiKey.subscribe(
-      data => {
-         this.http.get(url, {
-          headers: new HttpHeaders().set("x-api-key", data["api"])
-        });
-      }
-    )
+    if (data != undefined) {
+      return this.apiKey.flatMap(d => {
+        return this.http.get(url, {headers: {"x-api-key": d["api"]}, params: data["parameters"]});
+    })
+    }
+    return this.apiKey.flatMap(d => {
+      return this.http.get(url, {headers: {"x-api-key": d["api"]}});
+  })
     
   }
 
   post(url, data) {
-    this.apiKey.map((res: Response) => {
-      var x = new HttpHeaders({"x-api-key":res["api"]})
-      console.log("x")
-      console.log(x)
-      return this.http.post(url, data, {
-        headers: x
-      });
-    })
+    return this.apiKey.flatMap(d => {
+      return this.http.post(url, data, {headers: {"x-api-key": d["api"]}});
+  })
   }
 
-  head(url) {
+  head(url, options=undefined) {
+    if (options != undefined) {
+      return this.apiKey.flatMap(d => {
+        return this.http.head(url, {headers: {"x-api-key": d["api"]}, observe: options["observe"]});
+    })
+    }
     return this.apiKey.flatMap(d => {
         return this.http.head(url, {headers: {"x-api-key": d["api"]}});
     })
   }
 
   put(url, data) {
-    return this.apiKey.subscribe(
-      data => {
-         this.http.put(url, data, {
-          headers: new HttpHeaders().set("x-api-key", data["api"])
-        });
-      }
-    )
-  }
+
+    return this.apiKey.flatMap(d => {
+      return this.http.put(url, data, {headers: {"x-api-key": d["api"]}});
+
+  })
   
+}
 }

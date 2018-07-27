@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 // import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { CreateUserService } from '../../service/create-user.service';
+import { CustomHttpService } from '../../service/custom-http.service';
 
 @Component({
   selector: 'app-in-progress-jobs',
@@ -16,7 +17,7 @@ export class InProgressJobsComponent implements OnInit {
   msg = undefined
 
   constructor(
-    private http: HttpClient
+    private http: CustomHttpService
   ) { }
 
   ngOnInit() {

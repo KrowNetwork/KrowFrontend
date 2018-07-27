@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { CustomHttpService } from '../../service/custom-http.service';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { Subject } from 'rxjs';
 export class HelpComponent implements OnInit {
   msg: string;
   constructor(
-    private http: HttpClient,
+    private http: CustomHttpService,
   ) { }
 
   ngOnInit() {

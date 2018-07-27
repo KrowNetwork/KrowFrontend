@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ItemType } from '../../shared/item-type-constructor';
 import { SkillsMainComponent } from '../../applicant/applicant-resume/resume-skills/skills-main.component';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { CustomHttpService } from '../../service/custom-http.service';
 
 @Component({
   selector: 'app-employer-post-jobs',
@@ -14,7 +15,7 @@ export class EmployerPostJobsComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: CustomHttpService
   ) {}
   
   title: string;

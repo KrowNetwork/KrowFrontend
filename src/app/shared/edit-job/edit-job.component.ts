@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { CreateUserService } from '../../service/create-user.service';
+import { CustomHttpService } from '../../service/custom-http.service';
 
 @Component({
   selector: 'app-edit-job',
@@ -44,7 +45,7 @@ export class EditJobComponent implements OnInit {
   show_employee = false
 
   constructor(
-    private http: HttpClient,
+    private http: CustomHttpService,
     private createUser: CreateUserService,
     private activatedRoute: ActivatedRoute,
     private router: Router

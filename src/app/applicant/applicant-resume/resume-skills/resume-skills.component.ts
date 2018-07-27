@@ -4,6 +4,7 @@ import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { ItemType } from '../../../shared/item-type-constructor';
 import { SkillsMainComponent } from './skills-main.component';
 import {Router, ActivatedRoute, Params} from '@angular/router';
+import { CustomHttpService } from '../../../service/custom-http.service';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class ResumeSkillsComponent implements OnInit {
   
   constructor( 
     private updateResumeService: UpdateResumeService,
-    private http: HttpClient,
+    private http: CustomHttpService,
     private componentFactoryResolver: ComponentFactoryResolver,
     private router: Router
 

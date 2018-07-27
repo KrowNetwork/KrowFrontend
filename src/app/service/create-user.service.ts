@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { CustomHttpService } from './custom-http.service';
 
 @Injectable()
 export class CreateUserService {
-    constructor(private http: HttpClient) { }
+    constructor(private http: CustomHttpService) { }
         
     createUserApplicantObj(userObj) {
         var obj = new Object();
@@ -79,7 +80,7 @@ export class CreateUserService {
                 callback(intent.toLowerCase(), userObj.user, router);
             }, // Catch Errors
             (err = HttpErrorResponse) => {
-                if (err.error instanceof Error) {
+                if (err instanceof Error) {
                     console.log("Client-side error occured.");
                 } else {
                     console.log("Server-side error occured.");
