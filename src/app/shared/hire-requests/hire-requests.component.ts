@@ -44,7 +44,7 @@ export class HireRequestsComponent implements OnInit {
           }
           
         })
-      // console.log(this.available_jobs)
+      // // console.log(this.available_jobs)
     }
   
     } 

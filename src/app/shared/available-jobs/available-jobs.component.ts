@@ -25,7 +25,7 @@ export class AvailableJobsComponent implements OnInit {
     // var hidden = sessionStorage.getItem("accountType")
     // var hidden = document.getElementById("test-ID");
     var url = "http://18.220.46.51:3000/api/employer/" + this.employer;
-    console.log("yur")
+    // console.log("yur")
     var IDs = []
     this.available_jobs = []
     this.http.get(url).subscribe(
@@ -55,7 +55,7 @@ export class AvailableJobsComponent implements OnInit {
     //   this.http.get(url).subscribe(
     //     data => {jsons.push(data)})
     // }
-    // console.log(jsons[0].jobID)
+    // // console.log(jsons[0].jobID)
     
   }
 

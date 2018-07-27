@@ -126,9 +126,9 @@ export class EmployerPostJobsComponent implements OnInit {
       (err: HttpErrorResponse) => {
           alert("Could not post job!");
           if (err.error instanceof Error) {
-              console.log("Client-side error occured.");
+              // console.log("Client-side error occured.");
           } else {
-              console.log("Server-side error occured.");
+              // console.log("Server-side error occured.");
           }
       }
     );

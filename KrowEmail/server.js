@@ -66,12 +66,12 @@ app.use(function(req, res, next) {
 
 
   app.post("/help", (req, res, next) => {
-    console.log(req.body)
+    // console.log(req.body)
     var body = ""
     req.on("data", function(chunk) {
         body += chunk
     })
-    console.log(body)
+    // console.log(body)
     var name = req.body.name
     var subject = req.body.subject
     var msg =  req.body.msg
@@ -97,9 +97,9 @@ app.use(function(req, res, next) {
         }
         sender.sendMail(mailOptions, function (err, info) {
             if (err) {
-                console.log(err);
+                // console.log(err);
             } else {
-                console.log('Message sent: ' + info.response);
+                // console.log('Message sent: ' + info.response);
             }
         });
     })
@@ -110,12 +110,12 @@ app.use(function(req, res, next) {
 
 
   app.post("/applicant-request", (req, res, next) => {
-    console.log(req.body)
+    // console.log(req.body)
     var body = ""
     req.on("data", function(chunk) {
         body += chunk
     })
-    console.log(body)
+    // console.log(body)
     var applicant_name = req.body.applicant_name
     var jobName = req.body.job_name
     
@@ -139,9 +139,9 @@ app.use(function(req, res, next) {
         }
         sender.sendMail(mailOptions, function (err, info) {
             if (err) {
-                console.log(err);
+                // console.log(err);
             } else {
-                console.log('Message sent: ' + info.response);
+                // console.log('Message sent: ' + info.response);
             }
         });
     })
@@ -149,12 +149,12 @@ app.use(function(req, res, next) {
 })
 
 app.post("/applicant-unrequest", (req, res, next) => {
-    console.log(req.body)
+    // console.log(req.body)
     var body = ""
     req.on("data", function(chunk) {
         body += chunk
     })
-    console.log(body)
+    // console.log(body)
     var applicant_name = req.body.applicant_name
     var jobName = req.body.job_name
     
@@ -178,9 +178,9 @@ app.post("/applicant-unrequest", (req, res, next) => {
         }
         sender.sendMail(mailOptions, function (err, info) {
             if (err) {
-                console.log(err);
+                // console.log(err);
             } else {
-                console.log('Message sent: ' + info.response);
+                // console.log('Message sent: ' + info.response);
             }
         });
     })
@@ -188,12 +188,12 @@ app.post("/applicant-unrequest", (req, res, next) => {
 })
 
 app.post("/hire-request", (req, res, next) => {
-    console.log(req.body)
+    // console.log(req.body)
     var body = ""
     req.on("data", function(chunk) {
         body += chunk
     })
-    console.log(body)
+    // console.log(body)
     var comp_name = req.body.comp_name
     var jobName = req.body.job_name
     
@@ -217,9 +217,9 @@ app.post("/hire-request", (req, res, next) => {
         }
         sender.sendMail(mailOptions, function (err, info) {
             if (err) {
-                console.log(err);
+                // console.log(err);
             } else {
-                console.log('Message sent: ' + info.response);
+                // console.log('Message sent: ' + info.response);
             }
         });
     })
@@ -227,13 +227,13 @@ app.post("/hire-request", (req, res, next) => {
 })
 
 app.post("/accept-hire", (req, res, next) => {
-    console.log("accept-hire")
-    console.log(req.body)
+    // console.log("accept-hire")
+    // console.log(req.body)
     var body = ""
     req.on("data", function(chunk) {
         body += chunk
     })
-    console.log(body)
+    // console.log(body)
     var applicant_name = req.body.applicant_name
     var jobName = req.body.job_name
     
@@ -257,9 +257,9 @@ app.post("/accept-hire", (req, res, next) => {
         }
         sender.sendMail(mailOptions, function (err, info) {
             if (err) {
-                console.log(err);
+                // console.log(err);
             } else {
-                console.log('Message sent: ' + info.response);
+                // console.log('Message sent: ' + info.response);
             }
         });
     })
@@ -270,6 +270,6 @@ app.listen(port, function (err) {
     if (err) {
       throw err
     }
-    console.log(`worker ${process.pid} started`);
+    // console.log(`worker ${process.pid} started`);
 
 })

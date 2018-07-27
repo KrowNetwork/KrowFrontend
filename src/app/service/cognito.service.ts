@@ -71,7 +71,7 @@ export class CognitoUtil {
 
     newToken(user) {
         var refreshToken = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt." + user.username + ".refreshToken")
-        console.log(refreshToken)
+        // console.log(refreshToken)
         // user.getSession(function(err, session) {
         //     // if (err) {                
         //     //     res.send(err);
@@ -81,7 +81,7 @@ export class CognitoUtil {
         //             user.refreshSession(refreshToken, (err, session) => {
     
         //                 if (err) {//throw err;
-        //                     console.log('In the err'+err);
+        //                     // console.log('In the err'+err);
         //                 }
         //                 else{
         //                     var regsmar_apiKey = session.idToken.jwtToken; // will this provide new IdToken?
@@ -92,10 +92,10 @@ export class CognitoUtil {
         // });
 
         var token = new CognitoRefreshToken({RefreshToken: refreshToken})
-        console.log(token)
+        // console.log(token)
         user.refreshSession(token, (err, session) => {
-            console.log(err)
-            console.log(session)
+            // console.log(err)
+            // console.log(session)
         })
     }
 
@@ -137,7 +137,7 @@ export class CognitoUtil {
         if (this.getCurrentUser() != null) {
             this.getCurrentUser().getSession(function (err, session) {
                 if (err) {
-                    console.log("CognitoUtil: Can't set the credentials:" + err);
+                    // console.log("CognitoUtil: Can't set the credentials:" + err);
                     callback.callbackWithParam(null);
                 }
                 else {
@@ -159,14 +159,14 @@ export class CognitoUtil {
         if (this.getCurrentUser() != null)
             this.getCurrentUser().getSession(function (err, session) {
                 if (err) {
-                    console.log("CognitoUtil: Can't set the credentials:" + err);
+                    // console.log("CognitoUtil: Can't set the credentials:" + err);
                     callback.callbackWithParam(null);
                 }
                 else {
                     if (session.isValid()) {
                         callback.callbackWithParam(session.getIdToken().getJwtToken());
                     } else {
-                        console.log("CognitoUtil: Got the id token, but the session isn't valid");
+                        // console.log("CognitoUtil: Got the id token, but the session isn't valid");
                     }
                 }
             });
@@ -181,7 +181,7 @@ export class CognitoUtil {
         if (this.getCurrentUser() != null)
             this.getCurrentUser().getSession(function (err, session) {
                 if (err) {
-                    console.log("CognitoUtil: Can't set the credentials:" + err);
+                    // console.log("CognitoUtil: Can't set the credentials:" + err);
                     callback.callbackWithParam(null);
                 }
 
@@ -198,14 +198,14 @@ export class CognitoUtil {
     refresh(): void {
         this.getCurrentUser().getSession(function (err, session) {
             if (err) {
-                console.log("CognitoUtil: Can't set the credentials:" + err);
+                // console.log("CognitoUtil: Can't set the credentials:" + err);
             }
 
             else {
                 if (session.isValid()) {
-                    console.log("CognitoUtil: refreshed successfully");
+                    // console.log("CognitoUtil: refreshed successfully");
                 } else {
-                    console.log("CognitoUtil: refreshed but session is still not valid");
+                    // console.log("CognitoUtil: refreshed but session is still not valid");
                 }
             }
         });

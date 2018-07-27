@@ -21,7 +21,7 @@ export class EmployerProfileComponent implements OnInit {
 
   constructor(public router: Router, public userService: UserLoginService, public http: CustomHttpService) {
     this.userService.isAuthenticated(this);
-    console.log("Employer Component: constructor");
+    // console.log("Employer Component: constructor");
 
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
     userService.verifyUserType(this.user)
@@ -35,7 +35,7 @@ export class EmployerProfileComponent implements OnInit {
       this.hide_applicant_links = true
       this.hide_employer_links = false
     }
-    console.log(this.hide_applicant_links)
+    // console.log(this.hide_applicant_links)
     
   }
 

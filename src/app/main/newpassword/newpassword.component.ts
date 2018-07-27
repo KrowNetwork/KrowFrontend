@@ -34,7 +34,7 @@ export class NewPasswordComponent implements CognitoCallback {
 
     ngOnInit() {
         this.errorMessage = null;
-        console.log("Checking if the user is already authenticated. If so, then redirect to the secure site");
+        // console.log("Checking if the user is already authenticated. If so, then redirect to the secure site");
         this.userService.isAuthenticated(this);
     }
 
@@ -43,7 +43,7 @@ export class NewPasswordComponent implements CognitoCallback {
             this.errorMessage = "All fields are required";
             return;
         }
-        console.log(this.registrationUser);
+        // console.log(this.registrationUser);
         this.errorMessage = null;
         this.userRegistration.newPassword(this.registrationUser, this);
     }
@@ -51,10 +51,10 @@ export class NewPasswordComponent implements CognitoCallback {
     cognitoCallback(message: string, result: any) {
         if (message != null) { //error
             this.errorMessage = message;
-            console.log("result: " + this.errorMessage);
+            // console.log("result: " + this.errorMessage);
         } else { //success
             //move to the next step
-            console.log("redirecting");
+            // console.log("redirecting");
             this.router.navigate(['/securehome']);
         }
     }

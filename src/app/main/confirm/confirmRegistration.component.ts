@@ -59,7 +59,7 @@ export class RegistrationConfirmationComponent implements OnInit, OnDestroy {
             return;
         }
         this.errorMessage = null;
-        // console.log(this.radioData)
+        // // console.log(this.radioData)
         this.regService.confirmRegistration(this.email, this.confirmationCode, this.radioData, this);
     }
 
@@ -70,7 +70,7 @@ export class RegistrationConfirmationComponent implements OnInit, OnDestroy {
     cognitoCallback(message: string, result: any) {
         if (message != null) { //error
             this.errorMessage = message;
-            console.log("message: " + this.errorMessage);
+            // console.log("message: " + this.errorMessage);
         } else { //success
             /*
                 VIVEK
@@ -80,7 +80,7 @@ export class RegistrationConfirmationComponent implements OnInit, OnDestroy {
             // Implementation of AngularJS Material is up to you. Do mind,
             // this in context is RegistrationConfirmationComponent, 
             // router comes from the constructor public router: Router therefore is a property of this
-            console.log("Moving to collect basic info");
+            // console.log("Moving to collect basic info");
             this.router.navigate(['/secureHome']);
         }
     }

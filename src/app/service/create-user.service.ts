@@ -63,7 +63,7 @@ export class CreateUserService {
     }
 
     initializeUser(userObj, intent: string, callback, router){
-        console.log("Initializing a new " + intent + " user with id = " + userObj.user);
+        // console.log("Initializing a new " + intent + " user with id = " + userObj.user);
         var obj = new Object();
         if(intent == "Applicant"){
             obj = this.createUserApplicantObj(userObj);
@@ -72,20 +72,20 @@ export class CreateUserService {
             obj = this.createUserEmployerObj(userObj);
         }
         var url = "http://18.220.46.51:3000/api/" + intent;
-        console.log(intent.toLowerCase());
+        // console.log(intent.toLowerCase());
 
         this.http.post(url, obj).subscribe(
             data => {
-                console.log(intent + " account sucessfuly initialized for user " + userObj.user);
+                // console.log(intent + " account sucessfuly initialized for user " + userObj.user);
                 callback(intent.toLowerCase(), userObj.user, router);
             }, // Catch Errors
             (err = HttpErrorResponse) => {
                 if (err instanceof Error) {
-                    console.log("Client-side error occured.");
+                    // console.log("Client-side error occured.");
                 } else {
-                    console.log("Server-side error occured.");
+                    // console.log("Server-side error occured.");
                 }
-                console.log(err);
+                // console.log(err);
             }
         );
     }

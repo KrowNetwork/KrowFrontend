@@ -18,7 +18,7 @@ export class AwsUtil {
 
         if (AwsUtil.runningInit) {
             // Need to make sure I don't get into an infinite loop here, so need to exit if this method is running already
-            console.log("AwsUtil: Aborting running initAwsService()...it's running already.");
+            // console.log("AwsUtil: Aborting running initAwsService()...it's running already.");
             // instead of aborting here, it's best to put a timer
             if (callback != null) {
                 callback.callback();
@@ -28,7 +28,7 @@ export class AwsUtil {
         }
 
 
-        console.log("AwsUtil: Running initAwsService()");
+        // console.log("AwsUtil: Running initAwsService()");
         AwsUtil.runningInit = true;
 
 
@@ -47,9 +47,9 @@ export class AwsUtil {
      * @param callback
      */
     setupAWS(isLoggedIn: boolean, callback: Callback, idToken: string): void {
-        console.log("AwsUtil: in setupAWS()");
+        // console.log("AwsUtil: in setupAWS()");
         if (isLoggedIn) {
-            console.log("AwsUtil: User is logged in");
+            // console.log("AwsUtil: User is logged in");
             // Setup mobile analytics
             var options = {
                 appId: '32673c035a0b40e99d6e1f327be0cb60',
@@ -68,11 +68,11 @@ export class AwsUtil {
 
             this.addCognitoCredentials(idToken);
 
-            console.log("AwsUtil: Retrieving the id token");
+            // console.log("AwsUtil: Retrieving the id token");
 
         }
         else {
-            console.log("AwsUtil: User is not logged in");
+            // console.log("AwsUtil: User is not logged in");
         }
 
         if (callback != null) {
@@ -100,7 +100,7 @@ export class AwsUtil {
     }
 
     static getCognitoParametersForIdConsolidation(idTokenJwt: string): {} {
-        console.log("AwsUtil: enter getCognitoParametersForIdConsolidation()");
+        // console.log("AwsUtil: enter getCognitoParametersForIdConsolidation()");
         let url = 'cognito-idp.' + CognitoUtil._REGION.toLowerCase() + '.amazonaws.com/' + CognitoUtil._USER_POOL_ID;
         let logins: Array<string> = [];
         logins[url] = idTokenJwt;

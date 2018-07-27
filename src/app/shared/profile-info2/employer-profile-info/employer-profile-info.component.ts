@@ -51,7 +51,7 @@ export class EmployerProfileInfoComponent implements OnInit {
   ) {
 
     this.userService.isAuthenticated(this);
-    console.log("Applicant Component: constructor");
+    // console.log("Applicant Component: constructor");
     
    }
   ngOnInit() {
@@ -67,13 +67,13 @@ export class EmployerProfileInfoComponent implements OnInit {
     
     this.http.get("http://18.220.46.51:3000/api/Employer/" + this.user).subscribe(
       data => {
-        console.log(data)
+        // console.log(data)
         this.companyName = data["employerName"]
         this.full_addr = data["address"] + ", " + data["city"] + ", " + data["state"]
 
         this.desc = data["description"]
 
-        console.log(this.desc)
+        // console.log(this.desc)
 
         if (data["email"] == "") {
           this.email = "No Email Provided"
@@ -164,7 +164,7 @@ export class EmployerProfileInfoComponent implements OnInit {
               n_data => {
                 var s = new Date(n_data["created"])
                 var start = (s.getMonth() + 1) + '/' + s.getDate() + '/' +  s.getFullYear()
-                console.log(n_data["location"])
+                // console.log(n_data["location"])
                 this.available_jobs.push(
                   {
                     title: n_data["title"],
@@ -226,7 +226,7 @@ export class EmployerProfileInfoComponent implements OnInit {
     //           })
     //       }
 
-    //       // console.log(this.experience)
+    //       // // console.log(this.experience)
     //     }
     //   }
     // )
@@ -261,9 +261,9 @@ export class EmployerProfileInfoComponent implements OnInit {
     try {
         var successful = document.execCommand('copy');
         // var msg = successful ? 'successful' : 'unsuccessful';
-        // console.log('Copying text "' + text + '" to clipboard was ' + msg);
+        // // console.log('Copying text "' + text + '" to clipboard was ' + msg);
     } catch (err) {
-        console.log('Cannot copy to clipboard');
+        // console.log('Cannot copy to clipboard');
     }
 
     // remove the TextAreaElement from the document

@@ -35,10 +35,10 @@ export class HelpComponent implements OnInit {
       
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
-        console.log("Client-side error occured.");
+        // console.log("Client-side error occured.");
       } else {
-        console.log("Server-side error occured.");
-        console.log(err);
+        // console.log("Server-side error occured.");
+        // console.log(err);
       }
       this.msg = "There was an error. Please try again"
     }

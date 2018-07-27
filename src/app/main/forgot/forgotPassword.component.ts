@@ -50,7 +50,7 @@ export class ForgotPassword2Component implements CognitoCallback, OnInit, OnDest
 
     constructor(public router: Router, public route: ActivatedRoute,
                 public userService: UserLoginService) {
-        console.log("email from the url: " + this.email);
+        // console.log("email from the url: " + this.email);
     }
 
     ngOnInit() {
@@ -80,7 +80,7 @@ export class ForgotPassword2Component implements CognitoCallback, OnInit, OnDest
     cognitoCallback(message: string) {
         if (message != null) { //error
             this.errorMessage = message;
-            console.log("result: " + this.errorMessage);
+            // console.log("result: " + this.errorMessage);
         } else { //success
             this.router.navigate(['/login']);
         }

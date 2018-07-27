@@ -23,7 +23,7 @@ export class UploadPicComponent implements OnInit {
   data: any;
   constructor(private router: Router, public userService: UserLoginService, public http: CustomHttpService, public s3service: S3Service) { 
     this.userService.isAuthenticated(this);
-    console.log("Applicant Component: constructor");
+    // console.log("Applicant Component: constructor");
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
 
     this.cropperSettings = new CropperSettings();
@@ -81,7 +81,7 @@ export class UploadPicComponent implements OnInit {
         
       }, function (err, data) {
      if (err) {
-       console.log(err, 'there was an error uploading your file');
+       // console.log(err, 'there was an error uploading your file');
        hasErr = true
      } 
    });
@@ -97,7 +97,7 @@ export class UploadPicComponent implements OnInit {
 croppedImage: any = '';
 
 cropped(bounds:Bounds) {
-  //console.log(bounds);
+  //// console.log(bounds);
 }
 
 fileChangeListener($event) {
@@ -131,7 +131,7 @@ fileChangeListener($event) {
 //     // show message
 // }
 // done(){
-//   console.log(this.data)
+//   // console.log(this.data)
 // }
 
 }

@@ -30,12 +30,12 @@ export class ResumeEducationComponent implements OnInit {
   ) {}
 
   updateResume(event){
-    console.log(event.target.closest("app-resume-education"))
+    // console.log(event.target.closest("app-resume-education"))
     this.updateResumeService.updateMain(event.target.closest("app-resume-education"));
   }
   
   loadComponent(educations) {
-    // console.log()
+    // // console.log()
     if(educations == "empty"){
       educations = new Array<ItemType>();
       educations.push(
@@ -103,9 +103,9 @@ export class ResumeEducationComponent implements OnInit {
       (err: HttpErrorResponse) => {
         this.loadComponent("empty");
         if (err.error instanceof Error) {
-          console.log("Client-side error occured.");
+          // console.log("Client-side error occured.");
         } else {
-          console.log("Server-side error occured.");
+          // console.log("Server-side error occured.");
         }
       }
     );

@@ -59,7 +59,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
   ) {
 
     this.userService.isAuthenticated(this);
-    console.log("Applicant Component: constructor");
+    // console.log("Applicant Component: constructor");
     
    }
 
@@ -89,7 +89,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
     
     this.http.get("http://18.220.46.51:3000/api/Applicant/" + this.id).subscribe(
       data => {
-        // console.log(data)
+        // // console.log(data)
         this.first = data["firstName"]
         this.last = data["lastName"]
         this.name = this.first + " " + this.last
@@ -235,22 +235,22 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           }
 
           // terminated
-          // console.log(data["terminatedJobs"].length)
+          // // console.log(data["terminatedJobs"].length)
           for (var i = 0; i < data["terminatedJobs"].length; i++){
             var id = data["terminatedJobs"][i].split("#")[1].toString()
-            // console.log("id" + id)
-            // console.log(data["terminateReasons"][i])
+            // // console.log("id" + id)
+            // // console.log(data["terminateReasons"][i])
             var n_url = "http://18.220.46.51:3000/api/Job/" + id 
             this.http.get(n_url).subscribe(
               n_data => {
-                // console.log(n_data)
+                // // console.log(n_data)
                 var start = new Date(n_data["startDate"])
                 var end = new Date(n_data["endDate"])
                 var nstart = (start.getMonth() + 1) + '/' + start.getDate() + '/' +  start.getFullYear()
                 var nend = (end.getMonth() + 1) + '/' + end.getDate() + '/' +  end.getFullYear()
 
-                // console.log(n_data["startDate"])
-                // console.log(data["terminateReasons"][i])
+                // // console.log(n_data["startDate"])
+                // // console.log(data["terminateReasons"][i])
                 this.terminated_jobs.push(
                   {
                     title: n_data["title"],
@@ -264,19 +264,19 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
                 
               })
           }
-          // console.log(this.terminated_jobs)
-          // console.log(this.terminated_jobs[0])
+          // // console.log(this.terminated_jobs)
+          // // console.log(this.terminated_jobs[0])
           // var nterm = []
           // var c = 0
           // this.terminated_jobs.forEach(element => {
           //   element.reason = this.terminate_reasons[c]
-          //   console.log(element)
+          //   // console.log(element)
           //   nterm.push(element)
           //   c += 1
           // });
-          // console.log(this.terminate_reasons[0])
+          // // console.log(this.terminate_reasons[0])
 
-          // console.log(this.experience)
+          // // console.log(this.experience)
         
       }
     )

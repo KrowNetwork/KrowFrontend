@@ -19,7 +19,7 @@ export class EditComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
-    console.log("constructor created")
+    // console.log("constructor created")
 
    }
 
@@ -125,28 +125,28 @@ export class EditComponent implements OnInit {
           data["lastUpdated"] = timestamp;
 
           // Update entry
-          console.log(data)
+          // console.log(data)
           this.http.put(url, data).subscribe(
             data => {
             }, // Catch Errors
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
-                console.log("Client-side error occured.");
+                // console.log("Client-side error occured.");
               } else {
-                console.log("Server-side error occured.");
+                // console.log("Server-side error occured.");
               } 
-              console.log(err)
+              // console.log(err)
             }
           );
         }
       }, // Catch Errors
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log("Client-side error occured.");
+          // console.log("Client-side error occured.");
         } else {
-          console.log("Server-side error occured.");
+          // console.log("Server-side error occured.");
         }
-        console.log(err)
+        // console.log(err)
       }
     );
     return new Promise(resolve => {
@@ -185,8 +185,8 @@ export class EditComponent implements OnInit {
     } else {
       this.profileType = "Employer"
     }
-    // console.log(this.id)
-    // console.log("x")
+    // // console.log(this.id)
+    // // console.log("x")
     // Test Id, get from login in the future
     var hidden = document.getElementById("test-ID");
     var profileType = hidden.attributes["value"].value;
@@ -207,7 +207,7 @@ export class EditComponent implements OnInit {
       description.children[0].innerHTML = "Description";
 
       // var ta = document.getElementsByClassName("ta")[0]
-      // console.log(ta)
+      // // console.log(ta)
       // ta.setAttribute("placeholder", "Company Description")
       description.children[1].children[0].setAttribute("type", "textarea")
       description.children[1].children[0].attributes[2].value = "Company Description";
@@ -247,9 +247,9 @@ export class EditComponent implements OnInit {
         }, // Catch Errors
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            console.log("Client-side error occured.");
+            // console.log("Client-side error occured.");
           } else {
-            console.log("Server-side error occured.");
+            // console.log("Server-side error occured.");
           }
         }
       );
@@ -291,7 +291,7 @@ export class EditComponent implements OnInit {
           this.first = data["firstName"];
           this.second = data["lastName"];
           this.bio = data["resume"]["biography"]
-          console.log(this.bio)
+          // console.log(this.bio)
           this.address = data["address"];
           this.city = data["city"];
           this.state = data["state"];
@@ -318,9 +318,9 @@ export class EditComponent implements OnInit {
         }, // Catch Errors
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            console.log("Client-side error occured.");
+            // console.log("Client-side error occured.");
           } else {
-            console.log("Server-side error occured.");
+            // console.log("Server-side error occured.");
           }
         }
       );
@@ -338,16 +338,16 @@ export class EditComponent implements OnInit {
   
 
   requestToHire() {
-    // console.log(this.profileType)
+    // // console.log(this.profileType)
     var url = "http://18.220.46.51:3000/api/RequestHireApplicant"
-    console.log(this.id )
+    // console.log(this.id )
     // var applicantUrl = "http://18.220.46.51:3000/api/Applicant/" + this.id 
     // var jobUrl = "http://18.220.46.51:3000/api/Job/" + sessionStorage.getItem("fromJob")
     // var employerUrl = "http://18.220.46.51:3000/api/Employer/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
 
-    // console.log(applicantUrl)
-    // console.log(jobUrl)
-    // console.log(employerUrl)
+    // // console.log(applicantUrl)
+    // // console.log(jobUrl)
+    // // console.log(employerUrl)
     
     
 
@@ -379,40 +379,40 @@ export class EditComponent implements OnInit {
                   }, 
                   (err: HttpErrorResponse) => {
                     if (err.error instanceof Error) {
-                      console.log("Client-side error occured.");
+                      // console.log("Client-side error occured.");
                     } else {
-                      console.log("Server-side error occured.");
-                      console.log(err);
+                      // console.log("Server-side error occured.");
+                      // console.log(err);
                     alert (err)
                     }
                   }) // closing email
               },
               (err: HttpErrorResponse) => {
                 if (err.error instanceof Error) {
-                  console.log("Client-side error occured.");
+                  // console.log("Client-side error occured.");
                 } else {
-                  console.log("Server-side error occured.");
-                  console.log(err);
+                  // console.log("Server-side error occured.");
+                  // console.log(err);
                 alert (err)
                 }
               }) //closing job_data
           },
           (err: HttpErrorResponse) => {
             if (err.error instanceof Error) {
-              console.log("Client-side error occured.");
+              // console.log("Client-side error occured.");
             } else {
-              console.log("Server-side error occured.");
-              console.log(err);
+              // console.log("Server-side error occured.");
+              // console.log(err);
             alert (err)
             }
           }) // closing emp_data
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log("Client-side error occured.");
+          // console.log("Client-side error occured.");
         } else {
-          console.log("Server-side error occured.");
-          console.log(err);
+          // console.log("Server-side error occured.");
+          // console.log(err);
           alert ("You have already requested to hire this applicant")
         }
       }
@@ -426,7 +426,7 @@ export class EditComponent implements OnInit {
     //       }
     //   }
     // )
-    // console.log(data)
+    // // console.log(data)
 
   }
 }

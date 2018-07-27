@@ -22,10 +22,10 @@ export class HomepageComponent implements OnInit {
     public userService: UserLoginService,
     private router: Router
   ) {
-    console.log("f")
+    // console.log("f")
     // todo - private v public
     this.userService.isAuthenticated(this);
-    console.log("Applicant Component: constructor");
+    // console.log("Applicant Component: constructor");
 
     if (sessionStorage.getItem("accountType") == "applicant") {
       this.is_applicant = true
@@ -34,7 +34,7 @@ export class HomepageComponent implements OnInit {
       this.is_applicant = false
     }
 
-    // console.log(this.is_applicant)
+    // // console.log(this.is_applicant)
   
   
   }
@@ -47,7 +47,7 @@ export class HomepageComponent implements OnInit {
 }
 
   ngOnInit() {
-    console.log("c")
+    // console.log("c")
   }
 
   bigBtn() {

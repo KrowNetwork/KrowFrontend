@@ -29,7 +29,7 @@ export class ProfileInfo2Component implements OnInit {
       this.is_applicant = false
     }
 
-    console.log(this.is_applicant)
+    // console.log(this.is_applicant)
 
     if (this.router.url.split("/")[3] === undefined) {
       this.view_private = true

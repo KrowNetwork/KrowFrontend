@@ -54,7 +54,7 @@ export class ResumeSkillsComponent implements OnInit {
 
   createNew(skill){
     if(/\S/.test(skill.data.skill.toString())){
-      console.log("found something");
+      // console.log("found something");
       return;
     }
     var node = document.createElement("li"); 
@@ -93,9 +93,9 @@ export class ResumeSkillsComponent implements OnInit {
       }, // Catch Errors
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log("Client-side error occured.");
+          // console.log("Client-side error occured.");
         } else {
-          console.log("Server-side error occured.");
+          // console.log("Server-side error occured.");
         }
       }
     );

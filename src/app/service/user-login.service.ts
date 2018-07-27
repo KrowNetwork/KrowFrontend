@@ -12,7 +12,7 @@ export class UserLoginService {
 
     private onLoginSuccess = (callback: CognitoCallback, session: CognitoUserSession) => {
 
-        console.log("In authenticateUser onSuccess callback");
+        // console.log("In authenticateUser onSuccess callback");
 
         AWS.config.credentials = this.cognitoUtil.buildCognitoCreds(session.getIdToken().getJwtToken());
 
@@ -29,7 +29,7 @@ export class UserLoginService {
         }
         let sts = new STS(clientParams);
         sts.getCallerIdentity(function (err, data) {
-            console.log("UserLoginService: Successfully set the AWS credentials");
+            // console.log("UserLoginService: Successfully set the AWS credentials");
             callback.cognitoCallback(null, session);
         });
     }
@@ -44,7 +44,7 @@ export class UserLoginService {
     }
 
     authenticate(username: string, password: string, callback: CognitoCallback) {
-        console.log("UserLoginService: starting the authentication");
+        // console.log("UserLoginService: starting the authentication");
 
         let authenticationData = {
             Username: username,
@@ -57,9 +57,9 @@ export class UserLoginService {
             Pool: this.cognitoUtil.getUserPool()
         };
 
-        console.log("UserLoginService: Params set...Authenticating the user");
+        // console.log("UserLoginService: Params set...Authenticating the user");
         let cognitoUser = new CognitoUser(userData);
-        console.log("UserLoginService: config is " + AWS.config);
+        // console.log("UserLoginService: config is " + AWS.config);
         cognitoUser.authenticateUser(authenticationDetails, {
             newPasswordRequired: (userAttributes, requiredAttributes) => callback.cognitoCallback(`User needs to set password.`, null),
             onSuccess: result => this.onLoginSuccess(callback, result),
@@ -115,7 +115,7 @@ export class UserLoginService {
     }
 
     logout() {
-        console.log("UserLoginService: Logging out");
+        // console.log("UserLoginService: Logging out");
         this.cognitoUtil.getCurrentUser().signOut();
     }
 
@@ -124,16 +124,16 @@ export class UserLoginService {
             throw("UserLoginService: Callback in isAuthenticated() cannot be null");
 
         let cognitoUser = this.cognitoUtil.getCurrentUser();
-        console.log(cognitoUser)
+        // console.log(cognitoUser)
         var createNewToken=false;
         if (cognitoUser != null) {
             cognitoUser.getSession(function (err, session) {
                 if (err) {
-                    console.log("UserLoginService: Couldn't get the session: " + err, err.stack);
+                    // console.log("UserLoginService: Couldn't get the session: " + err, err.stack);
                     callback.isLoggedIn(err, false);
                 }
                 else {
-                    console.log("UserLoginService: Session is " + session.isValid());
+                    // console.log("UserLoginService: Session is " + session.isValid());
                     if (localStorage.getItem("tokenCreation") !== undefined) {
                         var seconds = (new Date().getTime() - new Date(localStorage.getItem("tokenCreation")).getTime()) / 1000
                         if (seconds > 60 * 30) {
@@ -147,7 +147,7 @@ export class UserLoginService {
                 }
             });
         } else {
-            console.log("UserLoginService: can't retrieve the current user");
+            // console.log("UserLoginService: can't retrieve the current user");
             callback.isLoggedIn("Can't retrieve the CurrentUser", false);
         }
         if (createNewToken) {
@@ -163,9 +163,9 @@ export class UserLoginService {
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log("Client-side error occured.");
+          // console.log("Client-side error occured.");
         } else {
-          console.log("Server-side error occured.");
+          // console.log("Server-side error occured.");
         }
         sessionStorage.setItem("accountType", "employer")
 

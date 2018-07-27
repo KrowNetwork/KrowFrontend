@@ -21,7 +21,6 @@ export class ApplicantProfileComponent implements OnInit {
 
   constructor(public router: Router, public userService: UserLoginService, public http: CustomHttpService) {
     this.userService.isAuthenticated(this);
-    console.log("Applicant Component: constructor");
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
 
     // isApplicant = false 
@@ -51,17 +50,17 @@ export class ApplicantProfileComponent implements OnInit {
   openJobs(event) {
     var el = event.target.parentElement.children[1];
     var currStyle = el.attributes[1].value;
-    console.log(currStyle);
+    // console.log(currStyle);
     if(currStyle == "display: block;"){
-      console.log(1);
+      // console.log(1);
       event.target.parentElement.attributes[1].value = "inner-child";
       el.style = "display: none;";
-      console.log(el.style);
+      // console.log(el.style);
     }
     else if(currStyle == "display: none;"){      
-      console.log(2);
+      // console.log(2);
       el.style = "display: block;";
-      console.log(el.style);
+      // console.log(el.style);
     }
   }
   
@@ -83,7 +82,7 @@ export class ApplicantProfileComponent implements OnInit {
     // }
     
 
-    // console.log(this.isApplicant)
+    // // console.log(this.isApplicant)
 
     
       

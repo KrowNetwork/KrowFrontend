@@ -24,7 +24,7 @@ export class JobProfileComponent implements OnInit {
   constructor(public router: Router, public userService: UserLoginService, public http: CustomHttpService) {
     
     this.userService.isAuthenticated(this);
-    console.log("Job Component: constructor");
+    // console.log("Job Component: constructor");
 
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
 
@@ -56,9 +56,9 @@ scrollup(){
   ngOnInit() {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
     
-    // console.log(this.show_hire_requests)
-    // console.log(this.show_hire_requests)
-    // console.log(this.x)
+    // // console.log(this.show_hire_requests)
+    // // console.log(this.show_hire_requests)
+    // // console.log(this.x)
     // if (this.x.subscribe(this.x == this.user)) {
     //   this.btnText = "Find Job"
     // }

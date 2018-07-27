@@ -11,7 +11,7 @@ export class ExperienceMainComponent implements InterfaceComponent {
   deletedElements = new Array();
 
   displayDropdown(event){
-    console.log("display");
+    // console.log("display");
   }
 
   deleteItem(event){

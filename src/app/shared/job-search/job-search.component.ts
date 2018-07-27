@@ -33,28 +33,28 @@ export class JobSearchComponent implements OnInit {
   }
 
   getSearchQueryData(){
-    console.log("Loading new data for query: " + this.searchUserQuery);
+    // console.log("Loading new data for query: " + this.searchUserQuery);
     // Submit string to server to get a list of job ids
     var url = "http://18.220.46.51:4200/search?key=42fc1e42-5eb8-4a8f-8904-7c58529f0f58";
     this.http.get(url, {params: {"term": this.searchUserQuery}}).subscribe(
       data => {
-        console.log(data);
+        // console.log(data);
         this.display(this.parse(data))
       }, // Catch Errors  
       
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log("Client-side error occured.");
+          // console.log("Client-side error occured.");
         } else {
-          console.log("Server-side error occured.");
-          console.log(err);
+          // console.log("Server-side error occured.");
+          // console.log(err);
         }
       }
     );
   }
 
   parse(results){
-    // console.log(results)
+    // // console.log(results)
     var jobs = [];
     for(var k = 0; k < 10; k++){
       jobs.push(JSON.parse(results[k]))
@@ -97,7 +97,7 @@ export class JobSearchComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.searchUserQuery = params['search'];
-      console.log(params['search']);
+      // console.log(params['search']);
       if(params['search']){
         this.getSearchQueryData();
       }

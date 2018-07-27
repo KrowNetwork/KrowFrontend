@@ -15,11 +15,11 @@ export class CustomHttpService{
   constructor(private http: HttpClient) {
 
     this.apiKey = this.getKey()
-    console.log(this.apiKey)
-    // console.log(v)
-    // console.log("c")
+    // console.log(this.apiKey)
+    // // console.log(v)
+    // // console.log("c")
 
-    // console.log(this.head("http://18.200.46.51:3000/Applicant/352fa0c7-5921-4782-b476-43e97f9295d1"))
+    // // console.log(this.head("http://18.200.46.51:3000/Applicant/352fa0c7-5921-4782-b476-43e97f9295d1"))
 
   }
 
@@ -33,7 +33,7 @@ export class CustomHttpService{
     //   this.apiKey = res;
     //   return this.apiKey;
     // })
-      // console.log(this.apiKey)
+      // // console.log(this.apiKey)
     
   }
 
@@ -42,7 +42,7 @@ export class CustomHttpService{
   // }
 
   handlerFct(key) {
-    // console.log(key)
+    // // console.log(key)
     this.apiKey = key
   }
 

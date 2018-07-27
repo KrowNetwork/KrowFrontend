@@ -11,7 +11,7 @@ export class UpdateResumeService {
     async updateMain(dom){
         var currAttribute = dom.localName.slice(11);
         var componentsList = dom.children[0].children[0].children;
-        console.log(componentsList)
+        // console.log(componentsList)
         var updateButton = dom.children[0].children[1].children[1];
         var json = {data: []};
         for(var i = 0; i < componentsList.length; i++){
@@ -39,7 +39,7 @@ export class UpdateResumeService {
                     else {
                         // var currType = input.attributes[1].value;
                         var currType = input.getAttribute("secret");
-                        console.log(currType)
+                        // console.log(currType)
                         if(currAttribute == "experience" && currType == "type"){
                             value = "PROFESSIONALWORK";
                         }
@@ -111,24 +111,24 @@ export class UpdateResumeService {
                 var timestamp = new Date();
                 data["lastUpdated"] = timestamp;
                 data["resume"]["lastUpdated"] = timestamp;
-                console.log(data)
+                // console.log(data)
                 this.postData(data, url, updateButton);
             }, // Catch Errors
             (err: HttpErrorResponse) => {
                 alert("Could not get data!");
                 updateButton.innerText = "UPDATE";
                 if (err.error instanceof Error) {
-                    console.log("Client-side error occured.");
+                    // console.log("Client-side error occured.");
                 } else {
-                    console.log("Server-side error occured.");
+                    // console.log("Server-side error occured.");
                 }
             }
         );
     }
 
     postData(data, url, updateButton){
-        console.log("Posting Data");
-        console.log(data)
+        // console.log("Posting Data");
+        // console.log(data)
         // Update entry
         this.http.put(url, data).subscribe(
             data => {
@@ -140,11 +140,11 @@ export class UpdateResumeService {
                 // alert("Could not post data!");
                 updateButton.innerText = "UPDATE";
                 if (err.error instanceof Error) {
-                    console.log("Client-side error occured.");
+                    // console.log("Client-side error occured.");
                 } else {
-                    console.log("Server-side error occured.");
+                    // console.log("Server-side error occured.");
                 }
-                console.log(err)
+                // console.log(err)
             }
         );
     }
