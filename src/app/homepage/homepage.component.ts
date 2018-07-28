@@ -25,6 +25,7 @@ export class HomepageComponent implements OnInit {
     // console.log("f")
     // todo - private v public
     this.userService.isAuthenticated(this);
+    this.userService.verifyUserType(localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"))
     // console.log("Applicant Component: constructor");
 
     if (sessionStorage.getItem("accountType") == "applicant") {
