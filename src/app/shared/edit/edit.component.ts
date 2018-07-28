@@ -313,7 +313,7 @@ export class EditComponent implements OnInit {
             this.canDelete = true
           }
 
-          console.log(this.canDelete)
+          // console.log(this.canDelete)
 
           // Split url links
           for(var i = 0; i < data["links"].length; i++){
@@ -359,15 +359,15 @@ export class EditComponent implements OnInit {
     var i = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
     this.http2.post("http://52.15.219.10:4200/delete?token=" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt."+ i +".accessToken"), {id: i}).subscribe(
       data => {
-        console.log(data)
+        // console.log(data)
       }, // Catch Errors
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          console.log("Client-side error occured.");
+          // console.log("Client-side error occured.");
         } else {
-          console.log("Server-side error occured.");
+          // console.log("Server-side error occured.");
         }
-        console.log(err)
+        // console.log(err)
       }
     );
     this.router.navigate(["/logout"])
