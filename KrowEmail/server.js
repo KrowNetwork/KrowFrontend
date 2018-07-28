@@ -47,7 +47,7 @@ app.use(function(req, res, next) {
         if (err) {
             res.send(401, 'Incorrect Access Token')
         } else {
-            res.send({"api": "key"})
+            res.send({"api": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"})
             // qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv
         }
     });

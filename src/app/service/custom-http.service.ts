@@ -68,6 +68,8 @@ export class CustomHttpService{
   head(url, options=undefined) {
     if (options != undefined) {
       return this.apiKey.flatMap(d => {
+        console.log(d["api"])
+
         return this.http.head(url, {headers: {"x-api-key": d["api"]}, observe: options["observe"]});
     })
     }
