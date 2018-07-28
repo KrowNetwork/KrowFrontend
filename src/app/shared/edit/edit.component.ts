@@ -355,7 +355,8 @@ export class EditComponent implements OnInit {
   }
 
   delete() {
-    this.http.post("http://52.15.219.3000/delete", {id: localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")}).subscribe(
+    var i = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
+    this.http.post("http://52.15.219.3000/delete?token=" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt."+ i +".accessToken"), {id: i}).subscribe(
       data => {
         console.log(data)
       }
