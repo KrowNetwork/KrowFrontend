@@ -5,6 +5,7 @@ import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { log } from 'util';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { CustomHttpService } from '../../service/custom-http.service';
+var aws = require('aws-sdk');
 
 @Component({
   selector: 'app-edit',
@@ -42,7 +43,9 @@ export class EditComponent implements OnInit {
   lockResume = false;
   userType: string;
   profileType: string;
-
+  inProgressJobs = [];
+  canDelete = false;
+  showDel = false;
 
 
   updateInfo(children) {
@@ -228,6 +231,11 @@ export class EditComponent implements OnInit {
           this.phoneNumber = data["phoneNumber"];
           this.email = data["email"];
 
+          this.inProgressJobs = data["InprogressJobs"]
+          if (this.inProgressJobs.length == 0 || this.inProgressJobs === undefined) {
+            this.canDelete = true
+          }
+
           // Split url links
           for(var i = 0; i < data["links"].length; i++){
             var curr = data["links"][i];
@@ -298,6 +306,13 @@ export class EditComponent implements OnInit {
           this.country = data["country"];
           this.phoneNumber = data["phoneNumber"];
           this.email = data["email"];
+          this.inProgressJobs = data["InprogressJobs"]
+
+          if (this.inProgressJobs === undefined || this.inProgressJobs.length == 0) {
+            this.canDelete = true
+          }
+
+          console.log(this.canDelete)
 
           // Split url links
           for(var i = 0; i < data["links"].length; i++){
@@ -333,6 +348,22 @@ export class EditComponent implements OnInit {
 
   viewUserResume() {
     this.router.navigate(["applicant/applicant-resume/" + this.id])
+  }
+
+  showDelete() {
+    this.showDel = true
+  }
+
+  delete() {
+    this.http.post("http://52.15.219.3000/delete", {id: localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")}).subscribe(
+      data => {
+        console.log(data)
+      }
+    )
+  }
+
+  continue(err, data) {
+    console.log(err)
   }
 
   

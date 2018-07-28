@@ -24,6 +24,7 @@ export class JobSearchComponent implements OnInit {
 
   searchUserQuery: string;
   errorMessage: string;
+  
 
   submitSearchQuery(){
     var hidden = document.getElementById("test-ID");

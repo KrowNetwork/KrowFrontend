@@ -151,7 +151,7 @@ export class UserLoginService {
             callback.isLoggedIn("Can't retrieve the CurrentUser", false);
         }
         if (createNewToken) {
-            this.cognitoUtil.newToken(cognitoUser);
+            // this.cognitoUtil.newToken(cognitoUser);
             localStorage.setItem("tokenCreation", new Date().toString())
         }
     }

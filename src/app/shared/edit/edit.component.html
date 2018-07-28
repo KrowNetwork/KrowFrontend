@@ -1,9 +1,23 @@
 <div class="padding-left">
 
   <div class="social-edit"  id="sn">
-    <h3 id="app-responsive-component-profile"></h3>
-    <button *ngIf="profileType == 'Applicant'" [routerLink]="['/applicant/upload']">Upload Profile Picture</button>
-    <button *ngIf="profileType != 'Applicant'" [routerLink]="['/employer/upload']">Upload Profile Picture</button>
+      <h3 id="app-responsive-component-profile"></h3>
+
+    <div class = "container">
+        <button style="margin-left: 10px" *ngIf="profileType == 'Applicant'" (click)="showDelete()">Delete Account</button>
+        <button style="margin-left: 10px" *ngIf="profileType != 'Applicant'" (click)="showDelete()">Delete Account</button>
+    
+        <button *ngIf="profileType == 'Applicant'" [routerLink]="['/applicant/upload']">Upload Profile Picture</button>
+        <button *ngIf="profileType != 'Applicant'" [routerLink]="['/employer/upload']">Upload Profile Picture</button>
+    </div>
+    
+    <div class="social-edit" style="margin-top: 10px">
+      <span *ngIf="!canDelete && showDel">You must complete all inprogress jobs to delete your account.</span>
+
+      <button *ngIf="canDelete && showDel" (click)="delete()">Confirm</button>
+    </div>
+
+    
     <form>
       <div class="row">
         <div id="app-responsive-component-profile-first" class="col-lg-6">

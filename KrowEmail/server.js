@@ -5,6 +5,7 @@ var ejs = require("ejs")
 var app = express()
 var bodyParser = require("body-parser");
 var cognito = require("cognito-express")
+var fs = require('fs');
 
 var port = 4200
 
@@ -63,7 +64,22 @@ app.use(function(req, res, next) {
 
 
 
+  app.post("/delete", (req, res, next) => {
+    var accessTokenFromClient = req.query.token;
 
+    cognitoExpress.validate(accessTokenFromClient, function(err, response) {
+        if (err) {
+            res.send(401, 'Incorrect Access Token')
+        } else {
+            fs.appendFile("delete.txt", req["id"], function(err) {
+                if (err) res.send(400, "error");
+                else res.send(200, "success")
+            })
+
+            // qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv
+        }
+    });
+  })
 
   app.post("/help", (req, res, next) => {
     // console.log(req.body)

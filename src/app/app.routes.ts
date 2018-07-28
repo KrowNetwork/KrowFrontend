@@ -58,6 +58,8 @@ import { EditComponent } from "./shared/edit/edit.component"
 import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-profile-info/employer-profile-info.component'
 import { HomepageComponent } from './homepage/homepage.component'
 import { FAQsComponent } from './faqs/faqs.component'
+// import { DeleteComponent } from './delete/delete.component';
+
 
 
 
@@ -187,6 +189,10 @@ const secureHome: Routes = [
                 path: "upload",
                 component: UploadPicComponent
             }
+            // {
+            //     path: "delete",
+            //     component: DeleteComponent
+            // }
         ]
     },
     { 
@@ -241,6 +247,10 @@ const secureHome: Routes = [
                 path: "upload",
                 component: UploadPicComponent
             }
+            // {
+            //     path: "delete",
+            //     component: DeleteComponent
+            // }
         ]
     },
     { 
