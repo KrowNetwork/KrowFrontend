@@ -176,7 +176,15 @@ export class EmployerProfileInfoComponent implements OnInit {
                 )
                 
               })
-          }
+            }
+          // }, // Catch Errors
+          // (err = HttpErrorResponse) => {
+          //     sessionStorage.setItem("accountType", "applicant")
+          //     this.router.navigate(['/applicant']);
+          //     // console.log("User does not have an applicant account");
+          //     // console.log(err)
+          //     // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
+          // }
 
     //       // completed
     //       for (var i = 0; i < data["completedJobs"].length; i++){
@@ -230,7 +238,7 @@ export class EmployerProfileInfoComponent implements OnInit {
     //     }
     //   }
     // )
-  })
+  )
 }
 
   isLoggedIn(message: string, isLoggedIn: boolean) {

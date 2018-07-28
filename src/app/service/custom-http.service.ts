@@ -66,11 +66,11 @@ export class CustomHttpService{
   }
 
   head(url, options=undefined) {
-    var oUrl = "http://52.15.219.10:3000/h?url=" + url
+    var oUrl = "http://52.15.219.10:4200/h?url=" + url
     if (options != undefined) {
-        return this.http.head(oUrl, {observe: options["observe"]});
+        return this.http.get(oUrl, {observe: options["observe"]});
     } else {
-        return this.http.head(oUrl);
+        return this.http.get(oUrl);
     }
 
 
