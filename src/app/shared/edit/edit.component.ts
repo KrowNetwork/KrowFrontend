@@ -370,7 +370,7 @@ export class EditComponent implements OnInit {
         console.log(err)
       }
     );
-    this.router.navigate(["/"])
+    this.router.navigate(["/logout"])
   }
 
   continue(err, data) {

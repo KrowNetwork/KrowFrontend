@@ -12,7 +12,9 @@ export class UserParametersService {
 
         if (cognitoUser != null) {
             cognitoUser.getSession(function (err, session) {
-                if (err)
+                if (err) {
+                    
+                }
                     // console.log("UserParametersService: Couldn't retrieve the user");
                 else {
                     cognitoUser.getUserAttributes(function (err, result) {

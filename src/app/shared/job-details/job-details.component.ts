@@ -197,7 +197,7 @@ export class JobDetailsComponent implements OnInit {
 
   updateInfo(children) {
     // this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
-    this.activatedRoute.params.subscribe(params => // console.log(params));
+    // this.activatedRoute.params.subscribe(params => // console.log(params));
     // Test Id, get from login in the future
     
 

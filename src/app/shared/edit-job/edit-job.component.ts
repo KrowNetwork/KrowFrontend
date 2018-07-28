@@ -28,6 +28,7 @@ export class EditJobComponent implements OnInit {
   disabled = true;
   url: string;
 
+
   applicants = [];
   applicant_data = [];
   nameOfApplicants: string;
@@ -76,7 +77,7 @@ export class EditJobComponent implements OnInit {
 
   updateInfo(children) {
     // this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
-    this.activatedRoute.params.subscribe(params => // console.log(params));
+    // this.activatedRoute.params.subscribe(params => // console.log(params));
     // Test Id, get from login in the future
     
 
@@ -238,6 +239,7 @@ export class EditJobComponent implements OnInit {
         } else {
           this.lastUpdated = this.created
         }
+
         // // console.log(this.lastUpdated)
         
         this.employerID = data["employerID"];
