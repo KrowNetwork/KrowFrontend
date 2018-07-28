@@ -25,14 +25,16 @@ export class HomeComponent implements OnInit {
 
         var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
 
+        if(!user){
+            this.router.navigate(['/login']);
+        }
+
         if (sessionStorage.getItem("accountType") !== undefined) {
             this.router.navigate(["/" + sessionStorage.getItem("accountType")])
         }
         // this.token = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt." + user + ".idToken");
         // console.log(user)
-        if(!user){
-            this.router.navigate(['/login']);
-        }
+        
         else{
             
             this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(

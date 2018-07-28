@@ -66,14 +66,24 @@ export class CustomHttpService{
   }
 
   head(url, options=undefined) {
+    var oUrl = "http://52.15.219.10:3000/h?url=" + url
     if (options != undefined) {
-      return this.apiKey.flatMap(d => {
-        return this.http.head(url, {headers: {"x-api-key": d["api"]}, observe: options["observe"]});
-    })
+        return this.http.head(oUrl, {observe: options["observe"]});
+    } else {
+        return this.http.head(oUrl);
     }
-    return this.apiKey.flatMap(d => {
-        return this.http.head(url, {headers: {"x-api-key": d["api"]}});
-    })
+
+
+
+
+    // if (options != undefined) {
+    //   return this.apiKey.flatMap(d => {
+    //     return this.http.head(url, {headers: {"x-api-key": d["api"]}, observe: options["observe"]});
+    // })
+    // }
+    // return this.apiKey.flatMap(d => {
+    //     return this.http.head(url, {headers: {"x-api-key": d["api"]}});
+    // })
   }
 
   put(url, data) {

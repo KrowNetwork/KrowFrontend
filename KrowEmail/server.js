@@ -7,6 +7,8 @@ var bodyParser = require("body-parser");
 var cognito = require("cognito-express")
 var fs = require('fs');
 const { exec } = require('child_process');
+var request = require('request');
+
 
 var port = 4200
 
@@ -88,6 +90,17 @@ app.use(function(req, res, next) {
             // qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv
         }
     });
+  })
+
+  app.head("/h", (req, res, next) => {
+   var url = req.query.url
+    request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res) {
+        if (err) {
+            res.send(400, {"response": "err"})
+        } else {
+            res.send(200, {"res": "success"})
+        }
+    })
   })
 
   app.post("/help", (req, res, next) => {
