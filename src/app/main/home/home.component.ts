@@ -22,14 +22,12 @@ export class HomeComponent implements OnInit {
     ) {
         // console.log("Secure Home Component: constructor");
         this.userService.isAuthenticated(this)
-        
-    }
 
-    user: string;
-    token: string;
-
-    ngOnInit() {
         var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+
+        if (sessionStorage.getItem("accountType") !== undefined) {
+            this.router.navigate(["/" + sessionStorage.getItem("accountType")])
+        }
         // this.token = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt." + user + ".idToken");
         // console.log(user)
         if(!user){
@@ -45,33 +43,27 @@ export class HomeComponent implements OnInit {
                 this.router.navigate(['/applicant']);
             }, // Catch Errors
             (err = HttpErrorResponse) => {
-                if (err instanceof Error) {
-                    // console.log("Client-side error occured.");
-                } else {
-                    // console.log("Server-side error occured.");
-                }
+                sessionStorage.setItem("accountType", "employer")
+                this.router.navigate(['/employer']);
                 // console.log("User does not have an applicant account");
                 // console.log(err)
                 // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
             }
         );
-        this.http.head("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
-            data => {
-                // console.log("User has an employer account");
-                sessionStorage.setItem("accountType", "employer")
-                this.router.navigate(['/employer']);
-            }, // Catch Errors
-            (err = HttpErrorResponse) => {
-                if (err instanceof Error) {
-                    // console.log("Client-side error occured.");
-                } else {
-                    // console.log("Server-side error occured.");
-                }
-                // console.log("User does not have an employer account");
-                // this.router.navigate(['/basicInfo'], { queryParams: { as: "Employer" } });
-            }
-        );
+        
         }
+        
+    }
+
+    user: string;
+    token: string;
+
+    // $window.onload = function() {
+
+    // }
+
+    ngOnInit() {
+        
     }
 
     initializeApplicant(){
