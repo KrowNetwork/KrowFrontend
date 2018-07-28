@@ -134,15 +134,15 @@ export class UserLoginService {
                 }
                 else {
                     // console.log("UserLoginService: Session is " + session.isValid());
-                    if (localStorage.getItem("tokenCreation") !== undefined) {
-                        var seconds = (new Date().getTime() - new Date(localStorage.getItem("tokenCreation")).getTime()) / 1000
-                        if (seconds > 60 * 30) {
-                            createNewToken = true
-                        }
-                    else {
-                        localStorage.setItem("tokenCreation", new Date().toString())
-                    }
-                    }
+                    // if (localStorage.getItem("tokenCreation") !== undefined) {
+                    //     var seconds = (new Date().getTime() - new Date(localStorage.getItem("tokenCreation")).getTime()) / 1000
+                    //     if (seconds > 60 * 30) {
+                    //         createNewToken = true
+                    //     }
+                    // else {
+                    //     localStorage.setItem("tokenCreation", new Date().toString())
+                    // }
+                    // }
                     callback.isLoggedIn(err, session.isValid(), );
                 }
             });
@@ -150,10 +150,10 @@ export class UserLoginService {
             // console.log("UserLoginService: can't retrieve the current user");
             callback.isLoggedIn("Can't retrieve the CurrentUser", false);
         }
-        if (createNewToken) {
-            // this.cognitoUtil.newToken(cognitoUser);
-            localStorage.setItem("tokenCreation", new Date().toString())
-        }
+        // if (createNewToken) {
+        //     // this.cognitoUtil.newToken(cognitoUser);
+        //     localStorage.setItem("tokenCreation", new Date().toString())
+        // }
     }
 
     verifyUserType(userID) {
