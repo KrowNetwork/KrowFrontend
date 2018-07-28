@@ -16,6 +16,7 @@ export class EditComponent implements OnInit {
 
   constructor(
     public http: CustomHttpService,
+    public http2: HttpClient,
     private createUser: CreateUserService,
     private activatedRoute: ActivatedRoute,
     private router: Router
@@ -356,11 +357,20 @@ export class EditComponent implements OnInit {
 
   delete() {
     var i = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
-    this.http.post("http://52.15.219.3000/delete?token=" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt."+ i +".accessToken"), {id: i}).subscribe(
+    this.http2.post("http://52.15.219.10:4200/delete?token=" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt."+ i +".accessToken"), {id: i}).subscribe(
       data => {
         console.log(data)
+      }, // Catch Errors
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+        }
+        console.log(err)
       }
-    )
+    );
+    this.router.navigate(["/"])
   }
 
   continue(err, data) {

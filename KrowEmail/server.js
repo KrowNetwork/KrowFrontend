@@ -6,6 +6,7 @@ var app = express()
 var bodyParser = require("body-parser");
 var cognito = require("cognito-express")
 var fs = require('fs');
+const { exec } = require('child_process');
 
 var port = 4200
 
@@ -71,10 +72,18 @@ app.use(function(req, res, next) {
         if (err) {
             res.send(401, 'Incorrect Access Token')
         } else {
-            fs.appendFile("delete.txt", req["id"], function(err) {
-                if (err) res.send(400, "error");
-                else res.send(200, "success")
-            })
+            exec("aws cognito-idp admin-disable-user --user-pool-id us-east-2_THcotoVBG --username " + req.body.id, (error, stdout, stderr) => 
+        {
+            if (error) {
+                res.send(400, {"res": "error"})
+            } else {
+                res.send(200, {"res": "success"})
+            }
+        })
+            // fs.appendFile("delete.txt", req.body.id, function(err) {
+            //     if (err) res.send(400, {"res": "error"});
+            //     else res.send(200, {"res": "success"})
+            // })
 
             // qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv
         }
