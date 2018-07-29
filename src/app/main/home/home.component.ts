@@ -39,21 +39,20 @@ export class HomeComponent implements OnInit {
             
             this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
             data => {
-                console.log(data["res"])
-                if (data["res"] == "success") {
-                    sessionStorage.setItem("accountType", "applicant")
-                    this.router.navigate(['/applicant']);
-                } else {
-                    sessionStorage.setItem("accountType", "employer")
-                    this.router.navigate(['/employer']);
-                }
+                // console.log(data["res"])
+               
+                sessionStorage.setItem("accountType", "applicant")
+                this.router.navigate(['/applicant']);
+               
+                    
+                
                 // console.log(data)
                 // console.log("User has an applicant account");
                 
             }, // Catch Errors
             (err = HttpErrorResponse) => {
-                this.router.navigate(["/error"])
-                // console.log("User does not have an applicant account");
+                sessionStorage.setItem("accountType", "employer")
+                this.router.navigate(['/employer']);                // console.log("User does not have an applicant account");
                 // console.log(err)
                 // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
             }

@@ -157,16 +157,11 @@ export class UserLoginService {
     }
 
     verifyUserType(userID) {
-        this.http.head("http://18.220.46.51:3000/api/Applicant/" + userID,  {observe: 'response'}).subscribe(
+        this.http.head("http://18.220.46.51:3000/api/Applicant/" + userID).subscribe(
       response => {
                 sessionStorage.setItem("accountType", "applicant")
       },
       (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          // console.log("Client-side error occured.");
-        } else {
-          // console.log("Server-side error occured.");
-        }
         sessionStorage.setItem("accountType", "employer")
 
         

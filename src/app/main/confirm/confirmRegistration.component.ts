@@ -18,6 +18,7 @@ export class LogoutComponent implements LoggedInCallback {
     isLoggedIn(message: string, isLoggedIn: boolean) {
         if (isLoggedIn) {
             this.userService.logout();
+            sessionStorage.removeItem("accountType")
             this.router.navigate(['/login']);
         }
         else{
