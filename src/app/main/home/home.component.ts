@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
             this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
             data => {
                 // console.log(data["res"])
-                console.log(data)
+                // console.log(data)
                 sessionStorage.setItem("accountType", "applicant")
                 this.router.navigate(['/applicant']);
                
@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
                 
             }, // Catch Errors
             (err = HttpErrorResponse) => {
-                console.log(err["status"])
+                // console.log(err["status"])
                 if (err["status"] == 404) {
                     sessionStorage.setItem("accountType", "employer")
                     this.router.navigate(['/employer']);
