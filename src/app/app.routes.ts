@@ -307,10 +307,10 @@ const secureHome: Routes = [
         path: '**', 
         component: PageNotFoundComponent,
     },
-    { 
-        path: 'error', 
-        component: PageNotFoundComponent,
-    },
+    // { 
+    //     path: 'error', 
+    //     component: PageNotFoundComponent,
+    // },
 ];
 
 const routes: Routes = [

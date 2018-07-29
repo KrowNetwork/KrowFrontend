@@ -179,6 +179,7 @@ export class EmployerProfileInfoComponent implements OnInit {
             }
           // }, // Catch Errors
           // (err = HttpErrorResponse) => {
+          //   console.log("h" + err)
           //     sessionStorage.setItem("accountType", "applicant")
           //     this.router.navigate(['/applicant']);
           //     // console.log("User does not have an applicant account");
@@ -238,7 +239,7 @@ export class EmployerProfileInfoComponent implements OnInit {
     //     }
     //   }
     // )
-    }
+          }
   )
 }
 
