@@ -162,7 +162,12 @@ export class UserLoginService {
                 sessionStorage.setItem("accountType", "applicant")
       },
       (err: HttpErrorResponse) => {
-        sessionStorage.setItem("accountType", "employer")
+          if (err["status"] == 200) {
+            sessionStorage.setItem("accountType", "applicant")
+          } else {
+            sessionStorage.setItem("accountType", "employer")
+
+          }
 
         
       }

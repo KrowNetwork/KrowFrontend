@@ -24,7 +24,6 @@ export class HomeComponent implements OnInit {
         this.userService.isAuthenticated(this)
 
         var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
-        console.log(1)
         if(!user){
             this.router.navigate(['/login']);
         }
@@ -36,7 +35,6 @@ export class HomeComponent implements OnInit {
         // console.log(user)
         
         else {
-            console.log("here")
             this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
             data => {
                 // console.log(data["res"])
@@ -51,9 +49,15 @@ export class HomeComponent implements OnInit {
                 
             }, // Catch Errors
             (err = HttpErrorResponse) => {
-                console.log(err)
-                sessionStorage.setItem("accountType", "employer")
-                this.router.navigate(['/employer']);                // console.log("User does not have an applicant account");
+                console.log(err["status"])
+                if (err["status"] == 404) {
+                    sessionStorage.setItem("accountType", "employer")
+                    this.router.navigate(['/employer']);
+                } else {
+                    sessionStorage.setItem("accountType", "applicant")
+                this.router.navigate(['/applicant']);
+                }
+                                // console.log("User does not have an applicant account");
                 // console.log(err)
                 // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
             }
@@ -71,7 +75,6 @@ export class HomeComponent implements OnInit {
     // }
 
     ngOnInit() {
-        console.log("h")
     }
 
     initializeApplicant(){

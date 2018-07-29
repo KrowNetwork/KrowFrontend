@@ -95,12 +95,12 @@ app.use(function(req, res, next) {
   app.get("/h", (req, res, next) => {
    var url = req.query.url
     request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
-        if (err) {
-            console.log(err)
-            res.sendStatus(404).send("Oh uh, something went wrong");
+        if (res2.body.startsWith('{"error"')) {
+            res.sendStatus(404)
         } else {
-            res.sendStatus(200).send({"res": "success"})
+            res.sendStatus(200)
         }
+        
     })
   })
 
