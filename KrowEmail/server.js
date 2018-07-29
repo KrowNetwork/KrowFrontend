@@ -94,12 +94,8 @@ app.use(function(req, res, next) {
 
   app.head("/h", (req, res, next) => {
    var url = req.query.url
-    request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res) {
-        if (err) {
-            res.send(400, {"response": "err"})
-        } else {
-            res.send(200, {"res": "success"})
-        }
+    request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
+        res.send(res2)
     })
   })
 
