@@ -127,7 +127,7 @@ app.use(function(req, res, next) {
             console.log(err)
             res.status(404).send("Oh uh, something went wrong");
         } else {
-            res.status(200).send({"res": "success"})
+            res.send(res2.body)
         }
     })
   })

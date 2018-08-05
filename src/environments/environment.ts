@@ -18,6 +18,7 @@ export const environment = {
   sts_endpoint: '',
   dynamodb_endpoint: '',
   s3_endpoint: ''
+
   // region: 'us-east-1',
 
   // identityPoolId: 'us-east-1:c91da654-3704-45e0-8614-2b8f4b00a4e7',

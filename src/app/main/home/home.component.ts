@@ -28,17 +28,11 @@ export class HomeComponent implements OnInit {
             this.router.navigate(['/login']);
         }
 
-        // if (sessionStorage.getItem("accountType") !== undefined) {
-        //     this.router.navigate(["/" + sessionStorage.getItem("accountType")])
-        // }
-        // this.token = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt." + user + ".idToken");
-        // console.log(user)
-        
         else {
             this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
             data => {
                 // console.log(data["res"])
-                // console.log(data)
+                console.log(data)
                 sessionStorage.setItem("accountType", "applicant")
                 this.router.navigate(['/applicant']);
                
@@ -49,24 +43,20 @@ export class HomeComponent implements OnInit {
                 
             }, // Catch Errors
             (err = HttpErrorResponse) => {
-                // console.log(err["status"])
                 console.log(err)
-                if (err["status"] == 404) {
-                    sessionStorage.setItem("accountType", "employer")
-                    this.router.navigate(['/employer']);
-                } else {
-                    sessionStorage.setItem("accountType", "applicant")
-                this.router.navigate(['/applicant']);
+
+                
+                sessionStorage.setItem("accountType", "employer")
+                this.router.navigate(['/employer']);
+
                 }
-                                // console.log("User does not have an applicant account");
-                // console.log(err)
-                // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
+            )
+                                // console.log("User does not have an applicant acco        // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
             }
-        );
         
         }
         
-    }
+    
 
     user: string;
     token: string;

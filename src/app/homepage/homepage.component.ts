@@ -5,10 +5,9 @@ import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { UserLoginService } from '../service/user-login.service';
 import { CustomHttpService } from '../service/custom-http.service';
 
-
 @Component({
   selector: 'app-homepage',
-  templateUrl: './homepage.component.html',
+  templateUrl: "./homepage.component.html",
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
