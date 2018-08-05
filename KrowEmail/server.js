@@ -111,6 +111,32 @@ app.use(function(req, res, next) {
     })
   })
 
+  app.get("/g", (req, res, next) => {
+    var url = req.query.url
+    var accessTokenFromClient = req.query.token;
+
+    cognitoExpress.validate(accessTokenFromClient, function(err, response) {
+        if (err) {
+            res.send(401, 'Incorrect Access Token')
+        } else {
+            request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
+                if (err) {
+                    console.log(err)
+                    res.status(404).send(res2);
+                } else {
+                    res.status(200).send(res2)
+                }
+            })
+          })
+            //     if (err) res.send(400, {"res": "error"});
+            //     else res.send(200, {"res": "success"})
+            // })
+
+            // qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv
+        }
+    });
+    
+
   app.post("/help", (req, res, next) => {
     // console.log(req.body)
     var body = ""
