@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
         // console.log(user)
         
         else {
-            this.http.head("https://18.220.46.51:3000/api/Applicant/" + user).subscribe(
+            this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
             data => {
                 // console.log(data["res"])
                 // console.log(data)
@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit {
     }
 
     initializeApplicant(){
-        this.http.head("https://18.220.46.51:3000/api/Applicant/" + this.user).subscribe(
+        this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).subscribe(
             data => {
                 
                 sessionStorage.setItem("accountType", "applicant")
@@ -100,7 +100,7 @@ export class HomeComponent implements OnInit {
 
     initializeEmployer(){
         sessionStorage.setItem("accountType", "employer")
-        this.http.head("https://18.220.46.51:3000/api/Employer/" + this.user).subscribe(
+        this.http.head("http://18.220.46.51:3000/api/Employer/" + this.user).subscribe(
             data => {
                 // console.log("User has an employer account");
                 this.router.navigate(['/employer']);

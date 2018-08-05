@@ -58,8 +58,6 @@ import { EditComponent } from "./shared/edit/edit.component"
 import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-profile-info/employer-profile-info.component'
 import { HomepageComponent } from './homepage/homepage.component'
 import { FAQsComponent } from './faqs/faqs.component'
-import { GoogleSigninComponent } from './google-signin/google-signin.component';
-
 // import { DeleteComponent } from './delete/delete.component';
 
 
@@ -111,11 +109,7 @@ const appRoutes: Routes = [
     {
         path: "faqs",
         component: FAQsComponent
-    },
-    // {
-    //     path: "google-signin",
-    //     component: GoogleSigninComponent
-    // }
+    }
 ];
 
 const secureHome: Routes = [

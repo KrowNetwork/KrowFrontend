@@ -157,7 +157,7 @@ export class UserLoginService {
     }
 
     verifyUserType(userID) {
-        this.http.head("https://18.220.46.51:3000/api/Applicant/" + userID).subscribe(
+        this.http.head("http://18.220.46.51:3000/api/Applicant/" + userID).subscribe(
       response => {
                 sessionStorage.setItem("accountType", "applicant")
       },

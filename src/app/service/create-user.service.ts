@@ -71,7 +71,7 @@ export class CreateUserService {
         else if(intent == "Employer"){
             obj = this.createUserEmployerObj(userObj);
         }
-        var url = "https://18.220.46.51:3000/api/" + intent;
+        var url = "http://18.220.46.51:3000/api/" + intent;
         // console.log(intent.toLowerCase());
 
         this.http.post(url, obj).subscribe(

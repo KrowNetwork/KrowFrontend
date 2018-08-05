@@ -22,7 +22,7 @@ export class CompletedJobsComponent implements OnInit {
 
   ngOnInit() {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
-    var url = "https://18.220.46.51:3000/api/"
+    var url = "http://18.220.46.51:3000/api/"
     if (sessionStorage.getItem("accountType") == "applicant") {
       url += "Applicant/" + this.user
     } else if (sessionStorage.getItem("accountType") == "employer") {
@@ -39,7 +39,7 @@ export class CompletedJobsComponent implements OnInit {
         for (var i = 0; i < data["completedJobs"].length; i++){
 
           var id = data["completedJobs"][i].split("#")[1].toString()
-          var n_url = "https://18.220.46.51:3000/api/Job/" + id 
+          var n_url = "http://18.220.46.51:3000/api/Job/" + id 
           this.http.get(n_url).subscribe(
             n_data => {
               this.completed_jobs.push(

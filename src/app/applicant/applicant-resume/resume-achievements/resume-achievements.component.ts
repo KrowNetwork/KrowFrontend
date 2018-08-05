@@ -66,7 +66,7 @@ export class ResumeAchievementsComponent implements OnInit {
 			var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
 		}
 		
-		this.http.get("https://18.220.46.51:3000/api/Applicant/" + user).subscribe(
+		this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
 			data => {
 				var resumeAchievements = data["resume"]["achievements"];
 				var achievements = new Array<ItemType>();

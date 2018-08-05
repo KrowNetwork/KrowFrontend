@@ -114,7 +114,7 @@ export class EmployerPostJobsComponent implements OnInit {
 
   postJob(){
     this.msg = "Please wait"
-    var url = "https://18.220.46.51:3000/api/NewJob";
+    var url = "http://18.220.46.51:3000/api/NewJob";
     this.http.post(url, this.jobObject).subscribe(
       data => {
         this.msg = "Completed. Redirecting"

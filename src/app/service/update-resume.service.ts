@@ -81,7 +81,7 @@ export class UpdateResumeService {
         updateButton.innerText = "Updating...";
         this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
 
-        var url = "https://18.220.46.51:3000/api/Applicant/" + this.user;
+        var url = "http://18.220.46.51:3000/api/Applicant/" + this.user;
 
         this.http.get(url).subscribe(
             data => {
