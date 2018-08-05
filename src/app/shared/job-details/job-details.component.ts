@@ -149,7 +149,7 @@ export class JobDetailsComponent implements OnInit {
                   comp_name: emp_data["employerName"],
                   job_name:this.title
                 }
-                this.http.post("http://52.15.219.10:4200/hire-request", mailData).subscribe(
+                this.http.post("https://api.krownetwork.com/hire-request", mailData).subscribe(
                   data => {
                     this.msg = "Congratulations! The applicant has been notified!"
                   }, 
@@ -619,7 +619,7 @@ export class JobDetailsComponent implements OnInit {
                   to: data["email"],
                   job_name: this.title
                 }
-                this.http.post("http://52.15.219.10:4200/applicant-request", email_data).subscribe(
+                this.http.post("https://api.krownetwork.com/applicant-request", email_data).subscribe(
                   data => {
                     // alert("Congratulations! You've successfully applied!")
                     this.msg = "Congratulations! You've successfully applied!"
@@ -669,7 +669,7 @@ export class JobDetailsComponent implements OnInit {
                   to: data["email"],
                   job_name: this.title
                 }
-                this.http.post("http://52.15.219.10:4200/applicant-unrequest", email_data).subscribe(
+                this.http.post("https://api.krownetwork.com/applicant-unrequest", email_data).subscribe(
                   data => {
                     // alert("Congratulations! You've successfully applied!")
                     this.msg = "You've successfully removed your application"
@@ -764,7 +764,7 @@ export class JobDetailsComponent implements OnInit {
                   job_name: this.title,
                   to: empdata["email"]
                 }
-                this.http.post("http://52.15.219.10:4200/accept-hire", mailData).subscribe(
+                this.http.post("https://api.krownetwork.com/accept-hire", mailData).subscribe(
                   x => {
                     // console.log("success")
                   },

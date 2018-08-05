@@ -357,7 +357,7 @@ export class EditComponent implements OnInit {
 
   delete() {
     var i = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
-    this.http2.post("http://52.15.219.10:4200/delete?token=" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt."+ i +".accessToken"), {id: i}).subscribe(
+    this.http2.post("https://api.krownetwork.com/delete?token=" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt."+ i +".accessToken"), {id: i}).subscribe(
       data => {
         // console.log(data)
       }, // Catch Errors
@@ -415,7 +415,7 @@ export class EditComponent implements OnInit {
                   comp_name: emp_data["employerName"],
                   job_name: job_data["title"]
                 }
-                this.http.post("http://52.15.219.10:4200/hire-request", mailData).subscribe(
+                this.http.post("https://api.krownetwork.com/hire-request", mailData).subscribe(
                   data => {
                     alert("The applicant has been notified!")
                   }, 

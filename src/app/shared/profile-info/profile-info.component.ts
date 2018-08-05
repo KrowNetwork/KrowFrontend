@@ -349,7 +349,7 @@ export class ProfileInfoComponent implements OnInit {
                   comp_name: emp_data["employerName"],
                   job_name: job_data["title"]
                 }
-                this.http.post("http://52.15.219.10:4200/hire-request", mailData).subscribe(
+                this.http.post("https://api.krownetwork.com/hire-request", mailData).subscribe(
                   data => {
                     alert("The applicant has been notified!")
                   }, 
