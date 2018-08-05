@@ -28,7 +28,7 @@ export class CustomHttpService{
   // }
 
   getKey() {
-    return this.http.get("http://52.15.219.10:4200/hckey?token=" + this.token)
+    return this.http.get("https://52.15.219.10:4200/hckey?token=" + this.token)
     // .map((res: Response) => {
     //   this.apiKey = res;
     //   return this.apiKey;
@@ -66,7 +66,7 @@ export class CustomHttpService{
   }
 
   head(url, options=undefined) {
-    var oUrl = "http://52.15.219.10:4200/h?url=" + url
+    var oUrl = "https://52.15.219.10:4200/h?url=" + url
     if (options != undefined) {
         return this.http.get(oUrl, {observe: options["observe"]});
     } else {

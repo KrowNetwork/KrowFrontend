@@ -24,7 +24,7 @@ export class AvailableJobsComponent implements OnInit {
     // Test Id, get from login in the future
     // var hidden = sessionStorage.getItem("accountType")
     // var hidden = document.getElementById("test-ID");
-    var url = "http://18.220.46.51:3000/api/employer/" + this.employer;
+    var url = "https://18.220.46.51:3000/api/employer/" + this.employer;
     // console.log("yur")
     var IDs = []
     this.available_jobs = []
@@ -37,7 +37,7 @@ export class AvailableJobsComponent implements OnInit {
         for (var i = 0; i < data["availableJobs"].length; i++){
 
           var id = data["availableJobs"][i].split("#")[1].toString()
-          var n_url = "http://18.220.46.51:3000/api/Job/" + id 
+          var n_url = "https://18.220.46.51:3000/api/Job/" + id 
           this.http.get(n_url).subscribe(
             n_data => {
               if (n_data["applicantRequests"] !== undefined) {
