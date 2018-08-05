@@ -28,7 +28,7 @@ export class CustomHttpService{
   // }
 
   getKey() {
-    return this.http.get("https://api.krownetwork.com/hckey?token=" + this.token)
+    return this.http.get("https://52.15.219.10/hckey?token=" + this.token)
     // .map((res: Response) => {
     //   this.apiKey = res;
     //   return this.apiKey;
@@ -66,7 +66,7 @@ export class CustomHttpService{
   }
 
   head(url, options=undefined) {
-    var oUrl = "https://api.krownetwork.com/h?url=" + url
+    var oUrl = "https://52.15.219.10/h?url=" + url
     if (options != undefined) {
         return this.http.get(oUrl, {observe: options["observe"]});
     } else {

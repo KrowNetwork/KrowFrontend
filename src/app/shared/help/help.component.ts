@@ -28,7 +28,7 @@ export class HelpComponent implements OnInit {
       to: "help@krow.network"
     }
     this.msg = "Please wait"
-    this.http.post("https://api.krownetwork.com/help", msgData).subscribe(
+    this.http.post("https://52.15.219.10/help", msgData).subscribe(
       data=> {
         this.msg = "Success"
       },
