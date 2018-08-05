@@ -98,6 +98,7 @@ import { UploadPicComponent } from './upload-pic/upload-pic.component'
 // import { ImageCropperModule } from 'ngx-image-cropper';
 // import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 import {ImageCropperModule } from "ng2-img-cropper";
+import { GoogleSigninComponent } from './google-signin/google-signin.component';
 // import { DeleteComponent } from './delete/delete.component';
 
 
@@ -161,6 +162,7 @@ import {ImageCropperModule } from "ng2-img-cropper";
     HomepageComponent,
     FAQsComponent,
     UploadPicComponent,
+    GoogleSigninComponent,
     // DeleteComponent
     
   ],
