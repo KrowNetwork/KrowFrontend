@@ -353,17 +353,17 @@ app.post("/accept-hire", (req, res, next) => {
     res.send({"response": "success"})
 })
 
-// https.createServer(options, app).listen(port, function (err) {
-//     if (err) {
-//       throw err
-//     }
-//     // console.log(`worker ${process.pid} started`);
-
-// })
-http.createServer(app).listen(3000, function (err) {
+https.createServer(options, app).listen(443, function (err) {
     if (err) {
       throw err
     }
     // console.log(`worker ${process.pid} started`);
 
 })
+// http.createServer(app).listen(3000, function (err) {
+//     if (err) {
+//       throw err
+//     }
+//     // console.log(`worker ${process.pid} started`);
+
+// })
