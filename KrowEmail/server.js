@@ -13,9 +13,16 @@ const https = require('https');
 const http = require('http');
 
 var fs = require('fs');
+
+// var options = {
+//   key: fs.readFileSync('credentials/privatekey.pem'),
+//   cert: fs.readFileSync('credentials/server.crt')
+// };
+
 var options = {
-  key: fs.readFileSync('credentials/nc/privatekey.pem'),
-  cert: fs.readFileSync('credentials/nc/server.crt')
+  ca: fs.readFileSync('credentials/nc/ca_bundle.crt'),
+  key: fs.readFileSync('credentials/nc/private.key'),
+  cert: fs.readFileSync('credentials/nc/certificate.crt')
 };
 
 var port = 443
