@@ -47,15 +47,9 @@ export class CustomHttpService{
   }
 
   get(url, data=undefined) {
+    var oUrl = "https://api.krownetwork.com/g?url=" + url + "&token=" + this.token
     // let headers = new Headers();
-    if (data != undefined) {
-      return this.apiKey.flatMap(d => {
-        return this.http.get(url, {headers: {"x-api-key": d["api"]}, params: data["parameters"]});
-    })
-    }
-    return this.apiKey.flatMap(d => {
-      return this.http.get(url, {headers: {"x-api-key": d["api"]}});
-  })
+      return this.http.get(oUrl);
     
   }
 
@@ -67,11 +61,9 @@ export class CustomHttpService{
 
   head(url, options=undefined) {
     var oUrl = "https://api.krownetwork.com/h?url=" + url
-    if (options != undefined) {
-        return this.http.get(oUrl, {observe: options["observe"]});
-    } else {
-        return this.http.get(oUrl);
-    }
+    console.log(oUrl)
+    return this.http.get(oUrl);
+  }
 
 
 
@@ -84,7 +76,7 @@ export class CustomHttpService{
     // return this.apiKey.flatMap(d => {
     //     return this.http.head(url, {headers: {"x-api-key": d["api"]}});
     // })
-  }
+  
 
   put(url, data) {
 

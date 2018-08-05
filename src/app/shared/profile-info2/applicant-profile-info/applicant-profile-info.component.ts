@@ -89,7 +89,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
     
     this.http.get("http://18.220.46.51:3000/api/Applicant/" + this.id).subscribe(
       data => {
-        // // console.log(data)
+        console.log(data)
         this.first = data["firstName"]
         this.last = data["lastName"]
         this.name = this.first + " " + this.last

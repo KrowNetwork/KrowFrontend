@@ -50,6 +50,7 @@ export class HomeComponent implements OnInit {
             }, // Catch Errors
             (err = HttpErrorResponse) => {
                 // console.log(err["status"])
+                console.log(err)
                 if (err["status"] == 404) {
                     sessionStorage.setItem("accountType", "employer")
                     this.router.navigate(['/employer']);
