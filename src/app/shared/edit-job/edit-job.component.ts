@@ -449,7 +449,7 @@ export class EditJobComponent implements OnInit {
                   to: data["email"],
                   job_name: this.title
                 }
-                this.http.post("https://52.15.219.10/applicant-request", email_data).subscribe(
+                this.http.post("https://api.krownetwork.com/applicant-request", email_data).subscribe(
                   data => {
                     // alert("Congratulations! You've successfully applied!")
                     this.msg = "Congratulations! You've successfully applied!"
