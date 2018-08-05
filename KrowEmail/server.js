@@ -10,6 +10,7 @@ const { exec } = require('child_process');
 var request = require('request');
 const PROD = false;
 const https = require('https');
+const http = require('http');
 
 var fs = require('fs');
 var options = {
@@ -352,7 +353,14 @@ app.post("/accept-hire", (req, res, next) => {
     res.send({"response": "success"})
 })
 
-https.createServer(options, app).listen(port, function (err) {
+// https.createServer(options, app).listen(port, function (err) {
+//     if (err) {
+//       throw err
+//     }
+//     // console.log(`worker ${process.pid} started`);
+
+// })
+http.createServer(app).listen(80, function (err) {
     if (err) {
       throw err
     }
