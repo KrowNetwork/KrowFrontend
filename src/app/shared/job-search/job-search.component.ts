@@ -36,8 +36,8 @@ export class JobSearchComponent implements OnInit {
   getSearchQueryData(){
     // console.log("Loading new data for query: " + this.searchUserQuery);
     // Submit string to server to get a list of job ids
-    var url = "http://18.220.46.51:4200/search?key=42fc1e42-5eb8-4a8f-8904-7c58529f0f58";
-    this.http.get(url, {params: {"term": this.searchUserQuery}}).subscribe(
+    var url = "https://api.krownetwork.com/search";
+    this.http.get(url, {params: {"url": "http://18.220.46.51:4200/search?key=42fc1e42-5eb8-4a8f-8904-7c58529f0f58?term=" +  this.searchUserQuery}}).subscribe(
       data => {
         // console.log(data);
         this.display(this.parse(data))

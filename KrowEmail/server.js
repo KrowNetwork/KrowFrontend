@@ -99,6 +99,19 @@ app.use(function(req, res, next) {
     });
   })
 
+  app.get("/search", (req, res, next) => {
+    var url = req.query.url;
+    request.get(url, function(err, res2) {
+        if (err) {
+            console.log(err)
+            res.status(404).send("Oh uh, something went wrong");
+        } else {
+            res.status(200).send(res2.body)
+        }
+    })
+    
+  })
+
   app.get("/h", (req, res, next) => {
    var url = req.query.url
     request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
