@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { AwsUtil } from "./service/aws.service";
 import { UserLoginService } from "./service/user-login.service";
 import { CognitoUtil, LoggedInCallback } from "./service/cognito.service";
-import { Router } from "@angular/router";
+import { Router, NavigationEnd } from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -16,6 +16,16 @@ export class AppComponent implements OnInit, LoggedInCallback {
     public cognito: CognitoUtil,
     private router: Router
   ) {
+
+    this.router.events.subscribe(
+      event => {
+        if (event instanceof NavigationEnd) {
+          (<any>window).ga('set', 'page', event.urlAfterRedirects)
+          (<any>window).ga('send', 'pageview')
+        } 
+      }
+    )
+
   }
 
   ngOnInit() {
