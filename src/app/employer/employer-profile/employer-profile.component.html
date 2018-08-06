@@ -21,11 +21,9 @@
 				</div>
 				<div class="responsive-opensec">
 					<div class="btn-extars">
-						<a *ngIf="isLoggedInB" (click)="bigBtn()" class="post-job-btn" style="color:#ffffff">{{btnText}}</a>
+						<a (click)="bigBtn()" class="post-job-btn" style="color:#ffffff">{{btnText}}</a>
 						<ul class="account-btns">
-							<li *ngIf="!isLoggedInB" [routerLink]="['/register']" class="signup-popup" style="color:#96a0bd" ><a title=""><i class="la la-key"></i> Sign Up</a></li>
-							<li *ngIf="!isLoggedInB" [routerLink]="['/login']" class="signin-popup" style="color:#96a0bd"><a title=""><i class="la la-external-link-square"></i> Login</a></li>
-							<li *ngIf="isLoggedInB"  [routerLink]="['/logout']" class="signin-popup" style="color:#96a0bd"><a title=""><i class="la la-external-link-square"></i> Logout</a></li>
+							<li [routerLink]="['/logout']" class="signin-popup" style="color:#96a0bd"><a title=""><i class="la la-external-link-square"></i> Logout</a></li>
 						</ul>
 					</div><!-- Btn Extras -->
 					<div class="responsivemenu">
