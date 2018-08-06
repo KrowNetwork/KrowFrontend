@@ -56,7 +56,7 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
             // if (sessionStorage.getItem("redirectBack") !== undefined) {
             //     this.router.navigate(sessionStorage.getItem("redirectBack"))
             // } else {
-                this.router.navigate(['/secureHome']);
+                window.location.href = '/secureHome';
             // }
             
         }
