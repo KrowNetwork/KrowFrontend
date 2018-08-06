@@ -29,15 +29,24 @@ export class HomeComponent implements OnInit {
         }
 
         else {
-            this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
+            this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
             data => {
-                console.log(data)
-                console.log(data["statusCode"])
-
-                if (data["applicantID"] !== undefined) {
-                    sessionStorage.setItem("accountType", "applicant")
-                    this.router.navigate(['/applicant']);
-                } 
+                    if (data["error"] === undefined) {
+                        sessionStorage.setItem("accountType", "applicant")
+                        this.router.navigate(['/applicant']);
+                    } else {
+                        this.http.head("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
+                            data => {
+                                if (data["error"] === undefined) {
+                                    sessionStorage.setItem("accountType", "employer")
+                                    this.router.navigate(['/employer']);        
+                                
+                                } else {
+                                    this.show = true
+                                }})
+                    }
+                    
+                 
             
                 
                
@@ -48,26 +57,18 @@ export class HomeComponent implements OnInit {
                 
             }, // Catch Errors
             (err = HttpErrorResponse) => {      
-                sessionStorage.setItem("accountType", "employer")
-                this.router.navigate(['/employer']);
-
-                }
-            )
-
-            this.http.get("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
-                data => {
-                    if (data["employerID"] !== undefined) {
-                        sessionStorage.setItem("accountType", "employer")
-                        this.router.navigate(['/employer']);        
-                    } else {
-                        this.show = true
-                    }
-                }
+                
+                } 
                                 // console.log("User does not have an applicant acco        // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
             )
+
+                }
+            
+
+            
         
         }
-    }
+    
         
     
 
