@@ -610,8 +610,10 @@ export class JobDetailsComponent implements OnInit {
     this.msg = "Please wait"
     this.http.post(url, data).subscribe(
       data => {
+        console.log(1)
         this.http.get("http://18.220.46.51:3000/api/Employer/" + this.employerID).subscribe(
           data => {
+            console.log(2)
             this.http.get("http://18.220.46.51:3000/api/Applicant/" +localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") ).subscribe(
               appData => {
                 var email_data = {

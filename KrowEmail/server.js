@@ -162,12 +162,13 @@ app.use(function(req, res, next) {
         var url = req.query.url
         var accessTokenFromClient = req.query.token;
         var data = req.body
+        console.log(data)
     
         cognitoExpress.validate(accessTokenFromClient, function(err, response) {
             if (err) {
-                res.send(401, 'Incorrect Access Token')
+                throw new Error(err)
             } else {
-                request.post(url, data, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
+                request.post(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}, json: data}, function(err, res2) {
                     if (err) {
                         throw new Error(err)
                     } else {
