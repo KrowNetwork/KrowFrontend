@@ -14,6 +14,9 @@ import { log } from 'util';
 })
 export class ApplicantProfileInfoPrivateComponent implements OnInit {
 
+
+  tjL = 0;
+
   // vars 
   user: string;
   first: string;
@@ -236,6 +239,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
 
           // terminated
           // // console.log(data["terminatedJobs"].length)
+          this.tjL = data['terminatedJobs'].length
           for (var i = 0; i < data["terminatedJobs"].length; i++){
             var id = data["terminatedJobs"][i].split("#")[1].toString()
             // // console.log("id" + id)
@@ -250,14 +254,14 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
                 var nend = (end.getMonth() + 1) + '/' + end.getDate() + '/' +  end.getFullYear()
 
                 // // console.log(n_data["startDate"])
-                // // console.log(data["terminateReasons"][i])
+                console.log(data["terminateReasons"][i])
                 this.terminated_jobs.push(
                   {
                     title: n_data["title"],
                     jobID: n_data["jobID"],
                     startDate: nstart,
                     endDate: nend,
-                    // reason: this.terminate_reasons[i]
+                    reason: data["terminateReasons"][i]
                   }
                   
                 )

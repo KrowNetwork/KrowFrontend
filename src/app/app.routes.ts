@@ -27,6 +27,7 @@ import { JobProfileComponent } from './job/job-profile/job-profile.component';
 import { EditJobComponent } from './shared/edit-job/edit-job.component'
 
 import { UploadPicComponent } from './upload-pic/upload-pic.component'
+import { CalendarComponent } from './calendar/calendar.component';
 
 // Applicant components
 import { ApplicantProfileComponent } from './applicant/applicant-profile/applicant-profile.component';
@@ -109,7 +110,11 @@ const appRoutes: Routes = [
     {
         path: "faqs",
         component: FAQsComponent
-    }
+    },
+    // {
+    //     path: "calendar",
+    //     component: CalendarComponent
+    // }
 ];
 
 const secureHome: Routes = [

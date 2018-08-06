@@ -19,6 +19,7 @@
     "greenlock": "^2.3.8",
     "greenlock-express": "^2.3.2",
     "jsonwebtoken": "^8.3.0",
+    "mongodb": "^3.1.1",
     "mongoose": "^5.2.5",
     "nodemailer": "^4.6.7",
     "nodemon": "^1.18.3"
