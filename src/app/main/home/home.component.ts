@@ -13,7 +13,7 @@ declare let AWSCognito: any;
     templateUrl: './home.html'
 })
 export class HomeComponent implements OnInit {
-
+    show=false;
     constructor(
         public router: Router, 
         public userService: UserLoginService,
@@ -37,11 +37,8 @@ export class HomeComponent implements OnInit {
                 if (data["applicantID"] !== undefined) {
                     sessionStorage.setItem("accountType", "applicant")
                     this.router.navigate(['/applicant']);
-                } else {
-                    sessionStorage.setItem("accountType", "employer")
-                this.router.navigate(['/employer']);
-
-                }
+                } 
+            
                 
                
                     
@@ -56,6 +53,16 @@ export class HomeComponent implements OnInit {
 
                 }
             )
+
+            this.http.get("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
+                data => {
+                    if (data["employerID"] !== undefined) {
+                        sessionStorage.setItem("accountType", "employer")
+                        this.router.navigate(['/employer']);        
+                    } else {
+                        this.show = true
+                    }
+                }
                                 // console.log("User does not have an applicant acco        // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
             }
         
