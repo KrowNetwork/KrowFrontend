@@ -64,9 +64,10 @@ export class HomeComponent implements OnInit {
                     }
                 }
                                 // console.log("User does not have an applicant acco        // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
-            }
+            )
         
         }
+    }
         
     
 
