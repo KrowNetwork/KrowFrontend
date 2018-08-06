@@ -54,9 +54,8 @@ export class CustomHttpService{
   }
 
   post(url, data) {
-    return this.apiKey.flatMap(d => {
-      return this.http.post(url, data, {headers: {"x-api-key": d["api"]}});
-  })
+    var oUrl = "https://api.krownetwork.com/p?url=" + url + "&token=" + this.token
+      return this.http.post(oUrl, data)
   }
 
   head(url, options=undefined) {
