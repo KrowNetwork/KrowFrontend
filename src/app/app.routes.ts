@@ -175,11 +175,7 @@ const secureHome: Routes = [
                 component: HireRequestsComponent, 
                 // component: ComingSoonComponent
             },
-            { 
-                path: 'job-search', 
-                component: JobSearchComponent
-                //component: ComingSoonComponent
-            },
+            
             { 
                 path: 'edit', 
                 component: EditComponent
@@ -235,10 +231,10 @@ const secureHome: Routes = [
                 component: AvailableJobsComponent, 
                 // component: ComingSoonComponent
             },
-            { 
-                path: 'job-search', 
-                component: JobSearchComponent, 
-            },
+            // { 
+            //     path: 'job-search', 
+            //     component: JobSearchComponent, 
+            // },
             {
                 path: "edit",
                 component: EditComponent,
@@ -253,6 +249,17 @@ const secureHome: Routes = [
             // }
         ]
     },
+    {
+        path: "jobs",
+        component: JobProfileComponent,
+        children: [
+            { 
+                path: 'job-search', 
+                component: JobSearchComponent
+                //component: ComingSoonComponent
+            }
+        ]
+    },
     { 
         path: 'job', 
         component: JobProfileComponent, 
@@ -265,6 +272,7 @@ const secureHome: Routes = [
                 path: ":jobID/edit",
                 component: EditJobComponent
             }
+            
             // { 
             //     path: 'profile-info',
             //     component: ProfileInfoComponent

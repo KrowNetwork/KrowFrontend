@@ -24,7 +24,7 @@ export class EmployerProfileComponent implements OnInit {
     // console.log("Employer Component: constructor");
 
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
-    userService.verifyUserType(this.user)
+    // userService.verifyUserType(this.user)
     // isApplicant = false 
     
     if (sessionStorage.getItem("accountType") == "applicant") {
@@ -35,7 +35,7 @@ export class EmployerProfileComponent implements OnInit {
       this.hide_applicant_links = true
       this.hide_employer_links = false
     }
-    // console.log(this.hide_applicant_links)
+    console.log(this.hide_applicant_links)
     
   }
 

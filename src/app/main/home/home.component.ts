@@ -29,12 +29,20 @@ export class HomeComponent implements OnInit {
         }
 
         else {
-            this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
+            this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
             data => {
-                // console.log(data["res"])
                 console.log(data)
-                sessionStorage.setItem("accountType", "applicant")
-                this.router.navigate(['/applicant']);
+                console.log(data["statusCode"])
+
+                if (data["applicantID"] !== undefined) {
+                    sessionStorage.setItem("accountType", "applicant")
+                    this.router.navigate(['/applicant']);
+                } else {
+                    sessionStorage.setItem("accountType", "employer")
+                this.router.navigate(['/employer']);
+
+                }
+                
                
                     
                 
@@ -42,10 +50,7 @@ export class HomeComponent implements OnInit {
                 // console.log("User has an applicant account");
                 
             }, // Catch Errors
-            (err = HttpErrorResponse) => {
-                console.log(err)
-
-                
+            (err = HttpErrorResponse) => {      
                 sessionStorage.setItem("accountType", "employer")
                 this.router.navigate(['/employer']);
 

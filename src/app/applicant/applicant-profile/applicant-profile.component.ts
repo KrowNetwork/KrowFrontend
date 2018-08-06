@@ -24,7 +24,7 @@ export class ApplicantProfileComponent implements OnInit {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
 
     // isApplicant = false 
-    userService.verifyUserType(this.user)
+    // userService.verifyUserType(this.user)
 
     if (sessionStorage.getItem("accountType") == "applicant") {
       this.hide_applicant_links = false

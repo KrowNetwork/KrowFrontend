@@ -29,7 +29,7 @@ export class JobSearchComponent implements OnInit {
   submitSearchQuery(){
     var hidden = document.getElementById("test-ID");
     var typeAcc = hidden.attributes["value"].value;
-    var url = "/" + typeAcc.toLowerCase() + "/job-search";
+    var url = "/jobs" + "/job-search";
     this.router.navigate([url], { queryParams: { search: this.searchUserQuery }});
   }
 

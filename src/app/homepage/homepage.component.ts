@@ -24,14 +24,21 @@ export class HomepageComponent implements OnInit {
     // console.log("f")
     // todo - private v public
     this.userService.isAuthenticated(this);
-    this.userService.verifyUserType(localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"))
+    // this.userService.verifyUserType(localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"))
     // console.log("Applicant Component: constructor");
 
     if (sessionStorage.getItem("accountType") == "applicant") {
       this.is_applicant = true
       this.btnText = "Find Job"
+      // var x = document.getElementById("btn")
+      // console.log(x)
+      // x.setAttribute("class", "la la-search")
     } else {
       this.is_applicant = false
+      this.btnText = "Post Jobs"
+      // var x = document.getElementById("btn")
+      // console.log(x)
+      // x.setAttribute("class", "la la-plus")
     }
 
     // // console.log(this.is_applicant)
@@ -52,7 +59,9 @@ export class HomepageComponent implements OnInit {
 
   bigBtn() {
     if (this.is_applicant) {
-      this.router.navigate(["/applicant/job-search"])
+      this.router.navigate(["/jobs/job-search"])
+    } else {
+      this.router.navigate(["/employer/employer-post-jobs"])
     }
   }
 
