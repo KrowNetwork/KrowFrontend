@@ -12,12 +12,12 @@
 				<div class="responsive-menubar">
 					<div class="res-logo"><a href="index.html" title=""><img src="http://placehold.it/178x40" alt="" /></a></div>
 					<div class="menu-resaction">
-						<div class="res-openmenu">
-							<img src="images/icon.png" alt="" /> Menu
-						</div>
-						<div class="res-closemenu">
-							<img src="images/icon2.png" alt="" /> Close
-						</div>
+							<a class="res-openmenu" (click)="openMenu()">
+									<img src="images/icon.png" alt="" /> Menu
+								</a>
+								<a class="res-closemenu" (click)="closeMenu()">
+									<img src="images/icon2.png" alt="" /> Close
+								</a>
 					</div>
 				</div>
 				<div class="responsive-opensec">
@@ -38,7 +38,7 @@
 										<a (click)="goToProfile()" style="color:#96a0bd">Profile</a>
 									</li>
 									<li class="menu-item-has-children">
-											<a style="color: #96a0bd">Jobs</a>
+											<a style="color: #96a0bd" (click)="toggleMenu()">Jobs</a>
 											<ul [hidden]="hide_applicant_links">
 												<li><a [routerLink]="['/applicant/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
 												<li><a [routerLink]="['/applicant/terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>

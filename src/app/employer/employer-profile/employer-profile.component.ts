@@ -5,7 +5,24 @@ import { SELECT_ITEM_HEIGHT_EM } from '@angular/material';
 
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { CustomHttpService } from '../../service/custom-http.service';
+declare var $: any;
+// $(document).on('ready',function(){
+//   // $(window).on('load',function(){
+//       "use strict";
+//     $('.res-openmenu').on('click', function(){
+//       $('.responsive-header').addClass('active');
+//       $('.responsive-opensec').slideDown();
+//       $('.res-closemenu').removeClass('active')
+//       $(this).addClass('active');
+//     });
+//     $('.res-closemenu').on('click', function(){
+//       $('.responsive-header').removeClass('active');
+//       $('.responsive-opensec').slideUp();
+//       $('.res-openmenu').removeClass('active')
+//       $(this).addClass('active');
+//     });
 
+//   });
 
 declare var require: any;
 
@@ -18,6 +35,9 @@ export class EmployerProfileComponent implements OnInit {
   hide_employer_links:boolean;
   user: string;
   isApplicant = false; 
+  isActive = false
+  opActive = true
+  
 
   constructor(public router: Router, public userService: UserLoginService, public http: CustomHttpService) {
     this.userService.isAuthenticated(this);
@@ -50,6 +70,36 @@ export class EmployerProfileComponent implements OnInit {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  openMenu() {
+    $('.res-openmenu').on('click', function(){
+      $('.responsive-header').addClass('active');
+      $('.responsive-opensec').slideDown();
+      $('.res-closemenu').removeClass('active')
+      $(this).addClass('active');
+    });
+  }
+  
+  closeMenu() {
+    $('.res-closemenu').on('click', function(){
+      $('.responsive-header').removeClass('active');
+      $('.responsive-opensec').slideUp();
+      $('.res-openmenu').removeClass('active')
+      $(this).addClass('active');
+    });
+  }
+  
+  toggleMenu() {
+    $(".responsivemenu .menu-item-has-children > a").on("click",function(){
+      $(this).parent().siblings().children("ul").slideUp();
+      $(this).parent().siblings().removeClass("active");
+      $(this).parent().children("ul").slideToggle();
+      $(this).parent().toggleClass("active");
+      // console.log("f")
+      // return false;
+  });
+  }
+
+
   // IMAGES
   LOADER = require("../../../images/loader.gif");
   LOGO1 = require("../../../images/icon.png");
@@ -61,6 +111,7 @@ export class EmployerProfileComponent implements OnInit {
   
   }
 
+ 
   goToProfile() {
     if (this.isApplicant) {
       this.router.navigate(["/applicant/profile-info"])

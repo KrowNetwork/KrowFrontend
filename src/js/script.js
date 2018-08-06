@@ -1,4 +1,5 @@
-$(document).on('ready',function(){
+$(document).on('load',function(){
+// $(window).on('load',function(){
     "use strict";
 
     
@@ -254,6 +255,7 @@ $(document).on('ready',function(){
 		$('.res-openmenu').removeClass('active')
 		$(this).addClass('active');
 	});
+    
 
     /* Table Scroll */
     $('.manage-jobs-sec > table').parent().addClass('addscroll')

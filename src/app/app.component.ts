@@ -19,8 +19,10 @@ export class AppComponent implements OnInit, LoggedInCallback {
   }
 
   ngOnInit() {
+
     // this.userService.isAuthenticated(this);
   }
+  
 
   isLoggedIn(message: string, isLoggedIn: boolean) {
     if(!isLoggedIn){

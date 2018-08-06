@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators/map';
 import { CustomHttpService } from '../../service/custom-http.service';
 
 declare var require: any;
+declare var $: any;
 
 @Component({
   selector: 'app-job-profile',
@@ -89,6 +90,35 @@ scrollup(){
   goToAvailableJobs() {
     this.router.navigate(["employer/available-jobs"])
     // [routerLink]="['#/employer/available-jobs']"
+  }
+
+  openMenu() {
+    $('.res-openmenu').on('click', function(){
+      $('.responsive-header').addClass('active');
+      $('.responsive-opensec').slideDown();
+      $('.res-closemenu').removeClass('active')
+      $(this).addClass('active');
+    });
+  }
+  
+  closeMenu() {
+    $('.res-closemenu').on('click', function(){
+      $('.responsive-header').removeClass('active');
+      $('.responsive-opensec').slideUp();
+      $('.res-openmenu').removeClass('active')
+      $(this).addClass('active');
+    });
+  }
+  
+  toggleMenu() {
+    $(".responsivemenu .menu-item-has-children > a").on("click",function(){
+      $(this).parent().siblings().children("ul").slideUp();
+      $(this).parent().siblings().removeClass("active");
+      $(this).parent().children("ul").slideToggle();
+      $(this).parent().toggleClass("active");
+      // console.log("f")
+      // return false;
+  });
   }
 
 }

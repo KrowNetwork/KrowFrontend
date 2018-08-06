@@ -7,6 +7,7 @@ import { CustomHttpService } from '../../service/custom-http.service';
 
 
 declare var require: any;
+declare var $: any;
 
 @Component({
   selector: 'app-applicant-profile',
@@ -74,7 +75,34 @@ export class ApplicantProfileComponent implements OnInit {
   LOGO2 = require("../../../images/icon2.png");
   KROW_LOGO = require("../../../images/krow-logo.png");
   KROW_HEADER_2 = require("../../../images/krow-header-2.png");
-
+  openMenu() {
+    $('.res-openmenu').on('click', function(){
+      $('.responsive-header').addClass('active');
+      $('.responsive-opensec').slideDown();
+      $('.res-closemenu').removeClass('active')
+      $(this).addClass('active');
+    });
+  }
+  
+  closeMenu() {
+    $('.res-closemenu').on('click', function(){
+      $('.responsive-header').removeClass('active');
+      $('.responsive-opensec').slideUp();
+      $('.res-openmenu').removeClass('active')
+      $(this).addClass('active');
+    });
+  }
+  
+  toggleMenu() {
+    $(".responsivemenu .menu-item-has-children > a").on("click",function(){
+      $(this).parent().siblings().children("ul").slideUp();
+      $(this).parent().siblings().removeClass("active");
+      $(this).parent().children("ul").slideToggle();
+      $(this).parent().toggleClass("active");
+      // console.log("f")
+      // return false;
+  });
+  }
   ngOnInit() {
     // if (this.router.url.split("/")[3] === undefined) {
     //   if (sessionStorage.getItem("accountType") == "employer") {

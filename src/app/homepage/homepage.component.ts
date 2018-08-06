@@ -4,6 +4,7 @@ import { CreateUserService } from '../service/create-user.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { UserLoginService } from '../service/user-login.service';
 import { CustomHttpService } from '../service/custom-http.service';
+declare var $: any;
 
 @Component({
   selector: 'app-homepage',
@@ -51,6 +52,34 @@ export class HomepageComponent implements OnInit {
       // sessionStorage.setItem("redirectBack", this.router.url)
       //   // this.router.navigate(['/login']);
     }
+}
+openMenu() {
+  $('.res-openmenu').on('click', function(){
+    $('.responsive-header').addClass('active');
+    $('.responsive-opensec').slideDown();
+    $('.res-closemenu').removeClass('active')
+    $(this).addClass('active');
+  });
+}
+
+closeMenu() {
+  $('.res-closemenu').on('click', function(){
+    $('.responsive-header').removeClass('active');
+    $('.responsive-opensec').slideUp();
+    $('.res-openmenu').removeClass('active')
+    $(this).addClass('active');
+  });
+}
+
+toggleMenu() {
+  $(".responsivemenu .menu-item-has-children > a").on("click",function(){
+    $(this).parent().siblings().children("ul").slideUp();
+    $(this).parent().siblings().removeClass("active");
+    $(this).parent().children("ul").slideToggle();
+    $(this).parent().toggleClass("active");
+    // console.log("f")
+    // return false;
+});
 }
 
   ngOnInit() {
