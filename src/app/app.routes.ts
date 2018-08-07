@@ -111,10 +111,7 @@ const appRoutes: Routes = [
         path: "faqs",
         component: FAQsComponent
     },
-    // {
-    //     path: "calendar",
-    //     component: CalendarComponent
-    // }
+
 ];
 
 const secureHome: Routes = [
@@ -189,7 +186,11 @@ const secureHome: Routes = [
             {
                 path: "upload",
                 component: UploadPicComponent
-            }
+            },
+            // {
+            //     path: "calendar",
+            //     component: CalendarComponent
+            // }
             // {
             //     path: "delete",
             //     component: DeleteComponent
@@ -247,7 +248,11 @@ const secureHome: Routes = [
             {
                 path: "upload",
                 component: UploadPicComponent
-            }
+            },
+            // {
+            //     path: "calendar",
+            //     component: CalendarComponent
+            // }
             // {
             //     path: "delete",
             //     component: DeleteComponent

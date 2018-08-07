@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef  } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { HttpClient, HttpErrorResponse, HttpBackend  } from '@angular/common/http';
 import { CreateUserService } from '../../service/create-user.service';
 import { log } from 'util';
 import { encodeUriFragment } from '@angular/router/src/url_tree';
 import { CustomHttpService } from '../../service/custom-http.service';
+import { Overlay } from 'ngx-modialog';
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
+
 
 // import { post } from '../../../../node_modules/@types/selenium-webdriver/http';
 // import { splitAtColon } from '../../../../node_modules/@angular/compiler/src/util';
@@ -35,6 +38,8 @@ export class JobDetailsComponent implements OnInit {
   employerID: string;
   disabled = true;
   url: string;
+  showPop = false;
+  contract: string;
 
   ended = false;
 
@@ -86,7 +91,9 @@ export class JobDetailsComponent implements OnInit {
     private http: CustomHttpService,
     private createUser: CreateUserService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private modal: Modal
+        // private viewRef: ViewContainerRef
   ) { 
     if (sessionStorage.getItem("accountType") == "applicant") {
       if (sessionStorage.getItem("canAcceptJob") == "true") {
@@ -348,6 +355,8 @@ export class JobDetailsComponent implements OnInit {
         this.payment = data["payment"]
         this.paymentType = data["paymentType"]
         this.jobType = data["jobType"] 
+        this.contract = data["contract"]
+        console.log(data)
 
         if (data['startDate'] !== undefined && data["startDate"] != "") {
           this.started = true 
@@ -600,9 +609,10 @@ export class JobDetailsComponent implements OnInit {
     //   this.show_apply = true
     // }
   }
-
+  
   async apply(event){
     // // console.log(this.profileType)
+
     var url = "http://18.220.46.51:3000/api/RequestJob"
     var data = {
       "applicant": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
@@ -999,6 +1009,25 @@ changeSalaryP2() {
       this.msg = "There was an error. Please try again"
     }
   )
+}
+openNewDialog() {
+  console.log(this.contract)
+  var res = this.modal.alert()
+    .size("lg")
+    .showClose(true)
+    .title("Contract")
+    .body(`
+      <h3>Contract</h3>
+      <span>` + this.contract + `</span>
+    `)
+    .open()
+    
+  res.result
+    .then(result => {
+      if (result === true) {
+        this.acceptJob()
+      }
+    })
 }
   
 }

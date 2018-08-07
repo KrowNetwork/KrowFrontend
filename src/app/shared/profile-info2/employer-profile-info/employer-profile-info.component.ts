@@ -69,7 +69,12 @@ export class EmployerProfileInfoComponent implements OnInit {
       data => {
         // console.log(data)
         this.companyName = data["employerName"]
-        this.full_addr = data["address"] + ", " + data["city"] + ", " + data["state"]
+        if (data["address"] !== undefined && data["address"] != "")
+          this.full_addr += data["address"]
+        if (data["city"] !== undefined && data["city"] != "")
+          this.full_addr += ", " + data["city"]
+        if (data["state"] !== undefined && data["state"] != "")
+          this.full_addr += ", " + data["state"]
 
         this.desc = data["description"]
 
@@ -282,4 +287,9 @@ export class EmployerProfileInfoComponent implements OnInit {
     // unload
     TextAreaElement = undefined;
   } 
+  goToMap() {
+    var u = this.full_addr.replace(",", "")
+    u = u.split(" ").join("+")
+    window.open("https://www.google.com/maps/place/" + u)
+  }
 }

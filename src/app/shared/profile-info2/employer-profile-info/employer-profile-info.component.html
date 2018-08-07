@@ -21,7 +21,7 @@
 					   <a title="" (click)="copyUrl()" ><i class="la la-copy"></i></a><a href="#" title="" class="share-linkedin"><i class="la la-linkedin"></i></a><a href="#" title="" class="share-fb"><i class="fa fa-facebook"></i></a><a href="#" title="" class="share-twitter"><i class="fa fa-twitter"></i></a>
 									</div>
 									<div class="emply-btns">
-										<a class="seemap" href="#" title=""><i class="la la-map-marker"></i> See On Map</a>
+										<a class="seemap" (click)="goToMap()" title="" style="color:white"><i class="la la-map-marker"></i> See On Map</a>
 										<a *ngIf="display_edit" class="followus" [routerLink]="['/employer/edit']" title=""><i class="la la-pencil"></i> Edit</a>
 									</div>
 								</div><!-- Job Head -->

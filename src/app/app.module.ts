@@ -99,9 +99,12 @@ import { UploadPicComponent } from './upload-pic/upload-pic.component'
 // import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 import {ImageCropperModule } from "ng2-img-cropper";
 import { CalendarComponent } from './calendar/calendar.component';
+import { ContractComponent } from './contract/contract.component';
 // import { DeleteComponent } from './delete/delete.component';
 
 
+import { ModalModule } from 'ngx-modialog';
+import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
 
 
 
@@ -163,6 +166,7 @@ import { CalendarComponent } from './calendar/calendar.component';
     FAQsComponent,
     UploadPicComponent,
     CalendarComponent,
+    ContractComponent,
     // DeleteComponent
     
   ],
@@ -171,7 +175,9 @@ import { CalendarComponent } from './calendar/calendar.component';
     HttpClientModule,
     FormsModule,
     routing,
-    ImageCropperModule 
+    ImageCropperModule,
+    ModalModule.forRoot(),
+    BootstrapModalModule
     // ImageCropperModule,
     
   ],

@@ -27,6 +27,7 @@ export class EmployerPostJobsComponent implements OnInit {
   jobType: string;
   jobObject: any;
   errorMessage: string;
+  contract: string;
   msg = undefined;
 
   submitHandler(event){
@@ -106,6 +107,7 @@ export class EmployerPostJobsComponent implements OnInit {
     this.jobObject.newJob.payment = this.payment;
     this.jobObject.newJob.paymentType = this.paymentType;
     this.jobObject.newJob.jobType = this.jobType;
+    this.jobObject.newJob.contract = this.contract;
 
     this.postJob();
     
@@ -117,6 +119,7 @@ export class EmployerPostJobsComponent implements OnInit {
     var url = "http://18.220.46.51:3000/api/NewJob";
     this.http.post(url, this.jobObject).subscribe(
       data => {
+        console.log(data)
         this.msg = "Completed. Redirecting"
         setTimeout(() => 
         {
@@ -130,6 +133,7 @@ export class EmployerPostJobsComponent implements OnInit {
           } else {
               // console.log("Server-side error occured.");
           }
+          console.log(err)
       }
     );
     
@@ -149,7 +153,8 @@ export class EmployerPostJobsComponent implements OnInit {
         tags: [], 
         payment: "",
         paymentType: "",
-        jobType: ""
+        jobType: "",
+        contract: ""
       }
     }
   }
