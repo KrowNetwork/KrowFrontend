@@ -105,6 +105,7 @@ import { ContractComponent } from './contract/contract.component';
 
 import { ModalModule } from 'ngx-modialog';
 import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 
 
@@ -167,6 +168,7 @@ import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
     UploadPicComponent,
     CalendarComponent,
     ContractComponent,
+    FeedbackComponent,
     // DeleteComponent
     
   ],

@@ -1020,6 +1020,7 @@ openNewDialog() {
       <h3>Contract</h3>
       <span>` + this.contract + `</span>
     `)
+    .okBtn('Yes, I accept the terms of the contract')
     .open()
     
   res.result

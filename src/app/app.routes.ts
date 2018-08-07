@@ -60,6 +60,7 @@ import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-pr
 import { HomepageComponent } from './homepage/homepage.component'
 import { FAQsComponent } from './faqs/faqs.component'
 // import { DeleteComponent } from './delete/delete.component';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 
 
@@ -111,6 +112,10 @@ const appRoutes: Routes = [
         path: "faqs",
         component: FAQsComponent
     },
+    {
+        path: "feedback",
+        component: FeedbackComponent
+    }
 
 ];
 

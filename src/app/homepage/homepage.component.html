@@ -114,7 +114,7 @@
 							</li>
 							<li>
 									<a *ngIf="isLoggedInB" [routerLink]="['/logout']" routerLinkActive="active"  title=""><i class="la la-external-link-square"></i>LogOut</a>
-									<a *ngIf="!isLoggedInB" [routerLink]="['/login']" routerLinkActive="active"  title="">Log in</a>
+									<!-- <a *ngIf="!isLoggedInB" [routerLink]="['/login']" routerLinkActive="active"  title="">Log in</a> -->
 							</li>
 							
             </ul>
@@ -133,10 +133,17 @@
 							<div class="col-lg-12">
 								<div class="inner-header" id="responsive-title">
 										<div class="col-lg-12 simple-text-block">
-												<h3 style="color: white">Welcome to the Krow Network</h3>
+												<h3 style="color: white">Welcome to the Krow Network (Beta V1)</h3>
 												<h4 style="color: white">The fastest, most secure way to find the perfect job.</h4>
+												
 											</div>
+											
 								</div>
+								
+							</div>
+							<div class="col-lg-12">
+
+								
 							</div>
 						</div>
 					</div>
@@ -153,18 +160,37 @@
 			</div>
 		</div>
 	</section> -->
+	
+
+	<section>
+			<!-- <div class="block double-gap-top double-gap-bottom"> -->
+				<!-- <div data-velocity="-.1"  class="parallax scrolly-invisible layer color"></div> -->
+				<div class="container" style="background: white">
+						
+						<div class="row">
+								<div class="col-lg-1">
+										<button [routerLink]="['/feedback']" style="background: grey; color: white; float:center">Send Feedback</button>
+								</div>
+							</div>
+				</div>	
+			<!-- </div> -->
+		</section>
 
 	
 	<section>
 		<div class="block double-gap-top double-gap-bottom">
 			<!-- <div data-velocity="-.1"  class="parallax scrolly-invisible layer color"></div> -->
 			<div class="container" style="background: white">
+					
 				<div class="row" >
 					<div class="col-lg-12" >
+							
 						<div class="simple-text-block" >
+								
 							<h3 style="color: grey">What is the Krow Network?</h3>
 							<span style="color: grey">The Krow Network is a decentralized application that aims to streamline employment onto the internet, using blockchain technology. We look to pair employees and employers together through a secure network. Rather than scrambling for information on your counterparty before accepting or denying them as a business partner, their entire labor record becomes presented through their smart resume. Our blockchain autonomously track pieces of information from the platform without any intermediary party being involved. This creates a sense of validity, as decentralization will allow for an individual's resume to have complete transparency. When hiring an employee or deciding to work for a company, there will no longer be any missing pieces.</span>
 							<a href="/register" title="" style="background: grey; color: white">Create an Account</a>
+							
 						</div>
 					</div>
 				</div>
