@@ -4,10 +4,17 @@
       <div class="edu-history">
         <div class="edu-hisinfo">
           <div class="row" style="padding:20px; padding-bottom:0px">
-            <div class="col-lg-10">
+            <div class="col-lg-7">
               <div class="pf-field">
                 <input type="text" placeholder="Search" style="margin-bottom: 0"
                   [(ngModel)]="searchUserQuery" [ngModelOptions]="{standalone: true}"/>
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <div class="pf-field">
+                <input type="text" placeholder="Location" style="margin-bottom: 0"
+                  [(ngModel)]="locationQ" [ngModelOptions]="{standalone: true}"/>
+                  
               </div>
             </div>
             <div class="col-lg-2" style="padding: 3px 20px 0px 20px;">
