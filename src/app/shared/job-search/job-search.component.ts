@@ -24,20 +24,21 @@ export class JobSearchComponent implements OnInit {
 
   searchUserQuery: string;
   errorMessage: string;
+  locationQ: string;
   
 
   submitSearchQuery(){
     var hidden = document.getElementById("test-ID");
     var typeAcc = hidden.attributes["value"].value;
     var url = "/jobs" + "/job-search";
-    this.router.navigate([url], { queryParams: { search: this.searchUserQuery }});
+    this.router.navigate([url], { queryParams: { search: this.searchUserQuery, location: this.locationQ }});
   }
 
   getSearchQueryData(){
     // console.log("Loading new data for query: " + this.searchUserQuery);
     // Submit string to server to get a list of job ids
     var url = "https://api.krownetwork.com/search";
-    this.http.get(url, {params: {"url": "http://18.220.46.51:4200/search?key=42fc1e42-5eb8-4a8f-8904-7c58529f0f58&term=" +  this.searchUserQuery}}).subscribe(
+    this.http.get(url, {params: {"url": "http://18.220.46.51:4200/search?key=42fc1e42-5eb8-4a8f-8904-7c58529f0f58&term=" +  this.searchUserQuery + "&location=" + this.locationQ}}).subscribe(
       data => {
         // console.log(data);
         this.display(this.parse(data))
@@ -98,6 +99,7 @@ export class JobSearchComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.searchUserQuery = params['search'];
+      this.locationQ = params["location"]
       // console.log(params['search']);
       if(params['search']){
         this.getSearchQueryData();
