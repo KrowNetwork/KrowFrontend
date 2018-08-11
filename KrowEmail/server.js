@@ -31,7 +31,7 @@ const cognitoExpress = new cognito({
     region: "us-east-2",
     cognitoUserPoolId: "us-east-2_THcotoVBG",
     tokenUse: "access", //Possible Values: access | id
-    tokenExpiration: 1.8e6 //Up to default expiration of 1 hour (3600000 ms)
+    tokenExpiration:3600000  //Up to default expiration of 1 hour (3600000 ms)
 });
  
 
