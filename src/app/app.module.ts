@@ -76,6 +76,7 @@ import { UserParametersService } from './service/user-parameters.service';
 import { UserRegistrationService } from './service/user-registration.service';
 import { CreateUserService } from './service/create-user.service';
 import { CustomHttpService } from "./service/custom-http.service";
+import { PreviousRouteService } from "./service/previous-route.service";
 
 // Directives
 import { EducationDirective } from './applicant/applicant-resume/resume-education/education.directive';
@@ -104,7 +105,7 @@ import { ContractComponent } from './contract/contract.component';
 
 
 import { ModalModule } from 'ngx-modialog';
-import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
+import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap/ngx-modialog-plugins-bootstrap';
 import { FeedbackComponent } from './feedback/feedback.component';
 
 
@@ -199,7 +200,8 @@ import { FeedbackComponent } from './feedback/feedback.component';
     UserParametersService,
     UserRegistrationService,
     CreateUserService,
-    CustomHttpService
+    CustomHttpService,
+    PreviousRouteService
   ],
   bootstrap: [ 
     AppComponent 
