@@ -3,6 +3,14 @@
 			<div class="container">
 				 <div class="row">
 				 	<div class="col-lg-12 column">
+						<div *ngIf="errorMessage!=null" class="alert alert-danger">
+								<i class="la la-exclamation"></i>
+								{{ errorMessage }}
+						</div>
+						<div *ngIf="successMessage!=null" class="alert alert-success">
+								<i class="la la-exclamation"></i>
+								{{ successMessage }}
+						</div>
 				 		<div class="contact-form">
 				 			<h3>Send Feedback</h3>
 				 			<form>

@@ -15,6 +15,8 @@ export class FeedbackComponent implements OnInit {
   name: string;
   email: string;
   subject: string;
+  errorMessage = undefined;
+  successMessage = undefined;
   constructor(
     private http: CustomHttpService,
     private userService: UserLoginService,
@@ -35,6 +37,11 @@ export class FeedbackComponent implements OnInit {
   }
 
   sendFeedback() {
+    var e = "All Fields Are Required"
+    if (this.name === undefined || this.email === undefined || this.msg === undefined || this.subject === undefined) {
+      this.errorMessage = "All Fields Are Required"
+      return
+    } 
     var data = {
       name: this.name,
       email: this.email,
@@ -43,7 +50,12 @@ export class FeedbackComponent implements OnInit {
     }
     this.http.post("https://api.krownetwork.com/feedback", data).subscribe(
       data => {
-        alert("Success!")
+        this.errorMessage = undefined
+        this.successMessage = "Success! Redirecting..."
+        setTimeout(() => {
+          this.router.navigate(["/home"])
+        }, 1500)
+        
 
       },
       (err: HttpErrorResponse) => {
@@ -52,7 +64,7 @@ export class FeedbackComponent implements OnInit {
         } else {
           // console.log("Server-side error occured.");
         }
-        console.log(err)
+        this.errorMessage = "Uh oh, there was an error. Please try again."
       })
   }
 }

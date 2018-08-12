@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>https://krownetwork.com</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/index.html</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/applicant/completed-jobs</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/applicant/terminated-jobs</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/applicant/in-progress-jobs</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/applicant/requested-jobs</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/applicant/hire-requests</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/employer/completed-jobs</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/employer/terminated-jobs</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/employer/in-progress-jobs</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/employer/available-jobs</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/logout</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/register</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/faqs</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/faqs#general</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/faqs#applicant</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/faqs#employer</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/faqs#other</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/help</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/#scrollup</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/jobs/job-search</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/employer/employer-post-jobs</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/forgotPassword</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/login</loc><priority>0.5</priority></url>
+<url><loc>https://krownetwork.com/secureHome</loc><priority>0.5</priority></url>
+</urlset>
