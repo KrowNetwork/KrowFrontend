@@ -180,7 +180,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
     routing,
     ImageCropperModule,
     ModalModule.forRoot(),
-    BootstrapModalModule
+    // BootstrapModalModule
     // ImageCropperModule,
     
   ],

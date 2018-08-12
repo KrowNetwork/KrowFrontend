@@ -36,6 +36,7 @@ export class CompletedJobsComponent implements OnInit {
           this.has_jobs = false
         }
         // var available_jobs = this.http.get(data["availableJobs"].split("")
+        console.log(data["completedJobs"])
         for (var i = 0; i < data["completedJobs"].length; i++){
 
           var id = data["completedJobs"][i].split("#")[1].toString()
