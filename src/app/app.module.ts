@@ -105,7 +105,7 @@ import { ContractComponent } from './contract/contract.component';
 
 
 import { ModalModule } from 'ngx-modialog';
-import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap/ngx-modialog-plugins-bootstrap';
+import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
 import { FeedbackComponent } from './feedback/feedback.component';
 
 
@@ -180,6 +180,10 @@ import { FeedbackComponent } from './feedback/feedback.component';
     routing,
     ImageCropperModule,
     ModalModule.forRoot(),
+    BootstrapModalModule,
+    // Modal,
+    // bootstrap4Mode
+    // Modal
     // BootstrapModalModule
     // ImageCropperModule,
     

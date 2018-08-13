@@ -265,11 +265,11 @@ const secureHome: Routes = [
         ]
     },
     {
-        path: "jobs",
+        path: 'job-search',
         component: JobProfileComponent,
         children: [
             { 
-                path: 'job-search', 
+                path: "",
                 component: JobSearchComponent
                 //component: ComingSoonComponent
             }

@@ -88,7 +88,7 @@ toggleMenu() {
 
   bigBtn() {
     if (this.is_applicant) {
-      this.router.navigate(["/jobs/job-search"])
+      this.router.navigate(["/job-search"])
     } else {
       this.router.navigate(["/employer/employer-post-jobs"])
     }

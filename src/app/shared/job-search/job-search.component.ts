@@ -30,7 +30,7 @@ export class JobSearchComponent implements OnInit {
   submitSearchQuery(){
     var hidden = document.getElementById("test-ID");
     var typeAcc = hidden.attributes["value"].value;
-    var url = "/jobs" + "/job-search";
+    var url = "/job-search";
     this.router.navigate([url], { queryParams: { search: this.searchUserQuery, location: this.locationQ }});
   }
 
@@ -67,6 +67,10 @@ export class JobSearchComponent implements OnInit {
 
   display(data) {
     this.res = data;
+  }
+
+  goto(jobID) {
+    this.router.navigate(["/job/" + jobID])
   }
 
   // clearPrevious(data){

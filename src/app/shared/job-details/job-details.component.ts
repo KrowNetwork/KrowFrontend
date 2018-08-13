@@ -8,7 +8,7 @@ import { CustomHttpService } from '../../service/custom-http.service';
 import { Overlay } from 'ngx-modialog';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 
-
+// bootstrap4Mode()
 // import { post } from '../../../../node_modules/@types/selenium-webdriver/http';
 // import { splitAtColon } from '../../../../node_modules/@angular/compiler/src/util';
 // import { subscribeOn } from '../../../../node_modules/rxjs/operators';
@@ -92,7 +92,7 @@ export class JobDetailsComponent implements OnInit {
     private createUser: CreateUserService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private modal: Modal
+    public modal: Modal
         // private viewRef: ViewContainerRef
   ) { 
     if (sessionStorage.getItem("accountType") == "applicant") {
@@ -1013,14 +1013,14 @@ changeSalaryP2() {
 openNewDialog() {
   console.log(this.contract)
   var res = this.modal.alert()
-    .size("lg")
+    // .size("lg")
     .showClose(true)
     .title("Contract")
     .body(`
       <h3>Contract</h3>
       <span>` + this.contract + `</span>
     `)
-    .okBtn('Yes, I accept the terms of the contract')
+    // .okBtn('Yes, I accept the terms of the contract')
     .open()
     
   res.result
