@@ -111,8 +111,9 @@ export class UpdateResumeService {
                 var timestamp = new Date();
                 data["lastUpdated"] = timestamp;
                 data["resume"]["lastUpdated"] = timestamp;
-                // console.log(data)
+                console.log(data)
                 this.postData(data, url, updateButton);
+
             }, // Catch Errors
             (err: HttpErrorResponse) => {
                 alert("Could not get data!");

@@ -160,15 +160,17 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           for (var i = 0; i < data["resume"]["education"].length; i ++) {
             var element = data["resume"]["education"][i]
             element["startDate"] = new Date(element["startDate"])
-            element["startDate"] = (element["startDate"].getMonth().toString() + 1) + '/' + element["startDate"].getDate().toString() + '/' +  element["startDate"].getFullYear().toString()
+            element["startDate"] = ((element["startDate"].getMonth() + 1).toString()) + '/' + (element["startDate"].getDate() + 1).toString() + '/' +  element["startDate"].getFullYear().toString()
             
             element["endDate"] = new Date(element["endDate"])
-            element["endDate"] = (element["endDate"].getMonth().toString() + 1) + '/' + element["endDate"].getDate().toString() + '/' +  element["endDate"].getFullYear().toString()
+            element["endDate"] = ((element["endDate"].getMonth() + 1).toString()) + '/' + (element["endDate"].getDate() + 1).toString() + '/' +  element["endDate"].getFullYear().toString()
             this.education.push(element)
+            console.log(element)
           }
 
         }
 
+        console.log (data)
 
         if (data["resume"]["experience"].length == 0 || data["resume"]["experience"] === undefined) {
           this.experience = [{
@@ -183,10 +185,10 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           for (var i = 0; i < data["resume"]["experience"].length; i ++) {
             var element = data["resume"]["experience"][i]
             var s = new Date(element["startDate"])
-            element["startDate"] = (s.getMonth() + 1).toString() + '/' + s.getDate().toString() + '/' +  s.getFullYear().toString()
+            element["startDate"] = (s.getMonth() + 1).toString() + '/' + (s.getDate() + 1).toString() + '/' +  s.getFullYear().toString()
             
             var e = new Date(element["endDate"])
-            element["endDate"] = (e.getMonth() + 1).toString() + '/' + e.getDate().toString() + '/' +  e.getFullYear().toString()
+            element["endDate"] = (e.getMonth() + 1).toString() + '/' + (e.getDate() + 1).toString() + '/' +  e.getFullYear().toString()
             this.experience.push(element)
           }
         }

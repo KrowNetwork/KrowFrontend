@@ -60,12 +60,18 @@ export class ResumeEducationComponent implements OnInit {
     }
   }
   formatDate(date) {
-    var month = '' + (date.getMonth() + 1)
-    var day = '' + date.getDate().toString()
+    console.log(date)
+    var month = (date.getMonth() + 1).toString()
+    var day = (date.getDate() + 1).toString()
     var year = date.getFullYear()
 
+    console.log(month)
+    console.log(day)
+
     if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
+    if (day.length < 9) day = '0' + day;
+
+    console.log([year, month, day].join("-"))
 
     return  [year, month, day].join("-")
   }
