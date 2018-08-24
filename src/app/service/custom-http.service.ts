@@ -81,7 +81,7 @@ export class CustomHttpService{
     var oUrl = "https://api.krownetwork.com/pu?url=" + url
 
     return this.apiKey.flatMap(d => {
-      return this.http.put(oUrl, data);
+      return this.http.post(oUrl, data);
 
   })
   

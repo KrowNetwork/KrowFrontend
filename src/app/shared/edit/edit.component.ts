@@ -139,7 +139,7 @@ export class EditComponent implements OnInit {
               } else {
                 // console.log("Server-side error occured.");
               } 
-              // console.log(err)
+              console.log(err)
             }
           );
         }

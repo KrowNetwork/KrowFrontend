@@ -185,32 +185,32 @@ app.use(function(req, res, next) {
             
         });
 
-        app.put("/pu", (req, res, next) => {
-            var url = req.query.url
-            var accessTokenFromClient = req.query.token;
-            var data = req.body
-            console.log(data)
-        
-            cognitoExpress.validate(accessTokenFromClient, function(err, response) {
-                if (err) {
-                    throw new Error(err)
-                } else {
-                    request.put(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}, json: data}, function(err, res2) {
-                        if (err) {
-                            throw new Error(err)
-                        } else {
-                            res.status(200).send(res2.body)
-                        }
-                    })
-                  }
+    app.post("/pu", (req, res, next) => {
+        var url = req.query.url
+        var accessTokenFromClient = req.query.token;
+        var data = req.body
+        console.log(data)
+    
+        cognitoExpress.validate(accessTokenFromClient, function(err, response) {
+            if (err) {
+                throw new Error(err)
+            } else {
+                request.put(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}, json: data}, function(err, res2) {
+                    if (err) {
+                        throw new Error(err)
+                    } else {
+                        res.status(200).send(res2.body)
+                    }
                 })
-                    //     if (err) res.send(400, {"res": "error"});
-                    //     else res.send(200, {"res": "success"})
-                    // })
-        
-                    // qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv
-                
-            });
+                }
+            })
+                //     if (err) res.send(400, {"res": "error"});
+                //     else res.send(200, {"res": "success"})
+                // })
+    
+                // qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv
+            
+        });
     
 
   app.post("/help", (req, res, next) => {
