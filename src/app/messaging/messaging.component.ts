@@ -354,16 +354,10 @@ deleteMessage(msg) {
   // this.loadStream(id, userName)
   var self = this
   this.ddb.getItem(params_logs, function(err, data) {
-    console.log("a", data)
-    // var par = {
-      
-    // }
     data.Item.messages.L = self.current_room_data["messages"]
     data["TableName"] = "chat_logs"
-    console.log(data)
     self.ddb.putItem(data, function(err, data) {
-      console.log(err)
-      console.log(data)
+      if (err) console.log(err)
     })
 })
   
