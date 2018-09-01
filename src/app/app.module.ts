@@ -107,6 +107,13 @@ import { ContractComponent } from './contract/contract.component';
 import { ModalModule } from 'ngx-modialog';
 import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { MessagingComponent } from './messaging/messaging.component';
+import { TopBarComponent } from './top-bar/top-bar.component';
+// import { VirtualListModule } from 'angular-virtual-list';
+import { VirtualScrollModule } from 'angular2-virtual-scroll';
+import { ContextMenuModule } from 'ngx-contextmenu';
+// import { ContextMenuService } from 'angular2-contextmenu/src/contextMenu.service';
+
 
 
 
@@ -170,6 +177,9 @@ import { FeedbackComponent } from './feedback/feedback.component';
     CalendarComponent,
     ContractComponent,
     FeedbackComponent,
+    MessagingComponent,
+    TopBarComponent,
+
     // DeleteComponent
     
   ],
@@ -181,6 +191,9 @@ import { FeedbackComponent } from './feedback/feedback.component';
     ImageCropperModule,
     ModalModule.forRoot(),
     BootstrapModalModule,
+    VirtualScrollModule,
+    ContextMenuModule.forRoot()
+    // Websocket
     // Modal,
     // bootstrap4Mode
     // Modal

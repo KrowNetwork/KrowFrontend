@@ -67,7 +67,7 @@ export class EmployerProfileInfoComponent implements OnInit {
     
     this.http.get("http://18.220.46.51:3000/api/Employer/" + this.user).subscribe(
       data => {
-        // console.log(data)
+        console.log(data)
         this.companyName = data["employerName"]
         if (data["address"] !== undefined && data["address"] != "")
           this.full_addr += data["address"]

@@ -61,6 +61,7 @@ import { HomepageComponent } from './homepage/homepage.component'
 import { FAQsComponent } from './faqs/faqs.component'
 // import { DeleteComponent } from './delete/delete.component';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { MessagingComponent } from './messaging/messaging.component';
 
 
 
@@ -115,6 +116,10 @@ const appRoutes: Routes = [
     {
         path: "feedback",
         component: FeedbackComponent
+    },
+    {
+        path: "chat",
+        component: MessagingComponent
     }
 
 ];

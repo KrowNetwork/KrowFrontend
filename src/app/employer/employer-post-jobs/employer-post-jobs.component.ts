@@ -20,7 +20,7 @@ export class EmployerPostJobsComponent implements OnInit {
   
   title: string;
   description: string;
-  location: string;
+  // location: string;
   tags: [string];
   payment: any;
   paymentType: string;
@@ -77,7 +77,7 @@ export class EmployerPostJobsComponent implements OnInit {
     var jobTypes = ['ENTRY_LEVEL', 'INTERMEDIATE_LEVEL', 'SENIOR_LEVEL', 'INTERNSHIP', 'FREELANCE'];
     var paymentTypes = ['NONE', 'ONETIME', 'HOURLY', 'DAILY', 'WEEKLY', 'BIWEEKLY', 'MONTHLY', 'OTHER'];
     
-    if(!this.title || !this.description || !this.location || !this.jobType || !this.payment || !this.paymentType){
+    if(!this.title || !this.description || !this.jobType || !this.payment || !this.paymentType){
       this.errorMessage = "Please fill out all fields!"
       return;
     }
@@ -103,7 +103,7 @@ export class EmployerPostJobsComponent implements OnInit {
 
     this.jobObject.newJob.title = this.title;
     this.jobObject.newJob.description = this.description;
-    this.jobObject.newJob.location = this.location;
+    // this.jobObject.newJob.location = this.location;
     this.jobObject.newJob.payment = this.payment;
     this.jobObject.newJob.paymentType = this.paymentType;
     this.jobObject.newJob.jobType = this.jobType;
@@ -149,7 +149,7 @@ export class EmployerPostJobsComponent implements OnInit {
         $class: "network.krow.assets.IntermediateJob",
         title: "", 
         description: "", 
-        location: "", 
+        // location: "", 
         tags: [], 
         payment: "",
         paymentType: "",
