@@ -84,7 +84,7 @@ import { ExperienceDirective } from './applicant/applicant-resume/resume-experie
 import { AchievementDirective } from './applicant/applicant-resume/resume-achievements/achievement.directive';
 import { AffiliationsDirective } from './applicant/applicant-resume/resume-affiliations/affiliations.directive';
 import { JobSearchDirective } from './shared/job-search/job-search.directive';
-import { BottomBarComponent } from './shared/bottom-bar/bottom-bar.component';
+import { BottomBarComponent } from './bottom-bar/bottom-bar.component';
 import { HelpComponent } from './shared/help/help.component';
 import { ProfileInfo2Component } from './shared/profile-info2/profile-info2.component';
 import { ApplicantProfileInfoPrivateComponent } from './shared/profile-info2/applicant-profile-info/applicant-profile-info.component';
