@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild  } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef  } from '@angular/core';
 import * as AWS from "aws-sdk";
 import * as DynamoDBStream from "dynamodb-stream"
 import { UserLoginService } from '../service/user-login.service';
@@ -20,6 +20,7 @@ import { AuthenticationDetails, CognitoUser, CognitoUserSession, CognitoIdToken,
 })
 
 export class MessagingComponent implements OnInit {
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   public items = [
     { name: 'John', otherProperty: 'Foo' },
     { name: 'Joe', otherProperty: 'Bar' }
@@ -42,6 +43,7 @@ export class MessagingComponent implements OnInit {
   client = undefined
   passData = {}
   myVar: String;
+  noSend = false
 
 
   constructor(
@@ -50,6 +52,7 @@ export class MessagingComponent implements OnInit {
     public http: CustomHttpService,
     public modalService: ModalService,
     public cognitoUtil: CognitoUtil,
+    
     // public session: CognitoUserSession
   ) { 
 
@@ -101,6 +104,12 @@ export class MessagingComponent implements OnInit {
 
     
 
+  }
+
+  scrollToBottom() {
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+  } catch(err) { console.log(err) } 
   }
 
 
@@ -481,10 +490,12 @@ pop() {
 
     this.client.on('connect', () => {
       this.client.subscribe('/chat/' + id)
+      console.log("connected")
     })
     this.client.on('message', (topic, message) => {
       // this is where you will handle the messages you send from Lambda
       message = JSON.parse(message.toString()).message.messages
+      console.log(message)
       // console.log(message)
       // var msgs = [] 
       //   var setup = 
@@ -512,10 +523,11 @@ pop() {
       //     }
       //   });
         this.current_room_data["messages"] = message.L
+        this.scrollToBottom()
       })
 
     this.client.on("close", (err) => {
-      console.log(err)
+      console.log("close", err)
     })
 
 
@@ -524,6 +536,7 @@ pop() {
   }
   
   sendMessage(msg) {
+    this.noSend = true
     var setup = {
       M: {
         date: {S: (new Date).toISOString()},
@@ -553,6 +566,8 @@ pop() {
       })
   })
   msg = null;
+  this.myVar = ""
+  this.noSend = false
 }
 
 deleteMessage(msg) {

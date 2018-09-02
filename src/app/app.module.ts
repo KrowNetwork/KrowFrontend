@@ -116,7 +116,7 @@ import { VirtualScrollModule } from 'angular2-virtual-scroll';
 import { ContextMenuModule } from 'ngx-contextmenu';
 import { MessagingPopupComponent } from './messaging/messaging-popup/messaging-popup.component';
 // import { ContextMenuService } from 'angular2-contextmenu/src/contextMenu.service';
-
+// import { luegg } from "angularjs-scroll-glue"
 
 
 
@@ -196,7 +196,8 @@ import { MessagingPopupComponent } from './messaging/messaging-popup/messaging-p
     ModalModule.forRoot(),
     BootstrapModalModule,
     VirtualScrollModule,
-    ContextMenuModule.forRoot()
+    ContextMenuModule.forRoot(),
+    // luegg.directives
     // Websocket
     // Modal,
     // bootstrap4Mode

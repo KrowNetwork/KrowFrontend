@@ -53,7 +53,7 @@
                   <div class='messages-wrapper'>
                       <!-- <virtual-scroll [items]="current_room_data.messages" (update)="current_room_data.messages = $event"> -->
                         <!-- {{ user }} -->
-                        <div class="list"  >
+                        <div class="list" #scrollMe [scrollTop]="scrollMe.scrollHeight">
                         <div [contextMenu]="basicMenu" [contextMenuSubject]="message" [ngClass]="{ 'message': 1==1, 'sent': message.M.from.S == user, 'replies': message.M.from.S != user}" *ngFor="let message of current_room_data.messages; let i = index;">
                           <span *ngIf="message.M.from.S != user" class="sender">{{ current_room_data.user }}</span>
                           <p>{{ message.M.message.S }}</p>
@@ -71,7 +71,7 @@
                     <div class="message-input" >
                         <div class="wrap">
                         <input style="margin-bottom: 0px; height: 45px" type="text" id='textbox' [(ngModel)]="myVar" placeholder="Write your message..." />
-                        <button class="submit" (click)="sendMessage(myVar)" ng-click="myVar = null"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                        <button class="submit" (click)="sendMessage(myVar)" ng-click="myVar = null" [disabled]="noSend"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                         </div>
                       </div>
                 </div>

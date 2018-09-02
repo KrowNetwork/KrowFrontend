@@ -611,6 +611,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 // import { ContextMenuService } from 'angular2-contextmenu/src/contextMenu.service';
+// import { luegg } from "angularjs-scroll-glue"
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -687,13 +688,7 @@ var AppModule = /** @class */ (function () {
                 ngx_modialog__WEBPACK_IMPORTED_MODULE_70__["ModalModule"].forRoot(),
                 ngx_modialog_plugins_bootstrap__WEBPACK_IMPORTED_MODULE_71__["BootstrapModalModule"],
                 angular2_virtual_scroll__WEBPACK_IMPORTED_MODULE_75__["VirtualScrollModule"],
-                ngx_contextmenu__WEBPACK_IMPORTED_MODULE_76__["ContextMenuModule"].forRoot()
-                // Websocket
-                // Modal,
-                // bootstrap4Mode
-                // Modal
-                // BootstrapModalModule
-                // ImageCropperModule,
+                ngx_contextmenu__WEBPACK_IMPORTED_MODULE_76__["ContextMenuModule"].forRoot(),
             ],
             entryComponents: [
                 _applicant_applicant_resume_resume_experience_experience_main_component__WEBPACK_IMPORTED_MODULE_30__["ExperienceMainComponent"],
@@ -4471,7 +4466,7 @@ module.exports = ".body {\r\n    display: flex;\r\n    align-items: center;\r\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n    <app-top-bar></app-top-bar>\n    \n    <section class=\"overlape\">\n        <div class=\"block no-padding\">\n          <div data-velocity=\"-.1\" class=\"parallax scrolly-invisible no-parallax\"></div>\n          <div class=\"container fluid\">\n            <div class=\"row\">\n              <div class=\"col-lg-12\">\n                  <div class=\"inner-header\" id=\"responsive-title\">\n                      <h3>Chat</h3>\n                    </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </section>\n    \n      <section>\n        <div class=\"block no-padding\">\n          <div class=\"container\">\n             <div id=\"frame\">\n                <div id=\"sidepanel\">\n                  <!-- rooms -->\n                  <div class=\"rooms\">\n                    <ul class=\"list-unstyled\" style=\"list-style-type: none;\" >\n                      <li class=\"room\" *ngFor=\"let room of room_data; let i = index\">\n                        <a (click)=\"loadChat(room.chatID, room.name)\">\n                        <div class=\"wrap\">\n                          <span class=\"room-status away \"></span>\n                          <img :src=\"room.image\" alt=\"\" />\n                          <div class=\"meta\">\n                            <p class=\"name sidebar\">{{ room.name }}</p>\n                            <!-- <p class=\"sidebar\"><a>Delete</a></p> -->\n                          </div>\n                        </div>\n                        </a>\n                        \n                      </li>\n                    </ul>\n                  </div>\n\n                </div>\n\n                <div id=\"content\" class=\"content\">\n                  <!-- room-details -->\n                  <div class=\"room-details\">\n                      <!-- <img :src=\"activeRoom.image\" alt=\"\" class='description' /> -->\n                      <!-- <p>{{ current_room_data.user }}</p> -->\n\n                    </div>\n                  <!-- messages -->\n                  <div class='messages-wrapper'>\n                      <!-- <virtual-scroll [items]=\"current_room_data.messages\" (update)=\"current_room_data.messages = $event\"> -->\n                        <!-- {{ user }} -->\n                        <div class=\"list\"  >\n                        <div [contextMenu]=\"basicMenu\" [contextMenuSubject]=\"message\" [ngClass]=\"{ 'message': 1==1, 'sent': message.M.from.S == user, 'replies': message.M.from.S != user}\" *ngFor=\"let message of current_room_data.messages; let i = index;\">\n                          <span *ngIf=\"message.M.from.S != user\" class=\"sender\">{{ current_room_data.user }}</span>\n                          <p>{{ message.M.message.S }}</p>\n                          <context-menu>\n                              <ng-template contextMenuItem (execute)=\"deleteMessage($event.item.M.date.S)\">\n                                Delete Message\n                              </ng-template>\n                            </context-menu>\n                        </div>\n                      \n                    </div>\n                    <!-- <div ng:bind=\"message_html\"></div> -->\n                  </div>\n\n                    <div class=\"message-input\" >\n                        <div class=\"wrap\">\n                        <input style=\"margin-bottom: 0px; height: 45px\" type=\"text\" id='textbox' [(ngModel)]=\"myVar\" placeholder=\"Write your message...\" />\n                        <button class=\"submit\" (click)=\"sendMessage(myVar)\" ng-click=\"myVar = null\"><i class=\"fa fa-paper-plane\" aria-hidden=\"true\"></i></button>\n                        </div>\n                      </div>\n                </div>\n\n              </div>\n             </div>\n          </div>\n      </section>\n\n    <app-bottom-bar></app-bottom-bar>\n\n\n\n\n\n\n\n<!-- \n    <div id=\"modal-container\" class=\"hidden\"></div>\n    <div id=\"overlay\" (click)=\"removeModal()\" class=\"hidden\"></div> -->\n\n"
+module.exports = "\n    <app-top-bar></app-top-bar>\n    \n    <section class=\"overlape\">\n        <div class=\"block no-padding\">\n          <div data-velocity=\"-.1\" class=\"parallax scrolly-invisible no-parallax\"></div>\n          <div class=\"container fluid\">\n            <div class=\"row\">\n              <div class=\"col-lg-12\">\n                  <div class=\"inner-header\" id=\"responsive-title\">\n                      <h3>Chat</h3>\n                    </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </section>\n    \n      <section>\n        <div class=\"block no-padding\">\n          <div class=\"container\">\n             <div id=\"frame\">\n                <div id=\"sidepanel\">\n                  <!-- rooms -->\n                  <div class=\"rooms\">\n                    <ul class=\"list-unstyled\" style=\"list-style-type: none;\" >\n                      <li class=\"room\" *ngFor=\"let room of room_data; let i = index\">\n                        <a (click)=\"loadChat(room.chatID, room.name)\">\n                        <div class=\"wrap\">\n                          <span class=\"room-status away \"></span>\n                          <img :src=\"room.image\" alt=\"\" />\n                          <div class=\"meta\">\n                            <p class=\"name sidebar\">{{ room.name }}</p>\n                            <!-- <p class=\"sidebar\"><a>Delete</a></p> -->\n                          </div>\n                        </div>\n                        </a>\n                        \n                      </li>\n                    </ul>\n                  </div>\n\n                </div>\n\n                <div id=\"content\" class=\"content\">\n                  <!-- room-details -->\n                  <div class=\"room-details\">\n                      <!-- <img :src=\"activeRoom.image\" alt=\"\" class='description' /> -->\n                      <!-- <p>{{ current_room_data.user }}</p> -->\n\n                    </div>\n                  <!-- messages -->\n                  <div class='messages-wrapper'>\n                      <!-- <virtual-scroll [items]=\"current_room_data.messages\" (update)=\"current_room_data.messages = $event\"> -->\n                        <!-- {{ user }} -->\n                        <div class=\"list\" #scrollMe [scrollTop]=\"scrollMe.scrollHeight\">\n                        <div [contextMenu]=\"basicMenu\" [contextMenuSubject]=\"message\" [ngClass]=\"{ 'message': 1==1, 'sent': message.M.from.S == user, 'replies': message.M.from.S != user}\" *ngFor=\"let message of current_room_data.messages; let i = index;\">\n                          <span *ngIf=\"message.M.from.S != user\" class=\"sender\">{{ current_room_data.user }}</span>\n                          <p>{{ message.M.message.S }}</p>\n                          <context-menu>\n                              <ng-template contextMenuItem (execute)=\"deleteMessage($event.item.M.date.S)\">\n                                Delete Message\n                              </ng-template>\n                            </context-menu>\n                        </div>\n                      \n                    </div>\n                    <!-- <div ng:bind=\"message_html\"></div> -->\n                  </div>\n\n                    <div class=\"message-input\" >\n                        <div class=\"wrap\">\n                        <input style=\"margin-bottom: 0px; height: 45px\" type=\"text\" id='textbox' [(ngModel)]=\"myVar\" placeholder=\"Write your message...\" />\n                        <button class=\"submit\" (click)=\"sendMessage(myVar)\" ng-click=\"myVar = null\" [disabled]=\"noSend\"><i class=\"fa fa-paper-plane\" aria-hidden=\"true\"></i></button>\n                        </div>\n                      </div>\n                </div>\n\n              </div>\n             </div>\n          </div>\n      </section>\n\n    <app-bottom-bar></app-bottom-bar>\n\n\n\n\n\n\n\n<!-- \n    <div id=\"modal-container\" class=\"hidden\"></div>\n    <div id=\"overlay\" (click)=\"removeModal()\" class=\"hidden\"></div> -->\n\n"
 
 /***/ }),
 
@@ -4537,6 +4532,7 @@ var MessagingComponent = /** @class */ (function () {
         this.userName = String;
         this.client = undefined;
         this.passData = {};
+        this.noSend = false;
         var idToken = new amazon_cognito_identity_js__WEBPACK_IMPORTED_MODULE_9__["CognitoIdToken"]({
             IdToken: localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.idToken")
         });
@@ -4577,6 +4573,14 @@ var MessagingComponent = /** @class */ (function () {
             }
         };
     }
+    MessagingComponent.prototype.scrollToBottom = function () {
+        try {
+            this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+        }
+        catch (err) {
+            console.log(err);
+        }
+    };
     MessagingComponent.prototype.isLoggedIn = function (message, isLoggedIn) {
         if (!isLoggedIn) {
             this.router.navigate(['/login']);
@@ -4895,10 +4899,12 @@ var MessagingComponent = /** @class */ (function () {
         });
         this.client.on('connect', function () {
             _this.client.subscribe('/chat/' + id);
+            console.log("connected");
         });
         this.client.on('message', function (topic, message) {
             // this is where you will handle the messages you send from Lambda
             message = JSON.parse(message.toString()).message.messages;
+            console.log(message);
             // console.log(message)
             // var msgs = [] 
             //   var setup = 
@@ -4925,13 +4931,15 @@ var MessagingComponent = /** @class */ (function () {
             //     }
             //   });
             _this.current_room_data["messages"] = message.L;
+            _this.scrollToBottom();
         });
         this.client.on("close", function (err) {
-            console.log(err);
+            console.log("close", err);
         });
         // console.log("a", self.chat_details)
     };
     MessagingComponent.prototype.sendMessage = function (msg) {
+        this.noSend = true;
         var setup = {
             M: {
                 date: { S: (new Date).toISOString() },
@@ -4960,6 +4968,8 @@ var MessagingComponent = /** @class */ (function () {
             });
         });
         msg = null;
+        this.myVar = "";
+        this.noSend = false;
     };
     MessagingComponent.prototype.deleteMessage = function (msg) {
         var c = 0;
@@ -4990,6 +5000,10 @@ var MessagingComponent = /** @class */ (function () {
             });
         });
     };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('scrollMe'),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"])
+    ], MessagingComponent.prototype, "myScrollContainer", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(ngx_contextmenu__WEBPACK_IMPORTED_MODULE_6__["ContextMenuComponent"]),
         __metadata("design:type", ngx_contextmenu__WEBPACK_IMPORTED_MODULE_6__["ContextMenuComponent"])

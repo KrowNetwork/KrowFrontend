@@ -31,6 +31,7 @@
     "angular-websocket": "^2.0.1",
     "angular2-contextmenu": "^0.8.2",
     "angular2-virtual-scroll": "^0.4.10",
+    "angularjs-scroll-glue": "^2.2.0",
     "aws-iot-device-sdk": "^2.2.1",
     "aws-mqtt": "^0.2.2",
     "aws-mqtt-client": "0.0.5",
