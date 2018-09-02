@@ -43,7 +43,8 @@ export class MessagingComponent implements OnInit {
   client = undefined
   passData = {}
   myVar: String;
-  noSend = false
+  noSend = true
+  isHidden = true
 
 
   constructor(
@@ -133,6 +134,7 @@ export class MessagingComponent implements OnInit {
             uData["name"] = data["firstName"] + " " + data["lastName"]
             uData["id"] = id;
             uData["chatID"] = chat_id
+            uData["activity"] = "none"
             this.room_data.push(uData)
           } else {
             this.loadEmployerData(id, chat_id)
@@ -148,6 +150,7 @@ export class MessagingComponent implements OnInit {
             uData["name"] = data["employerName"]
             uData["id"] = id;
             uData["chatID"] = chat_id
+            uData["activity"] = "none"
             this.room_data.push(uData)
             // console.log(uData)
     })
@@ -189,7 +192,8 @@ export class MessagingComponent implements OnInit {
 
   }
 
-  loadChat(id, userName) {
+  loadChat(id, userName, event=undefined) {
+    console.log(event)
     var params_logs = {
       TableName: "chat_logs",
       Key: {
@@ -206,6 +210,16 @@ export class MessagingComponent implements OnInit {
       self.current_room_data["user"] = userName
       self.current_room_data["messages"] = data.Item.messages.L
       self.current_room_data["logID"] = id
+      self.noSend = false 
+      self.isHidden = false
+      for (var z = 0; z < self.room_data.length; z ++) {
+        if (self.room_data[z].chatID == id) {
+          self.room_data[z].activity = "active"
+          // break
+        } else {
+          self.room_data[z].activity = "none"
+        }
+      }
       // self.current_room_data["messages"].forEach(element => {
       //   self.message_html += 
       //   `

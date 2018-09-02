@@ -8,7 +8,7 @@
             <div class="row">
               <div class="col-lg-12">
                   <div class="inner-header" id="responsive-title">
-                      <h3>Chat</h3>
+                      <!-- <h3>Chat</h3> -->
                     </div>
               </div>
             </div>
@@ -24,10 +24,10 @@
                   <!-- rooms -->
                   <div class="rooms">
                     <ul class="list-unstyled" style="list-style-type: none;" >
-                      <li class="room" *ngFor="let room of room_data; let i = index">
+                      <li class="room" *ngFor="let room of room_data; let i = index" [ngClass]="{'none': room.activity == 'none', 'active': room.activity == 'active'}">
                         <a (click)="loadChat(room.chatID, room.name)">
                         <div class="wrap">
-                          <span class="room-status away "></span>
+                          <span class="room-status" ></span>
                           <img :src="room.image" alt="" />
                           <div class="meta">
                             <p class="name sidebar">{{ room.name }}</p>
@@ -68,7 +68,7 @@
                     <!-- <div ng:bind="message_html"></div> -->
                   </div>
 
-                    <div class="message-input" >
+                    <div class="message-input" [hidden]="isHidden">
                         <div class="wrap">
                         <input style="margin-bottom: 0px; height: 45px" type="text" id='textbox' [(ngModel)]="myVar" placeholder="Write your message..." />
                         <button class="submit" (click)="sendMessage(myVar)" ng-click="myVar = null" [disabled]="noSend"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>

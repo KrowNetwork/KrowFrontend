@@ -51,6 +51,9 @@
 												<li><a [routerLink]="['/employer/available-jobs']" routerLinkActive="active">Available Jobs</a></li>
 											</ul>
 										</li>
+										<li>
+											<a [routerLink]="['/chat']" style="color: #ffffff">Chat</a>
+										</li>
 							</ul>
 					</div>
 				</div>
@@ -99,7 +102,10 @@
                   <li><a [routerLink]="['/employer/in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
                   <li><a [routerLink]="['/employer/available-jobs']" routerLinkActive="active">Available Jobs</a></li>
                 </ul>
-              </li>
+							</li>
+							<li>
+								<a [routerLink]="['/chat']" style="color: #ffffff">Chat</a>
+							</li>
               <li>
 								<div class="btn-extars">
 										<a *ngIf="isLoggedInB" (click)="bigBtn()" class="post-job-btn" >{{btnText}}</a>
