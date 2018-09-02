@@ -296,4 +296,8 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
     }
 }
 
+newChat() {
+  this.router.navigate(["chat/" + this.id])
+}
+
 }

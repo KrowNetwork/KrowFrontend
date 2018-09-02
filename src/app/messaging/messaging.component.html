@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html>
 
-<body>
     <app-top-bar></app-top-bar>
     
     <section class="overlape">
@@ -26,8 +23,8 @@
                 <div id="sidepanel">
                   <!-- rooms -->
                   <div class="rooms">
-                    <ul class="list-unstyled" style="list-style-type: none;" *ngFor="let room of room_data; let i = index">
-                      <li class="room">
+                    <ul class="list-unstyled" style="list-style-type: none;" >
+                      <li class="room" *ngFor="let room of room_data; let i = index">
                         <a (click)="loadChat(room.chatID, room.name)">
                         <div class="wrap">
                           <span class="room-status away "></span>
@@ -48,20 +45,20 @@
                 <div id="content" class="content">
                   <!-- room-details -->
                   <div class="room-details">
-                      <img :src="activeRoom.image" alt="" class='description' />
-                      <p>{{ current_room_data.user }}</p>
+                      <!-- <img :src="activeRoom.image" alt="" class='description' /> -->
+                      <!-- <p>{{ current_room_data.user }}</p> -->
 
                     </div>
                   <!-- messages -->
                   <div class='messages-wrapper'>
                       <!-- <virtual-scroll [items]="current_room_data.messages" (update)="current_room_data.messages = $event"> -->
                         <!-- {{ user }} -->
-                        <div class="list" style="overflow-y:auto;" >
+                        <div class="list"  >
                         <div [contextMenu]="basicMenu" [contextMenuSubject]="message" [ngClass]="{ 'message': 1==1, 'sent': message.M.from.S == user, 'replies': message.M.from.S != user}" *ngFor="let message of current_room_data.messages; let i = index;">
-                          <span class="sender">{{ message.M.from.S }}</span>
+                          <span *ngIf="message.M.from.S != user" class="sender">{{ current_room_data.user }}</span>
                           <p>{{ message.M.message.S }}</p>
                           <context-menu>
-                              <ng-template contextMenuItem (execute)="deleteMessage(message.M.date.S)">
+                              <ng-template contextMenuItem (execute)="deleteMessage($event.item.M.date.S)">
                                 Delete Message
                               </ng-template>
                             </context-menu>
@@ -71,9 +68,9 @@
                     <!-- <div ng:bind="message_html"></div> -->
                   </div>
 
-                    <div class="message-input">
+                    <div class="message-input" >
                         <div class="wrap">
-                        <input type="text" id='textbox' [(ngModel)]="myVar" placeholder="Write your message..." />
+                        <input style="margin-bottom: 0px; height: 45px" type="text" id='textbox' [(ngModel)]="myVar" placeholder="Write your message..." />
                         <button class="submit" (click)="sendMessage(myVar)" ng-click="myVar = null"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                         </div>
                       </div>
@@ -85,8 +82,14 @@
       </section>
 
     <app-bottom-bar></app-bottom-bar>
-</body>
-</html>
 
 
+
+
+
+
+
+
+    <div id="modal-container" class="hidden"></div>
+    <div id="overlay" (click)="removeModal()" class="hidden"></div>
 

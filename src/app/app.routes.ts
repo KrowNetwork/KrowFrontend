@@ -119,7 +119,13 @@ const appRoutes: Routes = [
     },
     {
         path: "chat",
-        component: MessagingComponent
+        component: MessagingComponent,
+        children: [
+            {
+                path: ":newChat",
+                component: MessagingComponent
+            }
+        ]
     }
 
 ];

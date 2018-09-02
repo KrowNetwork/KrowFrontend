@@ -77,6 +77,8 @@ import { UserRegistrationService } from './service/user-registration.service';
 import { CreateUserService } from './service/create-user.service';
 import { CustomHttpService } from "./service/custom-http.service";
 import { PreviousRouteService } from "./service/previous-route.service";
+import { DomService } from "./service/dom.service";
+import { ModalService } from "./service/modal.service";
 
 // Directives
 import { EducationDirective } from './applicant/applicant-resume/resume-education/education.directive';
@@ -112,6 +114,7 @@ import { TopBarComponent } from './top-bar/top-bar.component';
 // import { VirtualListModule } from 'angular-virtual-list';
 import { VirtualScrollModule } from 'angular2-virtual-scroll';
 import { ContextMenuModule } from 'ngx-contextmenu';
+import { MessagingPopupComponent } from './messaging/messaging-popup/messaging-popup.component';
 // import { ContextMenuService } from 'angular2-contextmenu/src/contextMenu.service';
 
 
@@ -179,6 +182,7 @@ import { ContextMenuModule } from 'ngx-contextmenu';
     FeedbackComponent,
     MessagingComponent,
     TopBarComponent,
+    MessagingPopupComponent,
 
     // DeleteComponent
     
@@ -208,6 +212,7 @@ import { ContextMenuModule } from 'ngx-contextmenu';
     EducationMainComponent,
     AchievementsMainComponent,
     JobSearchMainComponent,
+    MessagingPopupComponent
   ],
   providers: [ 
     UpdateResumeService,
@@ -218,7 +223,9 @@ import { ContextMenuModule } from 'ngx-contextmenu';
     UserRegistrationService,
     CreateUserService,
     CustomHttpService,
-    PreviousRouteService
+    PreviousRouteService,
+    DomService,
+    ModalService
   ],
   bootstrap: [ 
     AppComponent 

@@ -6,6 +6,9 @@ import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { CustomHttpService } from "../service/custom-http.service";
 import { ContextMenuService, ContextMenuComponent } from 'ngx-contextmenu';
 // ChangeDetectorRef.detectChanges()
+import { MessagingPopupComponent } from './messaging-popup/messaging-popup.component'
+import { ModalService } from '../service/modal.service';
+
 
 @Component({
   selector: 'app-messaging',
@@ -33,25 +36,14 @@ export class MessagingComponent implements OnInit {
   currentID = String;
   userName = String
   client = undefined
-  menuOptions = [
-    {
-      text: 'Object-Select',
-      click: function ($itemScope, $event, modelValue, text, $li) {
-          console.log(1)
-      }
-  },
-  {
-      text: 'Object-Remove',
-      click: function ($itemScope, $event, modelValue, text, $li) {
-          console.log(2)
-      }
-  }
-  ]
+  passData = {}
+
 
   constructor(
     public userService: UserLoginService,
     public router: Router,
-    public http: CustomHttpService
+    public http: CustomHttpService,
+    public modalService: ModalService
   ) { 
     // AWS.config.update({region: "us-east-2"})
     // // var credentials = new AWS.SharedIniFileCredentials();
@@ -71,7 +63,13 @@ export class MessagingComponent implements OnInit {
         userID: {S: this.user}
       }
     }
+
+    
+
   }
+
+
+    
 
 
   isLoggedIn(message: string, isLoggedIn: boolean) {
@@ -111,7 +109,7 @@ export class MessagingComponent implements OnInit {
     })
   }
 
-  loadChatDetails(chatName) {
+  loadChatDetails(chatName, current) {
     var params_logs = {
       TableName: "chat_logs",
       Key: {
@@ -123,10 +121,28 @@ export class MessagingComponent implements OnInit {
       console.log(data)
       data.Item.users.L.forEach(element => {
         if (element.S != self.user) {
+          console.log(element)
           self.loadUserData(element.S, chatName)
           // console.log(element)
+          if (current) {
+            self.http.get("http://18.220.46.51:3000/api/Employer/" + element.S).subscribe(
+              data => {
+                if (data["error"] === undefined) {
+
+                  self.loadChat(chatName, data["employerName"])
+                } else {
+                  self.http.get("http://18.220.46.51:3000/api/Applicant/" + element.S).subscribe(
+                    data => {
+                      self.loadChat(chatName, data["firstName"] + " " + data["lastName"])
+                    }
+                  )
+                }
+              }
+            )
+          }
         }
       });
+      
     })
 
   }
@@ -164,13 +180,176 @@ export class MessagingComponent implements OnInit {
       // console.log(self.message_html)
     })
   }
+  defineNewUser(userId, chat_id) {
+    // console.log(err)
+    var chat_name = "_" + userId + "_" + this.user
+    // console.log(chat_name)
 
+
+    var p3 = {
+      TableName: "user_chats",
+      // Key: {
+      //   userID: userId
+      // },
+      Item: {
+        chats: {L: [{S: chat_name}]},
+        userID: {S: userId}
+      }
+    }
+    var p2 = {
+      TableName: "user_chats",
+      // Key: {
+      //   userID: userId
+      // },
+      Item: {
+        chats: {L: [{S: chat_name}]},
+        userID: {S: this.user}
+      }
+    }
+    
+
+    this.ddb.putItem(p3, function(err, data) {
+      // console.log(err, data)
+    })
+    this.ddb.putItem(p2, function(err, data) {
+      // console.log(err, data)
+    })
+
+    var chat = {
+      TableName: "chat_logs",
+      Item: 
+        {
+          users: {L: [
+            {S: userId},
+            {S: this.user}
+          ]},
+        messages: {L: []},
+        logID: {S: chat_id}
+        }
+    }
+
+    this.ddb.putItem(chat, function(err, data) {
+      console.log(err, data)
+    })
+    delete chat.TableName
+    return chat
+
+
+
+
+  }
   ngOnInit() {
+    if (this.router.url.split("/")[2] !== undefined) {
+      // console.log(this.router.url.split("/")[2])
+      var i = this.router.url.split("/")[2]
+      var p1 = {
+        TableName: "user_chats",
+        Key: {
+          userID: {S: i}
+        }
+      }
+      var self = this
+      var chat_1 = "_" + i + "_" + self.user
+      var chat_2 = "_" + self.user + "_" + i
+      var chat = undefined
+      this.ddb.getItem(p1, function(err, data) {
+        if (err) {
+          console.log(err)
+          chat = self.defineNewUser(i, chat_1)
+        }
+        else {
+          if (data.Item === undefined) {
+            chat = self.defineNewUser(i, chat_1)
+          } else {
+            
+
+            var add = true
+            for (var x = 0; x <= data.Item.chats.L.length; x ++) {
+              console.log(data.Item.chats.L[x].S)
+              if (data.Item.chats.L[x].S == chat_1 || data.Item.chats.L[x].S == chat_2) {
+                add = false;
+                break;
+              }
+            }
+              
+            
+
+            if (add) {
+              data.Item.chats.L.push({S: chat_1})
+              data.TableName = "user_chats"
+              self.ddb.putItem(data, function(err, data) {
+              })
+
+              data.Item.userID = {S: self.user}
+              self.ddb.putItem(data, function(err, data) {
+              })
+
+              
+
+
+
+            }
+
+          }
+        }
+      })
+      this.sleep(5000)
+      var self = this
+      this.ddb.getItem(this.params_chats, function(err, data) {
+        console.log(err)
+          console.log("a", data)
+          if (data.Item === undefined) {
+            self.loadChatDetails(chat_1, true)
+          } else {
+
+            var c_details = []
+            var names = data.Item.chats.L
+            console.log(names)
+            for (var z = 0; z < names.length;z++) {
+              self.loadChatDetails(names[z]["S"])
+            
+          }
+          }
+      })
+
+
+      // var setup = {
+      //   M: {
+      //     date: {S: (new Date).toISOString()},
+      //     from: {S: this.user},
+      //     message: {S: msg},
+      //   }
+      // }
+    //   var params_logs = {
+    //     TableName: "chat_logs",
+    //     Key: {
+    //       logID: {S: this.currentID}
+    //     }
+    //   }
+    //   // this.loadStream(id, userName)
+    //   var self = this
+    //   this.ddb.getItem(params_logs, function(err, data) {
+    //     console.log("a", data)
+    //     // var par = {
+          
+    //     // }
+    //     data.Item.messages.L.push(setup)
+    //     data["TableName"] = "chat_logs"
+    //     console.log(data)
+    //     self.ddb.putItem(data, function(err, data) {
+    //       console.log(err)
+    //       console.log(data)
+    //     })
+    // })
+    // msg = null;
+    } else {
+
     
     var self = this
     this.ddb.getItem(this.params_chats, function(err, data) {
 
         var c_details = []
+        console.log(data.Item)
         var names = data.Item.chats.L
         console.log(data)
         for (var i = 0; i < names.length; i++) {
@@ -181,10 +360,28 @@ export class MessagingComponent implements OnInit {
     })
 
     
+  }
 
 
 
+}
 
+
+sleep(seconds) {
+  var start = new Date().getSeconds();
+  var x = 0
+  while ((new Date().getSeconds() - start) > seconds) {
+    x = 0
+  }
+  // for (var i = 0; i < 1e7; i++) {
+  //   if ((new Date().getTime() - start) > milliseconds){
+  //     break;
+  //   }
+  // }
+}
+
+pop() {
+  this.modalService.init(MessagingPopupComponent, {test: "t"}, {})
 }
 
   loadStream(id, userName) {
@@ -261,7 +458,7 @@ export class MessagingComponent implements OnInit {
     this.client.on('message', (topic, message) => {
       // this is where you will handle the messages you send from Lambda
       message = JSON.parse(message.toString()).message.messages
-      console.log(message)
+      // console.log(message)
       // var msgs = [] 
       //   var setup = 
       //   {
@@ -333,16 +530,16 @@ export class MessagingComponent implements OnInit {
 
 deleteMessage(msg) {
   var c = 0
-  console.log(msg)
+  // console.log(msg)
   for (var i = 0; i <= this.current_room_data["messages"].length; i ++) {
-    console.log(this.current_room_data["messages"][i].M.date.S)
+    // console.log(this.current_room_data["messages"][i].M.date.S)
     if (this.current_room_data["messages"][i].M.date.S == msg) {
       this.current_room_data["messages"].splice(i, 1)
-      console.log(i)
+      // console.log(i)
       break
     }
   }
-  console.log(this.current_room_data["messages"])
+  // console.log(this.current_room_data["messages"])
 
   
   var params_logs = {
