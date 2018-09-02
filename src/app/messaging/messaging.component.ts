@@ -10,7 +10,7 @@ import { ContextMenuService, ContextMenuComponent } from 'ngx-contextmenu';
 import { MessagingPopupComponent } from './messaging-popup/messaging-popup.component'
 import { ModalService } from '../service/modal.service';
 import { AuthenticationDetails, CognitoUser, CognitoUserSession, CognitoIdToken, CognitoAccessToken, CognitoRefreshToken } from "amazon-cognito-identity-js";
-
+var AWSMqtt = require("aws-mqtt")
 
 @Component({
   selector: 'app-messaging',
@@ -41,6 +41,7 @@ export class MessagingComponent implements OnInit {
   currentID = String;
   userName = String
   client = undefined
+  client2 = undefined
   passData = {}
   myVar: String;
   noSend = true
@@ -163,6 +164,7 @@ export class MessagingComponent implements OnInit {
         logID: {S: chatName}
       }
     }
+    this.room_data = []
     var self = this
     this.ddb.getItem(params_logs, function(err, data) {
       data.Item.users.L.forEach(element => {
@@ -295,13 +297,49 @@ export class MessagingComponent implements OnInit {
 
   }
   ngOnInit() {
+    var id3 = (Math.floor((Math.random() * 100000) + 1)) + this.user
+
+    this.client2 = AWSMqtt.connect({
+      WebSocket: WebSocket, 
+      region: AWS.config.region,
+      credentials: AWS.config.credentials,
+      endpoint: 'a3iz1rb67gh4ak.iot.us-east-2.amazonaws.com', // NOTE: get this value with `aws iot describe-endpoint`
+      clientId: id3
+    })
+
+    this.client2.on('connect', () => {
+      this.client2.subscribe('/order/' + this.user)
+      // console.log("connected")
+    })
+    this.client2.on('message', (topic, message) => {
+      // this is where you will handle the messages you send from Lambda
+      message = JSON.parse(message.toString()).message
+      var names = message.Item.chats.L[0].S
+      for (var a = 0; a < this.room_data.length; a++) {
+        if (this.room_data[a].chatID == names) {
+          var x = this.room_data[a]
+          this.room_data.splice(a, 1)
+          this.room_data.unshift(x)
+        }
+      }
+        // console.log(data)
+
+      
+      // this.current_room_data["messages"] = message.L
+      // this.scrollToBottom()
+    })
+
+    this.client2.on("close", (err) => {
+      // console.log("close", err)
+    })
+
     if (this.router.url.split("/")[2] !== undefined) {
       // console.log(this.router.url.split("/")[2])
       var i = this.router.url.split("/")[2]
       var p1 = {
         TableName: "user_chats",
         Key: {
-          userID: {S: i}
+          userID: {S: this.user}
         }
       }
       var self = this
@@ -309,25 +347,27 @@ export class MessagingComponent implements OnInit {
       var chat_2 = "_" + self.user + "_" + i
       var chat = undefined
       this.ddb.getItem(p1, function(err, data) {
+        console.log(data)
         if (err) {
-          chat = self.defineNewUser(i, chat_1)
+          // chat = self.defineNewUser(i, chat_1)
         }
         else {
           if (data.Item === undefined) {
-            chat = self.defineNewUser(i, chat_1)
+            // chat = self.defineNewUser(i, chat_1)
           } else {
             
 
             var add = true
-            for (var x = 0; x <= data.Item.chats.L.length; x ++) {
+            for (var x = 0; x < data.Item.chats.L.length; x ++) {
               // console.log(data.Item.chats.L[x].S)
               if (data.Item.chats.L[x].S == chat_1 || data.Item.chats.L[x].S == chat_2) {
+                // console.log(data.Item.chats.L[x].S)
                 add = false;
                 break;
               }
             }
               
-            
+
 
             if (add) {
               data.Item.chats.L.push({S: chat_1})
@@ -335,7 +375,7 @@ export class MessagingComponent implements OnInit {
               self.ddb.putItem(data, function(err, data) {
               })
 
-              data.Item.userID = {S: self.user}
+              data.Item.userID = {S: i}
               self.ddb.putItem(data, function(err, data) {
               })
 
@@ -348,55 +388,23 @@ export class MessagingComponent implements OnInit {
           }
         }
       })
-      var self = this
-      this.ddb.getItem(this.params_chats, function(err, data) {
-        // console.log(err)
-          // console.log("a", data)
-          if (data.Item === undefined) {
-            self.loadChatDetails(chat_1, true)
-          } else {
-
-            var c_details = []
-            var names = data.Item.chats.L
-            // console.log(names)
-            for (var z = 0; z < names.length;z++) {
-              self.loadChatDetails(names[z]["S"], false)
-            
-          }
-          }
-      })
-
-
-      // var setup = {
-      //   M: {
-      //     date: {S: (new Date).toISOString()},
-      //     from: {S: this.user},
-      //     message: {S: msg},
-      //   }
-      // }
-    //   var params_logs = {
-    //     TableName: "chat_logs",
-    //     Key: {
-    //       logID: {S: this.currentID}
-    //     }
-    //   }
-    //   // this.loadStream(id, userName)
-    //   var self = this
-    //   this.ddb.getItem(params_logs, function(err, data) {
-    //     console.log("a", data)
-    //     // var par = {
+      var log = {
+        TableName: "chat_logs",
+        Item: {
+        logID: {S: chat_1},
+        messages: {L: [
           
-    //     // }
-    //     data.Item.messages.L.push(setup)
-    //     data["TableName"] = "chat_logs"
-    //     console.log(data)
-    //     self.ddb.putItem(data, function(err, data) {
-    //       console.log(err)
-    //       console.log(data)
-    //     })
-    // })
-    // msg = null;
-    } else {
+        ]},
+        users: {L : [
+          {S: this.user},
+          {S: i}
+        ]}
+      }
+      }
+      this.ddb.putItem(log, function(err, data) {
+      })
+      
+    }
 
     
     var self = this
@@ -418,7 +426,7 @@ export class MessagingComponent implements OnInit {
 
 
 
-}
+
 
 
 sleep(seconds) {
@@ -441,55 +449,9 @@ pop() {
   loadStream(id, userName) {
     this.currentID = id
     this.userName = userName
-  //   var ddbStream = new DynamoDBStream( new AWS.DynamoDBStreams(), "arn:aws:dynamodb:us-east-2:599179145875:table/chat_logs/stream/2018-08-30T02:25:13.303")
-  //   // console.log(ddbStream)
-  //   var self = this
-  //   ddbStream.on("modify record", function (newRecord, oldRecord) {
-  //     if (newRecord["logID"] == self.currentID) {
-              
-  //       // console.log(newRecord)
-  //       var msgs = [] 
-  //       var setup = 
-  //       {
-  //         M: {
-  //           date: {S: "D"},
-  //           from: {S: "D"},
-  //           message: {S: "D"},
-  //         }
-  //       }
-  //       newRecord.messages.forEach(element => {
-  //         // console.log(element)
-  //         setup.M.date.S = element.date
-  //         setup.M.from.S = element.from
-  //         setup.M.message.S = element.message
-  //         // console.log(setup)
-  //         msgs.push(setup)
 
-  //         setup = {
-  //           M: {
-  //             date: {S: "D"},
-  //             from: {S: "D"},
-  //             message: {S: "D"},
-  //           }
-  //         }
-  //       });
-  //       self.current_room_data["messages"] = msgs
-  //     }
-  //   })
 
-  //   // ddbStream.on("insert  record", function (data) {
-  //   //   console.log("b", data)
-  //   //   self.current_room_data["messages"] = data.Item.messages.L
-  //   // })
 
-  //   setInterval(function () {
-  //     ddbStream.fetchStreamState(function (err) {
-  //         if (err) { return console.error('error fetching stream state', err) }
-  //         // console.log('stream state fetched successfully')
-  //     })
-  // }, 1000)
-
-  var AWSMqtt = require("aws-mqtt")
   // AWS.config.update({accessKeyId: "AKIAJZJ4OX6ZEI5CTMOA", secretAccessKey: "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", region: "us-east-2"});
  
   var id2 = (Math.floor((Math.random() * 100000) + 1)) + id
@@ -544,8 +506,7 @@ pop() {
       console.log("close", err)
     })
 
-
-
+    
     // console.log("a", self.chat_details)
   }
   
