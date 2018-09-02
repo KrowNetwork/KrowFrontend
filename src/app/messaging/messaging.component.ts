@@ -2,12 +2,14 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewChild  } from '@angular
 import * as AWS from "aws-sdk";
 import * as DynamoDBStream from "dynamodb-stream"
 import { UserLoginService } from '../service/user-login.service';
+import { CognitoUtil } from '../service/cognito.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { CustomHttpService } from "../service/custom-http.service";
 import { ContextMenuService, ContextMenuComponent } from 'ngx-contextmenu';
 // ChangeDetectorRef.detectChanges()
 import { MessagingPopupComponent } from './messaging-popup/messaging-popup.component'
 import { ModalService } from '../service/modal.service';
+import { AuthenticationDetails, CognitoUser, CognitoUserSession, CognitoIdToken, CognitoAccessToken, CognitoRefreshToken } from "amazon-cognito-identity-js";
 
 
 @Component({
@@ -43,16 +45,46 @@ export class MessagingComponent implements OnInit {
     public userService: UserLoginService,
     public router: Router,
     public http: CustomHttpService,
-    public modalService: ModalService
+    public modalService: ModalService,
+    public cognitoUtil: CognitoUtil,
+    // public session: CognitoUserSession
   ) { 
-    // AWS.config.update({region: "us-east-2"})
-    // // var credentials = new AWS.SharedIniFileCredentials();
-    AWS.config.update({accessKeyId: "AKIAJZJ4OX6ZEI5CTMOA", secretAccessKey: "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", region: "us-east-2"});
-    
-    this.userService.isAuthenticated(this);
 
+    const idToken = new CognitoIdToken({
+        IdToken: localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.idToken")
+    });
+    const accessToken = new CognitoAccessToken({
+        AccessToken: localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.accessToken")
+    });
+    const refreshToken = new CognitoRefreshToken({
+        RefreshToken: localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.refreshToken")
+    });
+    
+    let tokenData = {
+        IdToken: idToken,
+        RefreshToken: refreshToken,
+        AccessToken: accessToken
+    };
+
+     let session = new CognitoUserSession(tokenData);
+
+    this.userService.isAuthenticated(this, false);
+    AWS.config.update({region: "us-east-2"})
+    // // var credentials = new AWS.SharedIniFileCredentials();
+    // AWS.config.update({accessKeyId: "AKIAJZJ4OX6ZEI5CTMOA", secretAccessKey: "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", region: "us-east-2"});
+    // console.log(this.cognitoUtil.buildCognitoCreds(session.getIdToken().getJwtToken()))
+    // AWS.config.credentials = this.cognitoUtil.buildCognitoCreds(session.getIdToken().getJwtToken());
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+      IdentityPoolId : 'us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88', // your identity pool id here
+      Logins : {
+          // Change the key below according to the specific region your user pool is in.
+          'cognito-idp.us-east-2.amazonaws.com/us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88' : localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.idToken")
+      }
+    });
+    
+
+    // console.log( session.getIdToken().getJwtToken())
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
-    console.log(this.user)
     // console.log((new Date).toISOString())
 
     this.ddb = new AWS.DynamoDB({apiVersion: '2012-10-08'})
@@ -118,10 +150,8 @@ export class MessagingComponent implements OnInit {
     }
     var self = this
     this.ddb.getItem(params_logs, function(err, data) {
-      console.log(data)
       data.Item.users.L.forEach(element => {
         if (element.S != self.user) {
-          console.log(element)
           self.loadUserData(element.S, chatName)
           // console.log(element)
           if (current) {
@@ -229,7 +259,7 @@ export class MessagingComponent implements OnInit {
     }
 
     this.ddb.putItem(chat, function(err, data) {
-      console.log(err, data)
+      // console.log(err, data)
     })
     delete chat.TableName
     return chat
@@ -254,7 +284,6 @@ export class MessagingComponent implements OnInit {
       var chat = undefined
       this.ddb.getItem(p1, function(err, data) {
         if (err) {
-          console.log(err)
           chat = self.defineNewUser(i, chat_1)
         }
         else {
@@ -265,7 +294,7 @@ export class MessagingComponent implements OnInit {
 
             var add = true
             for (var x = 0; x <= data.Item.chats.L.length; x ++) {
-              console.log(data.Item.chats.L[x].S)
+              // console.log(data.Item.chats.L[x].S)
               if (data.Item.chats.L[x].S == chat_1 || data.Item.chats.L[x].S == chat_2) {
                 add = false;
                 break;
@@ -293,20 +322,19 @@ export class MessagingComponent implements OnInit {
           }
         }
       })
-      this.sleep(5000)
       var self = this
       this.ddb.getItem(this.params_chats, function(err, data) {
-        console.log(err)
-          console.log("a", data)
+        // console.log(err)
+          // console.log("a", data)
           if (data.Item === undefined) {
             self.loadChatDetails(chat_1, true)
           } else {
 
             var c_details = []
             var names = data.Item.chats.L
-            console.log(names)
+            // console.log(names)
             for (var z = 0; z < names.length;z++) {
-              self.loadChatDetails(names[z]["S"])
+              self.loadChatDetails(names[z]["S"], false)
             
           }
           }
@@ -347,13 +375,13 @@ export class MessagingComponent implements OnInit {
     
     var self = this
     this.ddb.getItem(this.params_chats, function(err, data) {
-
+        // console.log(err)
         var c_details = []
-        console.log(data.Item)
+        // console.log(data.Item)
         var names = data.Item.chats.L
-        console.log(data)
+        // console.log(data)
         for (var i = 0; i < names.length; i++) {
-          self.loadChatDetails(names[i]["S"])
+          self.loadChatDetails(names[i]["S"], false)
         
         }
         // self.chat_details = data
@@ -435,13 +463,9 @@ pop() {
   //     })
   // }, 1000)
 
-  var AWS = require("aws-sdk")
   var AWSMqtt = require("aws-mqtt")
   // AWS.config.update({accessKeyId: "AKIAJZJ4OX6ZEI5CTMOA", secretAccessKey: "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", region: "us-east-2"});
-  AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: "us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88",
-
-  })
+ 
   var id2 = (Math.floor((Math.random() * 100000) + 1)) + id
 
   this.client = AWSMqtt.connect({
@@ -513,16 +537,16 @@ pop() {
     // this.loadStream(id, userName)
     var self = this
     this.ddb.getItem(params_logs, function(err, data) {
-      console.log("a", data)
+      // console.log("a", data)
       // var par = {
         
       // }
       data.Item.messages.L.push(setup)
       data["TableName"] = "chat_logs"
-      console.log(data)
+      // console.log(data)
       self.ddb.putItem(data, function(err, data) {
-        console.log(err)
-        console.log(data)
+        // console.log(err)
+        // console.log(data)
       })
   })
   msg = null;

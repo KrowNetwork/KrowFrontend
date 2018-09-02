@@ -1,7 +1,7 @@
 import { environment } from "../../environments/environment";
 import { Injectable } from "@angular/core";
 import { CognitoCallback, CognitoUtil, LoggedInCallback } from "./cognito.service";
-import { AuthenticationDetails, CognitoUser, CognitoUserSession } from "amazon-cognito-identity-js";
+import { AuthenticationDetails, CognitoUser, CognitoUserSession, CognitoRefreshToken } from "amazon-cognito-identity-js";
 import * as AWS from "aws-sdk/global";
 import * as STS from "aws-sdk/clients/sts";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
@@ -119,7 +119,7 @@ export class UserLoginService {
         this.cognitoUtil.getCurrentUser().signOut();
     }
 
-    isAuthenticated(callback: LoggedInCallback) {
+    isAuthenticated(callback: LoggedInCallback, force = false) {
         if (callback == null)
             throw("UserLoginService: Callback in isAuthenticated() cannot be null");
 
@@ -132,7 +132,28 @@ export class UserLoginService {
                     // console.log("UserLoginService: Couldn't get the session: " + err, err.stack);
                     callback.isLoggedIn(err, false);
                 }
-                else {
+                else {  
+                    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                        IdentityPoolId : 'us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88', // your identity pool id here
+                        Logins : {
+                            // Change the key below according to the specific region your user pool is in.
+                            'cognito-idp.us-east-2.amazonaws.com/us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88' : localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.idToken")
+                        }
+                      });
+                    if (AWS.config.credentials['expired'] == true || force == true) {
+                        var refresh_token = session.getRefreshToken()
+                        var idToken = session.getIdToken().getJwtToken()
+                        cognitoUser.refreshSession(refresh_token, (err, session) => {
+                            if (err) console.log(err) 
+                            else {
+                                // console.log(session.getIdToken().getJwtToken())
+                                // (<AWS.CognitoIdentityCredentials> AWS.config.credentials).params["logins"]['cognito-idp.us-east-2.amazonaws.com/us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88']  = idToken
+                                (<AWS.CognitoIdentityCredentials> AWS.config.credentials).refresh((err) => {
+                                    console.log(err)
+                                })
+                            }
+                        })
+                    }
                     // console.log("UserLoginService: Session is " + session.isValid());
                     // if (localStorage.getItem("tokenCreation") !== undefined) {
                     //     var seconds = (new Date().getTime() - new Date(localStorage.getItem("tokenCreation")).getTime()) / 1000

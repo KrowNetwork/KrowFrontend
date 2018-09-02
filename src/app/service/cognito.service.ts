@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
-import { CognitoUserPool } from "amazon-cognito-identity-js";
+import { CognitoUserPool, CognitoUser } from "amazon-cognito-identity-js";
 import * as AWS from "aws-sdk/global";
 import * as awsservice from "aws-sdk/lib/service";
 import * as CognitoIdentity from "aws-sdk/clients/cognitoidentity";
@@ -69,34 +69,8 @@ export class CognitoUtil {
         return this.cognitoCreds;
     }
 
-    newToken(user) {
-        var refreshToken = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt." + user.username + ".refreshToken")
-        // console.log(refreshToken)
-        // user.getSession(function(err, session) {
-        //     // if (err) {                
-        //     //     res.send(err);
-        //     // }
-        //     // else{
-        //             /* Session Refresh */
-        //             user.refreshSession(refreshToken, (err, session) => {
-    
-        //                 if (err) {//throw err;
-        //                     // console.log('In the err'+err);
-        //                 }
-        //                 else{
-        //                     var regsmar_apiKey = session.idToken.jwtToken; // will this provide new IdToken?
-        //                     localStorage.setItem('api_key',regsmar_apiKey);
-        //                 }
-        //             }); 
-        //     // }
-        // });
-
-        var token = new CognitoRefreshToken({RefreshToken: refreshToken})
-        // console.log(token)
-        user.refreshSession(token, (err, session) => {
-            // console.log(err)
-            // console.log(session)
-        })
+    refreshUser(user) {
+       
     }
 
 
