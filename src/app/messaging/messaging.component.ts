@@ -33,12 +33,15 @@ export class MessagingComponent implements OnInit {
   chats: undefined;
   chat_details = [];
   room_data = [];
-  current_room_data = {}
+  current_room_data = {
+    messages: []
+  }
   message_html = ""
   currentID = String;
   userName = String
   client = undefined
   passData = {}
+  myVar: String;
 
 
   constructor(
@@ -83,7 +86,7 @@ export class MessagingComponent implements OnInit {
     });
     
 
-    // console.log( session.getIdToken().getJwtToken())
+    console.log(AWS.config.credentials)
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     // console.log((new Date).toISOString())
 

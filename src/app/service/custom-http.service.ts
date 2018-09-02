@@ -60,7 +60,7 @@ export class CustomHttpService{
 
   head(url, options=undefined) {
     var oUrl = "https://api.krownetwork.com/h?url=" + url
-    console.log(oUrl)
+    // console.log(oUrl)
     return this.http.get(oUrl);
   }
 

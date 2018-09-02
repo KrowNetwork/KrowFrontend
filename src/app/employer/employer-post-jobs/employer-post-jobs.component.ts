@@ -29,6 +29,7 @@ export class EmployerPostJobsComponent implements OnInit {
   errorMessage: string;
   contract: string;
   msg = undefined;
+  blank = undefined;
 
   submitHandler(event){
     if(event.target.value == ""){
