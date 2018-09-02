@@ -24,10 +24,10 @@
                   <!-- rooms -->
                   <div class="rooms">
                     <ul class="list-unstyled" style="list-style-type: none;" >
-                      <li class="room" *ngFor="let room of room_data; let i = index" [ngClass]="{'none': room.activity == 'none', 'active': room.activity == 'active'}">
+                      <li class="room " *ngFor="let room of room_data; let i = index" [ngClass]="{'none': room.activity == 'none', 'active': room.activity == 'active'}">
                         <a (click)="loadChat(room.chatID, room.name)">
                         <div class="wrap">
-                          <span class="room-status" ></span>
+                          <span class="room-status none" ></span>
                           <img :src="room.image" alt="" />
                           <div class="meta">
                             <p class="name sidebar">{{ room.name }}</p>

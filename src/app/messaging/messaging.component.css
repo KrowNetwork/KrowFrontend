@@ -95,12 +95,14 @@
     margin: 0px;
     padding: 0px;
     width: 100%;
+    list-style-type: none;
   }
   #frame #sidepanel .rooms ul li.room {
     position: relative;
     padding: 10px 0 15px 0;
     font-size: 0.9em;
     cursor: pointer;
+    list-style-type: none;
     
   }
   @media screen and (max-width: 735px) {
