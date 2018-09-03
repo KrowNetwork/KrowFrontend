@@ -15,6 +15,7 @@ export class HomepageComponent implements OnInit {
   is_applicant = false;
   isLoggedInB = false;
   btnText: string;
+  term: String;
   constructor(
     public http: CustomHttpService,
     private createUser: CreateUserService,
@@ -129,6 +130,16 @@ toggleMenu() {
     } else {
       this.router.navigate(["/employer"])
     }
+  }
+
+  keyDown(event) {
+    if (event.key == "Enter") {
+      this.search()
+    }
+  }
+
+  search() {
+    this.router.navigate(["/job-search"], { queryParams: { search: this.term } })
   }
 
 }

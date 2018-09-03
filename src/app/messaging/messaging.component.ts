@@ -576,5 +576,12 @@ deleteMessage(msg) {
 })
   
 }
+
+keyDown(event) {
+  if (event.key == "Enter") {
+    this.sendMessage(this.myVar)
+  }
+}
+
 }
 

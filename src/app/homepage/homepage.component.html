@@ -258,7 +258,7 @@
 										<div class="row">
 											<div class="col-lg-11 col-md-5 col-sm-5 col-xs-12">
 												<div class="job-field">
-													<input type="text" placeholder="Search Job Title, Keywords, Company Name and More" />
+													<input type="text" placeholder="Search Job Title" [(ngModel)]="term" [ngModelOptions]="{standalone: true}" (keydown)="keyDown($event)"/>
 													<i class="la la-keyboard-o"></i>
 												</div>
 											</div>
@@ -278,7 +278,7 @@
 											</div> -->
 
 											<div class="col-lg-1 col-md-2 col-sm-2 col-xs-12">
-												<button type="submit"><i class="la la-search"></i></button>
+												<button type="button" (click)="search()"><i class="la la-search"></i></button>
 											</div>
 										</div>
 									</form>
@@ -419,7 +419,7 @@
 						<div class="simple-text-block">
 							<h3>Get your Next Job Using a Smart Resume!</h3>
 							<span>Your resume is ready in minutes with Krow's resume assistant!</span>
-							<a href="#" title="">Create an Account</a>
+							<a href="/register" title="">Create an Account</a>
 						</div>
 					</div>
 				</div>

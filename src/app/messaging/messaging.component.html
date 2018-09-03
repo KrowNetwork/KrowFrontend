@@ -70,7 +70,7 @@
 
                     <div class="message-input" [hidden]="isHidden">
                         <div class="wrap">
-                        <input style="margin-bottom: 0px; height: 45px" type="text" id='textbox' [(ngModel)]="myVar" placeholder="Write your message..." />
+                        <input style="margin-bottom: 0px; height: 45px" type="text" id='textbox' [(ngModel)]="myVar" placeholder="Write your message..." (keydown)="keyDown($event)"/>
                         <button class="submit" (click)="sendMessage(myVar)" ng-click="myVar = null" [disabled]="noSend"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                         </div>
                       </div>
