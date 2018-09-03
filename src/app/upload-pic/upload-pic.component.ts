@@ -68,6 +68,10 @@ export class UploadPicComponent implements OnInit {
     var blob = this.dataURItoBlob(this.data.image)
     var image = new File([blob], this.user + '.png');
     const bucketName = 'krow-network-profile-pics';
+
+
+
+
     var s3 = this.s3service.getBucket(bucketName);
     this.image = this.user;
     var hasErr = false;
@@ -81,9 +85,11 @@ export class UploadPicComponent implements OnInit {
         
       }, function (err, data) {
      if (err) {
-       // console.log(err, 'there was an error uploading your file');
+       console.log(err, 'there was an error uploading your file');
        hasErr = true
-     } 
+     } else {
+      //  console.log(data)
+     }
    });
    if (!hasErr) {
      if (sessionStorage.getItem("accountType") == "applicant")
