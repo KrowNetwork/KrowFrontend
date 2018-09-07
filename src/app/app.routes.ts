@@ -126,6 +126,10 @@ const appRoutes: Routes = [
                 component: MessagingComponent
             }
         ]
+    },
+    {
+        path: "calendar",
+        component: CalendarComponent
     }
 
 ];
