@@ -41,24 +41,29 @@
 
             <div class="topbar">
               <span class="add" (click)="newEvent()">Add Event</span>
-              <span class="add" *ngIf="showEdit">Edit Event</span>
             </div>
             
             <div class="main-details">
+
+              <div class="event"  *ngFor="let current_event of current_events; let i = index">
               
                 <div class="title">
                   <h3 class="inline">{{ current_event.title }}</h3>
+                  <h6 class="inline edit">Edit Event</h6>
+                  <h6 class="inline complete" (click)="complete(i)">Complete Event</h6>
                 </div>
 
-                <h6 class="inline">{{ current_event.createdBy }}</h6>
-                <h6 class="inline">{{ current_event.dateCreated }}</h6>
-                <h6 class="inline">{{ current_event.dateDue }}</h6>
-                <h6 class="inline">{{ current_event.status }}</h6>
+                <h6 class="inline">Created By: {{ current_event.createdBy }}</h6>
+                <h6 class="inline">Date Created: {{ current_event.dateCreated }}</h6>
+                <h6 class="inline">Date to be finished: {{ current_event.dateDue }}</h6>
+                <h6 class="inline">Status: {{ current_event.status }}</h6>
 
                 <div class="description">
                   <!-- <h5>Description: </h5> -->
                   <h6>{{ current_event.description }}</h6>
                 </div>
+
+              </div>
       
               </div>
               <!-- <div class="bottombar">
@@ -73,3 +78,8 @@
   </section>
 
 <app-bottom-bar></app-bottom-bar>
+
+
+<div id="modal-container" class="hidden"></div>
+<div id="overlay" (click)="removeModal()" class="hidden"></div>
+

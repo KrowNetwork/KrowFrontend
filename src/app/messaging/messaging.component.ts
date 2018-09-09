@@ -46,6 +46,7 @@ export class MessagingComponent implements OnInit {
   myVar: String;
   noSend = true
   isHidden = true
+  created_user_data = undefined
 
 
   constructor(
@@ -238,7 +239,7 @@ export class MessagingComponent implements OnInit {
       // console.log(self.message_html)
     })
   }
-  defineNewUser(userId, chat_id) {
+  defineNewUser(userId, chat_id, self) {
     // console.log(err)
     var chat_name = "_" + userId + "_" + this.user
     // console.log(chat_name)
@@ -264,13 +265,15 @@ export class MessagingComponent implements OnInit {
         userID: {S: this.user}
       }
     }
+
+    self.created_user_data = p2
     
 
-    this.ddb.putItem(p3, function(err, data) {
-      // console.log(err, data)
+    self.ddb.putItem(p3, function(err, data) {
+      console.log(err, data)
     })
-    this.ddb.putItem(p2, function(err, data) {
-      // console.log(err, data)
+    self.ddb.putItem(p2, function(err, data) {
+      console.log(err, data)
     })
 
     var chat = {
@@ -279,14 +282,14 @@ export class MessagingComponent implements OnInit {
         {
           users: {L: [
             {S: userId},
-            {S: this.user}
+            {S: self.user}
           ]},
         messages: {L: []},
         logID: {S: chat_id}
         }
     }
 
-    this.ddb.putItem(chat, function(err, data) {
+    self.ddb.putItem(chat, function(err, data) {
       // console.log(err, data)
     })
     delete chat.TableName
@@ -336,30 +339,35 @@ export class MessagingComponent implements OnInit {
     if (this.router.url.split("/")[2] !== undefined) {
       // console.log(this.router.url.split("/")[2])
       var i = this.router.url.split("/")[2]
+      console.log(i)
       var p1 = {
         TableName: "user_chats",
         Key: {
           userID: {S: this.user}
         }
       }
+
+      console.log(p1)
+
       var self = this
       var chat_1 = "_" + i + "_" + self.user
       var chat_2 = "_" + self.user + "_" + i
       var chat = undefined
+      var self = this
       this.ddb.getItem(p1, function(err, data) {
-        console.log(data)
-        if (err) {
-          // chat = self.defineNewUser(i, chat_1)
-        }
+        console.log("d", Object.keys(data).length)
+        console.log("e", err)
+        if (Object.keys(data).length === 0) {
+            self.defineNewUser(i, chat_1, self)   
+            console.log("yeeee")   
+          }
         else {
-          if (data.Item === undefined) {
-            // chat = self.defineNewUser(i, chat_1)
-          } else {
+             
             
 
             var add = true
             for (var x = 0; x < data.Item.chats.L.length; x ++) {
-              // console.log(data.Item.chats.L[x].S)
+              console.log(data.Item.chats.L[x].S)
               if (data.Item.chats.L[x].S == chat_1 || data.Item.chats.L[x].S == chat_2) {
                 // console.log(data.Item.chats.L[x].S)
                 add = false;
@@ -372,7 +380,9 @@ export class MessagingComponent implements OnInit {
             if (add) {
               data.Item.chats.L.push({S: chat_1})
               data.TableName = "user_chats"
+              self.created_user_data = data
               self.ddb.putItem(data, function(err, data) {
+                
               })
 
               data.Item.userID = {S: i}
@@ -387,7 +397,7 @@ export class MessagingComponent implements OnInit {
 
           }
         }
-      })
+      )
       var log = {
         TableName: "chat_logs",
         Item: {
@@ -402,24 +412,43 @@ export class MessagingComponent implements OnInit {
       }
       }
       this.ddb.putItem(log, function(err, data) {
+        console.log(err)
       })
-      
+      var start = new Date().getSeconds()
+    // while (true) {
+    //   if (new Date().getSeconds() - start > 5) {
+    //     break;
+    //   }
+    // }
+      this.router.navigate(["/chat"])
     }
+    if (this.created_user_data === undefined) {
 
-    
-    var self = this
-    this.ddb.getItem(this.params_chats, function(err, data) {
-        // console.log(err)
-        var c_details = []
-        // console.log(data.Item)
-        var names = data.Item.chats.L
-        // console.log(data)
-        for (var i = 0; i < names.length; i++) {
-          self.loadChatDetails(names[i]["S"], false)
-        
-        }
-        // self.chat_details = data
-    })
+      var self = this
+      this.ddb.getItem(this.params_chats, function(err, data) {
+          // console.log(err)
+          var c_details = []
+          // console.log(data.Item)
+          var names = data.Item.chats.L
+          // console.log(data)
+          for (var i = 0; i < names.length; i++) {
+            self.loadChatDetails(names[i]["S"], false)
+          
+          }
+          // self.chat_details = data
+      })
+    } else {
+      console.log("weee")
+      var data = this.created_user_data
+      var c_details = []
+          // console.log(data.Item)
+      var names = data.Item.chats.L
+      // console.log(data)
+      for (var a = 0; a < names.length; a++) {
+        self.loadChatDetails(names[a]["S"], false)
+      
+      }
+    }
 
     
   }
@@ -471,7 +500,7 @@ pop() {
     this.client.on('message', (topic, message) => {
       // this is where you will handle the messages you send from Lambda
       message = JSON.parse(message.toString()).message.messages
-      console.log(message)
+      // console.log(message)
       // console.log(message)
       // var msgs = [] 
       //   var setup = 

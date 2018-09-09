@@ -117,6 +117,8 @@ export class UserLoginService {
     logout() {
         // console.log("UserLoginService: Logging out");
         this.cognitoUtil.getCurrentUser().signOut();
+        localStorage.clear()
+        sessionStorage.clear()
     }
 
     isAuthenticated(callback: LoggedInCallback, force = false) {

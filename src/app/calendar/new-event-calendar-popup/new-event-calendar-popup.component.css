@@ -1,0 +1,16 @@
+.pf-field {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.pf-title {
+    padding: 10px
+}
+
+.done {
+    padding: 10px
+}
+
+textarea {
+    max-height: 50%;
+}

@@ -1,0 +1,39 @@
+<!-- <div class="row">
+    <select ng-model="selectedName" ng-options="x for x in names">
+      </select>
+</div> -->
+
+
+
+
+<!-- <div class="sample-container">
+    <div class="sample-text">
+      This is the sample modal
+    </div>
+    <div class="sample-close">
+      <button (click)="close()">
+        Close Modal
+      </button>
+    </div>
+  </div> -->
+
+  <div class="row">
+    <div class="col-lg-6">
+        <span class="pf-title" style="margin-top:0px">Title</span> 
+        <div class="pf-field title">
+            <input type="text"  [(ngModel)]="title" [ngModelOptions]="{standalone: true}"/>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <span class="pf-title" style="margin-top:0px">Date to be completed</span> 
+        <div class="pf-field date">
+            <input type="date"  [(ngModel)]="date" [ngModelOptions]="{standalone: true}"/>
+        </div>
+    </div>
+  </div>
+  <span class="pf-title" style="margin-top:0px">Details</span>
+    <div class="pf-field">
+      <textarea style="padding: 15px" rows="20" type="text"
+        [(ngModel)]="details" [ngModelOptions]="{standalone: true}"></textarea>
+      </div>
+  <button class="done" (click)="complete()">Done</button>
