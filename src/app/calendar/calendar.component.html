@@ -27,7 +27,7 @@
 
                 <div class="dates-row" *ngFor="let row of dates; let i = index">
 
-                  <li class="date-item" *ngFor="let date of row; let b = index" (click)="showDetails(date[0])" [ngClass]='{ "active": date[2] == "active", "inactive": date[2] == "inactive" }'>
+                  <li class="date-item" *ngFor="let date of row; let b = index" (click)="showDetails(date[0])" [ngClass]='{ "active": date[2] == "active", "inactive": date[2] == "inactive", "clean": date[2] == "clean" }'>
                     <p>{{ date[1] }}</p>
                   </li>
 
@@ -50,7 +50,7 @@
                 <div class="title">
                   <h3 class="inline">{{ current_event.title }}</h3>
                   <h6 class="inline edit">Edit Event</h6>
-                  <h6 class="inline complete" (click)="complete(i)">Complete Event</h6>
+                  <h6 class="inline complete" *ngIf="current_event.status == 'In Progress'" (click)="complete(i, current_event.date)">Complete Event</h6>
                 </div>
 
                 <h6 class="inline">Created By: {{ current_event.createdBy }}</h6>

@@ -55,10 +55,18 @@
 .active {
     border-bottom: 2px solid red
 }
+.clean {
+    border-bottom: 2px solid green
+}
 
 .date-item.active :hover {
     background: #32465a;
     border-bottom: 2px solid red
+}
+
+.date-item.clean :hover {
+    background: #32465a;
+    border-bottom: 2px solid green
 }
 
 .topbar .add {

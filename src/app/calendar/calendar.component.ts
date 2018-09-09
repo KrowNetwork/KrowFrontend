@@ -10,6 +10,7 @@ import { ErrorStateMatcher } from '../../../node_modules/@angular/material';
 import { CustomHttpService } from "../service/custom-http.service";
 import { NewEventCalendarPopupComponent } from './new-event-calendar-popup/new-event-calendar-popup.component'
 import { ModalService } from '../service/modal.service';
+import { arrayUnion } from '../../../node_modules/ngx-modialog';
 
 declare var $: any
 $(".details").hide()
@@ -75,7 +76,6 @@ export class CalendarComponent implements OnInit {
     this.month = Moment().month()
     this.year = Moment().year()
     this.dateOfMonth = Moment().date()
-    console.log(new Date(this.year, this.month, this.dateOfMonth))
     var params = {
       TableName: "user_calendars",
       Key: {
@@ -90,7 +90,6 @@ export class CalendarComponent implements OnInit {
       data = data.data
       var events = data.Item.calendar.M
       // console.log(err)
-      console.log(data)
       var arr = []
       for (var x = 0; x < 42; x ++) {
         var iter = []
@@ -103,8 +102,18 @@ export class CalendarComponent implements OnInit {
               var e = events[d.toISOString().split("T")[0]]
               if (e !== undefined) {
 
-                // console.log(e)
-                arr.push([d.toISOString().split("T")[0], x - self.change + 1, "active"])
+                var clean = true
+                for (var a = 0; a < e.L.length; a ++) {
+                  if (e.L[a].M.status.S != "Completed") {
+                    clean = false
+                  }
+                }
+
+                if (clean) {
+                  arr.push([d.toISOString().split("T")[0], x - self.change + 1, "clean"])
+                } else {
+                  arr.push([d.toISOString().split("T")[0], x - self.change + 1, "active"])
+                }
               } else {
 
                 arr.push([d.toISOString().split("T")[0], x - self.change + 1, "inactive"])
@@ -115,8 +124,18 @@ export class CalendarComponent implements OnInit {
       for (var x = 0; x < arr.length; x += 7) {
         self.dates.push([arr[x], arr[x + 1], arr[x + 2], arr[x + 3], arr[x + 4], arr[x + 5], arr[x + 6]])
       }   
-      console.log(self.dates)
     })
+
+    // var clean = true
+    // for (var a = 0; a < this.user_calendar.response.data.Item.calendar.M[date].L.length; a ++) {
+    //   if (this.user_calendar.response.data.Item.calendar.M[date].L[a].M.status.S != "Completed") {
+    //     clean = false
+    //   }
+    // }
+
+    // if (clean) {
+
+    // }
     // self.up_to_date = self.user_calendar
 
    
@@ -129,17 +148,18 @@ export class CalendarComponent implements OnInit {
 
 
 
-  showDetails(date) {
+  async showDetails(date) {
     this.current_events = []
     if (date != " ") {
       var data = this.user_calendar.response.data.Item.calendar.M
       
       if (data[date] !== undefined) {
-        this.current_events = []
+        
         this.showEdit = true
         // console.log(data)
         data = data[date].L
-        console.log(data)
+        // this.current_events = new Array(data.length)
+        this.current_events = []
         for (var z = 0; z < data.length; z ++) {
           var current_event =   {
             title: " ",
@@ -147,9 +167,9 @@ export class CalendarComponent implements OnInit {
             dateCreated: " ",
             dateDue: " ",
             status: " ",
-            description: " "
+            description: " ",
+            date: " "
           }
-        
           current_event.title = data[z].M.title.S
           // console.log( data[z].M.createdBy.S)
           var dc = new Date( data[z].M.createdDate.S)
@@ -162,17 +182,36 @@ export class CalendarComponent implements OnInit {
 
           current_event.description =  data[z].M.details.S
 
-          this.http.get("http://18.220.46.51:3000/api/Applicant/" +  data[z].M.createdBy.S).subscribe(user => {
+          current_event.date = date
+
+          // var c = this.http.get("http://18.220.46.51:3000/api/Applicant/" +  data[z].M.createdBy.S).toPromise()
+          // await c
+          var self = this
+          await this.getApplicant(data[z].M.createdBy.S).then(function(user) {
             if (user["error"] === undefined) {
               current_event.createdBy = user["firstName"] + " " + user["lastName"]
-              this.current_events.push(current_event)
+              self.current_events.push(current_event)
             } else {
-              this.http.get("http://18.220.46.51:3000/api/Employer/" +  data[z].M.createdBy.S).subscribe(user => {
+              var self2 = self
+               self.getEmployer(data[z].M.createdBy.S).then(function(user) {
                 current_event.createdBy = user["employerName"]
-                this.current_events.push(current_event)
+                self2.current_events.push(current_event)
               })
             }
           })
+
+
+          // .subscribe(user => {
+          //   if (user["error"] === undefined) {
+          //     current_event.createdBy = user["firstName"] + " " + user["lastName"]
+          //     this.current_events[z] = current_event
+          //   } else {
+          //     this.http.get("http://18.220.46.51:3000/api/Employer/" +  data[z].M.createdBy.S).subscribe(user => {
+          //       current_event.createdBy = user["employerName"]
+          //       this.current_events[z] = current_event
+          //     })
+          //   }
+          // })
           
           
         }
@@ -187,9 +226,16 @@ export class CalendarComponent implements OnInit {
           current_event.createdBy = " "
           this.current_events.push(current_event)
         }
-      
-      
-    }
+      }
+  }
+
+  async getApplicant(id) {
+    let res = await this.http.get("http://18.220.46.51:3000/api/Applicant/" +  id).toPromise();
+    return res;
+  }
+  async getEmployer(id) {
+    let res = await this.http.get("http://18.220.46.51:3000/api/Employer/" +  id).toPromise();
+    return res;
   }
 
   loadStream() {
@@ -213,11 +259,7 @@ export class CalendarComponent implements OnInit {
       // console.log("yerrr", message)
       var data = message.data
       var events = message.calendar.M
-      // console.log("a", this.up_to_date)
-      // this.up_to_date.response.data.Item = data
-      // console.log("b", this.up_to_date)
-      // console.log(err)
-      console.log(data)
+
       var arr = []
       for (var x = 0; x < 42; x ++) {
         var iter = []
@@ -230,8 +272,18 @@ export class CalendarComponent implements OnInit {
               var e = events[d.toISOString().split("T")[0]]
               if (e !== undefined) {
 
-                // console.log(e)
-                arr.push([d.toISOString().split("T")[0], x - this.change + 1, "active"])
+                var clean = true
+                for (var a = 0; a < e.L.length; a ++) {
+                  if (e.L[a].M.status.S != "Completed") {
+                    clean = false
+                  }
+                }
+
+                if (clean) {
+                  arr.push([d.toISOString().split("T")[0], x - this.change + 1, "clean"])
+                } else {
+                  arr.push([d.toISOString().split("T")[0], x - this.change + 1, "active"])
+                }
               } else {
 
                 arr.push([d.toISOString().split("T")[0], x - this.change + 1, "inactive"])
@@ -263,8 +315,23 @@ export class CalendarComponent implements OnInit {
     this.modalService.destroy()
   }
 
-  complete(i) {
-    console.log(i)
+  complete(i, date) {
+    // console.log(date)
+    // console.log(this.user_calendar.response.data.Item.calendar.M[date].L[i])
+    this.user_calendar.response.data.Item.calendar.M[date].L[i].M.status.S = "Completed"
     this.current_events[i].status = "Completed"
+    var d = this.user_calendar.response.data
+    d.TableName = "user_calendars"
+    this.ddb.putItem(d, function(data, err) {
+      console.log(err)
+    })
+    var clean = true
+    for (var a = 0; a < this.user_calendar.response.data.Item.calendar.M[date].L.length; a ++) {
+      if (this.user_calendar.response.data.Item.calendar.M[date].L[a].M.status.S != "Completed") {
+        clean = false
+      }
+    }
+    // console.log(d)
+    
   }
 }
