@@ -17,11 +17,13 @@
       </section>
     
       <section>
+        
         <div class="block no-padding">
           <div class="container">
              <div id="frame">
                 <div id="sidepanel">
                   <!-- rooms -->
+                  
                   <div class="rooms">
                     <ul class="list-unstyled" style="list-style-type: none;" >
                       <li class="room " *ngFor="let room of room_data; let i = index" [ngClass]="{'none': room.activity == 'none', 'active': room.activity == 'active'}">
@@ -39,16 +41,16 @@
                       </li>
                     </ul>
                   </div>
-
+                
                 </div>
 
                 <div id="content" class="content">
                   <!-- room-details -->
-                  <div class="room-details">
+                  <!-- <div class="room-details"> -->
                       <!-- <img :src="activeRoom.image" alt="" class='description' /> -->
                       <!-- <p>{{ current_room_data.user }}</p> -->
 
-                    </div>
+                    <!-- </div> -->
                   <!-- messages -->
                   <div class='messages-wrapper'>
                       <!-- <virtual-scroll [items]="current_room_data.messages" (update)="current_room_data.messages = $event"> -->
