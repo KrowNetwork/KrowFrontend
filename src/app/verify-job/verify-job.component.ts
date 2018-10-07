@@ -70,16 +70,18 @@ export class VerifyJobComponent implements OnInit {
         TableName: "verifications",
         Item: item.Item
       }
-
+      var self = this
       this.ddb.putItem(params, function(err, data) {
         console.log(err, data)
-        if (err === undefined) {
+        if (err === null) {
+          console.log(item)
+          // console.log("here")
           var p = {
-            applicant: data.Item.applicantID.S,
-            verifyID: data.Item.verificationID.S,
-            verificationEmail: data.Item.email.S
+            applicant: item.Item.applicantID.S,
+            verifyID: item.Item.verificationID.S,
+            verificationEmail: item.Item.email.S
           }
-          this.http.post("https://api.krownetwork.com/verify", p).subscribe(
+          self.http.post("https://api.krownetwork.com/verify", p).subscribe(
             data => {
               console.log(data)
             }
