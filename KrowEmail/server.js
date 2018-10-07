@@ -377,7 +377,7 @@ app.post("/request-verification", (req, res, next) => {
                     TableName: "verifications",
                     Item: {
                         verificationID: {S: verificationID},
-                        code: {S: rID},
+                        code: {N: rID},
                         email: {S: req.body.to},
                         verified: {BOOL: false}
                     }
