@@ -11,7 +11,7 @@ var request = require('request');
 const PROD = false;
 const https = require('https');
 const http = require('http');
-const aws = require("aws-sdk")
+const AWS = require("aws-sdk")
 
 var fs = require('fs');
 
