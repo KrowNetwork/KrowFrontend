@@ -38,7 +38,7 @@ export class VerifyJobComponent implements OnInit {
 
   sendReq() {
     this.dataShare.shared.subscribe(data => this.name = data)
-    this.name["email"] = this.email
+    this.name["to"] = this.email
 
     this.http.post("https://api.krownetwork.com/request-verification", this.name).subscribe(
       data => {

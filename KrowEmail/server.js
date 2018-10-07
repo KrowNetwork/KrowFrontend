@@ -368,9 +368,9 @@ app.post("/request-verification", (req, res, next) => {
         }
         sender.sendMail(mailOptions, function (err, info) {
             if (err) {
-                // console.log(err);
+                console.log(err);
             } else {
-                // console.log('Message sent: ' + info.response);
+                console.log('Message sent: ' + info.response);
             }
         });
     })
