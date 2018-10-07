@@ -306,7 +306,7 @@ newChat() {
 reqVerify(id, jname) {
   console.log(id)
   this.dataService.changeData({
-    name: this.name,
+    user: this.name,
     jobName: jname,
     verificationID: id
   })

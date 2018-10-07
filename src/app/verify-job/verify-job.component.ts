@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
-// import { HttpClient } from '@angular/common/http'
-import { CustomHttpService } from '../service/custom-http.service'
+import { HttpClient } from '@angular/common/http'
+// import { CustomHttpService } from '../service/custom-http.service'
 import { DataShareService } from "../service/data-share.service"
 
 @Component({
@@ -17,7 +17,7 @@ export class VerifyJobComponent implements OnInit {
   name: String
   constructor(
     private router: Router,
-    private http: CustomHttpService,
+    private http: HttpClient,
     private dataShare: DataShareService
   ) { }
 
