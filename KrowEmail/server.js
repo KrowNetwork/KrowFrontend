@@ -379,7 +379,8 @@ app.post("/request-verification", (req, res, next) => {
                         verificationID: {S: verificationID},
                         code: {S: rID.toString()},
                         email: {S: req.body.to},
-                        verified: {BOOL: false}
+                        verified: {BOOL: false},
+                        requestDate: {S: new Date().toISOString()}
                     }
                 }
                 console.log(ddb_params)
