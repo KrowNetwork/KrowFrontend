@@ -22,8 +22,33 @@
                                     <i class="la la-user"></i>
                                 </div>
                                 <div class="cfield">                                
+                                    <input id="biaPhone" required type="text" placeholder="Phone Number (000)-000-0000" class="form-control"
+                                        [(ngModel)]="phoneNumber" [ngModelOptions]="{standalone: true}">
+                                    <i class="la la-envelope"></i>
+                                </div>
+                                <div class="cfield">                                
                                     <input id="biaEmail" required type="email" placeholder="Professional Email" class="form-control"
                                         [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
+                                    <i class="la la-envelope"></i>
+                                </div>
+                                <div class="cfield">                                
+                                    <input id="biaAddr" required type="text" placeholder="Address" class="form-control"
+                                        [(ngModel)]="address" [ngModelOptions]="{standalone: true}">
+                                    <i class="la la-envelope"></i>
+                                </div>
+                                <div class="cfield">                                
+                                    <input id="biaCity" required type="text" placeholder="City" class="form-control"
+                                        [(ngModel)]="city" [ngModelOptions]="{standalone: true}">
+                                    <i class="la la-envelope"></i>
+                                </div>
+                                <div class="cfield">                                
+                                    <input id="biaState" required type="text" placeholder="State" class="form-control"
+                                        [(ngModel)]="state" [ngModelOptions]="{standalone: true}">
+                                    <i class="la la-envelope"></i>
+                                </div>
+                                <div class="cfield">                                
+                                    <input id="biaCountry" required type="text" placeholder="Country" class="form-control"
+                                        [(ngModel)]="country" [ngModelOptions]="{standalone: true}">
                                     <i class="la la-envelope"></i>
                                 </div>
                                 <div class="cfield">                                

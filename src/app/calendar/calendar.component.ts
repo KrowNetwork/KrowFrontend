@@ -6,11 +6,9 @@ import * as Moment from 'moment';
 import * as AWS from "aws-sdk"
 import * as AWSMqtt from "aws-mqtt"
 import { WebSocket } from "ws"
-import { ErrorStateMatcher } from '../../../node_modules/@angular/material';
 import { CustomHttpService } from "../service/custom-http.service";
 import { NewEventCalendarPopupComponent } from './new-event-calendar-popup/new-event-calendar-popup.component'
 import { ModalService } from '../service/modal.service';
-import { arrayUnion } from '../../../node_modules/ngx-modialog';
 
 declare var $: any
 $(".details").hide()
@@ -37,6 +35,10 @@ export class CalendarComponent implements OnInit {
   showEdit = false;
   current_events = []
   up_to_date = undefined
+  current_month = ""
+  monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
 
   constructor(
     private userService: UserLoginService,
@@ -59,6 +61,7 @@ export class CalendarComponent implements OnInit {
     
 
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+    console.log(this.user)
     this.ddb = new AWS.DynamoDB({apiVersion: '2012-10-08'})
     // this. = new AWS.DynamoDB({apiVersion: '2012-10-08'})
     
@@ -75,6 +78,7 @@ export class CalendarComponent implements OnInit {
     this.length = Moment().endOf('month').toDate().getDate()
     this.month = Moment().month()
     this.year = Moment().year()
+    this.current_month = this.monthNames[this.month]
     this.dateOfMonth = Moment().date()
     var params = {
       TableName: "user_calendars",
@@ -87,6 +91,31 @@ export class CalendarComponent implements OnInit {
     self.user_calendar.send()
     // test.send()
     self.user_calendar.on("success", function(data) {
+      
+      console.log(data)
+      if (Object.keys(data.data).length == 0) {
+
+
+
+        var p = {
+          TableName: "user_calendars",
+          Item: {
+            
+            calendar: {M: {}},
+            userID: {S: self.user}
+          },
+        }
+
+        // p.Item.calendar.M[da] = {L: []}
+
+        console.log(p)
+        self.ddb.putItem(p, function(err, data) { console.log(err) })
+        data = {
+          data: p
+        }
+        self.user_calendar.response.data = p
+      }
+      
       data = data.data
       var events = data.Item.calendar.M
       // console.log(err)
@@ -125,6 +154,8 @@ export class CalendarComponent implements OnInit {
         self.dates.push([arr[x], arr[x + 1], arr[x + 2], arr[x + 3], arr[x + 4], arr[x + 5], arr[x + 6]])
       }   
     })
+
+    
 
     // var clean = true
     // for (var a = 0; a < this.user_calendar.response.data.Item.calendar.M[date].L.length; a ++) {

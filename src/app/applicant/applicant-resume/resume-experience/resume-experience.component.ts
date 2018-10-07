@@ -27,7 +27,17 @@ export class ResumeExperienceComponent implements OnInit {
     private router: Router
 
   ) {}
-  
+
+  guid() {
+
+    return this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + this.s4() + this.s4();
+  }
+
+  s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
   updateResume(event){
     this.updateResumeService.updateMain(event.target.closest("app-resume-experience"));
   }
@@ -43,6 +53,8 @@ export class ResumeExperienceComponent implements OnInit {
           description: "",
           startDate: "",
           endDate: "",
+          verified: false,
+          verifyID: "",
         })
       );
     }
@@ -88,6 +100,8 @@ export class ResumeExperienceComponent implements OnInit {
               description: resumeExperiences[k]["description"],
               startDate: this.formatDate(new Date(resumeExperiences[k]["startDate"])),
               endDate: this.formatDate(new Date(resumeExperiences[k]["endDate"])),
+              verified: false,
+              verifyID: this.guid()
             })
           );
         }

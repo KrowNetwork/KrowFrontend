@@ -3,7 +3,7 @@ import { ModalService } from '../../service/modal.service';
 import * as AWS from "aws-sdk"
 import {UserLoginService} from "../../service/user-login.service"
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
-import { isMoment } from '../../../../node_modules/moment';
+import { isMoment } from 'moment';
 import * as Moment from 'moment';
 
 @Component({

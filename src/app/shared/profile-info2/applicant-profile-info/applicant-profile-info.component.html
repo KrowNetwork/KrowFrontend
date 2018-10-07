@@ -55,8 +55,11 @@
 				 								<div class="edu-hisinfo">
 				 									<h3>{{ exp.title }} <span>{{ exp.position }}</span></h3>
 				 									<i>{{ exp.startDate }} - {{ exp.endDate }}</i>
-				 									<p>{{ exp.description }}</p>
-				 								</div>
+													 <p>{{ exp.description }}</p>
+													 <p>{{ exp.verified }}</p>
+													 <p>{{ exp.verifyID }}</p>
+												 </div>
+												 <button (click)="reqVerify(exp.verifyID, exp.position)">l</button>
 				 							</div>
 				 						</div>
 				 						

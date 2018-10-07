@@ -1,0 +1,9 @@
+<div *ngIf="showReq == true">
+  <input type="email" id="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"/>
+  <button (click)="sendReq()">Submit</button>
+</div>
+
+<div *ngIf="showVer == true">
+  <input type="email" id="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"/>
+  <button (click)="sendVer()">Submit</button>
+</div>

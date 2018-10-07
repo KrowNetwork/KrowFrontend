@@ -63,6 +63,7 @@ import { FAQsComponent } from './faqs/faqs.component'
 import { FeedbackComponent } from './feedback/feedback.component';
 import { MessagingComponent } from './messaging/messaging.component';
 
+import { VerifyJobComponent } from './verify-job/verify-job.component';
 
 
 
@@ -130,6 +131,10 @@ const appRoutes: Routes = [
     {
         path: "calendar",
         component: CalendarComponent
+    },
+    {
+        path: "verify/:id",
+        component: VerifyJobComponent
     }
 
 ];
@@ -207,6 +212,14 @@ const secureHome: Routes = [
                 path: "upload",
                 component: UploadPicComponent
             },
+            {
+                path: "verify/:id",
+                component: VerifyJobComponent
+            },
+            {
+                path: "requestVerification/:id",
+                component: VerifyJobComponent
+            }
             // {
             //     path: "calendar",
             //     component: CalendarComponent

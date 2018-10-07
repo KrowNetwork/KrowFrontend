@@ -335,6 +335,47 @@ app.post("/feedback", (req, res, next) => {
     res.send({"response": "success"})
 })
 
+app.post("/request-verification", (req, res, next) => {
+    // console.log(req.body)
+    var body = ""
+    req.on("data", function(chunk) {
+        body += chunk
+    })
+    // console.log(body)
+    var user = req.body.user
+    var jobName = req.body.jobName 
+    var verificationID = req.body.verificationID
+    var rID = Math.floor(Math.random()*90000) + 10000;
+    
+
+    var sender = nodeMailer.createTransport({
+        host: "smtp.1and1.com",
+        port: 587,
+        secure: false,
+        requireTLS: true,
+        auth: {
+            user: "notifications@krow.network",
+            pass: "rfk-Coz-CJp-2Ey"
+        }
+    });
+    ejs.renderFile(__dirname + "/templates/verifyExp.ejs", { name: name, jobName: jobName, code: rID, link: "http://localhost:4200/verify/" + verificationID}, function (err, data) {
+        var mailOptions = {
+            from: "Krow Network No-Reply <notifications@krow.network>",
+            to: req.body.to,
+            subject: "Someone has requested you to verify their job experience",
+            html: data
+        }
+        sender.sendMail(mailOptions, function (err, info) {
+            if (err) {
+                // console.log(err);
+            } else {
+                // console.log('Message sent: ' + info.response);
+            }
+        });
+    })
+    res.send({"response": "success"})
+})
+
 app.post("/applicant-unrequest", (req, res, next) => {
     // console.log(req.body)
     var body = ""

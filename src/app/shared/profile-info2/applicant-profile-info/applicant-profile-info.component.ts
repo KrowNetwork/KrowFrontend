@@ -6,7 +6,7 @@ import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { S3Service } from "../../../service/s3.service"
 import { CustomHttpService } from "../../../service/custom-http.service"
 import { log } from 'util';
-
+import { DataShareService } from "../../../service/data-share.service" 
 @Component({
   selector: 'app-applicant-profile-info',
   templateUrl: './applicant-profile-info.component.html',
@@ -58,7 +58,8 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
     private userService: UserLoginService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private s3service: S3Service
+    private s3service: S3Service,
+    private dataService: DataShareService
   ) {
 
     this.userService.isAuthenticated(this);
@@ -177,7 +178,9 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
             title: "None",
             desc: "None",
             startDate: "Never",
-            endDate: "Never"
+            endDate: "Never",
+            verified: false,
+            verifyID: "None"
           }]
 
         } else {
@@ -298,6 +301,16 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
 
 newChat() {
   this.router.navigate(["chat/" + this.id])
+}
+
+reqVerify(id, jname) {
+  console.log(id)
+  this.dataService.changeData({
+    name: this.name,
+    jobName: jname,
+    verificationID: id
+  })
+  this.router.navigate(["applicant/requestVerification/" + id])
 }
 
 }

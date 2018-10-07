@@ -21,6 +21,11 @@ export class BasicInfoCollectorComponent implements OnInit {
     second: string;
     email: string;
     bio: string;
+    address: string;
+    state: string;
+    city: string;
+    country: string;
+    phoneNumber: string;
     errorMessage: string;
   
     ngOnInit() {
@@ -53,7 +58,12 @@ export class BasicInfoCollectorComponent implements OnInit {
                     first: this.first,
                     second: this.second,
                     email: this.email,
-                    bio: this.bio
+                    bio: this.bio,
+                    address: this.address,
+                    state: this.state,
+                    city: this.city,
+                    country: this.country,
+                    phoneNumber: this.phoneNumber
                 }
             } else {
                 var obj = {
@@ -61,7 +71,12 @@ export class BasicInfoCollectorComponent implements OnInit {
                     first: this.first,
                     second: this.second,
                     email: this.email,
-                    bio: ""
+                    bio: "",
+                    address: this.address,
+                    state: this.state,
+                    city: this.city,
+                    country: this.country,
+                    phoneNumber: this.phoneNumber
                 }
             }
             

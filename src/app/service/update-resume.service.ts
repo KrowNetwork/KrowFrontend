@@ -7,11 +7,21 @@ export class UpdateResumeService {
     constructor(private http: CustomHttpService) { }
 
     user: string;
+    guid() {
+
+        return this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + this.s4() + this.s4();
+      }
+    
+      s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+      }
 
     async updateMain(dom){
         var currAttribute = dom.localName.slice(11);
         var componentsList = dom.children[0].children[0].children;
-        // console.log(componentsList)
+        console.log(componentsList)
         var updateButton = dom.children[0].children[1].children[1];
         var json = {data: []};
         for(var i = 0; i < componentsList.length; i++){
@@ -39,9 +49,16 @@ export class UpdateResumeService {
                     else {
                         // var currType = input.attributes[1].value;
                         var currType = input.getAttribute("secret");
-                        // console.log(currType)
                         if(currAttribute == "experience" && currType == "type"){
                             value = "PROFESSIONALWORK";
+                            currJson.push({
+                                type: "verified",
+                                value: false
+                            })
+                            currJson.push({
+                                type: "verifyID",
+                                value: this.guid()
+                            })
                         }
                         currJson.push({
                             type: currType,
@@ -129,7 +146,7 @@ export class UpdateResumeService {
 
     postData(data, url, updateButton){
         // console.log("Posting Data");
-        // console.log(data)
+        console.log(data)
         // Update entry
         this.http.put(url, data).subscribe(
             data => {

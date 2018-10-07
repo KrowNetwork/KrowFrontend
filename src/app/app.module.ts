@@ -116,6 +116,7 @@ import { VirtualScrollModule } from 'angular2-virtual-scroll';
 import { ContextMenuModule } from 'ngx-contextmenu';
 import { MessagingPopupComponent } from './messaging/messaging-popup/messaging-popup.component';
 import { NewEventCalendarPopupComponent } from './calendar/new-event-calendar-popup/new-event-calendar-popup.component';
+import { VerifyJobComponent } from './verify-job/verify-job.component';
 // import { ContextMenuService } from 'angular2-contextmenu/src/contextMenu.service';
 // import { luegg } from "angularjs-scroll-glue"
 
@@ -185,6 +186,7 @@ import { NewEventCalendarPopupComponent } from './calendar/new-event-calendar-po
     TopBarComponent,
     MessagingPopupComponent,
     NewEventCalendarPopupComponent,
+    VerifyJobComponent,
 
     // DeleteComponent
     
