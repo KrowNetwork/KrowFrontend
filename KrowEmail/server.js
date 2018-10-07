@@ -11,6 +11,7 @@ var request = require('request');
 const PROD = false;
 const https = require('https');
 const http = require('http');
+const aws = require("aws-sdk")
 
 var fs = require('fs');
 
@@ -36,10 +37,10 @@ const cognitoExpress = new cognito({
  
 
 
+AWS.config.update({accessKeyId: "AKIAJZJ4OX6ZEI5CTMOA", secretAccessKey: "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", region: "us-east-2"});
+AWS.config.update({region: "us-east-2"})
 
-
-
-
+var ddb = new AWS.DynamoDB({apiVersion: '2012-10-08'})
 
 
 
@@ -371,6 +372,22 @@ app.post("/request-verification", (req, res, next) => {
                 console.log(err);
             } else {
                 console.log('Message sent: ' + info.response);
+
+                var ddb_params = {
+                    TableName: "verifications",
+                    Item: {
+                        verificationID: {S: verificationID},
+                        code: {S: rID},
+                        email: {S: req.body.to},
+                        verified: {BOOL: false}
+                    }
+                }
+
+                ddb.putItem(ddb_params, function(err, data) {
+                    console.log(data, err)
+                })
+
+
             }
         });
     })
