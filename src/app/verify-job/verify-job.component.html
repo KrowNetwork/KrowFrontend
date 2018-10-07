@@ -1,9 +1,12 @@
 <div *ngIf="showReq == true">
-  <input type="email" id="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"/>
+  <input type="email" placeholder="email" id="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" required/>
   <button (click)="sendReq()">Submit</button>
 </div>
 
 <div *ngIf="showVer == true">
-  <input type="email" id="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"/>
+  <input type="text" placeholder="First Name" id="fName" [(ngModel)]="firstName" [ngModelOptions]="{standalone: true}" required/>
+  <input type="text" placeholder="Last Name" id="lName" [(ngModel)]="lastName" [ngModelOptions]="{standalone: true}" required/>
+  <input type="text" placeholder="Code" id="code" [(ngModel)]="code" [ngModelOptions]="{standalone: true}" required/>
+  <input type="text" placeholder="Business Name" id="bName" [(ngModel)]="businessName" [ngModelOptions]="{standalone: true}" required/>
   <button (click)="sendVer()">Submit</button>
 </div>

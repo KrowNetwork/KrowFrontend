@@ -308,7 +308,8 @@ reqVerify(id, jname) {
   this.dataService.changeData({
     user: this.name,
     jobName: jname,
-    verificationID: id
+    verificationID: id,
+    aID: this.id
   })
   this.router.navigate(["applicant/requestVerification/" + id])
 }
