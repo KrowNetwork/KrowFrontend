@@ -382,8 +382,9 @@ app.post("/request-verification", (req, res, next) => {
                         verified: {BOOL: false}
                     }
                 }
-
+                console.log(ddb_params)
                 ddb.putItem(ddb_params, function(err, data) {
+                    console.log("test")
                     console.log(data, err)
                 })
 
