@@ -337,6 +337,7 @@ app.post("/feedback", (req, res, next) => {
 
 app.post("/request-verification", (req, res, next) => {
     // console.log(req.body)
+    console.log("OK THIS IS JUST EPIC")
     var body = ""
     req.on("data", function(chunk) {
         body += chunk

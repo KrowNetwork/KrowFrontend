@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
-import { CustomHttpService } from "../service/custom-http.service"
+// import { HttpClient } from '@angular/common/http'
+import { CustomHttpService } from '../service/custom-http.service'
 import { DataShareService } from "../service/data-share.service"
 
 @Component({
@@ -39,7 +40,11 @@ export class VerifyJobComponent implements OnInit {
     this.dataShare.shared.subscribe(data => this.name = data)
     this.name["email"] = this.email
 
-    this.http.post("https://api.krownetwork.com/request-verification", this.name)
+    this.http.post("https://api.krownetwork.com/request-verification", this.name).subscribe(
+      data => {
+        console.log(data)
+      }
+    )
     console.log("Done")
   }
 
