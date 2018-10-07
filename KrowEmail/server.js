@@ -359,7 +359,7 @@ app.post("/request-verification", (req, res, next) => {
             pass: "rfk-Coz-CJp-2Ey"
         }
     });
-    ejs.renderFile(__dirname + "/templates/verifyExp.ejs", { name: user, jobName: jobName, code: rID, link: "http://localhost:4200/verify/" + verificationID}, function (err, data) {
+    ejs.renderFile(__dirname + "/templates/verifyExp.ejs", { name: user, jobName: jobName, code: rID, link: "https://krownetwork.com/verify/" + verificationID}, function (err, data) {
         var mailOptions = {
             from: "Krow Network No-Reply <notifications@krow.network>",
             to: req.body.to,
