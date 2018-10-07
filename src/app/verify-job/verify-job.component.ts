@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { HttpClient } from '@angular/common/http'
-// import { CustomHttpService } from '../service/custom-http.service'
+import { CustomHttpService } from '../service/custom-http.service'
 import { DataShareService } from "../service/data-share.service"
 import * as AWS from "aws-sdk";
 @Component({
@@ -24,6 +24,7 @@ export class VerifyJobComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpClient,
+    private chttp: CustomHttpService,
     private dataShare: DataShareService
   ) {
 
@@ -72,9 +73,21 @@ export class VerifyJobComponent implements OnInit {
 
       this.ddb.putItem(params, function(err, data) {
         console.log(err, data)
+        if (err === undefined) {
+          var p = {
+            applicant: data.Item.applicantID.S,
+            verifyID: data.Item.verificationID.S,
+            verificationEmail: data.Item.email.S
+          }
+          this.http.post("https://api.krownetwork.com/verify", p).subscribe(
+            data => {
+              console.log(data)
+            }
+          )
+        }
       })
 
-      
+
 
 
     }

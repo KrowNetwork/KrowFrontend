@@ -186,6 +186,26 @@ app.use(function(req, res, next) {
             
         });
 
+    app.post("/verify", (req, res, next) => {
+        var applicant = req.body.applicant
+        var verifyID = req.body.verifyID 
+        var verificationEmail = req.body.verificationEmail
+
+        var data = {
+            applicant: applicant,
+            verifyID: verifyID,
+            verificationEmail: verificationEmail
+        }
+
+        request.post("http://18.220.46.51:3000/api/VerifyJobExp",  {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}, json: data}, function(err, res2) {
+            if (err) {
+                throw new Error(err)
+            } else {
+                res.status(200).send(res2.body)
+            }
+        })
+    })
+
     app.post("/pu", (req, res, next) => {
         var url = req.query.url
         var accessTokenFromClient = req.query.token;
