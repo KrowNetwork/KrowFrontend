@@ -366,6 +366,7 @@ app.post("/request-verification", (req, res, next) => {
     // console.log(body)
     var user = req.body.user
     var jobName = req.body.jobName 
+    var company = req.body.company 
     var verificationID = req.body.verificationID
     var rID = Math.floor(Math.random()*90000) + 10000;
     
@@ -401,7 +402,10 @@ app.post("/request-verification", (req, res, next) => {
                         email: {S: req.body.to},
                         verified: {BOOL: false},
                         requestDate: {S: new Date().toISOString()},
-                        applicantID: {S: req.body.aID}
+                        applicantID: {S: req.body.aID},
+                        requestor: {S: user},
+                        job_name: {S: jobName},
+                        company: {S: company}
                         
                         
                     }

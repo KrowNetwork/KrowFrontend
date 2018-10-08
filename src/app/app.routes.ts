@@ -16,15 +16,9 @@ import { ResendCodeComponent } from './main/resend/resendCode.component';
 
 // Employer components
 import { EmployerProfileComponent } from './employer/employer-profile/employer-profile.component';
-import { EmployerPostJobsComponent } from './employer/employer-post-jobs/employer-post-jobs.component';
-import { RequestedJobsComponent } from './shared/requested-jobs/requested-jobs.component';
-import { HireRequestsComponent } from './shared/hire-requests/hire-requests.component';
+
 
 // Job components
-import { JobProfileComponent } from './job/job-profile/job-profile.component';
-
-
-import { EditJobComponent } from './shared/edit-job/edit-job.component'
 
 import { UploadPicComponent } from './upload-pic/upload-pic.component'
 import { CalendarComponent } from './calendar/calendar.component';
@@ -40,18 +34,13 @@ import { ResumeAffiliationsComponent } from './applicant/applicant-resume/resume
 
 // Shared components
 import { ComingSoonComponent } from './shared/coming-soon/coming-soon.component';
-import { JobSearchComponent } from './shared/job-search/job-search.component';
 import { BasicInfoCollectorComponent } from './shared/basic-info-collector/basic-info-collector.component';
 
 // Profile components (shared)
 import { ProfileInfoComponent } from './shared/profile-info/profile-info.component';
 import { ProfileInfo2Component } from './shared/profile-info2/profile-info2.component';
 
-import { AvailableJobsComponent } from './shared/available-jobs/available-jobs.component';
-import { CompletedJobsComponent } from './shared/completed-jobs/completed-jobs.component';
-import { TerminatedJobsComponent } from './shared/terminated-jobs/terminated-jobs.component';
-import { InProgressJobsComponent } from './shared/in-progress-jobs/in-progress-jobs.component';
-import { JobDetailsComponent } from './shared/job-details/job-details.component';
+
 
 import { HelpComponent } from './shared/help/help.component';
 import { EditComponent } from "./shared/edit/edit.component"
@@ -178,32 +167,6 @@ const secureHome: Routes = [
                 component: ApplicantResumeComponent
             },
             { 
-                path: 'completed-jobs', 
-                component: CompletedJobsComponent, 
-                // component: ComingSoonComponent
-            },
-            { 
-                path: 'terminated-jobs', 
-                component: TerminatedJobsComponent, 
-                // component: ComingSoonComponent
-            },
-            { 
-                path: 'in-progress-jobs', 
-                component: InProgressJobsComponent, 
-                // component: ComingSoonComponent 
-            },
-            { 
-                path: 'requested-jobs', 
-                component: RequestedJobsComponent, 
-                // component: ComingSoonComponent 
-            },
-            { 
-                path: 'hire-requests', 
-                component: HireRequestsComponent, 
-                // component: ComingSoonComponent
-            },
-            
-            { 
                 path: 'edit', 
                 component: EditComponent
                 //component: ComingSoonComponent
@@ -246,34 +209,6 @@ const secureHome: Routes = [
                 path: 'profile-info/:employerID',
                 component: EmployerProfileInfoComponent
             },
-            { 
-                path: 'employer-post-jobs', 
-                component: EmployerPostJobsComponent,
-            },
-            { 
-                path: 'completed-jobs', 
-                component: CompletedJobsComponent, 
-                // component: ComingSoonComponent
-            },
-            { 
-                path: 'terminated-jobs', 
-                component: TerminatedJobsComponent, 
-                // component: ComingSoonComponent
-            },
-            { 
-                path: 'in-progress-jobs', 
-                component: InProgressJobsComponent, 
-                // component: ComingSoonComponent
-            },
-            { 
-                path: 'available-jobs', 
-                component: AvailableJobsComponent, 
-                // component: ComingSoonComponent
-            },
-            // { 
-            //     path: 'job-search', 
-            //     component: JobSearchComponent, 
-            // },
             {
                 path: "edit",
                 component: EditComponent,
@@ -289,64 +224,6 @@ const secureHome: Routes = [
             // {
             //     path: "delete",
             //     component: DeleteComponent
-            // }
-        ]
-    },
-    {
-        path: 'job-search',
-        component: JobProfileComponent,
-        children: [
-            { 
-                path: "",
-                component: JobSearchComponent
-                //component: ComingSoonComponent
-            }
-        ]
-    },
-    { 
-        path: 'job', 
-        component: JobProfileComponent, 
-        children: [
-            { 
-                path: ':jobID', 
-                component: JobDetailsComponent
-            },
-            {
-                path: ":jobID/edit",
-                component: EditJobComponent
-            }
-            
-            // { 
-            //     path: 'profile-info',
-            //     component: ProfileInfoComponent
-            // },
-            // { 
-            //     path: 'employer-post-jobs', 
-            //     component: EmployerPostJobsComponent,
-            // },
-            // { 
-            //     path: 'completed-jobs', 
-            //     //component: CompletedJobsComponent, 
-            //     component: ComingSoonComponent
-            // },
-            // { 
-            //     path: 'terminated-jobs', 
-            //     //component: TerminatedJobsComponent, 
-            //     component: ComingSoonComponent
-            // },
-            // { 
-            //     path: 'in-progress-jobs', 
-            //     //component: InProgressJobsComponent, 
-            //     component: ComingSoonComponent
-            // },
-            // { 
-            //     path: 'available-jobs', 
-            //     //component: AvailableJobsComponent, 
-            //     component: ComingSoonComponent
-            // },
-            // { 
-            //     path: 'job-search', 
-            //     component: JobSearchComponent, 
             // }
         ]
     },

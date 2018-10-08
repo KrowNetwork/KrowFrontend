@@ -303,13 +303,14 @@ newChat() {
   this.router.navigate(["chat/" + this.id])
 }
 
-reqVerify(id, jname) {
+reqVerify(id, jname, comp) {
   console.log(id)
   this.dataService.changeData({
     user: this.name,
     jobName: jname,
     verificationID: id,
-    aID: this.id
+    aID: this.id,
+    company: comp
   })
   this.router.navigate(["applicant/requestVerification/" + id])
 }

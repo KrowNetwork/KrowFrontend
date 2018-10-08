@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { CustomHttpService } from '../service/custom-http.service'
 import { DataShareService } from "../service/data-share.service"
 import * as AWS from "aws-sdk";
@@ -21,6 +21,14 @@ export class VerifyJobComponent implements OnInit {
   name: String
   ddb = undefined
   item = undefined
+  msg = {
+    msg: "",
+    type:"danger"
+  }
+
+  fullName = ""
+  jobTitle = ""
+  company = ""
   constructor(
     private router: Router,
     private http: HttpClient,
@@ -102,6 +110,11 @@ export class VerifyJobComponent implements OnInit {
     this.http.post("https://api.krownetwork.com/request-verification", this.name).subscribe(
       data => {
         console.log(data)
+        this.msg.msg = "The request has been sent"
+        this.msg.type = "success"
+      }, // Catch Errors
+      (err: HttpErrorResponse) => {
+        this.msg.msg = "There was an error. Please try again"
       }
     )
     console.log("Done")

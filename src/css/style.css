@@ -8122,19 +8122,29 @@ header.gradient{
 .edu-history.style2 > i {
     position: absolute;
     left: 0;
-    top: 0;
-    width: 16px;
-    height: 16px;
-    border: 2px solid #8b91dd;
-    content: "";
+    top: -20px;
+    /* width: 16px; */
+    /* margin-bottom: 10px; */
+    /* height: 16px; */
+    /* border: 2px solid #8b91dd; */
+    color: #8b91dd;
     
+    /* content: ""; */
+/*     
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
-    border-radius: 50%;
+    brder-radius: 50%; */
+}
+
+.edu-history.style2 > i.verified {
+
+    color: #fb236a;
+    
 
 }
+
 .edu-history.style2 .edu-hisinfo > h3 {
     margin: 0;
 }

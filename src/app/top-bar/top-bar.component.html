@@ -32,28 +32,11 @@
 								</li>
 								<li *ngIf="isLoggedInB">
 										<a (click)="goToProfile()" style="color:#96a0bd">Resume</a>
-									</li>
-									<li [hidden]="!isLoggedInB" class="menu-item-has-children" >
-											<a style="color: #96a0bd" (click)="toggleMenu()">Jobs</a>
-											<ul [hidden]="!is_applicant">
-												<li><a [routerLink]="['/applicant/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
-												<li><a [routerLink]="['/applicant/terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
-												<li><a [routerLink]="['/applicant/in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
-												<!-- <li><a [routerLink]="['/employer/available-jobs']">Available Jobs</a></li> -->
-												<li><a [routerLink]="['/applicant/requested-jobs']" routerLinkActive="active">Requested Jobs</a></li>
-												<li><a [routerLink]="['/applicant/hire-requests']" routerLinkActive="active">Hire Requests</a></li>
-				
-											</ul>
-											<ul [hidden]="is_applicant">
-												<li><a [routerLink]="['/employer/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
-												<li><a [routerLink]="['/employer/terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
-												<li><a [routerLink]="['/employer/in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
-												<li><a [routerLink]="['/employer/available-jobs']" routerLinkActive="active">Available Jobs</a></li>
-											</ul>
-										</li>
-										<li>
+								</li>
+									
+										<!-- <li>
 											<a [routerLink]="['/chat']" style="color: #ffffff">Chat</a>
-										</li>
+										</li> -->
 							</ul>
 					</div>
 				</div>
@@ -84,28 +67,10 @@
               </li>
               <li *ngIf="isLoggedInB">
                 <a role="button" (click)="goToProfile()" style="color:#ffffff">Profile</a>
-              </li>
-              <li [hidden]="!isLoggedInB">
-                <a style="color: #ffffff">Jobs</a>
-                <ul [hidden]="!is_applicant">
-                  <li><a [routerLink]="['/applicant/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
-                  <li><a [routerLink]="['/applicant/terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
-                  <li><a [routerLink]="['/applicant/in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
-                  <!-- <li><a [routerLink]="['/employer/available-jobs']">Available Jobs</a></li> -->
-                  <li><a [routerLink]="['/applicant/requested-jobs']" routerLinkActive="active">Requested Jobs</a></li>
-                  <li><a [routerLink]="['/applicant/hire-requests']" routerLinkActive="active">Hire Requests</a></li>
-  
-                </ul>
-                <ul [hidden]="is_applicant">
-                  <li><a [routerLink]="['/employer/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
-                  <li><a [routerLink]="['/employer/terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
-                  <li><a [routerLink]="['/employer/in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
-                  <li><a [routerLink]="['/employer/available-jobs']" routerLinkActive="active">Available Jobs</a></li>
-                </ul>
-							</li>
-							<li>
+              </li>                
+							<!-- <li>
 								<a [routerLink]="['/chat']" style="color: #ffffff">Chat</a>
-							</li>
+							</li> -->
               <li>
 								<div class="btn-extars">
 										<a *ngIf="isLoggedInB" (click)="bigBtn()" class="post-job-btn" >{{btnText}}</a>

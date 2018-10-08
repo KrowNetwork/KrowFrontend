@@ -25,7 +25,6 @@
 				 			<li><a href="#about" title="">About</a></li>
 				 			<li><a href="#education" title="">Education</a></li>
 				 			<li><a href="#experience" title="">Work Experience</a></li>
-				 			<li><a href="#krowjobs" title="">Krow Network Jobs</a></li>
 				 			<!-- <li><a href="#portfolio" title="">Portfolio</a></li>
 				 			<li><a href="#skills" title="">Professional Skills</a></li>
 				 			<li><a href="#awards" title="">Awards</a></li> -->
@@ -51,15 +50,14 @@
 				 						<div class="edu-history-sec" id="experience">
 				 							<h2>Work & Experience</h2>
 				 							<div class="edu-history style2" *ngFor="let exp of experience; let i = index">
-				 								<i></i>
+												<!-- <i></i> -->
+												<i class="la la-check-circle"  [ngClass]="{ 'verified': exp.verified == true}" style="font-size: 16px;  padding: 0px;"></i>
 				 								<div class="edu-hisinfo">
 				 									<h3>{{ exp.title }} <span>{{ exp.position }}</span></h3>
 				 									<i>{{ exp.startDate }} - {{ exp.endDate }}</i>
 													 <p>{{ exp.description }}</p>
-													 <p>{{ exp.verified }}</p>
-													 <p>{{ exp.verifyID }}</p>
 												 </div>
-												 <button (click)="reqVerify(exp.verifyID, exp.position)">l</button>
+												 <button *ngIf="exp.verified != true" (click)="reqVerify(exp.verifyID, exp.position)" style="font-size:15px">Verify Experience</button>
 				 							</div>
 				 						</div>
 				 						
@@ -132,48 +130,7 @@
 				 						<!-- </div> -->
 				 					</div>
 								 </div>
-								 <div class="col-lg-8 column">
-										<div class="cand-details" id="krowjobs">
-											<h2>Krow Network Jobs</h2>
-											<div class="edu-history-sec" id="inProgressJobs">
-												<h2>In Progress Jobs</h2>
-												<div class="edu-history style2" *ngFor="let job of in_progress_jobs; let i = index">
-													<i></i>
-													<div class="edu-hisinfo">
-														<h3>{{ job.title }} <button [routerLink]="['/job/', job.jobID]">View Job</button></h3>
-														<i>{{ job.startDate }}</i>
-														
-													</div>
-												</div>
-											</div>
-											
-											
-											<div class="edu-history-sec" id="completedJobs">
-												<h2>Completed Jobs</h2>
-												<div class="edu-history style2" *ngFor="let job of completed_jobs; let i = index">
-													<i></i>
-													<div class="edu-hisinfo">
-														<h3>{{ job.title }} <button [routerLink]="['/job/', job.jobID]">View Job</button></h3>
-														<i>{{ job.startDate }} - {{ job.endDate }}</i>
-													</div>
-												</div>
-											</div>
-
-											<div class="edu-history-sec" id="terminatedJobs">
-												<h2>Terminated Jobs</h2>
-												<div class="edu-history style2" *ngFor="let job of terminated_jobs; let i = index">
-													<i></i>
-													<div class="edu-hisinfo">
-														<h3>{{ job.title }} <button [routerLink]="['/job/', job.jobID]">View Job</button></h3>
-														<i>{{ job.startDate }} - {{ job.endDate }}</i>
-														<i>{{ terminate_reasons[tjL - i + 1] }}</i>
-													</div>
-												</div>
-											</div>
-											
-											
-										</div>
-									</div>
+								 
 				 				<!-- <div class="col-lg-4 column">
 							 		<div class="quick-form-job">
 							 			<h3>Contact</h3>
