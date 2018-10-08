@@ -16,8 +16,8 @@
                 <div class="col-lg-12">
                     <div class="account-popup-area signin-popup-box static">
                         <div class="account-popup">	
-                            <h1 style="color: #141f72; font-weight: 700">Verify  Experience</h1>
-                            <h6	style="color: #141f72">NAME has requested verification for their work as JOB at COMPANY</h6>
+                            <h1 style="color: #141f72; font-weight: 700">Verify Experience</h1>
+                            <h6	style="color: #141f72">{{ fullName }} has requested verification for their work as {{ jobTitle }} at {{ company }}</h6>
                             
                             <form style="margin-top: 0">
                                 <div class="cfield">
@@ -40,7 +40,18 @@
                                         [(ngModel)]="businessName" [ngModelOptions]="{standalone: true}" required>
                                         <i class="la la-building"></i>
                                   </div>
-                                <button (click)="sendVer()" style="margin-top: 0">Submit</button>
+                                  <div class="cfield">                                
+                                      <input id="eSig" required type="text" placeholder="Electronic Signature" class="form-control"
+                                          [(ngModel)]="esig" [ngModelOptions]="{standalone: true}" required>
+                                          <i class="la la-pencil"></i>
+                                    </div>
+                                <div class="cField">
+                                    <!-- <label class="checkbox-inline" style="margin-bottom: 5px"> -->
+                                        <input type="checkbox" name="cb" id="cb1"  [(ngModel)]="check" [ngModelOptions]="{standalone: true}" required><label for="cb1">{{ agreementText }}</label>
+                                        <!-- <input type="checkbox" name="favoriteColors"> {{ agreementText }} -->
+                                    <!-- </label > -->
+                                </div>
+                                <button (click)="sendVer()" style="margin-top: 15px">Submit</button>
                                 
                             </form>
                            

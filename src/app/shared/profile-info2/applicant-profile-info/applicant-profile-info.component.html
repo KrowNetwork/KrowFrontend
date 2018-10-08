@@ -57,7 +57,7 @@
 				 									<i>{{ exp.startDate }} - {{ exp.endDate }}</i>
 													 <p>{{ exp.description }}</p>
 												 </div>
-												 <button *ngIf="exp.verified != true" (click)="reqVerify(exp.verifyID, exp.position)" style="font-size:15px">Verify Experience</button>
+												 <button *ngIf="exp.verified != true" (click)="reqVerify(exp.verifyID, exp.position, exp.title)" style="font-size:15px">Verify Experience</button>
 				 							</div>
 				 						</div>
 				 						
