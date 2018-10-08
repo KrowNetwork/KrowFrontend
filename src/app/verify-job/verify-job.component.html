@@ -16,6 +16,10 @@
                 <div class="col-lg-12">
                     <div class="account-popup-area signin-popup-box static">
                         <div class="account-popup">	
+                          
+                            <div *ngIf="msg.msg != ''" class="alert" [ngClass]="{'alert-danger': msg.type == 'danger', 'alert-success': msg.type=='success'}" role="alert">
+                              {{msg.msg}}
+                            </div>
                             <h1 style="color: #141f72; font-weight: 700">Verify Experience</h1>
                             <h6	style="color: #141f72">{{ fullName }} has requested verification for their work as {{ jobTitle }} at {{ company }}</h6>
                             

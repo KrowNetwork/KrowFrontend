@@ -54,7 +54,7 @@ export class ResumeExperienceComponent implements OnInit {
           startDate: "",
           endDate: "",
           verified: false,
-          verifyID: "",
+          verifyID: this.guid(),
         })
       );
     }
@@ -71,13 +71,14 @@ export class ResumeExperienceComponent implements OnInit {
   }
 
   formatDate(date) {
+    console.log(date)
     var month = '' + (date.getMonth() + 1)
-    var day = '' + date.getDate().toString()
+    var day = '' + (date.getDate() + 1).toString()
     var year = date.getFullYear()
 
     if (month.length < 2) month = '0' + month;
     if (day.length < 2) day = '0' + day;
-
+    console.log([year, month, day].join("-"))
     return  [year, month, day].join("-")
   }
 
@@ -100,8 +101,8 @@ export class ResumeExperienceComponent implements OnInit {
               description: resumeExperiences[k]["description"],
               startDate: this.formatDate(new Date(resumeExperiences[k]["startDate"])),
               endDate: this.formatDate(new Date(resumeExperiences[k]["endDate"])),
-              verified: false,
-              verifyID: this.guid()
+              verified: resumeExperiences[k]['verified'],
+              verifyID: resumeExperiences[k]['verifyID']
             })
           );
         }

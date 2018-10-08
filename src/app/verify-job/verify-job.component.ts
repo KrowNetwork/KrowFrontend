@@ -67,6 +67,9 @@ export class VerifyJobComponent implements OnInit {
         self.fullName = data.data.Item.requestor.S
         self.jobTitle = data.data.Item.job_name.S
         self.company = data.data.Item.company.S
+        if (data.data.Item.verified.BOOL == true) {
+          self.router.navigate(["/"])
+        }
       })
     }
 
