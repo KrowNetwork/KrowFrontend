@@ -31,7 +31,7 @@
 										<a [routerLink]="['/']" routerLinkActive="active">Home</a>
 								</li>
 								<li *ngIf="isLoggedInB">
-										<a (click)="goToProfile()" style="color:#96a0bd">Profile</a>
+										<a (click)="goToProfile()" style="color:#96a0bd">Resume</a>
 									</li>
 									<li [hidden]="!isLoggedInB" class="menu-item-has-children" >
 											<a style="color: #96a0bd" (click)="toggleMenu()">Jobs</a>

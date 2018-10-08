@@ -58,13 +58,13 @@ export class TopBarComponent implements OnInit {
 
     if (sessionStorage.getItem("accountType") == "applicant") {
       this.is_applicant = true
-      this.btnText = "Find Job"
+      this.btnText = "Edit Resume"
       // var x = document.getElementById("btn")
       // console.log(x)
       // x.setAttribute("class", "la la-search")
     } else {
       this.is_applicant = false
-      this.btnText = "Post Jobs"
+      this.btnText = "Edit Profile"
       // var x = document.getElementById("btn")
       // console.log(x)
       // x.setAttribute("class", "la la-plus")
@@ -117,9 +117,9 @@ toggleMenu() {
 
   bigBtn() {
     if (this.is_applicant) {
-      this.router.navigate(["/job-search"])
+      this.router.navigate(["/applicant/edit"])
     } else {
-      this.router.navigate(["/employer/employer-post-jobs"])
+      this.router.navigate(["/employer/edit"])
     }
   }
 
