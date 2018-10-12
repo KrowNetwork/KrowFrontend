@@ -4,6 +4,8 @@
   </div>
 
 <div *ngIf="showReq == true">
+  <h4>Please enter the email address of the person you'd like to have verify this job.</h4>
+  <span>Please note: We reserve the right to conduct random audits on verification requests. If this verification is found to be fraudulent, all employers will be informed, and a note will be placed on your resume.</span>
   <input style="margin:10px" type="email" placeholder="Email Address" id="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" required/>
   <button (click)="sendReq()" style="display: inline">Submit</button>
 </div>
