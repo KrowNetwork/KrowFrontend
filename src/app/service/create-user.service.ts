@@ -53,12 +53,12 @@ export class CreateUserService {
         obj["terminatedJobs"] = [];
         obj["inprogressJobs"] = [];
         obj["availableJobs"] = [];
-        obj["country"] = "";
-        obj["state"] = "";
-        obj["city"] = "";
-        obj["address"] = "";
+        obj["country"] = userObj.country;
+        obj["state"] = userObj.state;
+        obj["city"] = userObj.city;
+        obj["address"] = userObj.address;
         obj["email"] = userObj.email;
-        obj["phoneNumber"] = "";
+        obj["phoneNumber"] = userObj.phoneNumber;
         obj["links"] = [];
         obj["created"] = new Date();
         obj["lastUpdated"] = new Date();
