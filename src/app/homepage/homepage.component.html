@@ -1,5 +1,25 @@
 <app-top-bar></app-top-bar>
 <div class="theme-layout" id="scrollup">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Jobhunt</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<meta name="author" content="CreativeLayers">
+
+		<!-- Styles -->
+		<link rel="stylesheet" type="text/css" href="css/bootstrap-grid.css" />
+		<link rel="stylesheet" href="css/icons.css">
+		<link rel="stylesheet" href="css/animate.min.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/responsive.css" />
+		<link rel="stylesheet" type="text/css" href="css/chosen.css" />
+		<link rel="stylesheet" type="text/css" href="css/colors/colors.css" />
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+
+	</head>
 
 <!-- This section is the header given by the template creator
 
@@ -252,13 +272,13 @@
 							</ul>
 							<div class="job-search-sec">
 								<div class="job-search style2">
-									<h3>The Easiest Way to Get Your New Job</h3>
-									<span>Find Career Opportunities, Internships, and Get Paid Working From Home</span>
+									<h3>Search Smart Resumes</h3>
+									<span>Enter your candidate's name below to access their resume</span>
 									<form>
 										<div class="row">
 											<div class="col-lg-11 col-md-5 col-sm-5 col-xs-12">
 												<div class="job-field">
-													<input type="text" placeholder="Search Job Title" [(ngModel)]="term" [ngModelOptions]="{standalone: true}" (keydown)="keyDown($event)"/>
+													<input type="text" placeholder="Search Full Name" [(ngModel)]="term" [ngModelOptions]="{standalone: true}" (keydown)="keyDown($event)"/>
 													<i class="la la-keyboard-o"></i>
 												</div>
 											</div>
@@ -284,49 +304,18 @@
 									</form>
 									<div class="or-browser">
 										<span>Advanced Options: </span>
-										<a href="#" title="">Type</a>
-										<a href="#" title="">Category</a>
-										<a href="#" title="">Pay</a>
 										<a href="#" title="">Location</a>
+										<a href="#" title="">Skill Set</a>
 										<a href="#" title="">College</a>
 									</div>
 								</div>
 							</div>
-							<div class="scroll-to">
-								<a href="#scroll-here" title=""><i class="la la-arrow-down"></i></a>
-							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-
-	<section>
-		<div class="block no-padding">
-			<div class="container fluid">
-				<div class="row">
-					<div class="col-lg-6">
-						<div data-velocity="-.1" style="background: url(https://images.pexels.com/photos/1081228/pexels-photo-1081228.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800&w=1600) repeat scroll 50% 422.28px transparent;" class="parallax scrolly-invisible layer color purple"></div><!-- PARALLAX BACKGROUND IMAGE -->
-						<div class="who-am">
-							<h3>I AM HIRING!</h3>
-							<p>Start hiring employees through our trusted network for free by signing up below. You will be able to control everything from hiring your employees, to managing deadlines and paychecks.</p>
-							<a href="#" title="">Post new job</a>
-						</div>
-					</div>
-					<div class="col-lg-6">
-						<div data-velocity="-.1" style="background: url(https://images.pexels.com/photos/935756/pexels-photo-935756.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800&w=1600) repeat scroll 50% 422.28px transparent;" class="parallax scrolly-invisible layer color red"></div><!-- PARALLAX BACKGROUND IMAGE -->
-						<div class="who-am flip">
-							<h3>I AM A JOBSEEKER!</h3>
-							<p>Sign up below to create your smart resume and get hired today! You can perform a variety of jobs based on your skill level, and recieve a paycheck directly to your bank account. </p>
-							<a href="#" title="">Browse Jobs</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
 
 	<section>
 		<div class="block">
@@ -334,75 +323,24 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="heading">
-							<h2>Featured Jobs</h2>
-							<span>Jobs Available Right Now!</span>
+							<h2>How It Works</h2>
 						</div><!-- Heading -->
-						<div class="job-listings-sec">
-							<div class="job-listing">
-								<div class="job-title-sec">
-									<div class="c-logo"> <img src="http://placehold.it/98x51" alt="" /> </div>
-									<h3><a href="#" title="">Web Designer / Developer</a></h3>
-									<span>Massimo Artemisis</span>
-								</div>
-								<span class="job-lctn"><i class="la la-map-marker"></i>Sacramento, California</span>
-								<span class="fav-job"><i class="la la-heart-o"></i></span>
-								<span class="job-is ft">FULL TIME</span>
-							</div><!-- Job -->
-							<div class="job-listing">
-								<div class="job-title-sec">
-									<div class="c-logo"> <img src="http://placehold.it/98x51" alt="" /> </div>
-									<h3><a href="#" title="">Marketing Director</a></h3>
-									<span>Tix Dog</span>
-								</div>
-								<span class="job-lctn"><i class="la la-map-marker"></i>Rennes, France</span>
-								<span class="fav-job"><i class="la la-heart-o"></i></span>
-								<span class="job-is pt">PART TIME</span>
-							</div><!-- Job -->
-							<div class="job-listing">
-								<div class="job-title-sec">
-									<div class="c-logo"> <img src="http://placehold.it/98x51" alt="" /> </div>
-									<h3><a href="#" title="">C Developer (Senior) C .Net</a></h3>
-									<span>StarHealth</span>
-								</div>
-								<span class="job-lctn"><i class="la la-map-marker"></i>London, United Kingdom</span>
-								<span class="fav-job"><i class="la la-heart-o"></i></span>
-								<span class="job-is ft">FULL TIME</span>
-							</div><!-- Job -->
-							<div class="job-listing">
-								<div class="job-title-sec">
-									<div class="c-logo"> <img src="http://placehold.it/98x51" alt="" /> </div>
-									<h3><a href="#" title="">Application Developer For Android</a></h3>
-									<span>Altes Bank</span>
-								</div>
-								<span class="job-lctn"><i class="la la-map-marker"></i>Istanbul, Turkey</span>
-								<span class="fav-job"><i class="la la-heart-o"></i></span>
-								<span class="job-is fl">FREELANCE</span>
-							</div><!-- Job -->
-							<div class="job-listing">
-								<div class="job-title-sec">
-									<div class="c-logo"> <img src="http://placehold.it/98x51" alt="" /> </div>
-									<h3><a href="#" title="">Regional Sales Manager South east Asia</a></h3>
-									<span>Vincent</span>
-								</div>
-								<span class="job-lctn"><i class="la la-map-marker"></i>Ajax, Ontario</span>
-								<span class="fav-job"><i class="la la-heart-o"></i></span>
-								<span class="job-is tp">TEMPORARY</span>
-							</div><!-- Job -->
-							<div class="job-listing">
-								<div class="job-title-sec">
-									<div class="c-logo"> <img src="http://placehold.it/98x51" alt="" /> </div>
-									<h3><a href="#" title="">Social Media and Public Relation Executive </a></h3>
-									<span>MediaLab</span>
-								</div>
-								<span class="job-lctn"><i class="la la-map-marker"></i>Ankara / Turkey</span>
-								<span class="fav-job"><i class="la la-heart-o"></i></span>
-								<span class="job-is ft">FULL TIME</span>
-							</div><!-- Job -->
-						</div>
-					</div>
-					<div class="col-lg-12">
-						<div class="browse-all-cat">
-							<a href="#" title="">Load more listings</a>
+						<div class="how-to-sec">
+							<div class="how-to">
+								<span class="how-icon"><i class="la la-user"></i></span>
+								<h3>Register for an Account</h3>
+								<p>Create your personalized resume upon sign up, and let your employers know what you have to offer</p>
+							</div>
+							<div class="how-to">
+								<span class="how-icon"><i class="la la-file-archive-o"></i></span>
+								<h3>Get your Experiences Verified</h3>
+								<p>Simply give us a refferal to any experience you claim, and we will get it verified on your resume</p>
+							</div>
+							<div class="how-to">
+								<span class="how-icon"><i class="la la-list"></i></span>
+								<h3>Apply for the Job</h3>
+								<p>Share your smart resume instantly with any employer, and have the ultimate advantage to get the job</p>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -417,9 +355,9 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="simple-text-block">
-							<h3>Get your Next Job Using a Smart Resume!</h3>
-							<span>Your resume is ready in minutes with Krow's resume assistant!</span>
-							<a href="/register" title="">Create an Account</a>
+							<h3>Get your Next Job with a Smart Resume!</h3>
+							<span>Your resume will be ready in minutes with Krow's resume assistant!</span>
+							<a href="/register" title="">Create a resume</a>
 						</div>
 					</div>
 				</div>
@@ -427,105 +365,160 @@
 		</div>
 	</section>
 
-	<section id="scroll-here">
+	<section>
 		<div class="block">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-12">
-						<div class="heading">
-							<h2>Trending Categories</h2>
-							<span>37 jobs live - 0 added today.</span>
+					<div class="col-lg-8 column">
+						<div class="heading left">
+							<h2>Frequently Asked Questions</h2>
 						</div><!-- Heading -->
-						<div class="cat-sec">
-							<div class="row no-gape">
-								<div class="col-lg-3 col-md-3 col-sm-6">
-									<div class="p-category">
-										<a href="#" title="">
-											<i class="la la-bullhorn"></i>
-											<span>Design, Art & Multimedia</span>
-											<p>(22 open positions)</p>
-										</a>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-3 col-sm-6">
-									<div class="p-category">
-										<a href="#" title="">
-											<i class="la la-graduation-cap"></i>
-											<span>Education Training</span>
-											<p>(6 open positions)</p>
-										</a>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-3 col-sm-6">
-									<div class="p-category">
-										<a href="#" title="">
-											<i class="la la-line-chart "></i>
-											<span>Accounting / Finance</span>
-											<p>(3 open positions)</p>
-										</a>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-3 col-sm-6">
-									<div class="p-category">
-										<a href="#" title="">
-											<i class="la la-users"></i>
-											<span>Human Resource</span>
-											<p>(3 open positions)</p>
-										</a>
-									</div>
-								</div>
+						<div id="toggle-widget" class="experties">
+							<h2>How We Share Information?</h2>
+							<div class="content">
+								<p>Book your car, all you need is a credit or debit card. When you pick the car up, you’ll need Different car hire companies have different requirements, so please make sure you check the car’s terms and conditions as well.</p>
 							</div>
-						</div>
-						<div class="cat-sec">
-							<div class="row no-gape">
-								<div class="col-lg-3 col-md-3 col-sm-6">
-									<div class="p-category">
-										<a href="#" title="">
-											<i class="la la-phone"></i>
-											<span>Telecommunications</span>
-											<p>(22 open positions)</p>
-										</a>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-3 col-sm-6">
-									<div class="p-category">
-										<a href="#" title="">
-											<i class="la la-cutlery"></i>
-											<span>Restaurant / Food Service</span>
-											<p>(6 open positions)</p>
-										</a>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-3 col-sm-6">
-									<div class="p-category">
-										<a href="#" title="">
-											<i class="la la-building"></i>
-											<span>Construction / Facilities</span>
-											<p>(3 open positions)</p>
-										</a>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-3 col-sm-6">
-									<div class="p-category">
-										<a href="#" title="">
-											<i class="la la-user-md"></i>
-											<span>Health</span>
-											<p>(3 open positions)</p>
-										</a>
-									</div>
-								</div>
+							<h2>In Which We Explain How And With Whom We Share Your Information?</h2>
+							<div class="content">
+								<p>Book your car, all you need is a credit or debit card. When you pick the car up, you’ll need Different car hire companies have different requirements, so please make sure you check the car’s terms and conditions as well.</p>
+							</div>
+							<h2>Special Provisions Applicable To Employer?</h2>
+							<div class="content">
+								<p>Book your car, all you need is a credit or debit card. When you pick the car up, you’ll need Different car hire companies have different requirements, so please make sure you check the car’s terms and conditions as well.</p>
+							</div>
+							<h2>How Do I Find Contact Information For Harvard Students, Faculty?</h2>
+							<div class="content">
+								<p>Book your car, all you need is a credit or debit card. When you pick the car up, you’ll need Different car hire companies have different requirements, so please make sure you check the car’s terms and conditions as well.</p>
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-12">
-						<div class="or-browser">
-							<a href="#" title="">Type</a>
+					<div class="col-lg-4 column">
+						<div class="reviews-sec" id="reviews">
+							<div class="col-lg-6">
+								<div class="reviews style2">
+									<img src="http://placehold.it/101x101" alt="" />
+									<h3>Augusta Silva <span>Web designer</span></h3>
+									<p>Without JobHunt i’d be homeless, they found me a job and got me sorted out quickly with everything!  Can’t quite believe the service level that they offer!</p>
+								</div><!-- Reviews -->
+							</div>
+							<div class="col-lg-6">
+								<div class="reviews style2">
+									<img src="http://placehold.it/101x101" alt="" />
+									<h3>Ali Tufan <span>Web designer</span></h3>
+									<p>Without JobHunt i’d be homeless, they found me a job and got me sorted out quickly with everything!  Can’t quite believe the service level that they offer!</p>
+								</div><!-- Reviews -->
+							</div>
+							<div class="col-lg-6">
+								<div class="reviews style2">
+									<img src="http://placehold.it/101x101" alt="" />
+									<h3>Augusta Silva <span>Web designer</span></h3>
+									<p>Without JobHunt i’d be homeless, they found me a job and got me sorted out quickly with everything!  Can’t quite believe the service level that they offer!</p>
+								</div><!-- Reviews -->
+							</div>
+							<div class="col-lg-6">
+								<div class="reviews style2">
+									<img src="http://placehold.it/101x101" alt="" />
+									<h3>Ali Tufan <span>Web designer</span></h3>
+									<p>Without JobHunt i’d be homeless, they found me a job and got me sorted out quickly with everything!  Can’t quite believe the service level that they offer!</p>
+								</div><!-- Reviews -->
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</section>
+
+
+	<section>
+		<div class="block gray">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="heading">
+							<h2>Career Tips</h2>
+							<span>We want to help you get the job</span>
+						</div><!-- Heading -->
+						<div class="blog-sec">
+							<div class="row">
+								<div class="col-lg-4">
+									<div class="my-blog">
+										<div class="blog-thumb">
+											<a href="#" title=""><img src="http://placehold.it/360x200" alt="" /></a>
+											<div class="blog-date">
+												<a href="#" title="">2017 <i>March 29</i></a>
+											</div>
+										</div>
+										<div class="blog-details">
+											<h3><a href="#" title="">Attract More Attention Sales And Profits</a></h3>
+											<p>A job is a regular activity performed in exchange becoming an employee, volunteering, </p>
+											<a href="#" title="">Read More <i class="la la-long-arrow-right"></i></a>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-4">
+									<div class="my-blog">
+										<div class="blog-thumb">
+											<a href="#" title=""><img src="http://placehold.it/360x200" alt="" /></a>
+											<div class="blog-date">
+												<a href="#" title="">2017 <i>March 29</i></a>
+											</div>
+										</div>
+										<div class="blog-details">
+											<h3><a href="#" title="">11 Tips to Help You Get New Clients</a></h3>
+											<p>A job is a regular activity performed in exchange becoming an employee, volunteering, </p>
+											<a href="#" title="">Read More <i class="la la-long-arrow-right"></i></a>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-4">
+									<div class="my-blog">
+										<div class="blog-thumb">
+											<a href="#" title=""><img src="http://placehold.it/360x200" alt="" /></a>
+											<div class="blog-date">
+												<a href="#" title="">2017 <i>March 29</i></a>
+											</div>
+										</div>
+										<div class="blog-details">
+											<h3><a href="#" title="">An Overworked Newspaper Editor</a></h3>
+											<p>A job is a regular activity performed in exchange becoming an employee, volunteering, </p>
+											<a href="#" title="">Read More <i class="la la-long-arrow-right"></i></a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</section>
+
+	<section>
+		<div class="block gray">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="subscription-sec">
+							<div class="row">
+								<div class="col-lg-6">
+									<h3>Sign Up for Our Newsletter</h3>
+									<span>Keep up to date with any changes by signing up to our newsletter</span>
+								</div>
+								<div class="col-lg-6">
+									<form>
+										<input type="text" placeholder="Enter Valid Email Address" />
+										<button type="submit"><i class="la la-paper-plane"></i></button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
 
 <!--
 	<section>
