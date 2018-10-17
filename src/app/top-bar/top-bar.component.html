@@ -3,7 +3,7 @@
 
 
 
-	
+
 		<div class="responsive-header">
 				<div class="responsive-menubar">
 					<div class="res-logo"><a href="index.html" title=""><img src="http://placehold.it/178x40" alt="" /></a></div>
@@ -31,18 +31,18 @@
 										<a [routerLink]="['/']" routerLinkActive="active">Home</a>
 								</li>
 								<li *ngIf="isLoggedInB">
-										<a (click)="goToProfile()" style="color:#96a0bd">Resume</a>
+										<a (click)="goToProfile()" style="color:#96a0bd">Saved Resumes</a>
 									</li>
-									<li [hidden]="!isLoggedInB" class="menu-item-has-children" >
+									<!-- <li [hidden]="!isLoggedInB" class="menu-item-has-children" >
 											<a style="color: #96a0bd" (click)="toggleMenu()">Jobs</a>
 											<ul [hidden]="!is_applicant">
 												<li><a [routerLink]="['/applicant/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
 												<li><a [routerLink]="['/applicant/terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
 												<li><a [routerLink]="['/applicant/in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
-												<!-- <li><a [routerLink]="['/employer/available-jobs']">Available Jobs</a></li> -->
+												<!- - <li><a [routerLink]="['/employer/available-jobs']">Available Jobs</a></li> - ->
 												<li><a [routerLink]="['/applicant/requested-jobs']" routerLinkActive="active">Requested Jobs</a></li>
 												<li><a [routerLink]="['/applicant/hire-requests']" routerLinkActive="active">Hire Requests</a></li>
-				
+
 											</ul>
 											<ul [hidden]="is_applicant">
 												<li><a [routerLink]="['/employer/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
@@ -53,7 +53,7 @@
 										</li>
 										<li>
 											<a [routerLink]="['/chat']" style="color: #ffffff">Chat</a>
-										</li>
+										</li> -->
 							</ul>
 					</div>
 				</div>
@@ -71,7 +71,7 @@
           <!-- <div class="btn-extars"> -->
             <!-- <a [routerLink]="['employer-post-jobs']" routerLinkActive="active" class="post-job-btn"><i class="la la-plus"></i>Post Jobs</a> -->
             <!-- <div *ngIf="isLoggedInB"> -->
-              
+
 						<!-- </div> -->
           <!-- </div>Btn Extras -->
           <nav class="nav">
@@ -83,18 +83,18 @@
                 <!-- <a role="button" (click)="switchSession()">Switch to {{switchTo}}</a> -->
               </li>
               <li *ngIf="isLoggedInB">
-                <a role="button" (click)="goToProfile()" style="color:#ffffff">Profile</a>
+                <a role="button" (click)="goToProfile()" style="color:#ffffff">My Resume</a>
               </li>
               <li [hidden]="!isLoggedInB">
-                <a style="color: #ffffff">Jobs</a>
+                <!-- <a style="color: #ffffff">Jobs</a>
                 <ul [hidden]="!is_applicant">
                   <li><a [routerLink]="['/applicant/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
                   <li><a [routerLink]="['/applicant/terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
                   <li><a [routerLink]="['/applicant/in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
-                  <!-- <li><a [routerLink]="['/employer/available-jobs']">Available Jobs</a></li> -->
+                  <!- - <li><a [routerLink]="['/employer/available-jobs']">Available Jobs</a></li> - ->
                   <li><a [routerLink]="['/applicant/requested-jobs']" routerLinkActive="active">Requested Jobs</a></li>
                   <li><a [routerLink]="['/applicant/hire-requests']" routerLinkActive="active">Hire Requests</a></li>
-  
+
                 </ul>
                 <ul [hidden]="is_applicant">
                   <li><a [routerLink]="['/employer/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
@@ -105,25 +105,22 @@
 							</li>
 							<li>
 								<a [routerLink]="['/chat']" style="color: #ffffff">Chat</a>
-							</li>
+							</li> -->
               <li>
 								<div class="btn-extars">
 										<a *ngIf="isLoggedInB" (click)="bigBtn()" class="post-job-btn" >{{btnText}}</a>
 										<a *ngIf="!isLoggedInB" href="login" class="post-job-btn">Log In/Sign Up</a>
 								</div>
-                
+
 							</li>
 							<li>
 									<a *ngIf="isLoggedInB" [routerLink]="['/logout']" routerLinkActive="active"  title=""><i class="la la-external-link-square"></i>LogOut</a>
 									<!-- <a *ngIf="!isLoggedInB" [routerLink]="['/login']" routerLinkActive="active"  title="">Log in</a> -->
 							</li>
-							
+
             </ul>
           </nav><!-- Menus -->
         </div>
 			</div>
-			
+
     </header>
-  
-
-
