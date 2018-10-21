@@ -36,7 +36,7 @@ export class AppComponent implements OnInit, LoggedInCallback {
 
   isLoggedIn(message: string, isLoggedIn: boolean) {
     if(!isLoggedIn){
-      this.router.navigate(["/login"]);
+      // this.router.navigate(["/login"]);
     }
     let mythis = this;
     this.cognito.getIdToken({ callback() { },

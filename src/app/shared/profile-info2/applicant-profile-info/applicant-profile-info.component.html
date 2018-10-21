@@ -5,7 +5,7 @@
 					<div class="col-lg-12">
 						<div class="cand-single-user">
 							<div class="share-bar circle">
-				 				<a href="{{ urlLINKEDIN }}" title="" class="share-linkedin"><i class="la la-linkedin"></i></a><a href="{{ urlFACEBOOK }}" title="" class="share-fb"><i class="fa fa-facebook"></i></a><a href="{{ urlTWITTER }}" title="" class="share-twitter"><i class="fa fa-twitter"></i></a>
+				 				<a href="{{ urlLINKEDIN }}" title="" class="share-linkedin"><i class="la la-linkedin"></i></a><a href="{{ urlFACEBOOK }}" title="" class="share-fb"><i class="fa fa-facebook"></i></a><a href="{{ urlTWITTER }}" title="" class="share-twitter"><i class="fa fa-twitter"></i></a><a (click)="copy()" title="" class="share-twitter"><i class="fa fa-link"></i></a>
 				 			</div>
 				 			<div class="can-detail-s">
 				 				<div class="cst"><img src="{{ imgURL }}" alt="" /></div>
@@ -29,18 +29,27 @@
 				 						<span id="bio"></span>
 				 						<!-- <span>{{ bio }}</span> -->
 				 						<div class="edu-history-sec" id="education">
-				 							<h2>Education</h2>
-				 							<div class="edu-history" *ngFor="let edu of education; let i = index">
-				 								<i class="la la-graduation-cap"></i>
-				 								<div class="edu-hisinfo">
-													<h3>{{ edu.title }}</h3>
-													<i>{{ edu.description }}</i>
-				 									<i>{{ edu.startDate }} to {{ edu.endDate }}</i>
-				 								</div>
-				 							</div>
+											 <h2>Education</h2>
+											 <div *ngIf="education.length != 0">
+												 
+												<div  class="edu-history" *ngFor="let edu of education; let i = index">
+													<i class="la la-graduation-cap"></i>
+													<div class="edu-hisinfo">
+														<h3>{{ edu.title }}</h3>
+														<i>{{ edu.description }}</i>
+														<i>{{ edu.startDate }} to {{ edu.endDate }}</i>
+													</div>
+												</div>
+											</div>
+											<div *ngIf="education.length == 0">
+													<div class="edu-hisinfo">
+															<h3 style="margin-left:25px; margin-top:0px">Add education history by editing your profile!</h3>
+													</div>
+											</div>
 				 						</div>
 				 						<div class="edu-history-sec" id="experience">
-				 							<h2>Work & Experience</h2>
+											 <h2>Work & Experience</h2>
+											 <div *ngIf="experience.length != 0">
 				 							<div class="edu-history style2" *ngFor="let exp of experience; let i = index">
 												<!-- <i></i> -->
 												<i class="la la-check-circle"  [ngClass]="{ 'verified': exp.verified == true}" style="font-size: 16px;  padding: 0px;"></i>
@@ -50,92 +59,20 @@
 													 <p>{{ exp.description }}</p>
 												 </div>
 												 <button *ngIf="exp.verified != true" (click)="reqVerify(exp.verifyID, exp.position, exp.title)" style="font-size:15px; right: -25%; position: absolute">Verify Experience</button>
-				 							</div>
+											 </div>
+											</div>
+											 <div *ngIf="experience.length == 0">
+													<div class="edu-hisinfo">
+															<h3 style="margin-left:25px; margin-top:0px">Add experience by editing your profile!</h3>
+													</div>
+											</div>
 				 						</div>
 				 						
-				 						<!-- <div class="progress-sec" id="skills">
-				 							<h2>Professional Skills</h2>
-				 							<div class="progress-sec">
-				 								<span>Adobe Photoshop</span>
-				 								<div class="progressbar"> <div class="progress" style="width: 80%;"><span>80%</span></div> </div>
-				 							</div>
-				 							<div class="progress-sec">
-				 								<span>Production In Html</span>
-				 								<div class="progressbar"> <div class="progress" style="width: 60%;"><span>60%</span></div> </div>
-				 							</div>
-				 							<div class="progress-sec">
-				 								<span>Graphic Design</span>
-				 								<div class="progressbar"> <div class="progress" style="width: 75%;"><span>75%</span></div> </div>
-				 							</div>
-				 						</div>
-				 						<div class="edu-history-sec" id="awards">
-				 							<h2>Awards</h2>
-				 							<div class="edu-history style2">
-				 								<i></i>
-				 								<div class="edu-hisinfo">
-				 									<h3>Perfect Attendance Programs</h3>
-				 									<i>2008 - 2012</i>
-				 									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-				 								</div>
-				 							</div>
-				 							<div class="edu-history style2">
-				 								<i></i>
-				 								<div class="edu-hisinfo">
-				 									<h3>Top Performer Recognition</h3>
-				 									<i>2008 - 2012</i>
-				 									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-				 								</div>
-				 							</div>
-				 							<div class="edu-history style2">
-				 								<i></i>
-				 								<div class="edu-hisinfo">
-				 									<h3>King LLC</h3>
-				 									<i>2008 - 2012</i>
-				 									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-				 								</div>
-				 							</div>
-				 						</div>
-				 						<div class="companyies-fol-sec">
-				 							<h2>Companies Followed By</h2>
-				 							<div class="cmp-follow">
-				 								<div class="row">
-				 									<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
-				 										<a href="#" title=""><img src="http://placehold.it/80x80" alt="" /><span>King LLC</span></a>
-				 									</div>
-				 									<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
-				 										<a href="#" title=""><img src="http://placehold.it/80x80" alt="" /><span>Telimed</span></a>
-				 									</div>
-				 									<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
-				 										<a href="#" title=""><img src="http://placehold.it/80x80" alt="" /><span>Ucesas</span></a>
-				 									</div>
-				 									<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
-				 										<a href="#" title=""><img src="http://placehold.it/80x80" alt="" /><span>TeraPlaner</span></a>
-				 									</div>
-				 									<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
-				 										<a href="#" title=""><img src="http://placehold.it/80x80" alt="" /><span>Cubico</span></a>
-				 									</div>
-				 									<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
-				 										<a href="#" title=""><img src="http://placehold.it/80x80" alt="" /><span>Airbnb</span></a>
-				 									</div>
-				 								</div>
-				 							</div> -->
-				 						<!-- </div> -->
+				 						
 				 					</div>
 								 </div>
 								 
-				 				<!-- <div class="col-lg-4 column">
-							 		<div class="quick-form-job">
-							 			<h3>Contact</h3>
-							 			<form>
-							 				<input type="text" placeholder="Enter your Name *" />
-							 				<input type="text" placeholder="Email Address*" />
-							 				<input type="text" placeholder="Phone Number" />
-							 				<textarea placeholder="Message should have more than 50 characters"></textarea>
-							 				<button class="submit">Send Email</button>
-							 				<span>You accepts our <a href="#" title="">Terms and Conditions</a></span>
-							 			</form>
-							 		</div>
-						 		</div> -->
+		
 				 			</div>
 				 		</div>
 					</div>

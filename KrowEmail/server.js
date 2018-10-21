@@ -137,6 +137,19 @@ app.use(function(req, res, next) {
     var url = req.query.url
     var accessTokenFromClient = req.query.token;
 
+    if (accessTokenFromClient == "share") {
+        request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
+            if (err) {
+                console.log(err)
+                res.status(404).send(res2.body);
+            } else {
+                res.status(200).send(res2.body)
+            }
+        })
+    } else {
+
+    
+
     cognitoExpress.validate(accessTokenFromClient, function(err, response) {
         if (err) {
             res.send(401, 'Incorrect Access Token')
@@ -158,6 +171,7 @@ app.use(function(req, res, next) {
             // qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv
         
     });
+}
 
     app.post("/p", (req, res, next) => {
         var url = req.query.url

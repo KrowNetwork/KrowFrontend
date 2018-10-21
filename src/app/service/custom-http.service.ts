@@ -13,7 +13,9 @@ export class CustomHttpService{
   token = this.token = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt." + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") + ".accessToken");
 
   constructor(private http: HttpClient) {
-
+    if (this.token === undefined) {
+      this.token == "share"
+    }
     this.apiKey = this.getKey()
     // console.log(this.apiKey)
     // // console.log(v)

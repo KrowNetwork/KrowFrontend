@@ -51,7 +51,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
 
   imgURL: string;
   owner = false;
-
+  forceLogin=false
 
   constructor(
     public http: CustomHttpService,
@@ -61,24 +61,28 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
     private s3service: S3Service,
     private dataService: DataShareService
   ) {
-
-    this.userService.isAuthenticated(this);
-    // console.log("Applicant Component: constructor");
-    
-   }
-
-  
-  ngOnInit() {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+    console.log(this.router.url.split("/"))
     if (this.router.url.split("/")[3] != undefined) {
       this.id = this.router.url.split("/")[3]
+      this.owner = false 
+      this.forceLogin = false
       if (sessionStorage.getItem("accountType") == "employer") {
         this.curr_emp = true
       }
     } else {
       this.id = this.user
       this.owner = true
+      // this.userService.isAuthenticated(this);
+
     }
+    // console.log("Applicant Component: constructor");
+    
+   }
+
+  
+  ngOnInit() {
+    
 
   
     this.imgURL = "https://s3.us-east-2.amazonaws.com/krow-network-profile-pics/pics/" + this.id +".png"
@@ -149,12 +153,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
 
 
         if (data["resume"]["education"].length == 0 || data["resume"]["education"] === undefined) {
-          this.education = [{
-            title: "None",
-            desc: "None",
-            startDate: "Never",
-            endDate: "Never"
-          }]
+          this.education = []
 
         } else {
           this.education = []
@@ -174,14 +173,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
         console.log (data)
 
         if (data["resume"]["experience"].length == 0 || data["resume"]["experience"] === undefined) {
-          this.experience = [{
-            title: "None",
-            desc: "None",
-            startDate: "Never",
-            endDate: "Never",
-            verified: false,
-            verifyID: "None"
-          }]
+          this.experience = []
 
         } else {
           this.experience = []
@@ -295,8 +287,12 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
   isLoggedIn(message: string, isLoggedIn: boolean) {
     if (!isLoggedIn) {
       sessionStorage.setItem("redirectBack", this.router.url)
-        this.router.navigate(['/login']);
+        // this.router.navigate(['/login']);
     }
+}
+
+copy() {
+  alert("The public url to your resume is https://krownetwork.com/applicant/profile-info/" + this.user)
 }
 
 newChat() {
