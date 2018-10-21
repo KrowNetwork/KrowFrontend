@@ -13,8 +13,10 @@ export class CustomHttpService{
   token = this.token = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt." + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") + ".accessToken");
 
   constructor(private http: HttpClient) {
-    if (this.token === undefined) {
-      this.token == "share"
+    console.log(this.token)
+    if (!this.token) {
+      this.token = "share"
+      console.log("yerr" + this.token)
     }
     this.apiKey = this.getKey()
     // console.log(this.apiKey)
@@ -49,6 +51,7 @@ export class CustomHttpService{
   }
 
   get(url, data=undefined) {
+    console.log(this.token)
     var oUrl = "https://api.krownetwork.com/g?url=" + url + "&token=" + this.token
     // let headers = new Headers();
       return this.http.get(oUrl);

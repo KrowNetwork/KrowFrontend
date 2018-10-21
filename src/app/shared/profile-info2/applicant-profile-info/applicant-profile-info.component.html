@@ -5,7 +5,7 @@
 					<div class="col-lg-12">
 						<div class="cand-single-user">
 							<div class="share-bar circle">
-				 				<a href="{{ urlLINKEDIN }}" title="" class="share-linkedin"><i class="la la-linkedin"></i></a><a href="{{ urlFACEBOOK }}" title="" class="share-fb"><i class="fa fa-facebook"></i></a><a href="{{ urlTWITTER }}" title="" class="share-twitter"><i class="fa fa-twitter"></i></a><a (click)="copy()" title="" class="share-twitter"><i class="fa fa-link"></i></a>
+				 				<a href="{{ urlLINKEDIN }}" title="" class="share-linkedin"><i class="la la-linkedin"></i></a><a href="{{ urlFACEBOOK }}" title="" class="share-fb"><i class="fa fa-facebook"></i></a><a href="{{ urlTWITTER }}" title="" class="share-twitter"><i class="fa fa-twitter"></i></a><a *ngIf="owner" (click)="copy()" title="" class="share-twitter"><i class="fa fa-link"></i></a>
 				 			</div>
 				 			<div class="can-detail-s">
 				 				<div class="cst"><img src="{{ imgURL }}" alt="" /></div>
@@ -18,7 +18,7 @@
 				 			</div>
 				 			<div class="download-cv" style="vertical-align:middle">
 								 <a *ngIf="owner" [routerLink]="['/applicant/edit']" title="" style="margin-top: 5px;">Edit Profile<i class="la la-pencil"></i></a>
-				 				<a *ngIf="!owner" (click)="newChat()" title="" >Send Message <i class="la la-paper-plane"></i></a>
+				 				<!-- <a *ngIf="!owner" (click)="newChat()" title="" >Send Message <i class="la la-paper-plane"></i></a> -->
 				 			</div>
 				 		</div>
 				 		<div class="cand-details-sec">
@@ -43,7 +43,7 @@
 											</div>
 											<div *ngIf="education.length == 0">
 													<div class="edu-hisinfo">
-															<h3 style="margin-left:25px; margin-top:0px">Add education history by editing your profile!</h3>
+															<!-- <h3 style="margin-left:25px; margin-top:0px">Add education history by editing your profile!</h3> -->
 													</div>
 											</div>
 				 						</div>
@@ -58,12 +58,12 @@
 				 									<i>{{ exp.startDate }} - {{ exp.endDate }}</i>
 													 <p>{{ exp.description }}</p>
 												 </div>
-												 <button *ngIf="exp.verified != true" (click)="reqVerify(exp.verifyID, exp.position, exp.title)" style="font-size:15px; right: -25%; position: absolute">Verify Experience</button>
+												 <button *ngIf="exp.verified != true && owner == true" (click)="reqVerify(exp.verifyID, exp.position, exp.title)" style="font-size:15px; right: -25%; position: absolute">Verify Experience</button>
 											 </div>
 											</div>
 											 <div *ngIf="experience.length == 0">
 													<div class="edu-hisinfo">
-															<h3 style="margin-left:25px; margin-top:0px">Add experience by editing your profile!</h3>
+															<!-- <h3 style="margin-left:25px; margin-top:0px">Add experience by editing your profile!</h3> -->
 													</div>
 											</div>
 				 						</div>
