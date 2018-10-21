@@ -170,8 +170,8 @@ app.use(function(req, res, next) {
 
             // qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv
         
-    });
-}
+    }});
+
 
     app.post("/p", (req, res, next) => {
         var url = req.query.url
