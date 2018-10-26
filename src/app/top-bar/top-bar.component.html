@@ -87,33 +87,13 @@
                 <!-- <a role="button" (click)="switchSession()">Switch to {{switchTo}}</a> -->
               </li>
               <li *ngIf="isLoggedInB">
-<<<<<<< HEAD
-                <a role="button" (click)="goToProfile()" style="color:#ffffff">My Resume</a>
-              </li>
-              <li [hidden]="!isLoggedInB">
-                <!-- <a style="color: #ffffff">Jobs</a>
-                <ul [hidden]="!is_applicant">
-                  <li><a [routerLink]="['/applicant/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
-                  <li><a [routerLink]="['/applicant/terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
-                  <li><a [routerLink]="['/applicant/in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
-                  <!- - <li><a [routerLink]="['/employer/available-jobs']">Available Jobs</a></li> - ->
-                  <li><a [routerLink]="['/applicant/requested-jobs']" routerLinkActive="active">Requested Jobs</a></li>
-                  <li><a [routerLink]="['/applicant/hire-requests']" routerLinkActive="active">Hire Requests</a></li>
-
-                </ul>
-                <ul [hidden]="is_applicant">
-                  <li><a [routerLink]="['/employer/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
-                  <li><a [routerLink]="['/employer/terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
-                  <li><a [routerLink]="['/employer/in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
-                  <li><a [routerLink]="['/employer/available-jobs']" routerLinkActive="active">Available Jobs</a></li>
-                </ul>
-							</li>
-							<li>
-=======
                 <a role="button" (click)="goToProfile()" style="color:#ffffff">Profile</a>
-              </li>                
+							</li>   
+							
+							<li *ngIf="isLoggedInB">
+                <a role="button" (click)="goToFeedback()" style="color:#ffffff">Feedback</a>
+              </li>              
 							<!-- <li>
->>>>>>> c5ff83041c27aeee2b00c522ce8bb18a4d036664
 								<a [routerLink]="['/chat']" style="color: #ffffff">Chat</a>
 							</li> -->
               <li>

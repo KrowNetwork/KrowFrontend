@@ -131,4 +131,8 @@ toggleMenu() {
     }
   }
 
+  goToFeedback() {
+      this.router.navigate(["/feedback"])
+  }
+
 }
