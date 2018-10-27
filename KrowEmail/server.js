@@ -109,8 +109,9 @@ app.use(function(req, res, next) {
   })
 
   app.get("/search", (req, res, next) => {
-    var url = req.query.url;
-    request.get(url, function(err, res2) {
+    var term = req.query.term;
+    var key = req.query.key;
+    request.get("http://18.220.46.51:4200/search?term=" + term + "&key=" + key, function(err, res2) {
         if (err) {
             console.log(err)
             res.status(404).send("Oh uh, something went wrong");

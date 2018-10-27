@@ -12,7 +12,7 @@ export class SearchService {
   }
   test() {
     console.log("adgfasdf")
-    this.http.search("18.220.46.51:4200/search?term=tucker&key=dgf463d4-4fg5-55la-3z0f-7c78ft9s9z64&sort=piss").subscribe(
+    this.http.search("18.220.46.51:4200/search?").subscribe(
       data => {
         console.log(data)
       }
