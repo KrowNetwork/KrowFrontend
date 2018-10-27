@@ -17,6 +17,7 @@ import { ResendCodeComponent } from './main/resend/resendCode.component';
 // Employer components
 import { EmployerProfileComponent } from './employer/employer-profile/employer-profile.component';
 
+import { SearchComponent } from './search/search.component';
 
 // Job components
 
@@ -124,6 +125,10 @@ const appRoutes: Routes = [
     {
         path: "verify/:id",
         component: VerifyJobComponent
+    }
+    {
+        path: "search",
+        component: SearchComponent
     }
 
 ];

@@ -58,6 +58,12 @@ export class CustomHttpService{
     
   }
 
+  search(term) {
+    var oUrl = "https://api.krownetwork.com/search?term=" + term + "&key=dgf463d4-4fg5-55la-3z0f-7c78ft9s9z64"
+    // let headers = new Headers();
+      return this.http.get(oUrl);
+  }
+
   post(url, data) {
     var oUrl = "https://api.krownetwork.com/p?url=" + url + "&token=" + this.token
       return this.http.post(oUrl, data)

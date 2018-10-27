@@ -105,6 +105,7 @@ import { ContextMenuModule } from 'ngx-contextmenu';
 import { MessagingPopupComponent } from './messaging/messaging-popup/messaging-popup.component';
 import { NewEventCalendarPopupComponent } from './calendar/new-event-calendar-popup/new-event-calendar-popup.component';
 import { VerifyJobComponent } from './verify-job/verify-job.component';
+import { SearchComponent } from './search/search.component';
 // import { ContextMenuService } from 'angular2-contextmenu/src/contextMenu.service';
 // import { luegg } from "angularjs-scroll-glue"
 
@@ -163,6 +164,7 @@ import { VerifyJobComponent } from './verify-job/verify-job.component';
     MessagingPopupComponent,
     NewEventCalendarPopupComponent,
     VerifyJobComponent,
+    SearchComponent,
 
     // DeleteComponent
     
