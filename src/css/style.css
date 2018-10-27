@@ -680,6 +680,15 @@ label::after {
 .account-btns > li:first-child {
     margin: 0;
 }
+.feedback-top {
+    float: left;
+    padding: 8px 8px 8px;
+    font-size: 11px;
+    font-family: Open Sans;
+    color: #000000;
+    width: 100%;
+    background-color: #44ec8d;
+}
 .menu-sec nav {
     float: right;
     margin-right: 20px;

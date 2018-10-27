@@ -14,6 +14,7 @@ declare var $: any;
 export class TopBarComponent implements OnInit {
   is_applicant = false;
   isLoggedInB = false;
+  isFeedbackOn = false;
   btnText: string;
   constructor(
     public http: CustomHttpService,
@@ -133,6 +134,10 @@ toggleMenu() {
 
   goToFeedback() {
       this.router.navigate(["/feedback"])
+  }
+
+  hideFeedback() {
+      this.isFeedbackOn = true;
   }
 
 }
