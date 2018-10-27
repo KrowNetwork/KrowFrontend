@@ -125,7 +125,7 @@ const appRoutes: Routes = [
     {
         path: "verify/:id",
         component: VerifyJobComponent
-    }
+    },
     {
         path: "search",
         component: SearchComponent

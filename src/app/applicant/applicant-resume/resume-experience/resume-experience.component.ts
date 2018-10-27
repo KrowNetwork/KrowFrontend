@@ -55,6 +55,7 @@ export class ResumeExperienceComponent implements OnInit {
           endDate: "",
           verified: false,
           verifyID: this.guid(),
+          present: false
         })
       );
     }
@@ -102,7 +103,8 @@ export class ResumeExperienceComponent implements OnInit {
               startDate: this.formatDate(new Date(resumeExperiences[k]["startDate"])),
               endDate: this.formatDate(new Date(resumeExperiences[k]["endDate"])),
               verified: resumeExperiences[k]['verified'],
-              verifyID: resumeExperiences[k]['verifyID']
+              verifyID: resumeExperiences[k]['verifyID'],
+              present: resumeExperiences[k]["present"]
             })
           );
         }

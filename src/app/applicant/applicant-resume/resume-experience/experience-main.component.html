@@ -85,6 +85,7 @@
                             <span class="pf-title" style="margin-top:0px">To</span> 
                             <div class="pf-field">
                                 <input (keydown)="changeHandler($event)" type="date" placeholder="End date" secret="endDate" value={{data.endDate}}/>
+                                <input (click)="changeHandler($event)" type="checkbox" name="cb" id="cb1"  [(ngModel)]="check" [ngModelOptions]="{standalone: true}" required><label for="cb1">Present</label>
                             </div>
                         </div>
                     </div>
