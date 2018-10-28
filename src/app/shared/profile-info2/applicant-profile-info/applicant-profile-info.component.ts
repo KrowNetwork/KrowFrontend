@@ -184,6 +184,11 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
             
             var e = new Date(element["endDate"])
             element["endDate"] = (e.getMonth() + 1).toString() + '/' + (e.getDate() + 1).toString() + '/' +  e.getFullYear().toString()
+            
+            if (element.present == true) {
+              element.endDate = "Present"
+            }
+
             this.experience.push(element)
           }
         }

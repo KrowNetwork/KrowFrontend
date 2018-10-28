@@ -50,6 +50,7 @@ export class UpdateResumeService {
                         
                         // var currType = input.attributes[1].value;
                         var currType = input.getAttribute("secret");
+                        // console.log(currType)
                         if(currAttribute == "experience" && currType == "type"){
                             value = "PROFESSIONALWORK";
                             currJson.push({
@@ -61,10 +62,32 @@ export class UpdateResumeService {
                                 value: this.guid()
                             })
                         }
-                        currJson.push({
-                            type: currType,
-                            value: value
-                        });
+                        // console.log(currType, value)
+                        if (currType == "present") {
+                            console.log("a")
+                            if (value == "on") {
+                                console.log(currType, value)
+                                currJson.push({
+                                    type: currType,
+                                    value: true
+                                });
+                            } else {
+                                console.log('f')
+                                currJson.push({
+                                    type: currType,
+                                    value: false
+                                });
+                           
+                        } } else {
+                            currJson.push({
+                                type: currType,
+                                value: value
+                            });
+
+                        }
+                        
+                        
+                        
                     }
                 }
                 if(existsEmpty != true){
@@ -75,6 +98,7 @@ export class UpdateResumeService {
                 }
             }
             if(i == componentsList.length - 1){
+                // console.log(json)
                 this.updateData(updateButton, json, currAttribute);
             }
         }
@@ -126,9 +150,17 @@ export class UpdateResumeService {
                     }
                     if (attribute == "experience") {
                         console.log("yerr")
-                        for (var i = 0; i < data['resume'][attribute].length; i += 1) {
-                            newData[i].verified = data['resume'][attribute][i].verified
-                            newData[i].verifyID = data['resume'][attribute][i].verifyID
+                        if (newData.length != 0) {
+                            for (var i = 0; i < data['resume'][attribute].length; i += 1) {
+                                
+                                if (newData[i].verified !== undefined || data['resume'][attribute][i].verified !== undefined) {
+                                    newData[i].verified = data['resume'][attribute][i].verified
+                                    newData[i].verifyID = data['resume'][attribute][i].verifyID
+                                }
+                                // if (data['resume'][attribute][i].present === undefined) {
+                                //     newData[i].present = false
+                                // }
+                            }
                         }
                     } 
                     console.log(newData)

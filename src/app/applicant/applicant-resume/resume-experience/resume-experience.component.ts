@@ -17,7 +17,7 @@ import { CustomHttpService } from '../../../service/custom-http.service';
   styleUrls: ['../resume-elements.component.css']
 })
 export class ResumeExperienceComponent implements OnInit {
-
+  // check=false;
   @ViewChild(ExperienceDirective) achievementHost: ExperienceDirective;
 
   constructor(
@@ -39,6 +39,7 @@ export class ResumeExperienceComponent implements OnInit {
       .substring(1);
   }
   updateResume(event){
+    console.log(event.target.closest("app-resume-experience"))
     this.updateResumeService.updateMain(event.target.closest("app-resume-experience"));
   }
 
@@ -51,11 +52,11 @@ export class ResumeExperienceComponent implements OnInit {
           position: "",
           title: "",
           description: "",
-          startDate: "",
-          endDate: "",
+          startDate: "0000-00-00",
+          endDate: "0000-00-00",
           verified: false,
           verifyID: this.guid(),
-          present: false
+          present: true
         })
       );
     }
@@ -65,8 +66,8 @@ export class ResumeExperienceComponent implements OnInit {
       let componentFactory = this.componentFactoryResolver.resolveComponentFactory(experienceItem.component);
 
       let viewContainerRef = this.achievementHost.viewContainerRef;
-
       let componentRef = viewContainerRef.createComponent(componentFactory);
+
       (<InterfaceComponent>componentRef.instance).data = experienceItem.data;
     }
   }
@@ -92,22 +93,32 @@ export class ResumeExperienceComponent implements OnInit {
     this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
       data => {
         var resumeExperiences = data["resume"]["experience"];
+        console.log(resumeExperiences)
         var experiences = new Array<ItemType>();
         for(var k = 0; k < resumeExperiences.length; k++){
+          var x = {
+            type: resumeExperiences[k]["type"],
+            position: resumeExperiences[k]["position"],
+            title: resumeExperiences[k]["title"],
+            description: resumeExperiences[k]["description"],
+            startDate: this.formatDate(new Date(resumeExperiences[k]["startDate"])),
+            endDate: this.formatDate(new Date(resumeExperiences[k]["endDate"])),
+            verified: resumeExperiences[k]['verified'],
+            verifyID: resumeExperiences[k]['verifyID'],
+            present: resumeExperiences[k]["present"]
+          }
+
+          if (x.present == true) {
+            x.present = "on"
+          } else {
+            console.log("peepee")
+            x.present = "off"
+          }
+          var y  = new ItemType(ExperienceMainComponent, x)
           experiences.push(
-            new ItemType(ExperienceMainComponent, {
-              type: resumeExperiences[k]["type"],
-              position: resumeExperiences[k]["position"],
-              title: resumeExperiences[k]["title"],
-              description: resumeExperiences[k]["description"],
-              startDate: this.formatDate(new Date(resumeExperiences[k]["startDate"])),
-              endDate: this.formatDate(new Date(resumeExperiences[k]["endDate"])),
-              verified: resumeExperiences[k]['verified'],
-              verifyID: resumeExperiences[k]['verifyID'],
-              present: resumeExperiences[k]["present"]
-            })
+            y
           );
-        }
+          console.log(experiences)
         if(experiences.length == 0){
           this.loadComponent("empty");
         }

@@ -50,6 +50,7 @@
 				 						<div class="edu-history-sec" id="experience">
 											 <h2>Work & Experience</h2>
 											 <div *ngIf="experience.length != 0">
+												 {{experience[0].present}}
 				 							<div class="edu-history style2" *ngFor="let exp of experience; let i = index">
 												<!-- <i></i> -->
 												<i class="la la-check-circle"  [ngClass]="{ 'verified': exp.verified == true}" style="font-size: 16px;  padding: 0px;"></i>
