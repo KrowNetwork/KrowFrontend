@@ -7,6 +7,7 @@ import {SearchService} from "../service/search.service"
 })
 export class SearchComponent implements OnInit {
   people = []
+  name = ""
   constructor(
     public search: SearchService
   ) { }
