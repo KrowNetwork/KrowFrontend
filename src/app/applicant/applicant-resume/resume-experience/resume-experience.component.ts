@@ -125,7 +125,7 @@ export class ResumeExperienceComponent implements OnInit {
         else{
           this.loadComponent(experiences);
         }
-      }, // Catch Errors
+      }}, // Catch Errors
       (err: HttpErrorResponse) => {
         this.loadComponent("empty");
         if (err.error instanceof Error) {
