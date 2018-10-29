@@ -25,6 +25,7 @@ export class HomepageComponent implements OnInit {
   ) {
     // console.log("f")
     // todo - private v public
+    console.log("y")
     this.userService.isAuthenticated(this);
 
     var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");

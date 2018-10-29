@@ -125,7 +125,7 @@ toggleMenu() {
   }
 
   goToProfile() {
-    if (this.is_applicant) {
+    if (sessionStorage.getItem("accountType") == "applicant") {
       this.router.navigate(["/applicant"])
     } else {
       this.router.navigate(["/employer"])

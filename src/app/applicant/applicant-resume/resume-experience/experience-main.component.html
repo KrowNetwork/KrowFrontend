@@ -69,6 +69,7 @@
                                 </datalist>
                             </div>
                         </div>
+                        {{data.present}}
                         <div class="col-lg-12">
                             <span class="pf-title" style="margin-top:0px">Description</span>
                             <div class="pf-field">
@@ -84,9 +85,15 @@
                         <div class="col-lg-6">
                             <span class="pf-title" style="margin-top:0px">To</span> 
                             <div class="pf-field">
-                                <input (keydown)="changeHandler($event)" type="date" placeholder="End date" secret="endDate" value={{data.endDate}}/>
+                                <input (keydown)="changeHandler($event)" type="date" placeholder="End date" secret="endDate" value={{data.endDate}} [disabled]="data.present"/>
                             </div>
                         </div>
+                        <div class="col-lg-6">
+                                <span class="pf-title" style="margin-top:0px">Present?</span> 
+                                <div class="pf-field">
+                                    <input (click)="changeHandler($event)" type="checkbox" name="cb" id="cb1"  secret="present" [(ngModel)]=data.present><label for="cb1">Present</label>
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>

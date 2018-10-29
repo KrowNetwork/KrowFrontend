@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CustomHttpService } from "../service/custom-http.service"
+import 'rxjs/add/operator/map';
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +11,17 @@ export class SearchService {
     public http: CustomHttpService
   ) { 
   }
-  test() {
-    console.log("adgfasdf")
-    this.http.search("18.220.46.51:4200/search?").subscribe(
-      data => {
-        console.log(JSON.stringify(data))
-      }
-    )
+  // test() {
+  //   console.log("adgfasdf")
+  //   this.http.search("tucker").subscribe(
+  //     data => {
+  //       console.log(JSON.stringify(data))
+  //     }
+  //   )
+  // }
+
+  search(term) {
+    return this.http.search(term)
   }
   
 }
