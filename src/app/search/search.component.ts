@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {SearchService} from "../service/search.service"
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -8,10 +9,12 @@ import {SearchService} from "../service/search.service"
 export class SearchComponent implements OnInit {
 
   constructor(
-    public search: SearchService
+    public search: SearchService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    let term = this.route.snapshot.queryParams['term'];
     this.search.test()
   }
 

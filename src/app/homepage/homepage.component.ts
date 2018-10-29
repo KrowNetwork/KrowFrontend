@@ -139,7 +139,7 @@ toggleMenu() {
   }
 
   search() {
-    this.router.navigate(["/job-search"], { queryParams: { search: this.term } })
+    this.router.navigate(["/search"], { queryParams: { term: this.term } })
   }
 
 }

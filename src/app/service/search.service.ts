@@ -14,7 +14,7 @@ export class SearchService {
     console.log("adgfasdf")
     this.http.search("18.220.46.51:4200/search?").subscribe(
       data => {
-        console.log(data)
+        console.log(JSON.stringify(data))
       }
     )
   }
