@@ -85,6 +85,9 @@
 					<!-- </div>Btn Extras -->
           <nav class="nav">
             <ul>
+							<li *ngIf="allowSearchBarDisplay()">
+									<input class="top-bar-search" type="text" placeholder="Search Full Name" [(ngModel)]="term" [ngModelOptions]="{standalone: true}" (keydown)="keyDown($event)"/>
+							</li>
               <li>
                 <a [routerLink]="['/']" routerLinkActive="active">Home</a>
               </li>

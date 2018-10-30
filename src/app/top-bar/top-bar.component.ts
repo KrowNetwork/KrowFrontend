@@ -16,6 +16,7 @@ export class TopBarComponent implements OnInit {
   isLoggedInB = false;
   isFeedbackOn = false;
   btnText: string;
+  term: String;
   constructor(
     public http: CustomHttpService,
     private createUser: CreateUserService,
@@ -138,6 +139,26 @@ toggleMenu() {
 
   hideFeedback() {
       this.isFeedbackOn = true;
+  }
+
+  allowSearchBarDisplay(){
+      let url = this.router.url
+
+      if(url == '/' || url.match(/\/search\?term=*/)){
+        return false;
+      } else {
+        return true;
+      }
+  }
+
+  keyDown(event) {
+    if (event.key == "Enter") {
+      this.search()
+    }
+  }
+
+  search() {
+    this.router.navigate(["/search"], { queryParams: { term: this.term } })
   }
 
 }

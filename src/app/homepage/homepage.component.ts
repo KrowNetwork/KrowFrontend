@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { CreateUserService } from '../service/create-user.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
@@ -9,7 +9,7 @@ declare var $: any;
 @Component({
   selector: 'app-homepage',
   templateUrl: "./homepage.component.html",
-  styleUrls: ['./homepage.component.css']
+  styleUrls: ['./homepage.component.css'],
 })
 export class HomepageComponent implements OnInit {
   is_applicant = false;
@@ -21,7 +21,7 @@ export class HomepageComponent implements OnInit {
     private createUser: CreateUserService,
     private activatedRoute: ActivatedRoute,
     public userService: UserLoginService,
-    private router: Router
+    private router: Router,
   ) {
     // console.log("f")
     // todo - private v public

@@ -682,7 +682,8 @@ label::after {
 }
 .feedback-top {
     float: left;
-    padding: 8px 8px 8px;
+    position: absolute;
+    padding: 7px 7px 7px;
     font-size: 11px;
     font-family: Open Sans;
     color: #000000;
@@ -707,6 +708,14 @@ label::after {
     font-family: Open Sans;
     font-size: 15px;
     color: #ffffff;
+    position: relative;
+    padding: 14px 20px;
+}
+
+.menu-sec nav > ul > li > input {
+    float: left;
+    font-family: Open Sans;
+    font-size: 15px;
     position: relative;
     padding: 14px 20px;
 }
@@ -3394,6 +3403,10 @@ header.style4 {
     width: 100%;
     background: #222b38;
     padding: 2px 0;
+}
+
+.top-bar-search {
+    width: 40%
 }
 .h-social {
     float: left;
