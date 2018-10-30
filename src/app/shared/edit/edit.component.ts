@@ -357,7 +357,7 @@ export class EditComponent implements OnInit {
 
   delete() {
     var i = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
-    this.http2.post("https://api.krownetwork.com/delete?token=" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt."+ i +".accessToken"), {id: i}).subscribe(
+    this.http2.post("https://api.krownetwork.com/delete?token=" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt."+ i +".accessToken") + "&id=" + i, {id: i}).subscribe(
       data => {
         // console.log(data)
       }, // Catch Errors

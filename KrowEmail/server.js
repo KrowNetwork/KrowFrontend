@@ -85,19 +85,28 @@ app.use(function(req, res, next) {
 
   app.post("/delete", (req, res, next) => {
     var accessTokenFromClient = req.query.token;
+    var id = req.query.id;
 
     cognitoExpress.validate(accessTokenFromClient, function(err, response) {
         if (err) {
             res.send(401, 'Incorrect Access Token')
         } else {
-            exec("aws cognito-idp admin-disable-user --user-pool-id us-east-2_THcotoVBG --username " + req.body.id, (error, stdout, stderr) => 
+            exec("aws cognito-idp admin-delete-user --user-pool-id us-east-2_THcotoVBG --username " + req.body.id, (error, stdout, stderr) => 
         {
             if (error) {
                 res.send(400, {"res": "error"})
             } else {
-                res.send(200, {"res": "success"})
+                // res.send(200, {"res": "success"})
             }
         })
+        request.delete("http://18.220.46.51:3000/api/Applicant/" + id, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
+            if (err) {
+                console.log(err)
+                res.status(404).send("Oh uh, something went wrong");
+            } else {
+                res.status(200).send(res2.body)
+            }
+    })
             // fs.appendFile("delete.txt", req.body.id, function(err) {
             //     if (err) res.send(400, {"res": "error"});
             //     else res.send(200, {"res": "success"})
