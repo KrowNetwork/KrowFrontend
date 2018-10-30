@@ -11,17 +11,17 @@ export class SearchService {
     public http: CustomHttpService
   ) { 
   }
-  test() {
-    console.log("adgfasdf")
-    this.http.search("tucker").subscribe(
-      data => {
-        console.log(data)
-      }
-    )
-  }
+  // test() {
+  //   console.log("adgfasdf")
+  //   this.http.search("tucker").subscribe(
+  //     data => {
+  //       console.log(JSON.stringify(data))
+  //     }
+  //   )
+  // }
 
-  search(name) {
-    return this.http.search(name)
+  search(term) {
+    return this.http.search(term)
   }
   
 }
