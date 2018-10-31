@@ -27,6 +27,8 @@ export class BasicInfoCollectorComponent implements OnInit {
     country: string;
     phoneNumber: string;
     errorMessage: string;
+    collectInfoOn = true;
+    uploadImageOn = false;
   
     ngOnInit() {
         this.route
@@ -80,8 +82,15 @@ export class BasicInfoCollectorComponent implements OnInit {
                 }
             }
             
-            this.initializeUser.initializeUser(obj, this.intent, this.activate, this.router);
+            //this.initializeUser.initializeUser(obj, this.intent, this.activate, this.router);
+            this.initializeUser.initializeUser(obj, this.intent, null, this.router);
+            this.next();
         }
+    }
+
+    next(){
+        this.collectInfoOn = false;
+        this.uploadImageOn = true;
     }
 
     activate(intent: string, user: string, router){
