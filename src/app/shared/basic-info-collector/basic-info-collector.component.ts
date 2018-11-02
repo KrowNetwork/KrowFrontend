@@ -93,8 +93,13 @@ export class BasicInfoCollectorComponent implements OnInit {
         this.uploadImageOn = true;
     }
 
-    activate(intent: string, user: string, router){
+    // activate(intent: string, user: string, router){
+    //     // var path = "/" + intent;
+    //     router.navigate(["/" + intent + "/profile-info"]);
+    // }
+
+    activate(){
         // var path = "/" + intent;
-        router.navigate(["/" + intent + "/profile-info"]);
+        this.router.navigate(["/" + this.intent.toLowerCase() + "/profile-info"]);
     }
 }
