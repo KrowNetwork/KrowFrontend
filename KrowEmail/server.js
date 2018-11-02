@@ -104,7 +104,7 @@ app.use(function(req, res, next) {
                 console.log(err)
                 res.status(404).send("Oh uh, something went wrong");
             } else {
-                res.status(200).send(res2.body)
+                res.send(200, res2.body)
             }
     })
             // fs.appendFile("delete.txt", req.body.id, function(err) {
