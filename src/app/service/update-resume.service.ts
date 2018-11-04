@@ -18,7 +18,7 @@ export class UpdateResumeService {
           .substring(1);
       }
 
-    async updateMain(dom){
+    async updateMain(dom, skills=undefined){
         var currAttribute = dom.localName.slice(11);
         var componentsList = dom.children[0].children[0].children;
         console.log(componentsList)
@@ -51,8 +51,10 @@ export class UpdateResumeService {
                         // var currType = input.attributes[1].value;
                         var currType = input.getAttribute("secret");
                         // console.log(currType)
-                        if(currAttribute == "experience" && currType == "type"){
-                            value = "PROFESSIONALWORK";
+                        if(currAttribute == "experience" && currType == "skills"){
+                            // value = "PROFESSIONALWORK";
+                            value = skills
+                            console.log("v", value)
                             currJson.push({
                                 type: "verified",
                                 value: false
@@ -201,6 +203,7 @@ export class UpdateResumeService {
         // Update entry
         this.http.put(url, data).subscribe(
             data => {
+                console.log(data)
                 updateButton.setAttribute("style", "display: none");
                 updateButton.innerText = "UPDATE";
                 updateButton.style.pointerEvents = 'auto';

@@ -27,7 +27,7 @@ export class ResumeExperienceComponent implements OnInit {
     private router: Router
 
   ) {}
-
+  skills = []
   guid() {
 
     return this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + this.s4() + this.s4();
@@ -39,8 +39,51 @@ export class ResumeExperienceComponent implements OnInit {
       .substring(1);
   }
   updateResume(event){
+    var skills = []
     console.log(event.target.closest("app-resume-experience"))
-    this.updateResumeService.updateMain(event.target.closest("app-resume-experience"));
+    var x = document.getElementById("ulTags")
+    for (var i = 0; i < x.children.length; i++) {
+      var element = x.children[i]
+      if (element.className == "addedTag") {
+        console.log(element)
+        skills.push(element.children[1].getAttribute("value"))
+      }
+    }
+    console.log("s", skills)
+    // console.log(event.target.closest("ul"))
+    this.updateResumeService.updateMain(event.target.closest("app-resume-experience"), skills);
+  }
+  
+  submitHandler(event){
+    if(event.target.value == ""){
+      return;
+    }
+
+    this.createNew(event.target.value);
+    event.target.value = "";
+  }
+
+  createNew(skill){
+    // if(/\S/.test(skill.data.skill.toString())){
+    //   // console.log("found something");
+    //   return;
+    // }
+    var data = skill
+    var node = document.createElement("li"); 
+    node.setAttribute("class", "addedTag");
+    node.setAttribute("style", "margin-bottom: 5px; margin-top: 5px");
+    // var data = skill.data.skill.toString();
+    var span = "<span class='tagRemove'>x</span>";
+    var input = "<input type='hidden' name='tags[]' value='" + data + "'>";
+    node.innerHTML = (data + span + input);
+    node.children[0].addEventListener("click", function(){
+      this.closest(".resumeContainer").children[1].children[0].style = "margin-bottom: 15px; display: show";
+      this.parentNode.remove();
+    })
+    var ul = document.getElementById("ulTags");
+    console.log(ul)
+    ul.insertBefore(node, document.getElementById("lastNode"));
+    
   }
 
   loadComponent(experiences) {
@@ -62,13 +105,14 @@ export class ResumeExperienceComponent implements OnInit {
     }
     for(var i = 0; i < experiences.length; i++){
       let experienceItem = experiences[i];
-
+      
       let componentFactory = this.componentFactoryResolver.resolveComponentFactory(experienceItem.component);
 
       let viewContainerRef = this.achievementHost.viewContainerRef;
       let componentRef = viewContainerRef.createComponent(componentFactory);
 
       (<InterfaceComponent>componentRef.instance).data = experienceItem.data;
+      console.log((<InterfaceComponent>componentRef.instance))
     }
   }
 
@@ -83,7 +127,7 @@ export class ResumeExperienceComponent implements OnInit {
     console.log([year, month, day].join("-"))
     return  [year, month, day].join("-")
   }
-
+  
   ngOnInit() {
     if (sessionStorage.getItem("accountType") == "employer") {
 			var user = this.router.url.split("/")[3]
@@ -105,9 +149,13 @@ export class ResumeExperienceComponent implements OnInit {
             endDate: this.formatDate(new Date(resumeExperiences[k]["endDate"])),
             verified: resumeExperiences[k]['verified'],
             verifyID: resumeExperiences[k]['verifyID'],
-            present: resumeExperiences[k]["present"]
+            present: resumeExperiences[k]["present"],
+            skills: resumeExperiences[k]["skills"]
           }
-
+          this.skills = resumeExperiences[k]['skills']
+          this.skills.forEach(element => {
+              // this.createNew(element)
+          });
           if (x.present == true) {
             x.present = "on"
           } else {
