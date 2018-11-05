@@ -64,7 +64,7 @@
             <span class="pf-title">Bio</span>
             <div class="pf-field">
               <textarea (keydown)="changeHandler($event)" type="text" placeholder="Some cool stuff about me" 
-                [(ngModel)]="bio" [ngModelOptions]="{standalone: true}" id="bio" [disabled]="is_disabled()"></textarea>
+                [(ngModel)]="bio" [ngModelOptions]="{standalone: true}" id="bio" [disabled]="is_disabled()" ng-trim="false"></textarea>
               <i class="la la-user"></i>   
             </div>
           </div>

@@ -8073,6 +8073,12 @@ header.gradient{
     margin-top: 10px;
     margin-bottom: 20px;
 }
+
+.cand-details #bio {
+    float: left;
+    width: 100%;
+    white-space: pre
+}
 .cand-details > p {
     float: left;
     width: 100%;

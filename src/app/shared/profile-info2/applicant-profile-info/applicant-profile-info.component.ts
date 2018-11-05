@@ -131,7 +131,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           this.bio = data["resume"]["biography"]
         }
 
-        bioTag.innerHTML = this.bio
+        bioTag.innerHTML = this.bio;
 
         this.cityState = data["city"] + ", " + data["state"]
 
