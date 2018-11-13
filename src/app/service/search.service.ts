@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CustomHttpService } from "../service/custom-http.service"
+import { CustomHttpService } from "./custom-http.service"
 import 'rxjs/add/operator/map';
 
 @Injectable({

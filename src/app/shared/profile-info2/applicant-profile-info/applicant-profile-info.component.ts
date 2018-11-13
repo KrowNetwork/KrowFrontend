@@ -8,8 +8,6 @@ import { CustomHttpService } from "../../../service/custom-http.service"
 import { log } from 'util';
 import { DataShareService } from "../../../service/data-share.service" 
 
-
-
 @Component({
   selector: 'app-applicant-profile-info',
   templateUrl: './applicant-profile-info.component.html',
@@ -322,4 +320,7 @@ reqVerify(id, jname, comp) {
   this.router.navigate(["applicant/requestVerification/" + id])
 }
 
+
 }
+
+
