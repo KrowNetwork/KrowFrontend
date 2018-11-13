@@ -5,6 +5,7 @@ import { UserLoginService } from '../../../service/user-login.service';
 import { CustomHttpService } from '../../../service/custom-http.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { log } from 'util';
+// import ( SaveResumeService )
 
 @Component({
   selector: 'app-employer-profile-info',
@@ -40,6 +41,8 @@ export class EmployerProfileInfoComponent implements OnInit {
   terminated_jobs = [];
   available_jobs = []
 
+  saved = []
+
   display_edit = false
   imgURL: string;
 
@@ -47,14 +50,16 @@ export class EmployerProfileInfoComponent implements OnInit {
     public http: CustomHttpService,
     private userService: UserLoginService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {
 
-    this.userService.isAuthenticated(this);
+    // this.saveResume.init()
+    // this.saveResume.save("test")
     // console.log("Applicant Component: constructor");
     
    }
   ngOnInit() {
+    // console.log(this.saveResume.load_saves())
     if (this.router.url.split("/")[3] !== undefined) {
       this.user = this.router.url.split("/")[3]
     } else {
@@ -63,7 +68,10 @@ export class EmployerProfileInfoComponent implements OnInit {
     } 
 
     this.imgURL = "https://s3.us-east-2.amazonaws.com/krow-network-profile-pics/pics/" + this.user + ".png"
-    
+    var self = this
+      // console.log(res)
+
+    // console.log(this.saved)
     
     this.http.get("http://18.220.46.51:3000/api/Employer/" + this.user).subscribe(
       data => {
