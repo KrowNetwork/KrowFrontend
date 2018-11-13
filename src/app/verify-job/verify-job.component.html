@@ -1,5 +1,5 @@
 
-<div *ngIf="msg.msg != ''" class="alert" [ngClass]="{'alert-danger': msg.type == 'danger', 'alert-success': msg.type=='success'}" role="alert">
+<!---<div *ngIf="msg.msg != ''" class="alert" [ngClass]="{'alert-danger': msg.type == 'danger', 'alert-success': msg.type=='success'}" role="alert">
     {{msg.msg}}
   </div>
 
@@ -52,10 +52,10 @@
                                           <i class="la la-pencil"></i>
                                     </div>
                                 <div class="cField">
-                                    <!-- <label class="checkbox-inline" style="margin-bottom: 5px"> -->
+                                    !-- <label class="checkbox-inline" style="margin-bottom: 5px"> --
                                         <input type="checkbox" name="cb" id="cb1"  [(ngModel)]="check" [ngModelOptions]="{standalone: true}" required><label for="cb1">{{ agreementText }}</label>
-                                        <!-- <input type="checkbox" name="favoriteColors"> {{ agreementText }} -->
-                                    <!-- </label > -->
+                                        !-- <input type="checkbox" name="favoriteColors"> {{ agreementText }} --
+                                    !-- </label > --
                                 </div>
                                 <button (click)="sendVer()" style="margin-top: 15px">Submit</button>
                                 
@@ -67,4 +67,4 @@
             </div>
         </div>
     </div>
-</section>
+</section>--->

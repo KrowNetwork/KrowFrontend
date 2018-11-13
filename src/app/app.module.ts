@@ -1,6 +1,6 @@
 // Main imports
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { AppComponent } from './app.component';
 
@@ -56,6 +56,7 @@ import { ResumeAffiliationsComponent } from './applicant/applicant-resume/resume
 // Shared components
 import { ProfileInfoComponent } from './shared/profile-info/profile-info.component';
 import { BasicInfoCollectorComponent } from './shared/basic-info-collector/basic-info-collector.component';
+
 
 // Services
 import { UpdateResumeService } from './service/update-resume.service';
@@ -165,7 +166,6 @@ import { SearchComponent } from './search/search.component';
     NewEventCalendarPopupComponent,
     VerifyJobComponent,
     SearchComponent,
-
     // DeleteComponent
     
   ],
@@ -195,8 +195,10 @@ import { SearchComponent } from './search/search.component';
     EducationMainComponent,
     AchievementsMainComponent,
     MessagingPopupComponent,
-    NewEventCalendarPopupComponent
+    NewEventCalendarPopupComponent,
+    
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [ 
     UpdateResumeService,
     CognitoUtil,
