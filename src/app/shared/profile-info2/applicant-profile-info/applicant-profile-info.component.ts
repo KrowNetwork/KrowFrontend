@@ -6,7 +6,9 @@ import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { S3Service } from "../../../service/s3.service"
 import { CustomHttpService } from "../../../service/custom-http.service"
 import { log } from 'util';
-import { DataShareService } from "../../../service/data-share.service" 
+import { DataShareService } from "../../../service/data-share.service"
+import { ModalService } from '../../../service/modal.service'; 
+import { ShareLinkPopupComponent} from './share-link-popup/share-link-popup.component';
 
 @Component({
   selector: 'app-applicant-profile-info',
@@ -63,6 +65,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
     private router: Router,
     private s3service: S3Service,
     private dataService: DataShareService,
+    public modalService: ModalService,
   ) {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     console.log(this.router.url.split("/"))
@@ -86,8 +89,10 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
   
   ngOnInit() {
     
+    this.urlTWITTER = 'https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.krownetwork.com%2Fapplicant%2Fprofile-info%2F' + this.user;
+    this.urlFACEBOOK = 'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.krownetwork.com%2Fapplicant%2Fprofile-info%2F' + this.user;
+    this.urlLINKEDIN = `https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fwww.krownetwork.com%2Fapplicant%2Fprofile-info%2F${this.user}&title=Krow%20Network%20Resume%20Sharing&summary=Sharing%20my%20resume%20from%20Krow&source=KrowNetwork`;
 
-  
     this.imgURL = "https://s3.us-east-2.amazonaws.com/krow-network-profile-pics/pics/" + this.id +".png"
 
 
@@ -299,10 +304,17 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
     }
 }
 
+newEvent() {
+  this.modalService.init(ShareLinkPopupComponent,{},{});
+}
+
+removeModal() {
+  this.modalService.destroy()
+}
+
 copy() {
   alert("The public url to your resume is https://krownetwork.com/applicant/profile-info/" + this.user)
 }
-
 
 newChat() {
   this.router.navigate(["chat/" + this.id])

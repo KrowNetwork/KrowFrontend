@@ -105,6 +105,7 @@ import { VirtualScrollModule } from 'angular2-virtual-scroll';
 import { ContextMenuModule } from 'ngx-contextmenu';
 import { MessagingPopupComponent } from './messaging/messaging-popup/messaging-popup.component';
 import { NewEventCalendarPopupComponent } from './calendar/new-event-calendar-popup/new-event-calendar-popup.component';
+import { ShareLinkPopupComponent } from './shared/profile-info2/applicant-profile-info/share-link-popup/share-link-popup.component'
 import { VerifyJobComponent } from './verify-job/verify-job.component';
 import { SearchComponent } from './search/search.component';
 // import { ContextMenuService } from 'angular2-contextmenu/src/contextMenu.service';
@@ -166,6 +167,7 @@ import { SearchComponent } from './search/search.component';
     NewEventCalendarPopupComponent,
     VerifyJobComponent,
     SearchComponent,
+    ShareLinkPopupComponent
     // DeleteComponent
     
   ],
@@ -196,6 +198,7 @@ import { SearchComponent } from './search/search.component';
     AchievementsMainComponent,
     MessagingPopupComponent,
     NewEventCalendarPopupComponent,
+    ShareLinkPopupComponent
     
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

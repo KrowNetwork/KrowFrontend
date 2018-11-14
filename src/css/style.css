@@ -5233,12 +5233,51 @@ aside .widget.border:first-child {
 }
 .share-bar {
     float: left;
+    display: block;
     width: 100%;
     padding-top: 20px;
     padding-bottom: 20px;
     border-top: 1px solid #e8ecec;
     border-bottom: 1px solid #e8ecec;
 }
+
+.share-popup {
+    float: left;
+    display: block;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.share-popup > .share-bar {
+    padding-bottom: 50%;
+}
+
+.share-bar > .share-bar a {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+
+    width: 45px;
+    height: 45px;
+    line-height: 41px;
+}
+
+.share-popup button{
+    display: block;
+    position: absolute;
+    background: white;
+    color: black;
+    width:100%;
+    bottom: 0px;
+    left: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid #e8ecec;
+}
+
 .share-bar span {
     float: left;
     font-size: 16px;

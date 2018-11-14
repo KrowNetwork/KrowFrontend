@@ -11,11 +11,11 @@
 								<a href="{{ urlFACEBOOK }}" title="" class="share-fb">
 									<i class="fa fa-facebook"></i>
 								</a>
-								<a href="{{ urlTWITTER }}" title="" class="share-twitter">
+								<a href="{{ urlTWITTER }}" title="" class="twitter-share-button share-twitter" data-size="large">
 									<i class="fa fa-twitter"></i>
 								</a>
 
-								<a *ngIf="owner" (click)="copy()" title="" class="share-twitter">
+								<a *ngIf="owner" (click)="newEvent()" title="" class="share-twitter">
 									<i class="fa fa-link"></i>
 								</a>
 				 			</div>
@@ -95,3 +95,7 @@
 			</div>
 		</div>
 	</section>
+
+<div id="modal-container" class="hidden"></div>
+<div id="overlay" (click)="removeModal()" class="hidden"></div>
+
