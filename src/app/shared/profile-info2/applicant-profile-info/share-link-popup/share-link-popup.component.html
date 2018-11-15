@@ -1,10 +1,8 @@
-<div class="share-popup">
+<div *ngIf="!email" class="share-popup">
     <div class="share-bar circle">
         <div>
-            <a href="{{ urlLINKEDIN }}" title="" class="share-linkedin">
-                <i class="la la-linkedin"></i>
-            </a>
-            <p>Share via Email</p>
+            <a (click)="showEmail()">Share via Email</a>
+
         </div>
         <div>
             <a (click)="copy()" title="" class="share-fb">
@@ -17,3 +15,11 @@
     </div>
     <button (click)="close()">Close</button>
 </div>
+
+<div *ngIf="email" class="share-popup">
+    <input [(ngModel)]="addr" [ngModelOptions]="{standalone: true}" />
+    <a (click)="send(addr)">Send</a>
+
+    <button (click)="close()">Close</button>
+</div>
+

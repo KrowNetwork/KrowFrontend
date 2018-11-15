@@ -305,7 +305,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
 }
 
 newEvent() {
-  this.modalService.init(ShareLinkPopupComponent,{},{});
+  this.modalService.init(ShareLinkPopupComponent,{name: this.first + " " + this.last},{});
 }
 
 removeModal() {

@@ -66,10 +66,21 @@ export class EditComponent implements OnInit {
           var event = children[i].children[1].children[0];
 
           // Get element id that triggered event
-          var valueToChange = event.attributes[1].value;
+          var valueToChange = ""
+          var elValue = ""
+          // console.log(event.attributes)
+          // console.log(this.bio)
+          if (event.attributes[1] === undefined) {
+            valueToChange = "bio"
+            elValue = this.bio
+          } else {
+
+            valueToChange = event.attributes[1].value;
+            elValue = event.value; 
+          }
 
           // Value of element
-          var elValue = event.value; 
+           
 
 
           // Check if values match, in which case, do nothing
@@ -132,6 +143,7 @@ export class EditComponent implements OnInit {
           // console.log(data)
           this.http.put(url, data).subscribe(
             data => {
+              console.log(data)
             }, // Catch Errors
             (err: HttpErrorResponse) => {
               if (err.error instanceof Error) {
