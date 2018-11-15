@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalService } from '../../../../service/modal.service';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http'
-
+import { CustomHttpService } from '../../../../service/custom-http.service'
+import { HttpErrorResponse } from '../../../../../../node_modules/@angular/common/http';
 
 @Component({
   selector: 'app-share-link-popup',
@@ -9,11 +9,13 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http'
   styleUrls: ['./share-link-popup.component.css']
 })
 export class ShareLinkPopupComponent implements OnInit {
+    @Input() name: String;
     user: string;
-  
+    email = false;
+    addr: String;
     constructor(
       public modalService: ModalService,
-      private http: HttpClient,
+      public http: CustomHttpService
     ){
       this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     }
@@ -58,4 +60,24 @@ export class ShareLinkPopupComponent implements OnInit {
     close(){
       this.modalService.destroy()
     }
+
+    showEmail() {
+      this.email = true
+      console.log(this.name)
+    }
+
+    send(addr) {
+      var data = {
+        applicant_name: name,
+        id: this.user,
+        to: addr
+      }
+
+      this.http.post("https://api.krownetwork.com/request-verification", data).subscribe(
+        d => { 
+          this.close()
+          }, (err: HttpErrorResponse) => {
+        })
+      }
+    
 }
