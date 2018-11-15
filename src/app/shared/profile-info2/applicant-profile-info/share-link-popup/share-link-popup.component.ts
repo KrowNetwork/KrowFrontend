@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalService } from '../../../../service/modal.service';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 
 
 @Component({
@@ -12,6 +13,7 @@ export class ShareLinkPopupComponent implements OnInit {
   
     constructor(
       public modalService: ModalService,
+      private http: HttpClient,
     ){
       this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     }
@@ -19,9 +21,9 @@ export class ShareLinkPopupComponent implements OnInit {
         
     }
     copy() {
-      var textToCopy = "https://krownetwork.com/applicant/profile-info/" + this.user;
+      var textToCopy = "https://www.krownetwork.com/applicant/profile-info/" + this.user;
       var result = this.copyTextToClipboard(textToCopy);
-  }
+    }
 
     copyTextToClipboard(text) {
       var txtArea = document.createElement("textarea");
@@ -47,6 +49,10 @@ export class ShareLinkPopupComponent implements OnInit {
         document.body.removeChild(txtArea);
       }
       return false;
+    }
+
+    sendLink(){
+
     }
     
     close(){

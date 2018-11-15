@@ -313,7 +313,7 @@ removeModal() {
 }
 
 copy() {
-  alert("The public url to your resume is https://krownetwork.com/applicant/profile-info/" + this.user)
+  alert("The public url to your resume is https://www.krownetwork.com/applicant/profile-info/" + this.user)
 }
 
 newChat() {
