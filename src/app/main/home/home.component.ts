@@ -31,44 +31,27 @@ export class HomeComponent implements OnInit {
         else {
             this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
             data => {
-                console.log(data)
-                    if (data["error"] === undefined) {
-                        sessionStorage.setItem("accountType", "applicant")
-                        this.router.navigate(['/applicant']);
-                    } else {
-                        this.http.head("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
-                            data => {
-                                if (data["error"] === undefined) {
-                                    sessionStorage.setItem("accountType", "employer")
-                                    this.router.navigate(['/employer']);        
-                                
-                                } else {
-                                    this.show = true
-                                }})
-                    }
-                    
-                 
-            
-                
-               
-                    
-                
-                // console.log(data)
-                // console.log("User has an applicant account");
-                
+                sessionStorage.setItem("accountType", "applicant")
+                this.router.navigate(['/applicant']); 
             }, // Catch Errors
             (err = HttpErrorResponse) => {      
-                
-                } 
+                this.http.head("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
+                data => {
+                    sessionStorage.setItem("accountType", "employer")
+                    this.router.navigate(['/employer']);        
+                    
+                } , (err = HttpErrorResponse) => {
+                    this.show = true
+                }
                                 // console.log("User does not have an applicant acco        // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
             )
 
-                }
+            }
             
-
+        )
             
         
-        }
+        }}
     
         
     

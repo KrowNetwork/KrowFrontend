@@ -10,7 +10,7 @@ import { CustomHttpService } from '../../service/custom-http.service';
   styleUrls: ['./help.component.css']
 })
 export class HelpComponent implements OnInit {
-  msg: string;
+  msg = undefined;
   constructor(
     private http: CustomHttpService,
   ) { }
@@ -27,10 +27,10 @@ export class HelpComponent implements OnInit {
       msg: document.getElementById("message")["value"],
       to: "help@krow.network"
     }
-    this.msg = "Please wait"
+    // this.msg = "Please wait"
     this.http.post("https://api.krownetwork.com/help", msgData).subscribe(
-      data=> {
-        this.msg = "Success"
+      data => {
+        this.msg = {"success": "The email was sent!"}
       },
       
     (err: HttpErrorResponse) => {
@@ -40,7 +40,7 @@ export class HelpComponent implements OnInit {
         // console.log("Server-side error occured.");
         // console.log(err);
       }
-      this.msg = "There was an error. Please try again"
+      this.msg = {"error": "There was an error. Please try again."}
     }
     )
   }
