@@ -23,9 +23,9 @@ export class ShareLinkPopupComponent implements OnInit {
         
     }
     copy() {
-      var textToCopy = "https://krownetwork.com/applicant/profile-info/" + this.user;
+      var textToCopy = "https://www.krownetwork.com/applicant/profile-info/" + this.user;
       var result = this.copyTextToClipboard(textToCopy);
-  }
+    }
 
     copyTextToClipboard(text) {
       var txtArea = document.createElement("textarea");
@@ -51,6 +51,10 @@ export class ShareLinkPopupComponent implements OnInit {
         document.body.removeChild(txtArea);
       }
       return false;
+    }
+
+    sendLink(){
+
     }
     
     close(){
