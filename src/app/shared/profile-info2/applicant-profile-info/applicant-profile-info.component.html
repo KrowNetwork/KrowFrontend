@@ -64,14 +64,14 @@
 				 						<div class="edu-history-sec" id="experience">
 											 <h2>Work & Experience</h2>
 											 <div *ngIf="experience.length != 0">
-												 {{experience[0].present}}
 				 							<div class="edu-history style2" *ngFor="let exp of experience; let i = index">
 												<!-- <i></i> -->
 												<i class="la la-check-circle"  [ngClass]="{ 'verified': exp.verified == true}" style="font-size: 16px;  padding: 0px;"></i>
 				 								<div class="edu-hisinfo">
 				 									<h3>{{ exp.title }} <span>{{ exp.position }}</span></h3>
 				 									<i>{{ exp.startDate }} - {{ exp.endDate }}</i>
-													 <p>{{ exp.description }}</p>
+													<p>{{ exp.description }}</p>
+													<p>Skills: {{ exp.skills }}</p>
 												 </div>
 												 <!-- <button *ngIf="exp.verified != true && owner == true" (click)="reqVerify(exp.verifyID, exp.position, exp.title)" style="font-size:15px; right: -25%; position: absolute">Verify Experience</button> -->
 											 </div>

@@ -197,6 +197,8 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
               element.endDate = "Present"
             }
 
+            element.skills = element.skills.join(", ")
+
             this.experience.push(element)
           }
         }

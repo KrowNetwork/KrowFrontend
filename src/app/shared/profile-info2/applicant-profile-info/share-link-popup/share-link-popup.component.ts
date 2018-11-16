@@ -64,12 +64,12 @@ export class ShareLinkPopupComponent implements OnInit {
 
     send(addr) {
       var data = {
-        applicant_name: name,
+        applicant_name: this.name,
         id: this.user,
         to: addr
       }
 
-      this.http.post("https://api.krownetwork.com/request-verification", data).subscribe(
+      this.http.post("https://api.krownetwork.com/share-resume", data).subscribe(
         d => { 
           this.close()
           }, (err: HttpErrorResponse) => {
