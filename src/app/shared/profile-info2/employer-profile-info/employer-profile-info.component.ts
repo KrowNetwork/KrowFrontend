@@ -252,6 +252,8 @@ export class EmployerProfileInfoComponent implements OnInit {
     //     }
     //   }
     // )
+          }, (err: HttpErrorResponse) => {
+            this.router.navigate(["/login"])
           }
   )
 }
