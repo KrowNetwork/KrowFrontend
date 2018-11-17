@@ -111,7 +111,7 @@ const appRoutes: Routes = [
         component: FeedbackComponent
     },
     {
-        path: "toc",
+        path: "tac",
         component: TermsComponent
     },
     {
