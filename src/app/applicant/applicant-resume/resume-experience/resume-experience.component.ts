@@ -94,15 +94,11 @@ export class ResumeExperienceComponent implements OnInit {
   }
 
   formatDate(date) {
-    console.log(date)
-    var month = '' + (date.getMonth() + 1)
-    var day = '' + (date.getDate() + 1).toString()
-    var year = date.getFullYear()
-
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-    console.log([year, month, day].join("-"))
-    return  [year, month, day].join("-")
+    var d = date
+    console.log(d.getMonth() + 1)
+    console.log(d.getDate() + 1)
+    console.log(d.getFullYear())
+    return d
   }
   
   ngOnInit() {
@@ -122,8 +118,8 @@ export class ResumeExperienceComponent implements OnInit {
             position: resumeExperiences[k]["position"],
             title: resumeExperiences[k]["title"],
             description: resumeExperiences[k]["description"],
-            startDate: this.formatDate(new Date(resumeExperiences[k]["startDate"])),
-            endDate: this.formatDate(new Date(resumeExperiences[k]["endDate"])),
+            startDate: resumeExperiences[k]["startDate"].split('T')[0],
+            endDate: resumeExperiences[k]["endDate"],
             verified: resumeExperiences[k]['verified'],
             verifyID: resumeExperiences[k]['verifyID'],
             present: resumeExperiences[k]["present"],
@@ -133,6 +129,9 @@ export class ResumeExperienceComponent implements OnInit {
           // this.skills.forEach(element => {
           //     // this.createNew(element)
           // });
+          if (x.endDate !== undefined) {
+            x.endDate = x.endDate.split('T')[0]
+          }
           if (x.present == true) {
             x.present = "on"
           } else {

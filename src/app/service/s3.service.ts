@@ -23,6 +23,7 @@ export class S3Service {
     //     IdentityPoolId: IdentityPoolId
     //   })
     // });
+    
 
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
       IdentityPoolId : 'us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88', // your identity pool id here
@@ -31,7 +32,7 @@ export class S3Service {
           'cognito-idp.us-east-2.amazonaws.com/us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88' : localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.idToken")
       }
     });
-
+    console.log(AWS.config.credentials)
     AWS.config.update({region: "us-east-2"})
 
   //adds the S3 service, make sure the api version and bucket are correct

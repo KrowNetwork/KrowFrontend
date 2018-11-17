@@ -772,6 +772,15 @@ label::after {
     color: #202020;
     padding: 9px 25px;
 }
+
+.submitEmail {
+    /* float: left; */
+    width: 25%;
+    font-family: Open Sans;
+    font-size: 13px;
+    color: #202020;
+    padding: 9px 25px;
+}
 .menu-sec nav > ul > li > ul li:first-child > a {
     margin-top: 14px;
 }

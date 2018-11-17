@@ -68,15 +68,17 @@ export class EditComponent implements OnInit {
           // Get element id that triggered event
           var valueToChange = ""
           var elValue = ""
+          // console.log(event)
           // console.log(event.attributes)
           // console.log(this.bio)
-          if (event.attributes[1] === undefined) {
+          if (event.value === undefined) {
             valueToChange = "bio"
             elValue = this.bio
           } else {
 
             valueToChange = event.attributes[1].value;
             elValue = event.value; 
+            var found = true
           }
 
           // Value of element
@@ -91,16 +93,13 @@ export class EditComponent implements OnInit {
               change = true;
             }
           } else if(data[valueToChange] != elValue) {
-
           
 
             // Check for empty entry
-            if(elValue == ""){
-              continue;
-            }
+        
             
             // Check if url, in which case, map as json
-            else if(valueToChange.slice(0, 3) == "url"){
+            if(valueToChange.slice(0, 3) == "url"){
               var found = false;
               // Loop through current links looking for a match to update
               for(var k = 0; k < data["links"].length; k++){
@@ -128,6 +127,7 @@ export class EditComponent implements OnInit {
             else{
               // Change data value
               data[valueToChange] = elValue;
+              console.log(data[valueToChange])
               change = true;
             }
           }
@@ -140,7 +140,7 @@ export class EditComponent implements OnInit {
           data["lastUpdated"] = timestamp;
 
           // Update entry
-          // console.log(data)
+          console.log(data)
           this.http.put(url, data).subscribe(
             data => {
               console.log(data)

@@ -94,8 +94,8 @@ export class ResumeEducationComponent implements OnInit {
             new ItemType(EducationMainComponent, {
               title: resumeEducations[k]["title"],
               description: resumeEducations[k]["description"],
-              startDate:sd,
-              endDate: ed
+              startDate:sd.split('T')[0],
+              endDate: ed.split('T')[0]
             })
           );
         }

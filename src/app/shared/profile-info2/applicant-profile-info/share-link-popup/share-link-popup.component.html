@@ -1,8 +1,11 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
 <div *ngIf="!email" class="share-popup">
     <div class="share-bar circle">
         <div>
-            <a (click)="showEmail()">Share via Email</a>
-
+            <a (click)="showEmail()"><i class="fa fa-envelope"></i></a>
+            <p>Share via Email</p>
         </div>
         <div>
             <a (click)="copy()" title="" class="share-fb">
@@ -18,7 +21,7 @@
 
 <div *ngIf="email" class="share-popup">
     <input [(ngModel)]="addr" [ngModelOptions]="{standalone: true}" />
-    <a (click)="send(addr)">Send</a>
+    <a type="button" class="submitEmail" (click)="send(addr)">Send</a>
 
     <button (click)="close()">Close</button>
 </div>

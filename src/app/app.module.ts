@@ -108,6 +108,8 @@ import { NewEventCalendarPopupComponent } from './calendar/new-event-calendar-po
 import { ShareLinkPopupComponent } from './shared/profile-info2/applicant-profile-info/share-link-popup/share-link-popup.component'
 import { VerifyJobComponent } from './verify-job/verify-job.component';
 import { SearchComponent } from './search/search.component';
+import { TermsComponent } from './terms/terms.component';
+import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component';
 // import { ContextMenuService } from 'angular2-contextmenu/src/contextMenu.service';
 // import { luegg } from "angularjs-scroll-glue"
 
@@ -167,7 +169,9 @@ import { SearchComponent } from './search/search.component';
     NewEventCalendarPopupComponent,
     VerifyJobComponent,
     SearchComponent,
-    ShareLinkPopupComponent
+    ShareLinkPopupComponent,
+    TermsComponent,
+    PrivacypolicyComponent
     // DeleteComponent
     
   ],

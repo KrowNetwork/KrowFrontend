@@ -54,6 +54,8 @@ import { FeedbackComponent } from './feedback/feedback.component';
 import { MessagingComponent } from './messaging/messaging.component';
 
 import { VerifyJobComponent } from './verify-job/verify-job.component';
+import {TermsComponent} from "./terms/terms.component"
+import {PrivacypolicyComponent} from "./privacypolicy/privacypolicy.component"
 
 
 
@@ -109,23 +111,31 @@ const appRoutes: Routes = [
         component: FeedbackComponent
     },
     {
-        path: "chat",
-        component: MessagingComponent,
-        children: [
-            {
-                path: ":newChat",
-                component: MessagingComponent
-            }
-        ]
+        path: "toc",
+        component: TermsComponent
     },
     {
-        path: "calendar",
-        component: CalendarComponent
+        path: "privacypolicy",
+        component: PrivacypolicyComponent
     },
-    {
-        path: "verify/:id",
-        component: VerifyJobComponent
-    },
+    // {
+    //     path: "chat",
+    //     component: MessagingComponent,
+    //     children: [
+    //         {
+    //             path: ":newChat",
+    //             component: MessagingComponent
+    //         }
+    //     ]
+    // },
+    // {
+    //     path: "calendar",
+    //     component: CalendarComponent
+    // },
+    // {
+    //     path: "verify/:id",
+    //     component: VerifyJobComponent
+    // },
     {
         path: "search",
         component: SearchComponent
@@ -179,15 +189,15 @@ const secureHome: Routes = [
             {
                 path: "upload",
                 component: UploadPicComponent
-            },
-            {
-                path: "verify/:id",
-                component: VerifyJobComponent
-            },
-            {
-                path: "requestVerification/:id",
-                component: VerifyJobComponent
             }
+            // {
+            //     path: "verify/:id",
+            //     component: VerifyJobComponent
+            // },
+            // {
+            //     path: "requestVerification/:id",
+            //     component: VerifyJobComponent
+            // }
             // {
             //     path: "calendar",
             //     component: CalendarComponent

@@ -32,10 +32,10 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
   country: string;
   phone: string;
   email: string; 
-  urlFACEBOOK: string;
-  urlTWITTER: string;
-  urlLINKEDIN: string;
-  urlWEBSITE: string;
+  urlFACEBOOK = undefined;
+  urlTWITTER = undefined;
+  urlLINKEDIN = undefined;
+  urlWEBSITE = undefined;
 
   id: string;
 
@@ -55,7 +55,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
   imgURL: string;
   owner = false;
   forceLogin=false
-
+  location=""
   
 
   constructor(
@@ -89,12 +89,12 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
   
   ngOnInit() {
     
-    this.urlTWITTER = 'https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.krownetwork.com%2Fapplicant%2Fprofile-info%2F' + this.user;
-    this.urlFACEBOOK = 'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.krownetwork.com%2Fapplicant%2Fprofile-info%2F' + this.user;
-    this.urlLINKEDIN = `https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fwww.krownetwork.com%2Fapplicant%2Fprofile-info%2F${this.user}&title=Krow%20Network%20Resume%20Sharing&summary=Sharing%20my%20resume%20from%20Krow&source=KrowNetwork`;
+    this.urlTWITTER = false
+    this.urlFACEBOOK = false
+    this.urlLINKEDIN = false
 
-    this.imgURL = "https://s3.us-east-2.amazonaws.com/krow-network-profile-pics/pics/" + this.id +".png"
-
+    this.imgURL = "https://krow-network-profile-pics.s3.us-east-2.amazonaws.com/pics/" + this.id +".png"
+    console.log(this.imgURL)
 
     // this.http.get("https://s3.us-east-2.amazonaws.com/krow-network-profile-pics/pics/352fa0c7-5921-4782-b476-43e97f9295d1.png").subscribe(
     //   data => {
@@ -139,9 +139,32 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           this.bio = data["resume"]["biography"]
         }
 
-        bioTag.innerHTML = this.bio;
+        // bioTag.innerHTML = this.bio;
 
-        this.cityState = data["city"] + ", " + data["state"]
+        if (data["address"] != "") {
+          this.location += data["address"]
+        }
+
+        if (data["city"] != "") {
+          if (this.location != "") {
+            this.location += ", " + data["city"]
+          } else {
+            this.location += data["city"]
+          }
+        }
+
+        if (data["state"] != "") {
+          if (data["city"] != "" && this.location != "") {
+            this.location += ", " + data["state"]
+          } else {
+            this.location += data["state"]
+          }
+        }
+
+
+
+
+        // this.cityState = data["city"] + ", " + data["state"]
 
         for(var i = 0; i < data["links"].length; i++){
           var curr = data["links"][i];
