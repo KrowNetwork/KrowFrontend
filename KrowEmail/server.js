@@ -129,7 +129,7 @@ app.use(function(req, res, next) {
     })
   })
 //   https://us-18.api.mailchimp.com/3.0/lists/0d43791d4b
-  app.get("/g", (req, res, next) => {
+  app.get("/new-member", (req, res, next) => {
     var data = req.body
     var auth = "Tucker:eac99e13e104235d60828809af71d173-us18"
 
