@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
         else {
             this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
             data => {
+                console.log(data)
                 sessionStorage.setItem("accountType", "applicant")
                 this.router.navigate(['/applicant']); 
             }, // Catch Errors

@@ -1,7 +1,5 @@
 import { environment } from "../../environments/environment";
 import { Injectable } from "@angular/core";
-import {Router, ActivatedRoute, Params} from '@angular/router';
-
 import { CognitoCallback, CognitoUtil, LoggedInCallback } from "./cognito.service";
 import { AuthenticationDetails, CognitoUser, CognitoUserSession, CognitoRefreshToken } from "amazon-cognito-identity-js";
 import * as AWS from "aws-sdk/global";
@@ -42,8 +40,7 @@ export class UserLoginService {
     
     constructor(
         public cognitoUtil: CognitoUtil,
-        private http: CustomHttpService,
-        public router: Router) {
+        private http: CustomHttpService) {
     }
 
     authenticate(username: string, password: string, callback: CognitoCallback) {
@@ -125,7 +122,6 @@ export class UserLoginService {
     }
 
     isAuthenticated(callback: LoggedInCallback, force = false) {
-        // var router = Router
         if (callback == null)
             throw("UserLoginService: Callback in isAuthenticated() cannot be null");
 
@@ -139,26 +135,7 @@ export class UserLoginService {
                     callback.isLoggedIn(err, false);
                 }
                 else {  
-                    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                        IdentityPoolId : 'us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88', // your identity pool id here
-                        Logins : {
-                            // Change the key below according to the specific region your user pool is in.
-                            'cognito-idp.us-east-2.amazonaws.com/us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88' : localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.idToken")
-                        }
-                      });
-                    if (AWS.config.credentials['expired'] == true || force == true) {
-                        this.router.navigate(["/login"])
-                    }
-                    // console.log("UserLoginService: Session is " + session.isValid());
-                    // if (localStorage.getItem("tokenCreation") !== undefined) {
-                    //     var seconds = (new Date().getTime() - new Date(localStorage.getItem("tokenCreation")).getTime()) / 1000
-                    //     if (seconds > 60 * 30) {
-                    //         createNewToken = true
-                    //     }
-                    // else {
-                    //     localStorage.setItem("tokenCreation", new Date().toString())
-                    // }
-                    // }
+                    
                     callback.isLoggedIn(err, session.isValid(), );
                 }
             });
