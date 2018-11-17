@@ -5,6 +5,6 @@ import { Directive, ElementRef, ViewContainerRef } from '@angular/core';
 export class ExperienceDirective {
   constructor(public viewContainerRef: ViewContainerRef,
               private el: ElementRef) { 
-                console.log("nae", el)
+                // console.log("nae", el)
               }
 }

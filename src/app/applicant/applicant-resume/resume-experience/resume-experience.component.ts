@@ -39,52 +39,28 @@ export class ResumeExperienceComponent implements OnInit {
       .substring(1);
   }
   updateResume(event){
-    var skills = []
-    console.log(event.target.closest("app-resume-experience"))
-    var x = document.getElementById("ulTags")
-    for (var i = 0; i < x.children.length; i++) {
-      var element = x.children[i]
-      if (element.className == "addedTag") {
-        console.log(element)
-        skills.push(element.children[1].getAttribute("value"))
+    var x = document.getElementsByClassName("tags")
+    var skills_arr = []
+    for (var e = 0; e < x.length; e ++) {
+      var el = x[e]
+      var skills = []
+      for (var i = 0; i < el.children.length; i++) {
+        var element = el.children[i]
+        if (element.className == "addedTag") {
+          // console.log(element)
+          skills.push(element.children[1].getAttribute("value"))
+        }
       }
-    }
-    console.log("s", skills)
-    // console.log(event.target.closest("ul"))
-    this.updateResumeService.updateMain(event.target.closest("app-resume-experience"), skills);
+    console.log(skills)
+    skills_arr.push(skills)
+    // console.log("s", skills)
+    // console.log(el)
+    // console.log(el.closest("app-resume-experience"))
   }
-  
-  submitHandler(event){
-    if(event.target.value == ""){
-      return;
-    }
-
-    this.createNew(event.target.value);
-    event.target.value = "";
+  console.log(skills_arr)
+  this.updateResumeService.updateMain(event.target.closest("app-resume-experience"), skills_arr);
   }
 
-  createNew(skill){
-    // if(/\S/.test(skill.data.skill.toString())){
-    //   // console.log("found something");
-    //   return;
-    // }
-    var data = skill
-    var node = document.createElement("li"); 
-    node.setAttribute("class", "addedTag");
-    node.setAttribute("style", "margin-bottom: 5px; margin-top: 5px");
-    // var data = skill.data.skill.toString();
-    var span = "<span class='tagRemove'>x</span>";
-    var input = "<input type='hidden' name='tags[]' value='" + data + "'>";
-    node.innerHTML = (data + span + input);
-    node.children[0].addEventListener("click", function(){
-      this.closest(".resumeContainer").children[1].children[0].style = "margin-bottom: 15px; display: show";
-      this.parentNode.remove();
-    })
-    var ul = document.getElementById("ulTags");
-    console.log(ul)
-    ul.insertBefore(node, document.getElementById("lastNode"));
-    
-  }
 
   loadComponent(experiences) {
     if(experiences == "empty"){
@@ -99,10 +75,12 @@ export class ResumeExperienceComponent implements OnInit {
           endDate: "0000-00-00",
           verified: false,
           verifyID: this.guid(),
-          present: true
+          present: true,
+          skills: []
         })
       );
     }
+    console.log(experiences.length)
     for(var i = 0; i < experiences.length; i++){
       let experienceItem = experiences[i];
       
@@ -112,7 +90,6 @@ export class ResumeExperienceComponent implements OnInit {
       let componentRef = viewContainerRef.createComponent(componentFactory);
 
       (<InterfaceComponent>componentRef.instance).data = experienceItem.data;
-      console.log((<InterfaceComponent>componentRef.instance))
     }
   }
 
@@ -152,30 +129,31 @@ export class ResumeExperienceComponent implements OnInit {
             present: resumeExperiences[k]["present"],
             skills: resumeExperiences[k]["skills"]
           }
-          this.skills = resumeExperiences[k]['skills']
-          this.skills.forEach(element => {
-              // this.createNew(element)
-          });
+          // this.skills = resumeExperiences[k]['skills']
+          // this.skills.forEach(element => {
+          //     // this.createNew(element)
+          // });
           if (x.present == true) {
             x.present = "on"
           } else {
-            console.log("peepee")
+            // console.log("peepee")
             x.present = "off"
           }
           var y  = new ItemType(ExperienceMainComponent, x)
+          
           experiences.push(
             y
           );
-          console.log(experiences)
+        }
         if(experiences.length == 0){
           this.loadComponent("empty");
         }
         else{
           this.loadComponent(experiences);
         }
-      }}, // Catch Errors
+      }, // Catch Errors
       (err: HttpErrorResponse) => {
-        this.loadComponent("empty");
+        // this.loadComponent("empty");
         if (err.error instanceof Error) {
           // console.log("Client-side error occured.");
         } else {

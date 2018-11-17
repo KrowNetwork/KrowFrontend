@@ -41,8 +41,8 @@ export class ExperienceMainComponent implements InterfaceComponent {
     if(event.target.value == ""){
       return;
     }
-
-    this.createNew(event.target.value);
+    console.log(event)
+    this.createNew(event);
     event.target.value = "";
   }
 
@@ -51,10 +51,16 @@ export class ExperienceMainComponent implements InterfaceComponent {
     //   // console.log("found something");
     //   return;
     // }
-    var data = skill
-    var node = document.createElement("li"); 
+    var data = skill.target.value 
+    skill.target.value = ""
+    var src = skill.path[1]
+    var node = document.createElement("li");
+    var ul = src.closest(".tags");
+    // ul.appendChild(node)
     node.setAttribute("class", "addedTag");
     node.setAttribute("style", "margin-bottom: 5px; margin-top: 5px");
+    // node.set
+    console.log(node)
     // var data = skill.data.skill.toString();
     var span = "<span class='tagRemove'>x</span>";
     var input = "<input type='hidden' name='tags[]' value='" + data + "'>";
@@ -63,8 +69,9 @@ export class ExperienceMainComponent implements InterfaceComponent {
       this.closest(".resumeContainer").children[1].children[0].style = "margin-bottom: 15px; display: show";
       this.parentNode.remove();
     })
-    var ul = document.getElementById("ulTags");
-    ul.insertBefore(node, document.getElementById("lastNode"));
+    // var ul = src.closest(".tags");
+    console.log(src)
+    ul.insertBefore(node, src.closest("li"));
   }
 
   removeSkill(event){

@@ -77,6 +77,7 @@ export class TopBarComponent implements OnInit {
   isLoggedIn(message: string, isLoggedIn: boolean) {
     if (isLoggedIn) {
       this.isLoggedInB = true
+      console.log(this.isLoggedInB)
       // sessionStorage.setItem("redirectBack", this.router.url)
       //   // this.router.navigate(['/login']);
     }

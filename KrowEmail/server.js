@@ -443,7 +443,7 @@ app.post("/share-resume", (req, res, next) => {
     var applicant_name = req.body.applicant_name
     var id = req.body.id
 
-    var link = "https://krownetwork.com/applicant/profile-info/" + id
+    var link = "https://www.krownetwork.com/applicant/profile-info/" + id
 
     var sender = nodeMailer.createTransport({
         host: "smtp.1and1.com",

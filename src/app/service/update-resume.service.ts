@@ -18,7 +18,7 @@ export class UpdateResumeService {
           .substring(1);
       }
 
-    async updateMain(dom, skills=undefined){
+    async updateMain(dom, skills_arr=undefined){
         var currAttribute = dom.localName.slice(11);
         var componentsList = dom.children[0].children[0].children;
         console.log(componentsList)
@@ -53,7 +53,8 @@ export class UpdateResumeService {
                         // console.log(currType)
                         if(currAttribute == "experience" && currType == "skills"){
                             // value = "PROFESSIONALWORK";
-                            value = skills
+                            value = skills_arr[0]
+                            skills_arr.shift()
                             console.log("v", value)
                             currJson.push({
                                 type: "verified",
@@ -155,10 +156,10 @@ export class UpdateResumeService {
                         if (newData.length != 0) {
                             for (var i = 0; i < data['resume'][attribute].length; i += 1) {
                                 
-                                if (newData[i].verified !== undefined || data['resume'][attribute][i].verified !== undefined) {
-                                    newData[i].verified = data['resume'][attribute][i].verified
-                                    newData[i].verifyID = data['resume'][attribute][i].verifyID
-                                }
+                                // if (newData[i].verified !== undefined || data['resume'][attribute][i].verified !== undefined) {
+                                //     newData[i].verified = data['resume'][attribute][i].verified
+                                //     newData[i].verifyID = data['resume'][attribute][i].verifyID
+                                // }
                                 // if (data['resume'][attribute][i].present === undefined) {
                                 //     newData[i].present = false
                                 // }

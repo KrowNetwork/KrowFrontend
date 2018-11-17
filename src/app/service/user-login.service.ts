@@ -1,5 +1,7 @@
 import { environment } from "../../environments/environment";
 import { Injectable } from "@angular/core";
+import {Router, ActivatedRoute, Params} from '@angular/router';
+
 import { CognitoCallback, CognitoUtil, LoggedInCallback } from "./cognito.service";
 import { AuthenticationDetails, CognitoUser, CognitoUserSession, CognitoRefreshToken } from "amazon-cognito-identity-js";
 import * as AWS from "aws-sdk/global";
@@ -40,7 +42,8 @@ export class UserLoginService {
     
     constructor(
         public cognitoUtil: CognitoUtil,
-        private http: CustomHttpService) {
+        private http: CustomHttpService,
+        public router: Router) {
     }
 
     authenticate(username: string, password: string, callback: CognitoCallback) {
@@ -122,6 +125,7 @@ export class UserLoginService {
     }
 
     isAuthenticated(callback: LoggedInCallback, force = false) {
+        // var router = Router
         if (callback == null)
             throw("UserLoginService: Callback in isAuthenticated() cannot be null");
 
@@ -143,18 +147,7 @@ export class UserLoginService {
                         }
                       });
                     if (AWS.config.credentials['expired'] == true || force == true) {
-                        var refresh_token = session.getRefreshToken()
-                        var idToken = session.getIdToken().getJwtToken()
-                        cognitoUser.refreshSession(refresh_token, (err, session) => {
-                            if (err) console.log(err) 
-                            else {
-                                // console.log(session.getIdToken().getJwtToken())
-                                // (<AWS.CognitoIdentityCredentials> AWS.config.credentials).params["logins"]['cognito-idp.us-east-2.amazonaws.com/us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88']  = idToken
-                                (<AWS.CognitoIdentityCredentials> AWS.config.credentials).refresh((err) => {
-                                    console.log(err)
-                                })
-                            }
-                        })
+                        this.router.navigate(["/login"])
                     }
                     // console.log("UserLoginService: Session is " + session.isValid());
                     // if (localStorage.getItem("tokenCreation") !== undefined) {
