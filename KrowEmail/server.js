@@ -131,11 +131,9 @@ app.use(function(req, res, next) {
 //   https://us-18.api.mailchimp.com/3.0/lists/0d43791d4b
   app.post("/new-member", (req, res, next) => {
     var data = req.body
-    var auth = "eac99e13e104235d60828809af71d173-us18"
+    var auth = new Buffer('any:eac99e13e104235d60828809af71d173-us18' ).toString('base64'))
 
-        request.post("https://us18.api.mailchimp.com/3.0/lists/0d43791d4b/members/")
-            .setHeader('Authorization', 'Basic ' + new Buffer('any:' + auth ).toString('base64'))
-            .send(data).end(function(err, response) {//, {headers: {"Authorization":auth}, json: data}, function(err, res2) {
+        request.post("https://us18.api.mailchimp.com/3.0/lists/0d43791d4b/members/", {headers: {"Authorization":"Basic " + auth}, json: data}, function(err, res2) {
             if (err) {
                 console.log(err)
                 res.send(400, new Error(err));
