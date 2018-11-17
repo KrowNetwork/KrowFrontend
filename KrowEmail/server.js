@@ -80,12 +80,12 @@ app.use(function(req, res, next) {
 
     cognitoExpress.validate(accessTokenFromClient, function(err, response) {
         if (err) {
-            res.send(401, {error: "incorrect access token"})
+            res.send(401, new Error("incorrect access token"))
         } else {
             exec("aws cognito-idp admin-delete-user --user-pool-id us-east-2_THcotoVBG --username " + req.body.id, (error, stdout, stderr) => 
         {
             if (error) {
-                res.send(500, {error: "internal server error"})
+                res.send(500, new Error("internal server error"))
             } else {
                 res.send(200, {success: "the applicant was deleted"})
             }
@@ -93,7 +93,7 @@ app.use(function(req, res, next) {
         request.delete("http://18.220.46.51:3000/api/Applicant/" + id, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
             if (err) {
                 // // console.log(err)
-                res.send(400, {error: err});
+                res.send(400, new Error(err));
             } else {
                 res.send(200, res2.body)
             }
@@ -109,7 +109,7 @@ app.use(function(req, res, next) {
     request.get("http://18.220.46.51:4200/search?term=" + term + "&key=" + key, function(err, res2) {
         if (err) {
             // // console.log(err)
-            res.send(400, {error: err});
+            res.send(400, new Error(err));
         } else {
             res.send(200, res2.body)
         }
@@ -122,7 +122,7 @@ app.use(function(req, res, next) {
     request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
         if (err) {
             // // console.log(err)
-            res.send(400, {error: err});
+            res.send(400, new Error(err));
         } else {
             res.send(200, res2.body)
         }
@@ -137,7 +137,7 @@ app.use(function(req, res, next) {
         request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
             if (err) {
                 // // console.log(err)
-                res.send(400, {error: err});
+                res.send(400, new Error(err));
             } else {
                 res.send(200, res2.body)
             }
@@ -148,12 +148,12 @@ app.use(function(req, res, next) {
 
     cognitoExpress.validate(accessTokenFromClient, function(err, response) {
         if (err) {
-            res.send(401, {error: "incorrect access token"})
+            res.send(401, new Error("incorrect access token"))
         } else {
             request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
                 if (err) {
                     // // console.log(err)
-                    res.send(400, {error: err});
+                    res.send(400, new Error(err));
                 } else {
                     res.send(200, res2.body)
                 }
@@ -177,12 +177,12 @@ app.use(function(req, res, next) {
     
         cognitoExpress.validate(accessTokenFromClient, function(err, response) {
             if (err) {
-                res.send(401, {error: "incorrect access token"})
+                res.send(401, new Error("incorrect access token"))
             } else {
                 request.post(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}, json: data}, function(err, res2) {
                     if (err) {
                         // // console.log(err)
-                        res.send(400, {error: err});
+                        res.send(400, new Error(err));
                     } else {
                         res.send(200, res2.body)
                     }
@@ -211,7 +211,7 @@ app.use(function(req, res, next) {
         request.post("http://18.220.46.51:3000/api/VerifyJobExp",  {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}, json: data}, function(err, res2) {
             if (err) {
                 // console.log(err)
-                res.send(400, {error: err});
+                res.send(400, new Error(err));
             } else {
                 res.send(200, res2.body)
             }
@@ -231,7 +231,7 @@ app.use(function(req, res, next) {
                 request.put(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}, json: data}, function(err, res2) {
                     if (err) {
                         // console.log(err)
-                        res.send(400, {error: err});
+                        res.send(400, new Error(err));
                     } else {
                         res.send(200, res2.body)
                     }
