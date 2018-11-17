@@ -4,6 +4,7 @@ import { CreateUserService } from '../service/create-user.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { UserLoginService } from '../service/user-login.service';
 import { CustomHttpService } from '../service/custom-http.service';
+import { StringDoubleMap } from '../../../node_modules/aws-sdk/clients/gamelift';
 declare var $: any;
 
 @Component({
@@ -16,8 +17,12 @@ export class HomepageComponent implements OnInit {
   isLoggedInB = false;
   btnText: string;
   term: String;
+  firstName: String
+  lastName: String
+  email: String
   constructor(
     public http: CustomHttpService,
+    public http2: HttpClient,
     private createUser: CreateUserService,
     private activatedRoute: ActivatedRoute,
     public userService: UserLoginService,
@@ -138,6 +143,25 @@ toggleMenu() {
 
   search() {
     this.router.navigate(["/search"], { queryParams: { term: this.term } })
+  }
+
+  submit() {
+    var d = {
+      "email_address": this.email,
+      "status": "subscribed",
+      "merge_fields": {
+          "FNAME": this.firstName,
+          "LNAME": this.lastName
+      }
+  }
+  this.http2.post("https://api.krownetwork.com/new-member", d).subscribe(
+    data => {
+      console.log(data)
+      this.email = ""
+      this.firstName = ""
+      this.lastName = ""
+    }
+  )
   }
 
 }
