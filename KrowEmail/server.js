@@ -141,7 +141,7 @@ app.use(function(req, res, next) {
                 res.send(200, res2.body)
             }
         })
-    }
+    })
   
 
   app.get("/g", (req, res, next) => {
