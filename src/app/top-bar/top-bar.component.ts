@@ -111,8 +111,13 @@ toggleMenu() {
 });
 }
 
+
   ngOnInit() {
     // console.log("c")
+  }
+
+  removeModal() {
+    // this.modalService.destroy()
   }
 
   bigBtn() {

@@ -317,6 +317,8 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
 
           // // console.log(this.experience)
         
+      }, (err: HttpErrorResponse) => {
+            this.router.navigate(["/login"])
       }
     )
   
