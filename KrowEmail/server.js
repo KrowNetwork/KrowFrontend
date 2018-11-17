@@ -135,7 +135,7 @@ app.use(function(req, res, next) {
 
         request.post("https://us-18.api.mailchimp.com/3.0/lists/0d43791d4b", {headers: {"Authorization":auth}, json: data}, function(err, res2) {
             if (err) {
-                // // console.log(err)
+                console.log(err)
                 res.send(400, new Error(err));
             } else {
                 res.send(200, res2.body)
