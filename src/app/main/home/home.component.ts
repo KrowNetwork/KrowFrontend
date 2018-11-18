@@ -14,6 +14,7 @@ declare let AWSCognito: any;
 })
 export class HomeComponent implements OnInit {
     show=false;
+    user: String
     constructor(
         public router: Router, 
         public userService: UserLoginService,
@@ -23,13 +24,29 @@ export class HomeComponent implements OnInit {
         // console.log("Secure Home Component: constructor");
         this.userService.isAuthenticated(this)
 
-        var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
-        if(!user){
-            this.router.navigate(['/login']);
-        }
+        this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+        // if(!user){
+        //     this.router.navigate(['/login']);
+        // }
+        console.log(this.user)
 
-        else {
-            this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
+            
+            
+        
+        }
+    
+        
+    
+
+    // user: string;
+    token: string;
+
+    // $window.onload = function() {
+
+    // }
+
+    ngOnInit() {
+        this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).subscribe(
             data => {
                 console.log(data)
                 if (data['error'] === undefined) {
@@ -38,7 +55,7 @@ export class HomeComponent implements OnInit {
                     this.router.navigate(['/applicant']); 
                 } else {     
                     console.log("f") 
-                this.http.head("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
+                this.http.head("http://18.220.46.51:3000/api/Employer/" + this.user).subscribe(
                 data => {
                     if (data['error'] === undefined) {
 
@@ -56,21 +73,6 @@ export class HomeComponent implements OnInit {
             } }
             
         )
-            
-        
-        }}
-    
-        
-    
-
-    user: string;
-    token: string;
-
-    // $window.onload = function() {
-
-    // }
-
-    ngOnInit() {
     }
 
     initializeApplicant(){
@@ -85,6 +87,7 @@ export class HomeComponent implements OnInit {
     }
 
     isLoggedIn(message: string, isLoggedIn: boolean) {
+        console.log(isLoggedIn)
         if (!isLoggedIn) {
             this.router.navigate(['/login']);
         }

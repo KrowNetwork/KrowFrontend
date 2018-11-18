@@ -141,14 +141,19 @@ export class UserLoginService {
                     //     }
 
                     } else {
-                        callback.isLoggedIn(err, session.isValid())
+
+                        callback.isLoggedIn(err, true)
                     }})
+
                     // console.log("UserLoginService: Couldn't get the session: " + err, err.stack);
-                    callback.isLoggedIn("cant get user", false);
+                    // callback.isLoggedIn("cant get user", false);
+                    // return
                 }
                 else {
+
             // console.log("UserLoginService: can't retrieve the current user");
             callback.isLoggedIn("Can't retrieve the CurrentUser", false);
+            return
         }
         // if (createNewToken) {
         //     // this.cognitoUtil.newToken(cognitoUser);
