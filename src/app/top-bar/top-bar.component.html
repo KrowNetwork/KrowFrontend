@@ -9,10 +9,11 @@
 					<div class="res-logo"><a href="index.html" title=""><img src="assets/images/top-bar-logo.png" alt="Krow Network Logo" /></a></div>
 					<div class="menu-resaction">
 							<a class="res-openmenu" (click)="openMenu()">
-									<img src="images/icon.png" alt="" /> Menu
+									<!-- <img src="images/icon.png" alt="" /> Menu -->
+									<h3><i class="la la-bars" style="color: white"></i></h3>
 								</a>
 								<a class="res-closemenu" (click)="closeMenu()">
-									<img src="images/icon2.png" alt="" /> Close
+										<h3><i class="la la-close" style="color: white"></i></h3>
 								</a>
 					</div>
 				</div>
@@ -31,7 +32,10 @@
 										<a [routerLink]="['/']" routerLinkActive="active">Home</a>
 								</li>
 								<li *ngIf="isLoggedInB">
-										<a (click)="goToProfile()" style="color:#96a0bd">Saved Resumes</a>
+										<a (click)="goToProfile()" style="color:#96a0bd">Profile</a>
+								</li>
+								<li *ngIf="isLoggedInB">
+										<a role="button" (click)="goToFeedback()" style="color:#96a0bd">Feedback</a>
 									</li>
 									<!-- <li [hidden]="!isLoggedInB" class="menu-item-has-children" >
 											<a style="color: #96a0bd" (click)="toggleMenu()">Jobs</a>

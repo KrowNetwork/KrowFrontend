@@ -30,7 +30,7 @@ export class AppComponent implements OnInit, LoggedInCallback {
 
   ngOnInit() {
     if ((typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1)) {
-      alert("Mobile support is not fully integrated. Proceed at your own risk")
+      alert("Mobile support is not fully integrated. Proceed at your own risk. Use PC or Mac for full functionality.")
     } // this.userService.isAuthenticated(this);
   }
   
