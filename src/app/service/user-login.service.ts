@@ -6,6 +6,7 @@ import * as AWS from "aws-sdk/global";
 import * as STS from "aws-sdk/clients/sts";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { CustomHttpService } from "./custom-http.service"
+import { createAotUrlResolver } from "../../../node_modules/@angular/compiler";
 
 @Injectable()
 export class UserLoginService {
@@ -126,28 +127,26 @@ export class UserLoginService {
             throw("UserLoginService: Callback in isAuthenticated() cannot be null");
 
         let cognitoUser = this.cognitoUtil.getCurrentUser();
-        // console.log(cognitoUser)
         var createNewToken=false;
         if (cognitoUser != null) {
             cognitoUser.getSession(function (err, session) {
                 if (err) {
-                    cognitoUser.refreshSession(session.getRefreshToken().getJwtToken(), (err, session) => {
-                        if (err) {
-                            localStorage.clear()
-                            callback.isLoggedIn(err, false)
-                        } else {
-                            callback.isLoggedIn(session, true)
-                        }
-                    })
+                    // cognitoUser.refreshSession(refreshToken, (err, session) => {
+                    //     if (err) {
+                        localStorage.clear()
+                        callback.isLoggedIn(err, false)
+                    //     } else {
+                    //         callback.isLoggedIn(session, true)
+                    //         console.log(session)
+                    //     }
+
+                    } else {
+                        callback.isLoggedIn(err, session.isValid())
+                    }})
                     // console.log("UserLoginService: Couldn't get the session: " + err, err.stack);
-                    callback.isLoggedIn(err, false);
+                    callback.isLoggedIn("cant get user", false);
                 }
-                else {  
-                    
-                    callback.isLoggedIn(session, true)
-                }
-            });
-        } else {
+                else {
             // console.log("UserLoginService: can't retrieve the current user");
             callback.isLoggedIn("Can't retrieve the CurrentUser", false);
         }
