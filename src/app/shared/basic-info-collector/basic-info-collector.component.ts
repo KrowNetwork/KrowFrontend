@@ -26,7 +26,7 @@ export class BasicInfoCollectorComponent implements OnInit {
     city: string;
     country: string;
     phoneNumber: string;
-    errorMessage: string;
+    errorMessage = null;
     collectInfoOn = true;
     uploadImageOn = false;
   
@@ -53,7 +53,7 @@ export class BasicInfoCollectorComponent implements OnInit {
             return;
         }
         else{
-            this.errorMessage = "";
+            this.errorMessage = null;
             if (this.intent == "Applicant") {
                 var obj = {
                     user: this.user,

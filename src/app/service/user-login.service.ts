@@ -131,12 +131,20 @@ export class UserLoginService {
         if (cognitoUser != null) {
             cognitoUser.getSession(function (err, session) {
                 if (err) {
+                    cognitoUser.refreshSession(session.getRefreshToken().getJwtToken(), (err, session) => {
+                        if (err) {
+                            localStorage.clear()
+                            callback.isLoggedIn(err, false)
+                        } else {
+                            callback.isLoggedIn(session, true)
+                        }
+                    })
                     // console.log("UserLoginService: Couldn't get the session: " + err, err.stack);
                     callback.isLoggedIn(err, false);
                 }
                 else {  
                     
-                    callback.isLoggedIn(err, session.isValid(), );
+                    callback.isLoggedIn(session, true)
                 }
             });
         } else {

@@ -71,8 +71,8 @@ export class ResumeExperienceComponent implements OnInit {
           position: "",
           title: "",
           description: "",
-          startDate: "0000-00-00",
-          endDate: "0000-00-00",
+          startDate: "0000-00",
+          endDate: "0000-00",
           verified: false,
           verifyID: this.guid(),
           present: true,
@@ -118,7 +118,7 @@ export class ResumeExperienceComponent implements OnInit {
             position: resumeExperiences[k]["position"],
             title: resumeExperiences[k]["title"],
             description: resumeExperiences[k]["description"],
-            startDate: resumeExperiences[k]["startDate"].split('T')[0],
+            startDate: resumeExperiences[k]["startDate"].split('T')[0].slice(0, -3),
             endDate: resumeExperiences[k]["endDate"],
             verified: resumeExperiences[k]['verified'],
             verifyID: resumeExperiences[k]['verifyID'],
@@ -130,7 +130,7 @@ export class ResumeExperienceComponent implements OnInit {
           //     // this.createNew(element)
           // });
           if (x.endDate !== undefined) {
-            x.endDate = x.endDate.split('T')[0]
+            x.endDate = x.endDate.split('T')[0].slice(0, -3)
           }
           if (x.present == true) {
             x.present = "on"

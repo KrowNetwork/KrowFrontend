@@ -17,6 +17,9 @@ import { ShareLinkPopupComponent} from './share-link-popup/share-link-popup.comp
 })
 
 export class ApplicantProfileInfoPrivateComponent implements OnInit {
+  monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+  ];
 
   tjL = 0;
 
@@ -190,11 +193,13 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           this.education = []
           for (var i = 0; i < data["resume"]["education"].length; i ++) {
             var element = data["resume"]["education"][i]
-            element["startDate"] = new Date(element["startDate"])
-            element["startDate"] = ((element["startDate"].getMonth() + 1).toString()) + '/' + (element["startDate"].getDate() + 1).toString() + '/' +  element["startDate"].getFullYear().toString()
+            var d = new Date(element["startDate"])
+            element["startDate"] = this.monthNames[d.getMonth() + 1] + " " + d.getFullYear().toString()
             
-            element["endDate"] = new Date(element["endDate"])
-            element["endDate"] = ((element["endDate"].getMonth() + 1).toString()) + '/' + (element["endDate"].getDate() + 1).toString() + '/' +  element["endDate"].getFullYear().toString()
+            //((element["startDate"].getMonth() + 1).toString())  + '/' +  element["startDate"].getFullYear().toString()
+            
+            d = new Date(element["endDate"])
+            element["endDate"] = this.monthNames[d.getMonth() + 1] + " " + d.getFullYear().toString()
             this.education.push(element)
             console.log(element)
           }
@@ -211,10 +216,10 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           for (var i = 0; i < data["resume"]["experience"].length; i ++) {
             var element = data["resume"]["experience"][i]
             var s = new Date(element["startDate"])
-            element["startDate"] = (s.getMonth() + 1).toString() + '/' + (s.getDate() + 1).toString() + '/' +  s.getFullYear().toString()
+            element["startDate"] = this.monthNames[s.getMonth() + 1] + " " + s.getFullYear().toString()
             
             var e = new Date(element["endDate"])
-            element["endDate"] = (e.getMonth() + 1).toString() + '/' + (e.getDate() + 1).toString() + '/' +  e.getFullYear().toString()
+            element["endDate"] = this.monthNames[e.getMonth() + 1] + " " + e.getFullYear().toString()
             
             if (element.present == true) {
               element.endDate = "Present"
