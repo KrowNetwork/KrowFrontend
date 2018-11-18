@@ -1,6 +1,6 @@
 // Main imports
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { AppComponent } from './app.component';
 
@@ -57,7 +57,6 @@ import { ResumeAffiliationsComponent } from './applicant/applicant-resume/resume
 import { ProfileInfoComponent } from './shared/profile-info/profile-info.component';
 import { BasicInfoCollectorComponent } from './shared/basic-info-collector/basic-info-collector.component';
 
-
 // Services
 import { UpdateResumeService } from './service/update-resume.service';
 import { CognitoUtil } from './service/cognito.service';
@@ -105,16 +104,16 @@ import { VirtualScrollModule } from 'angular2-virtual-scroll';
 import { ContextMenuModule } from 'ngx-contextmenu';
 import { MessagingPopupComponent } from './messaging/messaging-popup/messaging-popup.component';
 import { NewEventCalendarPopupComponent } from './calendar/new-event-calendar-popup/new-event-calendar-popup.component';
-import { ShareLinkPopupComponent } from './shared/profile-info2/applicant-profile-info/share-link-popup/share-link-popup.component'
 import { VerifyJobComponent } from './verify-job/verify-job.component';
 import { SearchComponent } from './search/search.component';
-import { TermsComponent } from './terms/terms.component';
-import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component';
 // import { ContextMenuService } from 'angular2-contextmenu/src/contextMenu.service';
 // import { luegg } from "angularjs-scroll-glue"
-
-
-
+import {TermsComponent} from "./terms/terms.component"
+import {PrivacypolicyComponent} from "./privacypolicy/privacypolicy.component"
+import { AdminLoginComponent } from "./admin/admin-login/admin-login.component";
+import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
+import { UserSearchComponent } from './admin/user-search/user-search.component'
+import {ShareLinkPopupComponent} from "./shared/profile-info2/applicant-profile-info/share-link-popup/share-link-popup.component"
 
 @NgModule({
   declarations: [
@@ -169,9 +168,12 @@ import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component'
     NewEventCalendarPopupComponent,
     VerifyJobComponent,
     SearchComponent,
-    ShareLinkPopupComponent,
     TermsComponent,
-    PrivacypolicyComponent
+    PrivacypolicyComponent,
+    AdminLoginComponent,
+    AdminHomeComponent,
+    UserSearchComponent,
+    ShareLinkPopupComponent
     // DeleteComponent
     
   ],
@@ -201,11 +203,8 @@ import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component'
     EducationMainComponent,
     AchievementsMainComponent,
     MessagingPopupComponent,
-    NewEventCalendarPopupComponent,
-    ShareLinkPopupComponent
-    
+    NewEventCalendarPopupComponent
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [ 
     UpdateResumeService,
     CognitoUtil,

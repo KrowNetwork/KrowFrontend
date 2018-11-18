@@ -51,11 +51,19 @@ export class CustomHttpService{
   }
 
   get(url, data=undefined) {
-    console.log(this.token)
+    // console.log(this.token)
     var oUrl = "https://api.krownetwork.com/g?url=" + url + "&token=" + this.token
+    console.log(oUrl)
     // let headers = new Headers();
-      return this.http.get(oUrl);
-    
+     var x =  this.http.get(oUrl, data);
+      console.log(x)
+      return x
+  }
+
+  query(data) {
+    var url = "https://api.krownetwork.com/query?token=" + this.token
+    console.log(url)
+    return this.http.post(url, data)
   }
 
   search(term) {

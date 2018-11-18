@@ -57,6 +57,9 @@ import { VerifyJobComponent } from './verify-job/verify-job.component';
 import {TermsComponent} from "./terms/terms.component"
 import {PrivacypolicyComponent} from "./privacypolicy/privacypolicy.component"
 
+import { AdminLoginComponent } from "./admin/admin-login/admin-login.component"
+import { AdminHomeComponent } from './admin/admin-home/admin-home.component'
+import { UserSearchComponent } from './admin/user-search/user-search.component'
 
 
 const appRoutes: Routes = [
@@ -139,6 +142,10 @@ const appRoutes: Routes = [
     {
         path: "search",
         component: SearchComponent
+    },
+    {
+        path: "admin-login",
+        component: AdminLoginComponent
     }
 
 ];
@@ -206,6 +213,20 @@ const secureHome: Routes = [
             //     path: "delete",
             //     component: DeleteComponent
             // }
+        ]
+    },
+    {
+        path: 'admin',
+        children: [
+            {
+                path: "home",
+                component: AdminHomeComponent
+            },
+            {
+                path: "user-search",
+                component: UserSearchComponent
+
+            }
         ]
     },
     { 

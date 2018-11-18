@@ -323,6 +323,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           // // console.log(this.experience)
         
       }, (err: HttpErrorResponse) => {
+        localStorage.clear()
             this.router.navigate(["/login"])
       }
     )

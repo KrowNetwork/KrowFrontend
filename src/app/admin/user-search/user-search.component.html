@@ -1,0 +1,61 @@
+<section>
+    <div class="block remove-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="account-popup-area signin-popup-box static">
+                        <div class="account-popup">	
+                            <h1 style="color: #141f72; font-weight: 700">User Search</h1>	
+                            <div *ngIf="errorMessage!=null" class="alert alert-danger">
+                                <i class="la la-exclamation"></i>
+                                {{ errorMessage }}
+                            </div>	
+                            <form style="margin-top: 0">
+                                <div class="cfield">
+                                    <input id="name" required type="name" placeholder="First Name" class="form-control" 
+                                        [(ngModel)]="fname" [ngModelOptions]="{standalone: true}">
+                                    <i class="la la-envelope"></i>
+                                </div>
+                                <div class="cfield">
+                                    <input id="name" required type="name" placeholder="Last Name" class="form-control" 
+                                        [(ngModel)]="lname" [ngModelOptions]="{standalone: true}">
+                                    <i class="la la-envelope"></i>
+                                </div>
+                                <button (click)="search()" style="margin-top: 0">Search</button>
+                                
+                            </form>
+                            <h1>OR</h1>
+                            <form style="margin-top: 0">
+                                <div class="cfield">
+                                    <input id="userID" required type="name" placeholder="Applicant ID" class="form-control" 
+                                        [(ngModel)]="userID" [ngModelOptions]="{standalone: true}">
+                                    <i class="la la-envelope"></i>
+                                </div>
+                                <button (click)="searchID()" style="margin-top: 0">Search</button>
+                                
+                            </form>
+                            <div>
+                              <ul *ngFor="let user of users">
+                                <p>{{ user.applicantID }}</p>
+                                <p>{{ user.firstName }} {{ user.lastName }}</p>
+                                <p>{{ user.email }}</p>
+                                <p>{{ user.lastUpdated }}</p>
+                                <a type="button" href="https://www.krownetwork.com/applicant/profile-info/{{ user.applicantID }}">Page</a>
+                                <a href="https://us-east-2.console.aws.amazon.com/cognito/users/?region=us-east-2#/pool/us-east-2_THcotoVBG/users/{{ user.applicantID }}?_k=xg1nsl">View on AWS</a>
+                                <!-- <button (click)="inspect(user)">Inpsect</button> -->
+                              </ul>
+                            </div>
+                            <!-- <div class="extra-login">
+                                <span>Or (Coming Soon)</span>
+                                <div class="login-social">
+                                    <a class="fb-login" href="#" title=""><i class="fa fa-facebook"></i></a>
+                                    <a class="goo-login" href="#" title=""><i class="fa fa-google"></i></a>
+                                </div>
+                            </div> -->
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

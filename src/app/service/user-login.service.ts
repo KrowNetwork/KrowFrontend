@@ -43,6 +43,16 @@ export class UserLoginService {
         public cognitoUtil: CognitoUtil,
         private http: CustomHttpService) {
     }
+    getUser(username) {
+        let userData = {
+            Username: username,
+            Pool: this.cognitoUtil.getUserPool()
+        };
+
+        // console.log("UserLoginService: Params set...Authenticating the user");
+        let cognitoUser = new CognitoUser(userData);
+        return cognitoUser
+    }
 
     authenticate(username: string, password: string, callback: CognitoCallback) {
         // console.log("UserLoginService: starting the authentication");
@@ -120,6 +130,52 @@ export class UserLoginService {
         this.cognitoUtil.getCurrentUser().signOut();
         localStorage.clear()
         sessionStorage.clear()
+
+        
+    }
+
+    isAdmin(callback: LoggedInCallback, force = false) {
+        if (callback == null)
+            throw("UserLoginService: Callback in isAuthenticated() cannot be null");
+
+        let cognitoUser = this.cognitoUtil.getCurrentUser();
+        var createNewToken=false;
+        if (cognitoUser != null) {
+            cognitoUser.getSession(function (err, session) {
+                // console.log()
+                if (err) {
+                    // cognitoUser.refreshSession(refreshToken, (err, session) => {
+                    //     if (err) {
+                        localStorage.clear()
+                        callback.isLoggedIn(err, false)
+                    //     } else {
+                    //         callback.isLoggedIn(session, true)
+                    //         console.log(session)
+                    //     }
+
+                    } else {
+                        if (session.getIdToken().payload['cognito:groups'][0] == "Admin")
+                            callback.isLoggedIn(err, true)
+                        else {
+                            localStorage.clear()
+                            callback.isLoggedIn(err, false)
+                        }
+                    }})
+
+                    // console.log("UserLoginService: Couldn't get the session: " + err, err.stack);
+                    // callback.isLoggedIn("cant get user", false);
+                    // return
+                }
+                else {
+
+            // console.log("UserLoginService: can't retrieve the current user");
+            callback.isLoggedIn("Can't retrieve the CurrentUser", false);
+            return
+        }
+        // if (createNewToken) {
+        //     // this.cognitoUtil.newToken(cognitoUser);
+        //     localStorage.setItem("tokenCreation", new Date().toString())
+        // }
     }
 
     isAuthenticated(callback: LoggedInCallback, force = false) {
