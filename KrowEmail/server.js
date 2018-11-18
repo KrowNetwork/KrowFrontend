@@ -212,6 +212,36 @@ app.use(function(req, res, next) {
             
         });
 
+    app.post("/query", (req, res, next) => {
+        // var url = req.query.url
+        var accessTokenFromClient = req.query.token;
+        var data = req.body
+        // var qry = req.body.query
+        var url = req.body.url
+        // // console.log(data)
+    
+        cognitoExpress.validate(accessTokenFromClient, function(err, response) {
+            if (err) {
+                res.send(401, new Error("incorrect access token"))
+            } else {
+                request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
+                    if (err) {
+                        // // console.log(err)
+                        res.send(400, new Error(err));
+                    } else {
+                        res.send(200, res2.body)
+                    }
+                })
+                }
+            })
+                //     if (err) res.send(400, {"res": "error"});
+                //     else res.send(200, {"res": "success"})
+                // })
+    
+                // qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv
+            
+        });
+
     app.post("/verify", (req, res, next) => {
         var applicant = req.body.applicant
         var verifyID = req.body.verifyID 
