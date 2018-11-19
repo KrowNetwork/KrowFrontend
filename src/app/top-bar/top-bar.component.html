@@ -36,6 +36,7 @@
 								</li>
 								<li *ngIf="isLoggedInB">
 										<a role="button" (click)="goToFeedback()" style="color:#96a0bd">Feedback</a>
+
 									</li>
 									<!-- <li [hidden]="!isLoggedInB" class="menu-item-has-children" >
 											<a style="color: #96a0bd" (click)="toggleMenu()">Jobs</a>
@@ -106,9 +107,7 @@
                 <a role="button" (click)="goToFeedback()" style="color:#ffffff">Feedback</a>
               </li>              
 							<!-- <li>
->>>>>>> b77c2e2c5805559ee02c102fe250fd77fa338bb2
-								<a [routerLink]="['/chat']" style="color: #ffffff">Chat</a>
-							</li> -->
+
               <li>
 								<div class="btn-extars">
 										<a *ngIf="isLoggedInB" (click)="bigBtn()" class="post-job-btn" >{{btnText}}</a>
@@ -129,3 +128,4 @@
     </header>
 <div id="modal-container" class="hidden"></div>
 <div id="overlay" (click)="removeModal()" class="hidden"></div>
+
