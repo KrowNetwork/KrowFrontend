@@ -122,6 +122,10 @@ const appRoutes: Routes = [
         component: PrivacypolicyComponent
     },
     // {
+    //     path: "sitemap.xml"
+
+    // }
+    // {
     //     path: "chat",
     //     component: MessagingComponent,
     //     children: [
