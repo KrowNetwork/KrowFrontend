@@ -6,6 +6,7 @@ import * as AWS from "aws-sdk/global";
 import * as STS from "aws-sdk/clients/sts";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { CustomHttpService } from "./custom-http.service"
+import { createAotUrlResolver } from "../../../node_modules/@angular/compiler";
 
 @Injectable()
 export class UserLoginService {
@@ -41,6 +42,16 @@ export class UserLoginService {
     constructor(
         public cognitoUtil: CognitoUtil,
         private http: CustomHttpService) {
+    }
+    getUser(username) {
+        let userData = {
+            Username: username,
+            Pool: this.cognitoUtil.getUserPool()
+        };
+
+        // console.log("UserLoginService: Params set...Authenticating the user");
+        let cognitoUser = new CognitoUser(userData);
+        return cognitoUser
     }
 
     authenticate(username: string, password: string, callback: CognitoCallback) {
@@ -119,6 +130,52 @@ export class UserLoginService {
         this.cognitoUtil.getCurrentUser().signOut();
         localStorage.clear()
         sessionStorage.clear()
+
+        
+    }
+
+    isAdmin(callback: LoggedInCallback, force = false) {
+        if (callback == null)
+            throw("UserLoginService: Callback in isAuthenticated() cannot be null");
+
+        let cognitoUser = this.cognitoUtil.getCurrentUser();
+        var createNewToken=false;
+        if (cognitoUser != null) {
+            cognitoUser.getSession(function (err, session) {
+                // console.log()
+                if (err) {
+                    // cognitoUser.refreshSession(refreshToken, (err, session) => {
+                    //     if (err) {
+                        localStorage.clear()
+                        callback.isLoggedIn(err, false)
+                    //     } else {
+                    //         callback.isLoggedIn(session, true)
+                    //         console.log(session)
+                    //     }
+
+                    } else {
+                        if (session.getIdToken().payload['cognito:groups'][0] == "Admin")
+                            callback.isLoggedIn(err, true)
+                        else {
+                            localStorage.clear()
+                            callback.isLoggedIn(err, false)
+                        }
+                    }})
+
+                    // console.log("UserLoginService: Couldn't get the session: " + err, err.stack);
+                    // callback.isLoggedIn("cant get user", false);
+                    // return
+                }
+                else {
+
+            // console.log("UserLoginService: can't retrieve the current user");
+            callback.isLoggedIn("Can't retrieve the CurrentUser", false);
+            return
+        }
+        // if (createNewToken) {
+        //     // this.cognitoUtil.newToken(cognitoUser);
+        //     localStorage.setItem("tokenCreation", new Date().toString())
+        // }
     }
 
     isAuthenticated(callback: LoggedInCallback, force = false) {
@@ -126,52 +183,33 @@ export class UserLoginService {
             throw("UserLoginService: Callback in isAuthenticated() cannot be null");
 
         let cognitoUser = this.cognitoUtil.getCurrentUser();
-        // console.log(cognitoUser)
         var createNewToken=false;
         if (cognitoUser != null) {
             cognitoUser.getSession(function (err, session) {
                 if (err) {
-                    // console.log("UserLoginService: Couldn't get the session: " + err, err.stack);
-                    callback.isLoggedIn(err, false);
-                }
-                else {  
-                    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                        IdentityPoolId : 'us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88', // your identity pool id here
-                        Logins : {
-                            // Change the key below according to the specific region your user pool is in.
-                            'cognito-idp.us-east-2.amazonaws.com/us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88' : localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.idToken")
-                        }
-                      });
-                    if (AWS.config.credentials['expired'] == true || force == true) {
-                        var refresh_token = session.getRefreshToken()
-                        var idToken = session.getIdToken().getJwtToken()
-                        cognitoUser.refreshSession(refresh_token, (err, session) => {
-                            if (err) console.log(err) 
-                            else {
-                                // console.log(session.getIdToken().getJwtToken())
-                                // (<AWS.CognitoIdentityCredentials> AWS.config.credentials).params["logins"]['cognito-idp.us-east-2.amazonaws.com/us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88']  = idToken
-                                (<AWS.CognitoIdentityCredentials> AWS.config.credentials).refresh((err) => {
-                                    console.log(err)
-                                })
-                            }
-                        })
-                    }
-                    // console.log("UserLoginService: Session is " + session.isValid());
-                    // if (localStorage.getItem("tokenCreation") !== undefined) {
-                    //     var seconds = (new Date().getTime() - new Date(localStorage.getItem("tokenCreation")).getTime()) / 1000
-                    //     if (seconds > 60 * 30) {
-                    //         createNewToken = true
+                    // cognitoUser.refreshSession(refreshToken, (err, session) => {
+                    //     if (err) {
+                        localStorage.clear()
+                        callback.isLoggedIn(err, false)
+                    //     } else {
+                    //         callback.isLoggedIn(session, true)
+                    //         console.log(session)
                     //     }
-                    // else {
-                    //     localStorage.setItem("tokenCreation", new Date().toString())
-                    // }
-                    // }
-                    callback.isLoggedIn(err, session.isValid(), );
+
+                    } else {
+
+                        callback.isLoggedIn(err, true)
+                    }})
+
+                    // console.log("UserLoginService: Couldn't get the session: " + err, err.stack);
+                    // callback.isLoggedIn("cant get user", false);
+                    // return
                 }
-            });
-        } else {
+                else {
+
             // console.log("UserLoginService: can't retrieve the current user");
             callback.isLoggedIn("Can't retrieve the CurrentUser", false);
+            return
         }
         // if (createNewToken) {
         //     // this.cognitoUtil.newToken(cognitoUser);

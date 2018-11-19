@@ -28,20 +28,14 @@ import { ResendCodeComponent } from './main/resend/resendCode.component';
 
 // Employer components
 import { EmployerProfileComponent } from './employer/employer-profile/employer-profile.component';
-import { EmployerPostJobsComponent } from './employer/employer-post-jobs/employer-post-jobs.component';
 
 // Job components
 import { JobProfileComponent } from './job/job-profile/job-profile.component';
-import { JobDetailsComponent } from './shared/job-details/job-details.component';
 
 
 // Applicant components
 import { ApplicantProfileComponent } from './applicant/applicant-profile/applicant-profile.component';
 import { ApplicantResumeComponent } from './applicant/applicant-resume/applicant-resume.component';
-import { RequestedJobsComponent } from './shared/requested-jobs/requested-jobs.component';
-import { HireRequestsComponent } from './shared/hire-requests/hire-requests.component';
-import { JobSearchComponent } from './shared/job-search/job-search.component';
-  import { JobSearchMainComponent } from './shared/job-search/job-search-main.component';
 
 // Resume components
 import { ResumeEducationComponent } from './applicant/applicant-resume/resume-education/resume-education.component';
@@ -61,10 +55,6 @@ import { ResumeAffiliationsComponent } from './applicant/applicant-resume/resume
 
 // Shared components
 import { ProfileInfoComponent } from './shared/profile-info/profile-info.component';
-import { AvailableJobsComponent } from './shared/available-jobs/available-jobs.component';
-import { CompletedJobsComponent } from './shared/completed-jobs/completed-jobs.component';
-import { TerminatedJobsComponent } from './shared/terminated-jobs/terminated-jobs.component';
-import { InProgressJobsComponent } from './shared/in-progress-jobs/in-progress-jobs.component';
 import { BasicInfoCollectorComponent } from './shared/basic-info-collector/basic-info-collector.component';
 
 // Services
@@ -85,14 +75,12 @@ import { EducationDirective } from './applicant/applicant-resume/resume-educatio
 import { ExperienceDirective } from './applicant/applicant-resume/resume-experience/experience.directive';
 import { AchievementDirective } from './applicant/applicant-resume/resume-achievements/achievement.directive';
 import { AffiliationsDirective } from './applicant/applicant-resume/resume-affiliations/affiliations.directive';
-import { JobSearchDirective } from './shared/job-search/job-search.directive';
 import { BottomBarComponent } from './bottom-bar/bottom-bar.component';
 import { HelpComponent } from './shared/help/help.component';
 import { ProfileInfo2Component } from './shared/profile-info2/profile-info2.component';
 import { ApplicantProfileInfoPrivateComponent } from './shared/profile-info2/applicant-profile-info/applicant-profile-info.component';
 import { EditComponent } from "./shared/edit/edit.component";
 import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-profile-info/employer-profile-info.component';
-import { EditJobComponent } from './shared/edit-job/edit-job.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { FAQsComponent } from './faqs/faqs.component';
 import { UploadPicComponent } from './upload-pic/upload-pic.component'
@@ -117,24 +105,23 @@ import { ContextMenuModule } from 'ngx-contextmenu';
 import { MessagingPopupComponent } from './messaging/messaging-popup/messaging-popup.component';
 import { NewEventCalendarPopupComponent } from './calendar/new-event-calendar-popup/new-event-calendar-popup.component';
 import { VerifyJobComponent } from './verify-job/verify-job.component';
+import { SearchComponent } from './search/search.component';
 // import { ContextMenuService } from 'angular2-contextmenu/src/contextMenu.service';
 // import { luegg } from "angularjs-scroll-glue"
-
-
-
+import {TermsComponent} from "./terms/terms.component"
+import {PrivacypolicyComponent} from "./privacypolicy/privacypolicy.component"
+import { AdminLoginComponent } from "./admin/admin-login/admin-login.component";
+import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
+import { UserSearchComponent } from './admin/user-search/user-search.component'
+import {ShareLinkPopupComponent} from "./shared/profile-info2/applicant-profile-info/share-link-popup/share-link-popup.component"
 
 @NgModule({
   declarations: [
     // VIVEK (Add module declarations here, I'll worry about splitting it up later)
     AppComponent,
     EmployerProfileComponent,
-    EmployerPostJobsComponent,
     ApplicantProfileComponent,
-    AvailableJobsComponent,
-    CompletedJobsComponent,
     ProfileInfoComponent,
-    TerminatedJobsComponent,
-    InProgressJobsComponent,
     ApplicantResumeComponent,
     LoginComponent,
     RegisterComponent,
@@ -145,11 +132,6 @@ import { VerifyJobComponent } from './verify-job/verify-job.component';
     ResumeAffiliationsComponent, 
     ComingSoonComponent,
     PageNotFoundComponent,
-    RequestedJobsComponent,
-    HireRequestsComponent,
-    JobSearchComponent,
-    JobSearchDirective,
-    JobSearchMainComponent,
     AchievementsMainComponent,
     AchievementDirective,
     AffiliationsDirective,
@@ -168,14 +150,12 @@ import { VerifyJobComponent } from './verify-job/verify-job.component';
     ResendCodeComponent,
     BasicInfoCollectorComponent,
     JobProfileComponent,
-    JobDetailsComponent,
     BottomBarComponent,
     HelpComponent,
     ProfileInfo2Component,
     ApplicantProfileInfoPrivateComponent,
     EditComponent,
     EmployerProfileInfoComponent,
-    EditJobComponent,
     HomepageComponent,
     FAQsComponent,
     UploadPicComponent,
@@ -187,7 +167,13 @@ import { VerifyJobComponent } from './verify-job/verify-job.component';
     MessagingPopupComponent,
     NewEventCalendarPopupComponent,
     VerifyJobComponent,
-
+    SearchComponent,
+    TermsComponent,
+    PrivacypolicyComponent,
+    AdminLoginComponent,
+    AdminHomeComponent,
+    UserSearchComponent,
+    ShareLinkPopupComponent
     // DeleteComponent
     
   ],
@@ -216,7 +202,6 @@ import { VerifyJobComponent } from './verify-job/verify-job.component';
     SkillsMainComponent,
     EducationMainComponent,
     AchievementsMainComponent,
-    JobSearchMainComponent,
     MessagingPopupComponent,
     NewEventCalendarPopupComponent
   ],

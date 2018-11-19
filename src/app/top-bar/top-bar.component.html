@@ -3,16 +3,17 @@
 
 
 
-
 		<div class="responsive-header">
+
 				<div class="responsive-menubar">
-					<div class="res-logo"><a href="index.html" title=""><img src="http://placehold.it/178x40" alt="" /></a></div>
+					<div class="res-logo"><a href="index.html" title=""><img src="assets/images/top-bar-logo.png" alt="Krow Network Logo" /></a></div>
 					<div class="menu-resaction">
 							<a class="res-openmenu" (click)="openMenu()">
-									<img src="images/icon.png" alt="" /> Menu
+									<!-- <img src="images/icon.png" alt="" /> Menu -->
+									<h3><i class="la la-bars" style="color: white"></i></h3>
 								</a>
 								<a class="res-closemenu" (click)="closeMenu()">
-									<img src="images/icon2.png" alt="" /> Close
+										<h3><i class="la la-close" style="color: white"></i></h3>
 								</a>
 					</div>
 				</div>
@@ -31,7 +32,11 @@
 										<a [routerLink]="['/']" routerLinkActive="active">Home</a>
 								</li>
 								<li *ngIf="isLoggedInB">
-										<a (click)="goToProfile()" style="color:#96a0bd">Saved Resumes</a>
+										<a (click)="goToProfile()" style="color:#96a0bd">Profile</a>
+								</li>
+								<li *ngIf="isLoggedInB">
+										<a role="button" (click)="goToFeedback()" style="color:#96a0bd">Feedback</a>
+
 									</li>
 									<!-- <li [hidden]="!isLoggedInB" class="menu-item-has-children" >
 											<a style="color: #96a0bd" (click)="toggleMenu()">Jobs</a>
@@ -52,18 +57,27 @@
 											</ul>
 										</li>
 										<li>
+										<a (click)="goToProfile()" style="color:#96a0bd">Resume</a>
+								</li>
+
+										<!- - <li>
 											<a [routerLink]="['/chat']" style="color: #ffffff">Chat</a>
 										</li> -->
 							</ul>
 					</div>
 				</div>
 			</div>
-
+		
     <header class="stick-top">
+			<div class="feedback-top" *ngIf="!isFeedbackOn">
+					<a role="button" (click)="goToFeedback()">Do you have any feedback? Click here to get in contact with us!</a>
+					<a role="button" (click)="hideFeedback()" style="float:right">x</a>
+			</div>
+
       <div class="menu-sec">
         <div class="container">
           <div class="logo">
-            <a href="http://krownetwork.com/" title="">
+            <a href="https://www.krownetwork.com/" title="">
               <!-- <img src="{{KROW_HEADER_2}}" alt="" /> -->
               <img src="assets/images/top-bar-logo.png" alt="Krow Network Logo" />
             </a>
@@ -73,9 +87,12 @@
             <!-- <div *ngIf="isLoggedInB"> -->
 
 						<!-- </div> -->
-          <!-- </div>Btn Extras -->
+					<!-- </div>Btn Extras -->
           <nav class="nav">
             <ul>
+							<li *ngIf="allowSearchBarDisplay()">
+									<input class="top-bar-search" type="text" placeholder="Search Full Name" [(ngModel)]="term" [ngModelOptions]="{standalone: true}" (keydown)="keyDown($event)"/>
+							</li>
               <li>
                 <a [routerLink]="['/']" routerLinkActive="active">Home</a>
               </li>
@@ -83,29 +100,14 @@
                 <!-- <a role="button" (click)="switchSession()">Switch to {{switchTo}}</a> -->
               </li>
               <li *ngIf="isLoggedInB">
-                <a role="button" (click)="goToProfile()" style="color:#ffffff">My Resume</a>
-              </li>
-              <li [hidden]="!isLoggedInB">
-                <!-- <a style="color: #ffffff">Jobs</a>
-                <ul [hidden]="!is_applicant">
-                  <li><a [routerLink]="['/applicant/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
-                  <li><a [routerLink]="['/applicant/terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
-                  <li><a [routerLink]="['/applicant/in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
-                  <!- - <li><a [routerLink]="['/employer/available-jobs']">Available Jobs</a></li> - ->
-                  <li><a [routerLink]="['/applicant/requested-jobs']" routerLinkActive="active">Requested Jobs</a></li>
-                  <li><a [routerLink]="['/applicant/hire-requests']" routerLinkActive="active">Hire Requests</a></li>
+                <a role="button" (click)="goToProfile()" style="color:#ffffff">Profile</a>
+							</li>   
+							
+							<li *ngIf="isLoggedInB">
+                <a role="button" (click)="goToFeedback()" style="color:#ffffff">Feedback</a>
+              </li>              
+							<!-- <li>
 
-                </ul>
-                <ul [hidden]="is_applicant">
-                  <li><a [routerLink]="['/employer/completed-jobs']" routerLinkActive="active">Completed Jobs</a></li>
-                  <li><a [routerLink]="['/employer/terminated-jobs']" routerLinkActive="active">Terminated Jobs</a></li>
-                  <li><a [routerLink]="['/employer/in-progress-jobs']" routerLinkActive="active">In-Progress Jobs</a></li>
-                  <li><a [routerLink]="['/employer/available-jobs']" routerLinkActive="active">Available Jobs</a></li>
-                </ul>
-							</li>
-							<li>
-								<a [routerLink]="['/chat']" style="color: #ffffff">Chat</a>
-							</li> -->
               <li>
 								<div class="btn-extars">
 										<a *ngIf="isLoggedInB" (click)="bigBtn()" class="post-job-btn" >{{btnText}}</a>
@@ -124,3 +126,6 @@
 			</div>
 
     </header>
+<div id="modal-container" class="hidden"></div>
+<div id="overlay" (click)="removeModal()" class="hidden"></div>
+

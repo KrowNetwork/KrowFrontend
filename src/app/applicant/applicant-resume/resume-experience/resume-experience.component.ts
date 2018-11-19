@@ -17,7 +17,7 @@ import { CustomHttpService } from '../../../service/custom-http.service';
   styleUrls: ['../resume-elements.component.css']
 })
 export class ResumeExperienceComponent implements OnInit {
-
+  // check=false;
   @ViewChild(ExperienceDirective) achievementHost: ExperienceDirective;
 
   constructor(
@@ -27,7 +27,7 @@ export class ResumeExperienceComponent implements OnInit {
     private router: Router
 
   ) {}
-
+  skills = []
   guid() {
 
     return this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() + this.s4() + this.s4();
@@ -39,8 +39,28 @@ export class ResumeExperienceComponent implements OnInit {
       .substring(1);
   }
   updateResume(event){
-    this.updateResumeService.updateMain(event.target.closest("app-resume-experience"));
+    var x = document.getElementsByClassName("tags")
+    var skills_arr = []
+    for (var e = 0; e < x.length; e ++) {
+      var el = x[e]
+      var skills = []
+      for (var i = 0; i < el.children.length; i++) {
+        var element = el.children[i]
+        if (element.className == "addedTag") {
+          // console.log(element)
+          skills.push(element.children[1].getAttribute("value"))
+        }
+      }
+    console.log(skills)
+    skills_arr.push(skills)
+    // console.log("s", skills)
+    // console.log(el)
+    // console.log(el.closest("app-resume-experience"))
   }
+  console.log(skills_arr)
+  this.updateResumeService.updateMain(event.target.closest("app-resume-experience"), skills_arr);
+  }
+
 
   loadComponent(experiences) {
     if(experiences == "empty"){
@@ -51,36 +71,36 @@ export class ResumeExperienceComponent implements OnInit {
           position: "",
           title: "",
           description: "",
-          startDate: "",
-          endDate: "",
+          startDate: "0000-00",
+          endDate: "0000-00",
           verified: false,
-          verifyID: "",
+          verifyID: this.guid(),
+          present: true,
+          skills: []
         })
       );
     }
+    console.log(experiences.length)
     for(var i = 0; i < experiences.length; i++){
       let experienceItem = experiences[i];
-
+      
       let componentFactory = this.componentFactoryResolver.resolveComponentFactory(experienceItem.component);
 
       let viewContainerRef = this.achievementHost.viewContainerRef;
-
       let componentRef = viewContainerRef.createComponent(componentFactory);
+
       (<InterfaceComponent>componentRef.instance).data = experienceItem.data;
     }
   }
 
   formatDate(date) {
-    var month = '' + (date.getMonth() + 1)
-    var day = '' + date.getDate().toString()
-    var year = date.getFullYear()
-
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-
-    return  [year, month, day].join("-")
+    var d = date
+    console.log(d.getMonth() + 1)
+    console.log(d.getDate() + 1)
+    console.log(d.getFullYear())
+    return d
   }
-
+  
   ngOnInit() {
     if (sessionStorage.getItem("accountType") == "employer") {
 			var user = this.router.url.split("/")[3]
@@ -90,19 +110,38 @@ export class ResumeExperienceComponent implements OnInit {
     this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
       data => {
         var resumeExperiences = data["resume"]["experience"];
+        console.log(resumeExperiences)
         var experiences = new Array<ItemType>();
         for(var k = 0; k < resumeExperiences.length; k++){
+          var x = {
+            type: resumeExperiences[k]["type"],
+            position: resumeExperiences[k]["position"],
+            title: resumeExperiences[k]["title"],
+            description: resumeExperiences[k]["description"],
+            startDate: resumeExperiences[k]["startDate"].split('T')[0].slice(0, -3),
+            endDate: resumeExperiences[k]["endDate"],
+            verified: resumeExperiences[k]['verified'],
+            verifyID: resumeExperiences[k]['verifyID'],
+            present: resumeExperiences[k]["present"],
+            skills: resumeExperiences[k]["skills"]
+          }
+          // this.skills = resumeExperiences[k]['skills']
+          // this.skills.forEach(element => {
+          //     // this.createNew(element)
+          // });
+          if (x.endDate !== undefined) {
+            x.endDate = x.endDate.split('T')[0].slice(0, -3)
+          }
+          if (x.present == true) {
+            x.present = "on"
+          } else {
+            // console.log("peepee")
+            x.present = "off"
+          }
+          var y  = new ItemType(ExperienceMainComponent, x)
+          
           experiences.push(
-            new ItemType(ExperienceMainComponent, {
-              type: resumeExperiences[k]["type"],
-              position: resumeExperiences[k]["position"],
-              title: resumeExperiences[k]["title"],
-              description: resumeExperiences[k]["description"],
-              startDate: this.formatDate(new Date(resumeExperiences[k]["startDate"])),
-              endDate: this.formatDate(new Date(resumeExperiences[k]["endDate"])),
-              verified: false,
-              verifyID: this.guid()
-            })
+            y
           );
         }
         if(experiences.length == 0){
@@ -113,7 +152,7 @@ export class ResumeExperienceComponent implements OnInit {
         }
       }, // Catch Errors
       (err: HttpErrorResponse) => {
-        this.loadComponent("empty");
+        // this.loadComponent("empty");
         if (err.error instanceof Error) {
           // console.log("Client-side error occured.");
         } else {

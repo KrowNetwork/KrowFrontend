@@ -14,7 +14,9 @@ declare var $: any;
 export class TopBarComponent implements OnInit {
   is_applicant = false;
   isLoggedInB = false;
+  isFeedbackOn = false;
   btnText: string;
+  term: String;
   constructor(
     public http: CustomHttpService,
     private createUser: CreateUserService,
@@ -29,23 +31,20 @@ export class TopBarComponent implements OnInit {
     var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
     data => {
-        // console.log(data)
-            if (data["error"] === undefined) {
                 sessionStorage.setItem("accountType", "applicant")
                 // this.router.navigate(['/applicant']);
-            } else {
-                this.http.head("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
-                    data => {
-                        if (data["error"] === undefined) {
-                            sessionStorage.setItem("accountType", "employer")
-                            // this.router.navigate(['/employer']);        
+                
                         
-            }})}
 
         
     }, // Catch Errors
     (err = HttpErrorResponse) => {      
-        
+      this.http.head("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
+        data => {
+                sessionStorage.setItem("accountType", "employer")
+          }
+        )  
+                // this.router.navigate(['/employer']);        
     } 
                         // console.log("User does not have an applicant acco        // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
     )
@@ -78,6 +77,7 @@ export class TopBarComponent implements OnInit {
   isLoggedIn(message: string, isLoggedIn: boolean) {
     if (isLoggedIn) {
       this.isLoggedInB = true
+      console.log(this.isLoggedInB)
       // sessionStorage.setItem("redirectBack", this.router.url)
       //   // this.router.navigate(['/login']);
     }
@@ -111,8 +111,13 @@ toggleMenu() {
 });
 }
 
+
   ngOnInit() {
     // console.log("c")
+  }
+
+  removeModal() {
+    // this.modalService.destroy()
   }
 
   bigBtn() {
@@ -124,11 +129,39 @@ toggleMenu() {
   }
 
   goToProfile() {
-    if (this.is_applicant) {
+    if (sessionStorage.getItem("accountType") == "applicant") {
       this.router.navigate(["/applicant"])
     } else {
       this.router.navigate(["/employer"])
     }
+  }
+
+  goToFeedback() {
+      this.router.navigate(["/feedback"])
+  }
+
+  hideFeedback() {
+      this.isFeedbackOn = true;
+  }
+
+  allowSearchBarDisplay(){
+      let url = this.router.url
+
+      if(url == '/' || url.match(/\/search\?term=*/)){
+        return false;
+      } else {
+        return true;
+      }
+  }
+
+  keyDown(event) {
+    if (event.key == "Enter") {
+      this.search()
+    }
+  }
+
+  search() {
+    this.router.navigate(["/search"], { queryParams: { term: this.term } })
   }
 
 }

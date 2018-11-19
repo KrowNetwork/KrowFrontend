@@ -87,14 +87,14 @@ export class ResumeEducationComponent implements OnInit {
         var resumeEducations = data["resume"]["education"];
         var educations = new Array<ItemType>();
         for(var k = 0; k < resumeEducations.length; k++){
-          var sd =  this.formatDate(new Date(resumeEducations[k]["startDate"]))
-          var ed =  this.formatDate(new Date(resumeEducations[k]["endDate"]))
-
+          var sd =  resumeEducations[k]["startDate"].split('T')[0].slice(0, -3);
+          var ed =  resumeEducations[k]["endDate"].split('T')[0].slice(0, -3);
+          console.log(sd, ed)
           educations.push(
             new ItemType(EducationMainComponent, {
               title: resumeEducations[k]["title"],
               description: resumeEducations[k]["description"],
-              startDate:sd,
+              startDate: sd,
               endDate: ed
             })
           );

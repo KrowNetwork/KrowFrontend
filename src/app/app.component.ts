@@ -29,14 +29,15 @@ export class AppComponent implements OnInit, LoggedInCallback {
   }
 
   ngOnInit() {
-
-    // this.userService.isAuthenticated(this);
+    if ((typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1)) {
+      alert("Mobile support is not fully integrated. Proceed at your own risk. Use PC or Mac for full functionality.")
+    } // this.userService.isAuthenticated(this);
   }
   
 
   isLoggedIn(message: string, isLoggedIn: boolean) {
     if(!isLoggedIn){
-      this.router.navigate(["/login"]);
+      // this.router.navigate(["/login"]);
     }
     let mythis = this;
     this.cognito.getIdToken({ callback() { },

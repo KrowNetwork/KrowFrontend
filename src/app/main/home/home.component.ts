@@ -14,6 +14,7 @@ declare let AWSCognito: any;
 })
 export class HomeComponent implements OnInit {
     show=false;
+    user: String
     constructor(
         public router: Router, 
         public userService: UserLoginService,
@@ -23,49 +24,13 @@ export class HomeComponent implements OnInit {
         // console.log("Secure Home Component: constructor");
         this.userService.isAuthenticated(this)
 
-        var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
-        if(!user){
-            this.router.navigate(['/login']);
-        }
+        this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+        // if(!user){
+        //     this.router.navigate(['/login']);
+        // }
+        console.log(this.user)
 
-        else {
-            this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
-            data => {
-                console.log(data)
-                    if (data["error"] === undefined) {
-                        sessionStorage.setItem("accountType", "applicant")
-                        this.router.navigate(['/applicant']);
-                    } else {
-                        this.http.head("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
-                            data => {
-                                if (data["error"] === undefined) {
-                                    sessionStorage.setItem("accountType", "employer")
-                                    this.router.navigate(['/employer']);        
-                                
-                                } else {
-                                    this.show = true
-                                }})
-                    }
-                    
-                 
             
-                
-               
-                    
-                
-                // console.log(data)
-                // console.log("User has an applicant account");
-                
-            }, // Catch Errors
-            (err = HttpErrorResponse) => {      
-                
-                } 
-                                // console.log("User does not have an applicant acco        // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
-            )
-
-                }
-            
-
             
         
         }
@@ -73,7 +38,7 @@ export class HomeComponent implements OnInit {
         
     
 
-    user: string;
+    // user: string;
     token: string;
 
     // $window.onload = function() {
@@ -81,6 +46,33 @@ export class HomeComponent implements OnInit {
     // }
 
     ngOnInit() {
+        this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).subscribe(
+            data => {
+                console.log(data)
+                if (data['error'] === undefined) {
+
+                    sessionStorage.setItem("accountType", "applicant")
+                    this.router.navigate(['/applicant']); 
+                } else {     
+                    console.log("f") 
+                this.http.head("http://18.220.46.51:3000/api/Employer/" + this.user).subscribe(
+                data => {
+                    if (data['error'] === undefined) {
+
+                        sessionStorage.setItem("accountType", "employer")
+                        this.router.navigate(['/employer']);        
+                    } else {
+                        console.log("here")
+                        this.show = true
+                    }
+                    
+                }
+                                // console.log("User does not have an applicant acco        // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
+            )
+
+            } }
+            
+        )
     }
 
     initializeApplicant(){
@@ -95,6 +87,7 @@ export class HomeComponent implements OnInit {
     }
 
     isLoggedIn(message: string, isLoggedIn: boolean) {
+        console.log(isLoggedIn)
         if (!isLoggedIn) {
             this.router.navigate(['/login']);
         }

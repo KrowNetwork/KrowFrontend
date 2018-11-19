@@ -86,9 +86,10 @@ export class UploadPicComponent implements OnInit {
       }, function (err, data) {
      if (err) {
        console.log(err, 'there was an error uploading your file');
+       
        hasErr = true
      } else {
-      //  console.log(data)
+       console.log(data)
      }
    });
    if (!hasErr) {

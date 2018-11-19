@@ -25,6 +25,10 @@
                                         [(ngModel)]="confirmPassword" [ngModelOptions]="{standalone: true}">
                                     <i class="la la-key"></i>
                                 </div>
+                                <div>                                
+                                        <input type="checkbox" name="cb" id="cb1" required><label for="cb1">I agree to the <a href="https://www.krownetwork.com/tac">Terms and Conditions</a> and the <a href="https://www.krownetwork.com/privacypolicy">Privacy Policy.</a></label>
+                                        <!-- <i class="la la-key"></i> -->
+                                </div>
                                 
                                 <button (click)="onRegister()">
                                       Create your account

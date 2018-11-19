@@ -43,4 +43,8 @@ export class ProfileInfo2Component implements OnInit {
   ngOnInit() {
   }
 
+  removeModal() {
+    // this.modalService.destroy()
+  }
+
 }

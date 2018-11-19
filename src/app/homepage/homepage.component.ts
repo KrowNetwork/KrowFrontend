@@ -1,52 +1,55 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { CreateUserService } from '../service/create-user.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { UserLoginService } from '../service/user-login.service';
 import { CustomHttpService } from '../service/custom-http.service';
+import { StringDoubleMap } from '../../../node_modules/aws-sdk/clients/gamelift';
 declare var $: any;
 
 @Component({
   selector: 'app-homepage',
   templateUrl: "./homepage.component.html",
-  styleUrls: ['./homepage.component.css']
+  styleUrls: ['./homepage.component.css'],
 })
 export class HomepageComponent implements OnInit {
   is_applicant = false;
   isLoggedInB = false;
   btnText: string;
   term: String;
+  firstName: String
+  lastName: String
+  email: String
   constructor(
     public http: CustomHttpService,
+    public http2: HttpClient,
     private createUser: CreateUserService,
     private activatedRoute: ActivatedRoute,
     public userService: UserLoginService,
-    private router: Router
+    private router: Router,
   ) {
     // console.log("f")
     // todo - private v public
+    console.log("y")
     this.userService.isAuthenticated(this);
 
     var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
     data => {
-        // console.log(data)
-            if (data["error"] === undefined) {
                 sessionStorage.setItem("accountType", "applicant")
                 // this.router.navigate(['/applicant']);
-            } else {
-                this.http.head("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
-                    data => {
-                        if (data["error"] === undefined) {
-                            sessionStorage.setItem("accountType", "employer")
-                            // this.router.navigate(['/employer']);        
+                
                         
-            }})}
 
         
     }, // Catch Errors
     (err = HttpErrorResponse) => {      
-        
+      this.http.head("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
+        data => {
+                sessionStorage.setItem("accountType", "employer")
+          }
+        )  
+                // this.router.navigate(['/employer']);        
     } 
                         // console.log("User does not have an applicant acco        // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
     )
@@ -139,7 +142,26 @@ toggleMenu() {
   }
 
   search() {
-    this.router.navigate(["/job-search"], { queryParams: { search: this.term } })
+    this.router.navigate(["/search"], { queryParams: { term: this.term } })
+  }
+
+  submit() {
+    var d = {
+      "email_address": this.email,
+      "status": "subscribed",
+      "merge_fields": {
+          "FNAME": this.firstName,
+          "LNAME": this.lastName
+      }
+  }
+  this.http2.post("https://api.krownetwork.com/new-member", d).subscribe(
+    data => {
+      console.log(data)
+      this.email = ""
+      this.firstName = ""
+      this.lastName = ""
+    }
+  )
   }
 
 }

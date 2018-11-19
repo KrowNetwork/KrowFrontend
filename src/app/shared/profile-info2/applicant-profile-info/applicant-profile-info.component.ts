@@ -6,14 +6,20 @@ import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { S3Service } from "../../../service/s3.service"
 import { CustomHttpService } from "../../../service/custom-http.service"
 import { log } from 'util';
-import { DataShareService } from "../../../service/data-share.service" 
+import { DataShareService } from "../../../service/data-share.service"
+import { ModalService } from '../../../service/modal.service'; 
+import { ShareLinkPopupComponent} from './share-link-popup/share-link-popup.component';
+
 @Component({
   selector: 'app-applicant-profile-info',
   templateUrl: './applicant-profile-info.component.html',
   styleUrls: ['./applicant-profile-info.component.css']
 })
-export class ApplicantProfileInfoPrivateComponent implements OnInit {
 
+export class ApplicantProfileInfoPrivateComponent implements OnInit {
+  monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+  ];
 
   tjL = 0;
 
@@ -29,10 +35,10 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
   country: string;
   phone: string;
   email: string; 
-  urlFACEBOOK: string;
-  urlTWITTER: string;
-  urlLINKEDIN: string;
-  urlWEBSITE: string;
+  urlFACEBOOK = undefined;
+  urlTWITTER = undefined;
+  urlLINKEDIN = undefined;
+  urlWEBSITE = undefined;
 
   id: string;
 
@@ -51,7 +57,9 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
 
   imgURL: string;
   owner = false;
-
+  forceLogin=false
+  location=""
+  
 
   constructor(
     public http: CustomHttpService,
@@ -59,30 +67,37 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private s3service: S3Service,
-    private dataService: DataShareService
+    private dataService: DataShareService,
+    public modalService: ModalService,
   ) {
-
-    this.userService.isAuthenticated(this);
-    // console.log("Applicant Component: constructor");
-    
-   }
-
-  
-  ngOnInit() {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+    console.log(this.router.url.split("/"))
     if (this.router.url.split("/")[3] != undefined) {
       this.id = this.router.url.split("/")[3]
+      this.owner = false 
+      this.forceLogin = false
       if (sessionStorage.getItem("accountType") == "employer") {
         this.curr_emp = true
       }
     } else {
       this.id = this.user
       this.owner = true
+      // this.userService.isAuthenticated(this);
+
     }
+    // console.log("Applicant Component: constructor");
+    
+   }
 
   
-    this.imgURL = "https://s3.us-east-2.amazonaws.com/krow-network-profile-pics/pics/" + this.id +".png"
+  ngOnInit() {
+    
+    this.urlTWITTER = false
+    this.urlFACEBOOK = false
+    this.urlLINKEDIN = false
 
+    this.imgURL = "https://krow-network-profile-pics.s3.us-east-2.amazonaws.com/pics/" + this.id +".png"
+    console.log(this.imgURL)
 
     // this.http.get("https://s3.us-east-2.amazonaws.com/krow-network-profile-pics/pics/352fa0c7-5921-4782-b476-43e97f9295d1.png").subscribe(
     //   data => {
@@ -127,9 +142,32 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           this.bio = data["resume"]["biography"]
         }
 
-        bioTag.innerHTML = this.bio
+        // bioTag.innerHTML = this.bio;
 
-        this.cityState = data["city"] + ", " + data["state"]
+        if (data["address"] != "") {
+          this.location += data["address"]
+        }
+
+        if (data["city"] != "") {
+          if (this.location != "") {
+            this.location += ", " + data["city"]
+          } else {
+            this.location += data["city"]
+          }
+        }
+
+        if (data["state"] != "") {
+          if (data["city"] != "" && this.location != "") {
+            this.location += ", " + data["state"]
+          } else {
+            this.location += data["state"]
+          }
+        }
+
+
+
+
+        // this.cityState = data["city"] + ", " + data["state"]
 
         for(var i = 0; i < data["links"].length; i++){
           var curr = data["links"][i];
@@ -149,22 +187,19 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
 
 
         if (data["resume"]["education"].length == 0 || data["resume"]["education"] === undefined) {
-          this.education = [{
-            title: "None",
-            desc: "None",
-            startDate: "Never",
-            endDate: "Never"
-          }]
+          this.education = []
 
         } else {
           this.education = []
           for (var i = 0; i < data["resume"]["education"].length; i ++) {
             var element = data["resume"]["education"][i]
-            element["startDate"] = new Date(element["startDate"])
-            element["startDate"] = ((element["startDate"].getMonth() + 1).toString()) + '/' + (element["startDate"].getDate() + 1).toString() + '/' +  element["startDate"].getFullYear().toString()
+            var d = new Date(element["startDate"])
+            element["startDate"] = this.monthNames[d.getMonth() + 1] + " " + d.getFullYear().toString()
             
-            element["endDate"] = new Date(element["endDate"])
-            element["endDate"] = ((element["endDate"].getMonth() + 1).toString()) + '/' + (element["endDate"].getDate() + 1).toString() + '/' +  element["endDate"].getFullYear().toString()
+            //((element["startDate"].getMonth() + 1).toString())  + '/' +  element["startDate"].getFullYear().toString()
+            
+            d = new Date(element["endDate"])
+            element["endDate"] = this.monthNames[d.getMonth() + 1] + " " + d.getFullYear().toString()
             this.education.push(element)
             console.log(element)
           }
@@ -174,24 +209,24 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
         console.log (data)
 
         if (data["resume"]["experience"].length == 0 || data["resume"]["experience"] === undefined) {
-          this.experience = [{
-            title: "None",
-            desc: "None",
-            startDate: "Never",
-            endDate: "Never",
-            verified: false,
-            verifyID: "None"
-          }]
+          this.experience = []
 
         } else {
           this.experience = []
           for (var i = 0; i < data["resume"]["experience"].length; i ++) {
             var element = data["resume"]["experience"][i]
             var s = new Date(element["startDate"])
-            element["startDate"] = (s.getMonth() + 1).toString() + '/' + (s.getDate() + 1).toString() + '/' +  s.getFullYear().toString()
+            element["startDate"] = this.monthNames[s.getMonth() + 1] + " " + s.getFullYear().toString()
             
             var e = new Date(element["endDate"])
-            element["endDate"] = (e.getMonth() + 1).toString() + '/' + (e.getDate() + 1).toString() + '/' +  e.getFullYear().toString()
+            element["endDate"] = this.monthNames[e.getMonth() + 1] + " " + e.getFullYear().toString()
+            
+            if (element.present == true) {
+              element.endDate = "Present"
+            }
+
+            element.skills = element.skills.join(", ")
+
             this.experience.push(element)
           }
         }
@@ -287,6 +322,9 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
 
           // // console.log(this.experience)
         
+      }, (err: HttpErrorResponse) => {
+        localStorage.clear()
+            this.router.navigate(["/login"])
       }
     )
   
@@ -295,23 +333,39 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
   isLoggedIn(message: string, isLoggedIn: boolean) {
     if (!isLoggedIn) {
       sessionStorage.setItem("redirectBack", this.router.url)
-        this.router.navigate(['/login']);
+        // this.router.navigate(['/login']);
     }
+}
+
+newEvent() {
+  this.modalService.init(ShareLinkPopupComponent,{name: this.first + " " + this.last},{});
+}
+
+removeModal() {
+  this.modalService.destroy()
+}
+
+copy() {
+  alert("The public url to your resume is https://www.krownetwork.com/applicant/profile-info/" + this.user)
 }
 
 newChat() {
   this.router.navigate(["chat/" + this.id])
 }
 
-reqVerify(id, jname) {
+reqVerify(id, jname, comp) {
   console.log(id)
   this.dataService.changeData({
     user: this.name,
     jobName: jname,
     verificationID: id,
-    aID: this.id
+    aID: this.id,
+    company: comp
   })
   this.router.navigate(["applicant/requestVerification/" + id])
 }
 
+
 }
+
+

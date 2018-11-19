@@ -53,12 +53,12 @@ export class CreateUserService {
         obj["terminatedJobs"] = [];
         obj["inprogressJobs"] = [];
         obj["availableJobs"] = [];
-        obj["country"] = "";
-        obj["state"] = "";
-        obj["city"] = "";
-        obj["address"] = "";
+        obj["country"] = userObj.country;
+        obj["state"] = userObj.state;
+        obj["city"] = userObj.city;
+        obj["address"] = userObj.address;
         obj["email"] = userObj.email;
-        obj["phoneNumber"] = "";
+        obj["phoneNumber"] = userObj.phoneNumber;
         obj["links"] = [];
         obj["created"] = new Date();
         obj["lastUpdated"] = new Date();
@@ -109,7 +109,8 @@ export class CreateUserService {
 
 
                 // console.log(intent + " account sucessfuly initialized for user " + userObj.user);
-                callback(intent.toLowerCase(), userObj.user, router);
+                //callback(intent.toLowerCase(), userObj.user, router);
+                callback()
             }, // Catch Errors
             (err = HttpErrorResponse) => {
                 if (err instanceof Error) {

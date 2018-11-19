@@ -13,7 +13,11 @@ export class CustomHttpService{
   token = this.token = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt." + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") + ".accessToken");
 
   constructor(private http: HttpClient) {
-
+    console.log(this.token)
+    if (!this.token) {
+      this.token = "share"
+      console.log("yerr" + this.token)
+    }
     this.apiKey = this.getKey()
     // console.log(this.apiKey)
     // // console.log(v)
@@ -47,10 +51,25 @@ export class CustomHttpService{
   }
 
   get(url, data=undefined) {
+    // console.log(this.token)
     var oUrl = "https://api.krownetwork.com/g?url=" + url + "&token=" + this.token
+    console.log(oUrl)
+    // let headers = new Headers();
+     var x =  this.http.get(oUrl, data);
+      console.log(x)
+      return x
+  }
+
+  query(data) {
+    var url = "https://api.krownetwork.com/query?token=" + this.token
+    console.log(url)
+    return this.http.post(url, data)
+  }
+
+  search(term) {
+    var oUrl = "https://api.krownetwork.com/search?term=" + term + "&key=dgf463d4-4fg5-55la-3z0f-7c78ft9s9z64"
     // let headers = new Headers();
       return this.http.get(oUrl);
-    
   }
 
   post(url, data) {

@@ -18,7 +18,7 @@ export class UpdateResumeService {
           .substring(1);
       }
 
-    async updateMain(dom){
+    async updateMain(dom, skills_arr=undefined){
         var currAttribute = dom.localName.slice(11);
         var componentsList = dom.children[0].children[0].children;
         console.log(componentsList)
@@ -47,10 +47,15 @@ export class UpdateResumeService {
                         updateButton.innerText = "UPDATE";
                     }
                     else {
+                        
                         // var currType = input.attributes[1].value;
                         var currType = input.getAttribute("secret");
-                        if(currAttribute == "experience" && currType == "type"){
-                            value = "PROFESSIONALWORK";
+                        // console.log(currType)
+                        if(currAttribute == "experience" && currType == "skills"){
+                            // value = "PROFESSIONALWORK";
+                            value = skills_arr[0]
+                            skills_arr.shift()
+                            console.log("v", value)
                             currJson.push({
                                 type: "verified",
                                 value: false
@@ -60,10 +65,32 @@ export class UpdateResumeService {
                                 value: this.guid()
                             })
                         }
-                        currJson.push({
-                            type: currType,
-                            value: value
-                        });
+                        // console.log(currType, value)
+                        if (currType == "present") {
+                            console.log("a")
+                            if (value == "on") {
+                                console.log(currType, value)
+                                currJson.push({
+                                    type: currType,
+                                    value: true
+                                });
+                            } else {
+                                console.log('f')
+                                currJson.push({
+                                    type: currType,
+                                    value: false
+                                });
+                           
+                        } } else {
+                            currJson.push({
+                                type: currType,
+                                value: value
+                            });
+
+                        }
+                        
+                        
+                        
                     }
                 }
                 if(existsEmpty != true){
@@ -74,6 +101,7 @@ export class UpdateResumeService {
                 }
             }
             if(i == componentsList.length - 1){
+                // console.log(json)
                 this.updateData(updateButton, json, currAttribute);
             }
         }
@@ -94,6 +122,7 @@ export class UpdateResumeService {
     }
 
     updateData(updateButton, jsonData, attribute){
+        console.log(attribute)
         updateButton.style.pointerEvents = 'none';
         updateButton.innerText = "Updating...";
         this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
@@ -102,6 +131,8 @@ export class UpdateResumeService {
 
         this.http.get(url).subscribe(
             data => {
+                // console.log(data['resume'])
+
                 if(attribute == "skills"){
                     data["resume"][attribute] = [];
                     jsonData.forEach(element => {
@@ -109,6 +140,8 @@ export class UpdateResumeService {
                     });
                 }
                 else{
+                   
+                    console.log(jsonData)
                     var newData = new Array();
                     for(var i = 0; i < jsonData.data.length; i++){
                         var dataInstance = jsonData.data[i];
@@ -118,17 +151,38 @@ export class UpdateResumeService {
                         }
                         newData.push(currObj);
                     }
+                    if (attribute == "experience") {
+                        console.log("yerr")
+                        if (newData.length != 0) {
+                            for (var i = 0; i < data['resume'][attribute].length; i += 1) {
+                                
+                                // if (newData[i].verified !== undefined || data['resume'][attribute][i].verified !== undefined) {
+                                //     newData[i].verified = data['resume'][attribute][i].verified
+                                //     newData[i].verifyID = data['resume'][attribute][i].verifyID
+                                // }
+                                // if (data['resume'][attribute][i].present === undefined) {
+                                //     newData[i].present = false
+                                // }
+                            }
+                        }
+                    } 
+                    console.log(newData)
                     data["resume"][attribute] = [];
                     newData.forEach(element => {
+                        console.log(element)
+
                         data["resume"][attribute].push(element);
                     });
-                }
+                    }
+                    
+                
 
                 // Get timestamp and change data timestamp
                 var timestamp = new Date();
                 data["lastUpdated"] = timestamp;
                 data["resume"]["lastUpdated"] = timestamp;
                 console.log(data)
+                // if (data['resume']['experiences'])
                 this.postData(data, url, updateButton);
 
             }, // Catch Errors
@@ -145,17 +199,18 @@ export class UpdateResumeService {
     }
 
     postData(data, url, updateButton){
-        // console.log("Posting Data");
+        console.log("Posting Data");
         console.log(data)
         // Update entry
         this.http.put(url, data).subscribe(
             data => {
+                console.log(data)
                 updateButton.setAttribute("style", "display: none");
                 updateButton.innerText = "UPDATE";
                 updateButton.style.pointerEvents = 'auto';
             }, // Catch Errors
             (err: HttpErrorResponse) => {
-                // alert("Could not post data!");
+                alert("Could not post data!");
                 updateButton.innerText = "UPDATE";
                 if (err.error instanceof Error) {
                     // console.log("Client-side error occured.");

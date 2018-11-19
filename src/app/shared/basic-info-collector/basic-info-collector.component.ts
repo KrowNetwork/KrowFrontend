@@ -26,7 +26,9 @@ export class BasicInfoCollectorComponent implements OnInit {
     city: string;
     country: string;
     phoneNumber: string;
-    errorMessage: string;
+    errorMessage = null;
+    collectInfoOn = true;
+    uploadImageOn = false;
   
     ngOnInit() {
         this.route
@@ -51,7 +53,7 @@ export class BasicInfoCollectorComponent implements OnInit {
             return;
         }
         else{
-            this.errorMessage = "";
+            this.errorMessage = null;
             if (this.intent == "Applicant") {
                 var obj = {
                     user: this.user,
@@ -80,12 +82,24 @@ export class BasicInfoCollectorComponent implements OnInit {
                 }
             }
             
-            this.initializeUser.initializeUser(obj, this.intent, this.activate, this.router);
+            //this.initializeUser.initializeUser(obj, this.intent, this.activate, this.router);
+            this.initializeUser.initializeUser(obj, this.intent, null, this.router);
+            this.next();
         }
     }
 
-    activate(intent: string, user: string, router){
+    next(){
+        this.collectInfoOn = false;
+        this.uploadImageOn = true;
+    }
+
+    // activate(intent: string, user: string, router){
+    //     // var path = "/" + intent;
+    //     router.navigate(["/" + intent + "/profile-info"]);
+    // }
+
+    activate(){
         // var path = "/" + intent;
-        router.navigate(["/" + intent + "/profile-info"]);
+        this.router.navigate(["/" + this.intent.toLowerCase() + "/profile-info"]);
     }
 }
