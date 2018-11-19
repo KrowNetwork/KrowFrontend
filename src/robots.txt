@@ -1,0 +1,18 @@
+User-agent: *
+Disallow: /admin/*
+Disallow: /applicant/
+Disallow: /applicant
+Disallow: /employer/
+Disallow: /employer
+
+Allow: /search
+Allow: /search*
+Allow: /applicant/profile-info/*
+Allow: /employer/profile-info/*
+Allow: /privacypolicy
+Allow: /tac
+Allow: /faqs
+Allow: /help
+Allow: /login
+Allow: /register
+Allow: /forgotPassword
