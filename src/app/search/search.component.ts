@@ -22,6 +22,7 @@ export class SearchComponent implements OnInit {
   go(term) {
     this.people = []
     // this.route.snapshot.queryParams['term'] = term
+    // console.log(this.name)
     this.search.search(term).subscribe(
       data => {
         console.log(JSON.stringify(data));
