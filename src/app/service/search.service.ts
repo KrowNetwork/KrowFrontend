@@ -21,6 +21,7 @@ export class SearchService {
   // }
 
   search(term) {
+    console.log(term)
     return this.http.search(term)
   }
   

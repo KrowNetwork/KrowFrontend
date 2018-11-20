@@ -106,7 +106,7 @@
 							<li *ngIf="isLoggedInB">
                 <a role="button" (click)="goToFeedback()" style="color:#ffffff">Feedback</a>
               </li>              
-							<!-- <li>
+							<!-- <li> -->
 
               <li>
 								<div class="btn-extars">
@@ -117,7 +117,7 @@
 							</li>
 							<li>
 									<a *ngIf="isLoggedInB" [routerLink]="['/logout']" routerLinkActive="active"  title=""><i class="la la-external-link-square"></i>LogOut</a>
-									<!-- <a *ngIf="!isLoggedInB" [routerLink]="['/login']" routerLinkActive="active"  title="">Log in</a> -->
+									<a *ngIf="!isLoggedInB" [routerLink]="['/login']" routerLinkActive="active"  title="">Log in</a>
 							</li>
 
             </ul>

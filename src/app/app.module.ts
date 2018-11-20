@@ -203,7 +203,8 @@ import {ShareLinkPopupComponent} from "./shared/profile-info2/applicant-profile-
     EducationMainComponent,
     AchievementsMainComponent,
     MessagingPopupComponent,
-    NewEventCalendarPopupComponent
+    NewEventCalendarPopupComponent,
+    ShareLinkPopupComponent
   ],
   providers: [ 
     UpdateResumeService,
