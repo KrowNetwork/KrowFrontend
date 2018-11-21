@@ -11,6 +11,7 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
     email: string;
     password: string;
     errorMessage: string;
+    confirmedMessage: string;
     mfaStep = false;
     mfaData = {
         destination: '',
@@ -26,8 +27,14 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
 
     ngOnInit() {
         this.errorMessage = null;
+        console.log(localStorage.getItem("confirmed"))
         // console.log("Checking if the user is already authenticated. If so, then redirect to the secure site");
         this.userService.isAuthenticated(this);
+        if (localStorage.getItem("confirmed") == "true") {
+            localStorage.removeItem("confirmed")
+            this.confirmedMessage = "Please login to continue registration"
+            
+        }
     }
 
     onLogin() {
@@ -36,6 +43,7 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
             return;
         }
         else{
+            
             this.errorMessage = null;
             this.userService.authenticate(this.email, this.password, this);
         }

@@ -64,7 +64,7 @@ export class UserRegistrationService {
             }
         });
         // this.router.navigate(['/basicInfo?as=' + accountType.type])
-        this.router.navigate(['/secureHome' + accountType.type])
+        // this.router.navigate(['/secureHome' + accountType.type])
     }
 
     resendCode(username: string, callback: CognitoCallback): void {
