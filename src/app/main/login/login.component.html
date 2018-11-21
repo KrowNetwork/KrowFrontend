@@ -10,6 +10,11 @@
                                 <i class="la la-exclamation"></i>
                                 {{ errorMessage }}
                             </div>	
+                            <!-- {{ confirmedMessage }} -->
+                            <div *ngIf="confirmedMessage!=null" class="alert alert-success">
+                                    <i class="la la-exclamation"></i>
+                                    {{ confirmedMessage }}
+                                </div>	
                             <form style="margin-top: 0">
                                 <div class="cfield">
                                     <input id="signupEmail" required type="email" placeholder="Email" class="form-control" 

@@ -76,13 +76,14 @@ export class RegistrationConfirmationComponent implements OnInit, OnDestroy {
             /*
                 VIVEK
             */
+           localStorage.setItem("confirmed", "true")
             // Pop-up dialog with user agreements then move to secureHome using the same 
             // syntax as bellow on agreed, else we can discuss what to do (disable clickOutsideToClose)
             // Implementation of AngularJS Material is up to you. Do mind,
             // this in context is RegistrationConfirmationComponent, 
             // router comes from the constructor public router: Router therefore is a property of this
             // console.log("Moving to collect basic info");
-            this.router.navigate(['/secureHome']);
+            this.router.navigate(['/login']);
         }
     }
 }
