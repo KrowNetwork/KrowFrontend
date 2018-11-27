@@ -72,7 +72,7 @@
                         <div class="col-lg-6">
                                 <span class="pf-title" style="margin-top:0px"></span> 
                                 <div class="pf-field">
-                                    <input (click)="changeHandler($event)" type="checkbox" name="cb" id="cb1"  secret="present" [(ngModel)]=data.present><label for="cb1">Present</label>
+                                    <input (click)="changeCheck($event, data)" class="cbp" type="checkbox" name={{data.present}} id={{data.description}}  secret="present" [(ngModel)]=data.present /><label secret="label" for={{data.description}}>Present</label>
                                 </div>
                             </div>
                     </div>
