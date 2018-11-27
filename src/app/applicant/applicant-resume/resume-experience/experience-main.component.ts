@@ -35,6 +35,14 @@ export class ExperienceMainComponent implements InterfaceComponent {
 
   changeHandler(event){
     event.target.closest("app-resume-experience").children[0].children[1].children[1].style = "display:show";
+    // console.log(event)
+  }
+
+  changeCheck(event, data) {
+    event.target.closest("app-resume-experience").children[0].children[1].children[1].style = "display:show";
+    console.log(data)
+    // data.present = !data.present
+    // console.log(data)
   }
 
   submitHandler(event){

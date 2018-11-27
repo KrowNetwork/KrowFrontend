@@ -18,7 +18,7 @@ export class UpdateResumeService {
           .substring(1);
       }
 
-    async updateMain(dom, skills_arr=undefined){
+    async updateMain(dom, skills_arr=undefined, z=undefined){
         var currAttribute = dom.localName.slice(11);
         var componentsList = dom.children[0].children[0].children;
         console.log(componentsList)
@@ -67,15 +67,14 @@ export class UpdateResumeService {
                         }
                         // console.log(currType, value)
                         if (currType == "present") {
-                            console.log("a")
-                            if (value == "on") {
-                                console.log(currType, value)
+                            value = z[0]
+                            z.shift()
+                            if (value == "true" || value == true) {
                                 currJson.push({
                                     type: currType,
                                     value: true
                                 });
                             } else {
-                                console.log('f')
                                 currJson.push({
                                     type: currType,
                                     value: false

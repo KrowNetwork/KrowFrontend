@@ -40,9 +40,16 @@ export class ResumeExperienceComponent implements OnInit {
   }
   updateResume(event){
     var x = document.getElementsByClassName("tags")
+    var y = document.getElementsByClassName("cbp")
+    var z = []
+    for (var s = 0; s < y.length; s ++) {
+      z.push(y[s].getAttribute("ng-reflect-model"))
+    }
     var skills_arr = []
     for (var e = 0; e < x.length; e ++) {
       var el = x[e]
+      var cb = y[e]
+      // console.log(cb)
       var skills = []
       for (var i = 0; i < el.children.length; i++) {
         var element = el.children[i]
@@ -58,7 +65,7 @@ export class ResumeExperienceComponent implements OnInit {
     // console.log(el.closest("app-resume-experience"))
   }
   console.log(skills_arr)
-  this.updateResumeService.updateMain(event.target.closest("app-resume-experience"), skills_arr);
+  this.updateResumeService.updateMain(event.target.closest("app-resume-experience"), skills_arr, z);
   }
 
 
@@ -132,12 +139,12 @@ export class ResumeExperienceComponent implements OnInit {
           if (x.endDate !== undefined) {
             x.endDate = x.endDate.split('T')[0].slice(0, -3)
           }
-          if (x.present == true) {
-            x.present = "on"
-          } else {
-            // console.log("peepee")
-            x.present = "off"
-          }
+          // if (x.present == true) {
+          //   x.present = "on"
+          // } else {
+          //   // console.log("peepee")
+          //   x.present = "off"
+          // }
           var y  = new ItemType(ExperienceMainComponent, x)
           
           experiences.push(

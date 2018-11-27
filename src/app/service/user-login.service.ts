@@ -73,12 +73,24 @@ export class UserLoginService {
         // console.log("UserLoginService: config is " + AWS.config);
         cognitoUser.authenticateUser(authenticationDetails, {
             newPasswordRequired: (userAttributes, requiredAttributes) => callback.cognitoCallback(`User needs to set password.`, null),
-            onSuccess: result => this.onLoginSuccess(callback, result),
+            onSuccess: result => {
+                (<any>window).ga('send', 'event', { //GA tracking code
+                    eventCategory: 'login',
+                    eventLabel: 'login',
+                    eventAction: 'login',
+                    eventValue: 10
+                  });
+                console.log("GA SENT")
+                this.onLoginSuccess(callback, result)
+            },
             onFailure: err => this.onLoginError(callback, err),
             mfaRequired: (challengeName, challengeParameters) => {
                 callback.handleMFAStep(challengeName, challengeParameters, (confirmationCode: string) => {
                     cognitoUser.sendMFACode(confirmationCode, {
-                        onSuccess: result => this.onLoginSuccess(callback, result),
+                        onSuccess: result => {
+                            
+                            this.onLoginSuccess(callback, result)
+                        } ,
                         onFailure: err => this.onLoginError(callback, err)
                     });
                 });
