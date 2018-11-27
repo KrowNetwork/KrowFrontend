@@ -220,8 +220,8 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
             
             var e = new Date(element["endDate"])
             element["endDate"] = this.monthNames[e.getMonth() + 1] + " " + e.getFullYear().toString()
-            
-            if (element.present == true) {
+            console.log(element)
+            if (element.present == true || element.endDate == "undefined NaN") {
               element.endDate = "Present"
             }
 
