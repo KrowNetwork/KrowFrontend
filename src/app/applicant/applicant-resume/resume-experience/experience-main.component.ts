@@ -39,6 +39,7 @@ export class ExperienceMainComponent implements InterfaceComponent {
   }
 
   changeCheck(event, data) {
+    data.endDate = "1776-07"
     event.target.closest("app-resume-experience").children[0].children[1].children[1].style = "display:show";
     console.log(data)
     // data.present = !data.present
