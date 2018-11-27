@@ -64,7 +64,7 @@ export class ResumeExperienceComponent implements OnInit {
     // console.log(el)
     // console.log(el.closest("app-resume-experience"))
   }
-  console.log(skills_arr)
+  console.log(z)
   this.updateResumeService.updateMain(event.target.closest("app-resume-experience"), skills_arr, z);
   }
 

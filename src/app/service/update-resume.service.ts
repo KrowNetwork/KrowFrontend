@@ -53,6 +53,7 @@ export class UpdateResumeService {
                         // console.log(currType)
                         if(currAttribute == "experience" && currType == "skills"){
                             // value = "PROFESSIONALWORK";
+                            
                             value = skills_arr[0]
                             skills_arr.shift()
                             console.log("v", value)
@@ -66,6 +67,7 @@ export class UpdateResumeService {
                             })
                         }
                         // console.log(currType, value)
+                        console.log(z)
                         if (currType == "present") {
                             value = z[0]
                             z.shift()
