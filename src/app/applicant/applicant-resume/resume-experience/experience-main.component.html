@@ -28,7 +28,7 @@
                                 <input (keydown)="changeHandler($event)" type="text" placeholder="Manager" secret="position" value={{data.position}}/>
                             </div>
                         </div>
-                       
+                       <!-- {{data.skills}} -->
                         <div class="col-lg-12">
                             <span class="pf-title" style="margin-top:0px">Skills</span>
                             <div class="pf-field">
@@ -37,7 +37,7 @@
                                             <li class="addedTag" style="margin-bottom: 5px; margin-top: 5px" *ngFor="let skill of data.skills">
                                                 {{skill}}
                                             <span class="tagRemove" (click)="removeSkill($event);">x</span>
-                                            <input type="hidden" name="tags[]" value="{{skill}}">
+                                            <input type="hidden" name="tags[]" value="{{skill}}" [(ngModel)]=data.newskill >
                                             </li>
                                             <li class="tagAdd taglist" id="lastNode" style="margin-top: 5px">
                                               <input 
@@ -45,7 +45,7 @@
                                                 id="search-field" 
                                                 placeholder="Web Design" 
                                                 (keydown)="changeHandler($event)"
-                                                (keyup)="$event.keyCode == 13 ? submitHandler($event) : null">
+                                                (keyup)="$event.keyCode == 13 ? submitHandler($event, data) : null">
                                             </li>
                                           </ul>
                                 <!-- <input (keydown)="changeHandler($event)" type="text" placeholder="Seperate by comma" secret="skills" value={{data.skills}}/> -->
