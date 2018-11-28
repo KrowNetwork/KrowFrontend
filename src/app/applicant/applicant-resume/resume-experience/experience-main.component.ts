@@ -35,8 +35,8 @@ export class ExperienceMainComponent implements InterfaceComponent {
   }
 
   changeHandler(event){
-    console.log(event.target)
-    console.log(event.target.closest("app-resume-experience"))
+    // console.log(event.target)
+    // console.log(event.target.closest("app-resume-experience"))
     // event.target.closest("app-resume-experience").children[0].children[1].children[1].style = "display:show";
     event.target.closest("app-resume-experience").children[0].children[1].children[1].setAttribute("style","display:show");
     // console.log(event)
@@ -45,7 +45,7 @@ export class ExperienceMainComponent implements InterfaceComponent {
   changeCheck(event, data) {
     data.endDate = "1776-07"
     event.target.closest("app-resume-experience").children[0].children[1].children[1].setAttribute("style","display:show");
-    console.log(data)
+    // console.log(data)
     // data.present = !data.present
     // console.log(data)
   }
@@ -54,14 +54,14 @@ export class ExperienceMainComponent implements InterfaceComponent {
     if(event.target.value == ""){
       return;
     }
-    console.log(event.target.value)
+    // console.log(event.target.value)
     // event.target.value = data.newskill
     this.createNew(event);
     event.target.value = "";
   }
 
   createNew(skill){
-    console.log(skill)
+    // console.log(skill)
     // if(/\S/.test(skill.data.skill.toString())){
     //   // console.log("found something");
     //   return;
@@ -79,8 +79,8 @@ export class ExperienceMainComponent implements InterfaceComponent {
     node.setAttribute("class", "addedTag");
     node.setAttribute("style", "margin-bottom: 5px; margin-top: 5px");
     // node.set
-    console.log(node)
-    console.log("test")
+    // console.log(node)
+    // console.log("test")
     // var data = skill.data.skill.toString();
     var span = "<span class='tagRemove'>x</span>";
     var input = "<input type='hidden' name='tags[]' value='" + data + "'>";
@@ -90,7 +90,7 @@ export class ExperienceMainComponent implements InterfaceComponent {
       this.parentNode.remove();
     })
     // var ul = src.closest(".tags");
-    console.log(src)
+    // console.log(src)
     ul.insertBefore(node, src.closest("li"));
   }
 
