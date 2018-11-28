@@ -54,17 +54,18 @@ export class ResumeExperienceComponent implements OnInit {
       for (var i = 0; i < el.children.length; i++) {
         var element = el.children[i]
         if (element.className == "addedTag") {
-          // console.log(element)
-          skills.push(element.children[1].getAttribute("value"))
+          // console.log(element.innerHTML)
+          // console.log(element.children[1].getAttribute("value"))
+          skills.push(element.innerHTML.split("<")[0])
         }
       }
-    console.log(skills)
+    // console.log(skills)
     skills_arr.push(skills)
     // console.log("s", skills)
     // console.log(el)
     // console.log(el.closest("app-resume-experience"))
   }
-  console.log(z)
+  // console.log(z)
   this.updateResumeService.updateMain(event.target.closest("app-resume-experience"), skills_arr, z);
   }
 
