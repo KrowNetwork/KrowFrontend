@@ -43,6 +43,11 @@ AWS.config.update({region: "us-east-2"})
 
 var ddb = new AWS.DynamoDB({apiVersion: '2012-10-08'})
 
+function errorHandler(next, code, message) {
+    var e = new Error(message)
+    e.status = code
+    next(e)
+}
 
 
 app.use(function(req, res, next) {
@@ -83,13 +88,14 @@ app.use(function(req, res, next) {
 
     cognitoExpress.validate(accessTokenFromClient, function(err, response) {
         if (err) {
-            res.send(401, new Error("incorrect access token"))
+            errorHandler(next, 401, "incorrect access token")
+            // res.send(401, new Error("incorrect access token"))
         } else {
             exec("aws cognito-idp admin-delete-user --user-pool-id us-east-2_THcotoVBG --username " + req.body.id, (error, stdout, stderr) => 
         {
             if (error) {
                 // res.send(500, new Error("internal server error"))
-                res.send(500, new Error("internal server error"))
+                errorHandler(next, 500, "internal server error")
             } else {
                 res.send(200, {success: "the applicant was deleted"})
             }
@@ -97,7 +103,7 @@ app.use(function(req, res, next) {
         request.delete("http://18.220.46.51:3000/api/Applicant/" + id, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
             if (err) {
                 // // console.log(err)
-                res.send(400, new Error(err));
+                errorHandler(next, 400, err)
             } else {
                 res.send(200, res2.body)
             }
@@ -113,7 +119,7 @@ app.use(function(req, res, next) {
     request.get("http://18.220.46.51:4200/search?term=" + term + "&key=" + key, function(err, res2) {
         if (err) {
             // // console.log(err)
-            res.send(400, new Error(err));
+            errorHandler(next, 400, err)
         } else {
             res.send(200, res2.body)
         }
@@ -127,9 +133,7 @@ app.use(function(req, res, next) {
     request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
         if (err) {
             // // console.log(err)
-            var e = new Error(err)
-            err.status = 400
-            throw e
+            errorHandler(next, 400, err)
             // res.send(400, new Error(err));
         } else {
             res.send(200, res2.body)
@@ -143,8 +147,7 @@ app.use(function(req, res, next) {
 
         request.post("https://us18.api.mailchimp.com/3.0/lists/0d43791d4b/members/", {headers: {"Authorization":"Basic " + auth}, json: data}, function(err, res2) {
             if (err) {
-                console.log(err)
-                res.send(400, new Error(err));
+                errorHandler(next, 400, err)
             } else {
                 res.send(200, res2.body)
             }
@@ -159,8 +162,7 @@ app.use(function(req, res, next) {
     if (accessTokenFromClient == "share") {
         request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
             if (err) {
-                // // console.log(err)
-                res.send(400, new Error(err));
+                errorHandler(next, 400, err)
             } else {
                 res.send(200, res2.body)
             }
@@ -171,12 +173,12 @@ app.use(function(req, res, next) {
 
     cognitoExpress.validate(accessTokenFromClient, function(err, response) {
         if (err) {
-            res.send(401, new Error("incorrect access token"))
+            errorHandler(next, 401, "incorrect access token")
         } else {
             request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
                 if (err) {
                     // // console.log(err)
-                    res.send(400, new Error(err));
+                    errorHandler(next, 400, err)
                 } else {
                     res.send(200, res2.body)
                 }
@@ -200,12 +202,12 @@ app.use(function(req, res, next) {
     
         cognitoExpress.validate(accessTokenFromClient, function(err, response) {
             if (err) {
-                res.send(401, new Error("incorrect access token"))
+                errorHandler(next, 401, "incorrect access token")
             } else {
                 request.post(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}, json: data}, function(err, res2) {
                     if (err) {
                         // // console.log(err)
-                        res.send(400, new Error(err));
+                        errorHandler(next, 400, err)
                     } else {
                         res.send(200, res2.body)
                     }
@@ -235,7 +237,7 @@ app.use(function(req, res, next) {
                 request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
                     if (err) {
                         // // console.log(err)
-                        res.send(400, new Error(err));
+                        errorHandler(next, 400, err)
                     } else {
                         res.send(200, res2.body)
                     }
@@ -264,7 +266,7 @@ app.use(function(req, res, next) {
         request.post("http://18.220.46.51:3000/api/VerifyJobExp",  {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}, json: data}, function(err, res2) {
             if (err) {
                 // console.log(err)
-                res.send(400, new Error(err));
+                errorHandler(next, 400, err)
             } else {
                 res.send(200, res2.body)
             }
@@ -284,7 +286,7 @@ app.use(function(req, res, next) {
                 request.put(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}, json: data}, function(err, res2) {
                     if (err) {
                         // console.log(err)
-                        res.send(400, new Error(err));
+                        errorHandler(next, 400, err)
                     } else {
                         res.send(200, res2.body)
                     }
@@ -332,7 +334,7 @@ app.use(function(req, res, next) {
         }
         sender.sendMail(mailOptions, function (err, info) {
             if (err) {
-                res.send(500, {error: err})
+                errorHandler(next, 500, err)
             } else {
                 res.send(200, {success: "sent"})
             }
@@ -372,7 +374,7 @@ app.post("/feedback", (req, res, next) => {
         }
         sender.sendMail(mailOptions, function (err, info) {
             if (err) {
-                res.send(500, {error: err})
+                errorHandler(next, 500, err)
             } else {
                 res.send(200, {success: "sent"})
             }
@@ -411,7 +413,7 @@ app.post("/feedback", (req, res, next) => {
         }
         sender.sendMail(mailOptions, function (err, info) {
             if (err) {
-                res.send(500, {error: err})
+                errorHandler(next, 500, err)
             } else {
                 res.send(200, {success: "sent"})
             }
@@ -453,7 +455,7 @@ app.post("/request-verification", (req, res, next) => {
         }
         sender.sendMail(mailOptions, function (err, info) {
             if (err) {
-                res.send(500, {error: err})
+                errorHandler(next, 500, err)
             } else {
                 res.send(200, {success: "sent"})
             
@@ -517,7 +519,7 @@ app.post("/share-resume", (req, res, next) => {
         }
         sender.sendMail(mailOptions, function (err, info) {
             if (err) {
-                res.send(500, {error: err})
+                errorHandler(next, 500, err)
             } else {
                 res.send(200, {success: "sent"})
             }
@@ -556,7 +558,7 @@ app.post("/applicant-unrequest", (req, res, next) => {
         }
         sender.sendMail(mailOptions, function (err, info) {
             if (err) {
-                res.send(500, {error: err})
+                errorHandler(next, 500, err)
             } else {
                 res.send(200, {success: "sent"})
             }
@@ -594,7 +596,7 @@ app.post("/hire-request", (req, res, next) => {
         }
         sender.sendMail(mailOptions, function (err, info) {
             if (err) {
-                res.send(500, {error: err})
+                errorHandler(next, 500, err)
             } else {
                 res.send(200, {success: "sent"})
             }
@@ -633,7 +635,7 @@ app.post("/accept-hire", (req, res, next) => {
         }
         sender.sendMail(mailOptions, function (err, info) {
             if (err) {
-                res.send(500, {error: err})
+                errorHandler(next, 500, err)
             } else {
                 res.send(200, {success: "sent"})
             }
@@ -641,7 +643,7 @@ app.post("/accept-hire", (req, res, next) => {
     })
 })
 
-https.createServer(options, app).listen(443, function (err) {
+http.createServer(options, app).listen(4200, function (err) {
     if (err) {
       throw err
     }
