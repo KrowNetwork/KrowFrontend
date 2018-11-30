@@ -14,6 +14,7 @@ const http = require('http');
 const AWS = require("aws-sdk")
 
 var fs = require('fs');
+console.log("k")
 
 // var options = {
 //   key: fs.readFileSync('credentials/privatekey.pem'),
@@ -63,7 +64,9 @@ app.use(function(req, res, next) {
 
     cognitoExpress.validate(accessTokenFromClient, function(err, response) {
         if (err) {
-            res.send(401, {error: "incorrect access token"})
+            // res.send(401, {error: "incorrect access token"})
+            // res.CreateErrorResponse(401, "test")
+            throw new Error({"error": "incorrect access token"})
         } else {
             res.send({"api": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"})
         }
@@ -85,6 +88,7 @@ app.use(function(req, res, next) {
             exec("aws cognito-idp admin-delete-user --user-pool-id us-east-2_THcotoVBG --username " + req.body.id, (error, stdout, stderr) => 
         {
             if (error) {
+                // res.send(500, new Error("internal server error"))
                 res.send(500, new Error("internal server error"))
             } else {
                 res.send(200, {success: "the applicant was deleted"})
@@ -118,11 +122,15 @@ app.use(function(req, res, next) {
   })
 
   app.get("/h", (req, res, next) => {
+      console.log("h")
    var url = req.query.url
     request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
         if (err) {
             // // console.log(err)
-            res.send(400, new Error(err));
+            var e = new Error(err)
+            err.status = 400
+            throw e
+            // res.send(400, new Error(err));
         } else {
             res.send(200, res2.body)
         }
