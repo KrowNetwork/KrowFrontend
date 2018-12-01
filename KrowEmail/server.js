@@ -46,7 +46,7 @@ var ddb = new AWS.DynamoDB({apiVersion: '2012-10-08'})
 function errorHandler(next, code, message) {
     var e = new Error(message)
     e.status = code
-    next(e)
+    throw e
 }
 
 
