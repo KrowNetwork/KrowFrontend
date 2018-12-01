@@ -43,10 +43,14 @@ AWS.config.update({region: "us-east-2"})
 
 var ddb = new AWS.DynamoDB({apiVersion: '2012-10-08'})
 
-function errorHandler(next, code, message) {
-    var e = new Error(message)
-    e.status = code
-    throw e
+function errorHandler(res, res2, err, next, code, message) {
+    if (res2.body["error"] !== undefined || err) {
+        var e = new Error(message)
+        e.status = code
+        next(e)
+    } else {
+        res.status(200).send(res2.body)
+    }
 }
 
 
@@ -131,13 +135,15 @@ app.use(function(req, res, next) {
       console.log("h")
    var url = req.query.url
     request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
-        if (err) {
-            // // console.log(err)
-            errorHandler(next, 400, err)
-            res.status(400).send({status: 400, message: new Error(err)});
-        } else {
-            res.send(200, res2.body)
-        }
+        errorHandler(res, res2, err, next, 400, err)
+        // if (err) {
+        //     // // console.log(err)
+        //     errorHandler(next, 400, err)
+        //     // res.status(400).send({status: 400, message: new Error(err)});
+        // } else {
+            
+        //     res.send(200, res2.body)
+        // }
     })
   })
 //   https://us-18.api.mailchimp.com/3.0/lists/0d43791d4b
@@ -146,11 +152,7 @@ app.use(function(req, res, next) {
     var auth = new Buffer('any:eac99e13e104235d60828809af71d173-us18' ).toString('base64')
 
         request.post("https://us18.api.mailchimp.com/3.0/lists/0d43791d4b/members/", {headers: {"Authorization":"Basic " + auth}, json: data}, function(err, res2) {
-            if (err) {
-                errorHandler(next, 400, err)
-            } else {
-                res.send(200, res2.body)
-            }
+            errorHandler(res, res2, err, next, 400, err)
         })
     })
   
@@ -161,11 +163,7 @@ app.use(function(req, res, next) {
 
     if (accessTokenFromClient == "share") {
         request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
-            if (err) {
-                errorHandler(next, 400, err)
-            } else {
-                res.send(200, res2.body)
-            }
+            errorHandler(res, res2, err, next, 400, err)
         })
     } else {
 
@@ -176,12 +174,7 @@ app.use(function(req, res, next) {
             errorHandler(next, 401, "incorrect access token")
         } else {
             request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
-                if (err) {
-                    // // console.log(err)
-                    errorHandler(next, 400, err)
-                } else {
-                    res.send(200, res2.body)
-                }
+                errorHandler(res, res2, err, next, 400, err)
             })
           }
         })
