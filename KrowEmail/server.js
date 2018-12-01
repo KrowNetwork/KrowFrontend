@@ -134,7 +134,7 @@ app.use(function(req, res, next) {
         if (err) {
             // // console.log(err)
             errorHandler(next, 400, err)
-            // res.send(400, new Error(err));
+            res.status(400).send({status: 400, message: new Error(err));
         } else {
             res.send(200, res2.body)
         }
