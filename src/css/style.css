@@ -5254,7 +5254,24 @@ aside .widget.border:first-child {
     float: left;
     display: block;
     position: relative;
+    text-align: center;
     height: 100%;
+    width: 100%;
+}
+
+.share-popup-email {
+    float: left;
+    display: block;
+    position: absolute;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+}
+
+.share-popup-email > a {
+    float: left;
+    display: block;
+    text-align: center;
     width: 100%;
 }
 
@@ -5274,7 +5291,7 @@ aside .widget.border:first-child {
     line-height: 41px;
 }
 
-.share-popup button{
+.share-popup > button{
     display: block;
     position: absolute;
     background: white;
@@ -5285,6 +5302,21 @@ aside .widget.border:first-child {
     padding-top: 10px;
     padding-bottom: 10px;
     border-top: 1px solid #e8ecec;
+}
+
+.share-popup-email > .submitEmail {
+    display: block;
+    position: absolute;
+    background-color:#44c767;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:16px;
+	padding:6px 12px;
+    text-decoration:none;
 }
 
 .share-bar span {
