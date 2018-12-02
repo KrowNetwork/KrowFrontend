@@ -443,7 +443,7 @@ downloadPDF(){
 addHeight(height, size, pdf){
   this.fontHeight = height + size;
   
-  if(this.fontHeight > 280){
+  if(this.fontHeight > 275){
     pdf.addPage();
     this.fontHeight = 20;
   }
