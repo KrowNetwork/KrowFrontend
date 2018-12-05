@@ -63,6 +63,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
   location=""
 
   fontHeight = 0;
+  logo = '../../../../assets/images/krow-logo.png'
 
   @ViewChild('content') content: ElementRef;
   
@@ -380,12 +381,16 @@ downloadPDF(){
 
   doc.setFont('times');
   doc.setFontSize(16);
+  doc.addImage(this.logo, 'PNG', 197, 285, 7,7);
+  doc.setFontType('bold');
   doc.text(105, this.addHeight(this.fontHeight, 10, doc), this.name, null, null, 'center');
   
+  doc.setFontType('normal');
   doc.setFontSize(10);
   doc.text(105, this.addHeight(this.fontHeight, 5, doc), this.email, null, null, 'center');
   doc.text(105, this.addHeight(this.fontHeight, 5, doc), this.phone, null, null, 'center');
   doc.text(105, this.addHeight(this.fontHeight, 5, doc), this.location, null, null, 'center');
+  doc.line(20, this.addHeight(this.fontHeight, 3, doc), 190, this.fontHeight)
 
   doc.setFontType('bold');
   doc.setFontSize(14);
@@ -393,33 +398,40 @@ downloadPDF(){
 
   doc.setFontType('normal');
   doc.setFontSize(12);
-  doc.text(25, this.addHeight(this.fontHeight, 10, doc), this.bio, null, null, 'left');
+  doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.bio, null, null, 'left');
   doc.text(25, this.addHeight(this.fontHeight, this.bio.split("\n").length*5, doc), '\n', null, null, 'left');
 
   doc.setFontType('bold');
   doc.setFontSize(14);
-  doc.text(20, this.addHeight(this.fontHeight, 10, doc), 'Education', null, null, 'left');
+  doc.text(20, this.addHeight(this.fontHeight, 0, doc), 'Education', null, null, 'left');
 
   doc.setFontType('normal');
   doc.setFontSize(12);
   for(var i = 0; i < this.education.length; i++){
+    doc.setFontType('bolditalic');
     doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.education[i].title , null, null, 'left');
+    doc.setFontType('normal');
     doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.education[i].description , null, null, 'left');
     doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.education[i].startDate + ' to ' + this.education[i].endDate, null, null, 'left');
-    doc.text(25, this.addHeight(this.fontHeight, 5, doc), '\n', null, null, 'left');
+    doc.text(25, this.addHeight(this.fontHeight, 2, doc), '\n', null, null, 'left');
   }
  
   doc.setFontType('bold');
   doc.setFontSize(14);
-  doc.text(20, this.addHeight(this.fontHeight, 10, doc), 'Experience', null, null, 'left');
+  doc.text(20, this.addHeight(this.fontHeight, 5, doc), 'Experience', null, null, 'left');
 
   doc.setFontType('normal');
   doc.setFontSize(12);
   for(var i = 0; i < this.experience.length; i++){
+    doc.setFontType('bolditalic');
     doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.experience[i].title , null, null, 'left');
+    doc.setFontType('normal');
     doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.experience[i].startDate + ' to ' + this.experience[i].endDate, null, null, 'left');
     doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.experience[i].description , null, null, 'left');
-    doc.text(25, this.addHeight(this.fontHeight, 5, doc), '\n', null, null, 'left');
+    if(this.experience[i].skills != ''){
+      doc.text(25, this.addHeight(this.fontHeight, 5, doc), 'Skills: ' + this.experience[i].skills , null, null, 'left');
+    }
+    doc.text(25, this.addHeight(this.fontHeight, 2, doc), '\n', null, null, 'left');
   }
   
   doc.save('resume.pdf');
@@ -446,6 +458,7 @@ addHeight(height, size, pdf){
   
   if(this.fontHeight > 275){
     pdf.addPage();
+    pdf.addImage(this.logo, 'PNG', 197, 285, 7,7);
     this.fontHeight = 20;
   }
 
