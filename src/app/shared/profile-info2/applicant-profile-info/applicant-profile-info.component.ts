@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 // import { CreateUserService } from '../../../service/create-user.service';
 import { UserLoginService } from '../../../service/user-login.service';
@@ -9,6 +9,8 @@ import { log } from 'util';
 import { DataShareService } from "../../../service/data-share.service"
 import { ModalService } from '../../../service/modal.service'; 
 import { ShareLinkPopupComponent} from './share-link-popup/share-link-popup.component';
+import * as jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-applicant-profile-info',
@@ -61,6 +63,11 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
   owner = false;
   forceLogin=false
   location=""
+
+  fontHeight = 0;
+  logo = '../../../../assets/images/krow-logo.png'
+
+  @ViewChild('content') content: ElementRef;
   
 
   constructor(
@@ -382,6 +389,98 @@ reqVerify(id, jname, comp) {
 showJob(link) {
   // console.log(link)
   this.router.navigate([link])
+}
+downloadPDF(){
+  
+  const doc = new jsPDF();
+  this.fontHeight = 0; //reset font height to 0;
+  console.log(JSON.stringify(this.experience));
+  console.log(JSON.stringify(this.education));
+
+  doc.setFont('times');
+  doc.setFontSize(16);
+  doc.addImage(this.logo, 'PNG', 197, 285, 7,7);
+  doc.setFontType('bold');
+  doc.text(105, this.addHeight(this.fontHeight, 10, doc), this.name, null, null, 'center');
+  
+  doc.setFontType('normal');
+  doc.setFontSize(10);
+  doc.text(105, this.addHeight(this.fontHeight, 5, doc), this.email, null, null, 'center');
+  doc.text(105, this.addHeight(this.fontHeight, 5, doc), this.phone, null, null, 'center');
+  doc.text(105, this.addHeight(this.fontHeight, 5, doc), this.location, null, null, 'center');
+  doc.line(20, this.addHeight(this.fontHeight, 3, doc), 190, this.fontHeight)
+
+  doc.setFontType('bold');
+  doc.setFontSize(14);
+  doc.text(20, this.addHeight(this.fontHeight, 5, doc), 'About', null, null, 'left');
+
+  doc.setFontType('normal');
+  doc.setFontSize(12);
+  doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.bio, null, null, 'left');
+  doc.text(25, this.addHeight(this.fontHeight, this.bio.split("\n").length*5, doc), '\n', null, null, 'left');
+
+  doc.setFontType('bold');
+  doc.setFontSize(14);
+  doc.text(20, this.addHeight(this.fontHeight, 0, doc), 'Education', null, null, 'left');
+
+  doc.setFontType('normal');
+  doc.setFontSize(12);
+  for(var i = 0; i < this.education.length; i++){
+    doc.setFontType('bolditalic');
+    doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.education[i].title , null, null, 'left');
+    doc.setFontType('normal');
+    doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.education[i].description , null, null, 'left');
+    doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.education[i].startDate + ' to ' + this.education[i].endDate, null, null, 'left');
+    doc.text(25, this.addHeight(this.fontHeight, 2, doc), '\n', null, null, 'left');
+  }
+ 
+  doc.setFontType('bold');
+  doc.setFontSize(14);
+  doc.text(20, this.addHeight(this.fontHeight, 5, doc), 'Experience', null, null, 'left');
+
+  doc.setFontType('normal');
+  doc.setFontSize(12);
+  for(var i = 0; i < this.experience.length; i++){
+    doc.setFontType('bolditalic');
+    doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.experience[i].title , null, null, 'left');
+    doc.setFontType('normal');
+    doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.experience[i].startDate + ' to ' + this.experience[i].endDate, null, null, 'left');
+    doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.experience[i].description , null, null, 'left');
+    if(this.experience[i].skills != ''){
+      doc.text(25, this.addHeight(this.fontHeight, 5, doc), 'Skills: ' + this.experience[i].skills , null, null, 'left');
+    }
+    doc.text(25, this.addHeight(this.fontHeight, 2, doc), '\n', null, null, 'left');
+  }
+  
+  doc.save('resume.pdf');
+
+  // let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF  
+  
+  // var content = this.content.nativeElement;
+  //   html2canvas(content).then(contentCanvas => {  
+  //     // Few necessary setting options  
+  //     var imgWidth = 208;   
+  //     var pageHeight = 295;    
+  //     var imgHeight = contentCanvas.height * imgWidth / contentCanvas.width;  
+  //     var heightLeft = imgHeight;  
+  
+  //     const contentDataURL = contentCanvas.toDataURL('image/png', 1.0)  
+  //     var position = 0;  
+  //     pdf.addImage(contentDataURL, 'PNG', 20, 20, imgWidth, imgHeight)  
+  //     pdf.save('MYPdf.pdf'); // Generated PDF   
+  //   });  
+}
+
+addHeight(height, size, pdf){
+  this.fontHeight = height + size;
+  
+  if(this.fontHeight > 275){
+    pdf.addPage();
+    pdf.addImage(this.logo, 'PNG', 197, 285, 7,7);
+    this.fontHeight = 20;
+  }
+
+  return this.fontHeight;
 }
 
 

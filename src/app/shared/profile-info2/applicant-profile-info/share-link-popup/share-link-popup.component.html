@@ -20,8 +20,11 @@
 </div>
 
 <div *ngIf="email" class="share-popup">
-    <input [(ngModel)]="addr" [ngModelOptions]="{standalone: true}" />
-    <a type="button" class="submitEmail" (click)="send(addr)">Send</a>
+    <span class="share-popup-email">
+        <a>Enter an email:</a>
+        <input [(ngModel)]="addr" [ngModelOptions]="{standalone: true}" />
+        <button class="submitEmail" (click)="send(addr)">Send</button>
+    </span>
 
     <button (click)="close()">Close</button>
 </div>
