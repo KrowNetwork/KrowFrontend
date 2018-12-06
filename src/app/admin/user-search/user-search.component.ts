@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomHttpService } from "./../../service/custom-http.service"
+import { CustomHttpService } from "../../service/custom-http.service"
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { UserLoginService } from "../../service/user-login.service"
 @Component({

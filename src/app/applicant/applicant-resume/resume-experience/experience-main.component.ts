@@ -10,10 +10,6 @@ export class ExperienceMainComponent implements InterfaceComponent {
 
   deletedElements = new Array();
 
-  displayDropdown(event){
-    // console.log("display");
-  }
-
   deleteItem(event){
     this.changeHandler(event);
     this.deletedElements.push(event.target.closest("form"))

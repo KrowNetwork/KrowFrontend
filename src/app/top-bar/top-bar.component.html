@@ -4,7 +4,17 @@
 
 
 		<div class="responsive-header">
+				
+			<p>test</p>
+			<script async src="https://www.googletagmanager.com/gtag/js?id=UA-123402433-1"></script>
+			<!-- <script src="https://jsconsole.com/js/remote.js?2b72d5cf-df17-4bc3-abb7-d1cdbd9bf842"></script> -->
+			<script>
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
 
+				gtag('config', 'UA-123402433-1');
+			</script>
 				<div class="responsive-menubar">
 					<div class="res-logo"><a href="index.html" title=""><img src="assets/images/top-bar-logo.png" alt="Krow Network Logo" /></a></div>
 					<div class="menu-resaction">
@@ -32,7 +42,8 @@
 										<a [routerLink]="['/']" routerLinkActive="active">Home</a>
 								</li>
 								<li *ngIf="isLoggedInB">
-										<a (click)="goToProfile()" style="color:#96a0bd">Profile</a>
+										<!-- <a (click)="goToProfile()" style="color:#96a0bd">Profile</a> -->
+										<a [routerLink]="['/secureHome']" style="color:#96a0bd">Profile</a>
 								</li>
 								<li *ngIf="isLoggedInB">
 										<a role="button" (click)="goToFeedback()" style="color:#96a0bd">Feedback</a>
@@ -100,7 +111,8 @@
                 <!-- <a role="button" (click)="switchSession()">Switch to {{switchTo}}</a> -->
               </li>
               <li *ngIf="isLoggedInB">
-                <a role="button" (click)="goToProfile()" style="color:#ffffff">Profile</a>
+                <!-- <a role="button" (click)="goToProfile()" style="color:#ffffff">Profile</a> -->
+								<a role="button" [routerLink]="['/secureHome']" style="color:#ffffff;">Profile</a>
 							</li>   
 							
 							<li *ngIf="isLoggedInB">

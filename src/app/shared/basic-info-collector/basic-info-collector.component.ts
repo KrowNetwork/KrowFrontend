@@ -16,7 +16,7 @@ export class BasicInfoCollectorComponent implements OnInit {
     ) { }
 
     user: string;
-    intent: string;
+    intent: "Applicant";
     first: string;
     second: string;
     email: string;

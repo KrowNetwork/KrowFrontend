@@ -5,6 +5,7 @@ import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { UserLoginService } from '../service/user-login.service';
 import { CustomHttpService } from '../service/custom-http.service';
 declare var $: any;
+declare var gtag: Function
 
 @Component({
   selector: 'app-top-bar',
@@ -17,6 +18,8 @@ export class TopBarComponent implements OnInit {
   isFeedbackOn = false;
   btnText: string;
   term: String;
+  user = ""
+  
   constructor(
     public http: CustomHttpService,
     private createUser: CreateUserService,
@@ -24,30 +27,36 @@ export class TopBarComponent implements OnInit {
     public userService: UserLoginService,
     private router: Router
   ) {
+    // window.dataLayer
+    // function gtag(){window.dataLayer.push(arguments);}
     // console.log("f")
     // todo - private v public
+    
     this.userService.isAuthenticated(this);
 
-    var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
-    this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
-    data => {
-                sessionStorage.setItem("accountType", "applicant")
-                // this.router.navigate(['/applicant']);
+    this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+    gtag('js', new Date());
+    gtag('set', {'user_id': this.user}); // Set the user ID using signed-in user_id.
+    
+    // this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
+    // data => {
+    //             sessionStorage.setItem("accountType", "applicant")
+    //             // this.router.navigate(['/applicant']);
                 
                         
 
         
-    }, // Catch Errors
-    (err = HttpErrorResponse) => {      
-      this.http.head("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
-        data => {
-                sessionStorage.setItem("accountType", "employer")
-          }
-        )  
-                // this.router.navigate(['/employer']);        
-    } 
+    // }, // Catch Errors
+    // (err = HttpErrorResponse) => {      
+    //   this.http.head("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
+    //     data => {
+    //             sessionStorage.setItem("accountType", "employer")
+    //       }
+    //     )  
+    //             // this.router.navigate(['/employer']);        
+    // } 
                         // console.log("User does not have an applicant acco        // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
-    )
+    
 
         
 
@@ -71,8 +80,15 @@ export class TopBarComponent implements OnInit {
 
     // // console.log(this.is_applicant)
   
+
   
-  
+}
+
+showTracking() {
+  if (this.isLoggedInB && this.user != "") {
+    return true
+  }
+  return false
 }
   isLoggedIn(message: string, isLoggedIn: boolean) {
     if (isLoggedIn) {

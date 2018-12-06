@@ -1620,11 +1620,11 @@ label::after {
 .job-listing:hover {
     /* border-left-color: #8b91dd; */
 
-    -webkit-box-shadow: 0px 0px 30px rgba(0,0,0,0.1);
-    -moz-box-shadow: 0px 0px 30px rgba(0,0,0,0.1);
-    -ms-box-shadow: 0px 0px 30px rgba(0,0,0,0.1);
-    -o-box-shadow: 0px 0px 30px rgba(0,0,0,0.1);
-    box-shadow: 0px 0px 30px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
+    -ms-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
+    -o-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
 
     z-index: 1;
     position: relative;

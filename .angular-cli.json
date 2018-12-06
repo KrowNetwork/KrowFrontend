@@ -38,7 +38,8 @@
         "js/select-chosen.js",
         "js/jquery.scrollbar.min.js",
         "js/tag.js",
-        "js/maps3.js"
+        "js/maps3.js",
+        "js/analytics.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

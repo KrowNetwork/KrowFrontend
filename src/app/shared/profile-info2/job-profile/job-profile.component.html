@@ -1,0 +1,228 @@
+<p id="test-ID" value="Applicant" style="display:none"></p>
+
+<app-top-bar></app-top-bar>
+
+		
+
+	<section class="overlape">
+		<div class="block no-padding">
+			<div data-velocity="-.1" class="parallax scrolly-invisible no-parallax"></div>
+			<div class="container fluid">
+				<div class="row">
+					<div class="col-lg-12">
+							<div class="inner-header" id="responsive-title">
+									<h3>Job</h3>
+								</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	
+
+<section>
+  <div class="block">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 column">
+          <div class="job-single-sec style3">
+            <div class="job-head-wide">
+              <div class="row">
+                <div class="col-lg-8">
+                    <div *ngIf="msg != undefined">
+                        <span>{{ msg }}</span>
+                    </div>
+                  <div class="job-single-head3">
+                    <!-- <div class="job-thumb"> <img src="http://placehold.it/120x95" alt="" /><span>12 Open Position</span> </div> -->
+                    <div class="job-single-info3">
+                      <h3>{{ title }}</h3>
+                      <span><i class="la la-map-marker"></i>{{ location }}</span>
+                      <ul class="tags-jobs">
+                        <!-- <li><i class="la la-file-text"></i> Applications 1</li> -->
+                        <li><i class="la la-calendar-o"></i> Post Date: {{ created }}</li>
+                        <!-- <li><i *ngIf="started" class="la la-calendar-o"></i> Start Date: {{ startdate }}</li>
+                        <li><i *ngIf="ended" class="la la-calendar-o"></i> End Date: {{ enddate }}</li> -->
+
+                        <!-- <li><i class="la la-eye"></i> Views 5683</li> -->
+                      </ul>
+                    </div>
+                  </div><!-- Job Head -->
+                </div>
+                <div class="col-lg-4">
+                  <a *ngIf="canEdit" class="apply-thisjob" (click)="goToEdit()" title="" ><i class="la la-pencil"></i>Edit this job</a> 
+                  <!-- <a *ngIf="canEdit" class="apply-thisjob1 top-btn" (click)="goToEdit()" title=""><i class="la la-pencil"></i>Invite Applicants</a> -->
+
+                  <a *ngIf="canAcceptJob" class="apply-thisjob" (click)="acceptJob()" title="" style="margin-top: 5px;"><i class="la la-check"></i>Accept this job</a>
+                  <a *ngIf="!canEdit && canApply" class="apply-thisjob" (click)="apply(event)" title="" style="margin-top: 5px;"><i class="la la-paper-plane"></i>Apply for job</a>
+                  <a *ngIf="!canEdit && canDeApply" class="apply-thisjob" (click)="deapply($event)" title="" style="margin-top: 5px;"><i class="la la-close"></i>Remove Application</a>
+                  <a *ngIf="isEmployee" class="apply-thisjob" (click)="addToResume()" title="" style="margin-top: 5px;"><i class="la la-add"></i>Add to Resume</a>
+                  <a class="apply-thisjob" (click)="viewEmp()" title="" style="margin-top: 5px; margin-bottom: 5px"><i class="la la-eye"></i>View Employer</a>
+                  <!-- <div class="apply-alternative">
+                    <a href="#" title=""><i class="la la-linkedin"></i> Apply with Linkedin</a>
+                    <span><i class="la la-heart-o"></i> Shortlist</span> apply($event)
+                  </div> -->
+                </div>
+              </div>
+            </div>
+            <div class="job-wide-devider">                
+              <div class="row">
+                <div class="col-lg-12 column">		
+                  <div class="job-details">
+                    <h3 style="font-weight: 700">Job Description</h3>
+                    <!-- <div class="row">
+                      <div clas
+                    </div> -->
+                    <p style="width:100%; white-space: pre-wrap;">{{ description }}</p>
+                  </div>
+                  <!-- <div class="share-bar">
+                    <span>Share</span><a href="#" title="" class="share-fb"><i class="fa fa-facebook"></i></a><a href="#" title="" class="share-twitter"><i class="fa fa-twitter"></i></a>
+                  </div> -->
+                  <!-- <div class="extra-job-info">
+                    <span><i class="la la-clock-o"></i><strong>35</strong> Days</span>
+                    <span><i class="la la-file-text"></i><strong>300-500</strong> Application</span>
+                    <span><i class="la la-search-plus"></i><strong>35697</strong> Displayed</span>
+                  </div> -->
+
+                  <div class="social-edit" id=sn *ngIf="!canApply && hasEmp">
+                    <h3>Employee</h3>
+                    
+                  <div class="job-list-modern">
+                      <div class="job-listings-sec no-border">
+                        <div *ngIf="!canApply" class="job-listing wtabs">
+                          <div class="job-title-sec" >
+                            <!-- <div class="c-logo"> <img src="http://placehold.it/98x51" alt="" /> </div> -->
+                            <h3><a href="#" title="">{{ employee.firstName }} {{ employee.lastName }}</a></h3>
+                            <!-- <span>{{ item.employerName }}</span> -->
+                            <!-- <div class="job-lctn"><i class="la la-map-marker"></i>{{  }}</div> -->
+                            <span *ngIf="isOwner && requestCompleteB" style="color:red">The employee has requested completion on thier job</span>
+                            <div class="btn-group" *ngIf="isOwner && requestCompleteB" style="margin-top:10px">
+                              
+                              <button *ngIf="isOwner && requestCompleteB" style="display: inline; padding: 10px;" (click)="complete()">Complete</button>
+                              <button *ngIf="isOwner && requestCompleteB" style="display: inline; padding: 10px;" (click)="denyCompletion()">Deny</button>
+                            </div>
+                          </div>
+                                
+                          <!-- <div class="job-style-bx"> -->
+                            <!-- <span class="job-is ft ">Full time</span>
+                            <span class="fav-job"><i class="la la-heart-o"></i></span>
+                            <i>5 months ago</i> -->
+                            <div class="job-style-bx btn-group">
+                                <button [routerLink]="['/applicant/profile-info/', employee.applicantID]">View</button>
+                                <!-- <button style="display: inline; padding: 10px; color:#00ff6a" (click)="requestToHire(app.applicantID)"><i class="la la-check"></i></button> -->
+                                <button *ngIf="isOwner" style="display: inline; padding: 10px;" (click)="firep1()">Fire</button>
+                                
+                            </div>
+                           
+                              
+                          <!-- </div>  -->
+                        </div>
+                        <div *ngIf="confirmFire" class="pf-field">
+                            <input type="text" placeholder="Reason" id="reason"
+                            [(ngModel)]="reason" [ngModelOptions]="{standalone: true}"/>
+                            <button (click)="firep2()">Confirm</button>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="social-edit" id=sn *ngIf="isOwner">
+                  <h3 style="display: inline-block">Applicants <button *ngIf="canEdit" (click)="goToEdit()" title=""  style="display:inline-block"><i class="la la-pencil"></i>Invite Applicants</button> </h3> 
+                  
+                  <div class="job-list-modern">
+                      <div class="job-listings-sec no-border">
+                        <div class="job-listing wtabs" *ngFor="let app of applicant_data; let i = index">
+                          <div class="job-title-sec" style="width:100%">
+
+                            <h3 style="padding: 10px 24px;"><a href="#" title="">{{ app.firstName }} {{ app.lastName }}</a></h3>
+
+                            <div style="padding: 10px 24px;" class="job-style-bx btn-group">
+                                <button [routerLink]="['/applicant/profile-info/', app.applicantID]" style="">View</button>
+                                <button style="display: inline;  color:#00ff6a" (click)="requestToHire(app.applicantID)"><i class="la la-check"></i></button>
+                                <button style="display: inline;  color:#f44242" (click)="denyApplicantp1(app.applicantID)"><i class="la la-close"></i></button>
+                                <button style="display: inline;  color:#ffffff" (click)="chat(app.applicantID)"><i class="la la-comments-o"></i></button>
+                              </div> 
+                          </div>
+                                
+                          
+                        </div>
+                        <div *ngIf="confirmDeny" class="pf-field">
+                          <input type="text" placeholder="Reason" id="reason"
+                          [(ngModel)]="reason" [ngModelOptions]="{standalone: true}"/>
+                          <button (click)="denyApplicantp2()">Confirm</button>
+                      </div>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="social-edit" id=sn *ngIf="isOwner">
+                    <h3>Hire Requests</h3>
+                  <div class="job-list-modern">
+                      <div class="job-listings-sec no-border">
+                        <div class="job-listing wtabs" *ngFor="let app of h_data; let i = index">
+                          <div class="job-title-sec" >
+
+                            <h3 style="padding: 10px 24px;"><a href="#" title="">{{ app.firstName }} {{ app.lastName }}</a></h3>
+
+                            <div style="padding: 10px 24px;" class="job-style-bx btn-group">
+
+                                <button [routerLink]="['/applicant/profile-info/', app.applicantID]">View</button>
+                                <button style="display: inline; " (click)="unRequestHire(app.applicantID)"><i class="la la-close"></i></button>
+                                <!-- <button style="display: inline; padding: 10px; " (click)="requestToHire()"><i class="la la-close"></i></button> -->
+                              </div> 
+                          </div>
+                                
+                          
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="social-edit" id=sn *ngIf="isOwner">
+                  <h3>Denied Applicants</h3>
+                <div class="job-list-modern">
+                    <div class="job-listings-sec no-border">
+                      <div class="job-listing wtabs" *ngFor="let app of denied; let i = index">
+                        <div class="job-title-sec" >
+
+                          <h3 style="padding: 10px 24px;"><a href="#" title="">{{ app.firstName }} {{ app.lastName }}</a></h3>
+
+                            <div style="padding: 10px 24px;" class="job-style-bx btn-group">
+
+                              <button [routerLink]="['/applicant/profile-info/', app.applicantID]">View</button>
+                              <!-- <button style="display: inline; padding: 10px; " (click)="requestToHire(app.applicantID)"><i class="la la-check"></i></button>
+                              <button style="display: inline; padding: 10px; " (click)="requestToHire()"><i class="la la-close"></i></button> -->
+                            </div> 
+                        </div>
+                              
+                        
+                      </div>
+                    </div>
+                </div>
+              </div>
+
+                </div>
+                
+              </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="block no-padding">
+    <div class="container">
+       <div class="row no-gape">
+        <div class="col-lg-1 column"></div>
+        <div class="col-lg-10 column">
+          <router-outlet ></router-outlet>
+        </div>
+        <div class="col-lg-1 column"></div>
+       </div>
+    </div>
+  </div>
+</section>
+
+<app-bottom-bar></app-bottom-bar>
