@@ -41,12 +41,13 @@ import { BasicInfoCollectorComponent } from './shared/basic-info-collector/basic
 import { ProfileInfoComponent } from './shared/profile-info/profile-info.component';
 import { ProfileInfo2Component } from './shared/profile-info2/profile-info2.component';
 
+// import { HireRequestsComponent } from "./shared/profile-info2/applicant-profile-info/hire-requests/hire-requests.component"
 
 
 import { HelpComponent } from './shared/help/help.component';
 import { EditComponent } from "./shared/edit/edit.component"
 
-import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-profile-info/employer-profile-info.component'
+// import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-profile-info/employer-profile-info.component'
 import { HomepageComponent } from './homepage/homepage.component'
 import { FAQsComponent } from './faqs/faqs.component'
 // import { DeleteComponent } from './delete/delete.component';
@@ -60,6 +61,9 @@ import {PrivacypolicyComponent} from "./privacypolicy/privacypolicy.component"
 import { AdminLoginComponent } from "./admin/admin-login/admin-login.component"
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component'
 import { UserSearchComponent } from './admin/user-search/user-search.component'
+// import { EmployerPostJobsComponent } from './shared/employer-post-jobs/employer-post-jobs.component'
+import { JobProfileComponent } from './shared/profile-info2/job-profile/job-profile.component';
+// import { EditJobComponent } from './shared/edit-job/edit-job.component'
 
 
 const appRoutes: Routes = [
@@ -202,6 +206,10 @@ const secureHome: Routes = [
                 component: UploadPicComponent
             }
             // {
+            //     path: "hire-requests",
+            //     component: HireRequestsComponent
+            // }
+            // {
             //     path: "verify/:id",
             //     component: VerifyJobComponent
             // },
@@ -219,6 +227,56 @@ const secureHome: Routes = [
             // }
         ]
     },
+    { 
+        path: 'job', 
+        children: [
+            { 
+                path: ':jobID', 
+                component: JobProfileComponent
+            },
+            // { 
+            //     path: ':jobID/edit', 
+            //     component: EditJobComponent
+            // },
+            // {
+            //     path: ":jobID/edit",
+            //     component: EditJobComponent
+            // }
+            
+            // { 
+            //     path: 'profile-info',
+            //     component: ProfileInfoComponent
+            // },
+            // { 
+            //     path: 'employer-post-jobs', 
+            //     component: EmployerPostJobsComponent,
+            // },
+            // { 
+            //     path: 'completed-jobs', 
+            //     //component: CompletedJobsComponent, 
+            //     component: ComingSoonComponent
+            // },
+            // { 
+            //     path: 'terminated-jobs', 
+            //     //component: TerminatedJobsComponent, 
+            //     component: ComingSoonComponent
+            // },
+            // { 
+            //     path: 'in-progress-jobs', 
+            //     //component: InProgressJobsComponent, 
+            //     component: ComingSoonComponent
+            // },
+            // { 
+            //     path: 'available-jobs', 
+            //     //component: AvailableJobsComponent, 
+            //     component: ComingSoonComponent
+            // },
+            // { 
+            //     path: 'job-search', 
+            //     component: JobSearchComponent, 
+            // }
+        ]
+    },
     {
         path: 'admin',
         children: [
@@ -233,40 +291,44 @@ const secureHome: Routes = [
             }
         ]
     },
-    { 
-        path: 'employer', 
-        component: EmployerProfileComponent, 
-        children: [
-            { 
-                path: '', 
-                component: EmployerProfileInfoComponent
-            },
-            { 
-                path: 'profile-info',
-                component: EmployerProfileInfoComponent
-            },
-            { 
-                path: 'profile-info/:employerID',
-                component: EmployerProfileInfoComponent
-            },
-            {
-                path: "edit",
-                component: EditComponent,
-            },
-            {
-                path: "upload",
-                component: UploadPicComponent
-            },
-            // {
-            //     path: "calendar",
-            //     component: CalendarComponent
-            // }
-            // {
-            //     path: "delete",
-            //     component: DeleteComponent
-            // }
-        ]
-    },
+    // { 
+    //     path: 'employer', 
+    //     component: EmployerProfileComponent, 
+    //     children: [
+    //         { 
+    //             path: '', 
+    //             component: EmployerProfileInfoComponent
+    //         },
+    //         { 
+    //             path: 'profile-info',
+    //             component: EmployerProfileInfoComponent
+    //         },
+    //         { 
+    //             path: 'profile-info/:employerID',
+    //             component: EmployerProfileInfoComponent
+    //         },
+    //         {
+    //             path: "edit",
+    //             component: EditComponent,
+    //         },
+    //         {
+    //             path: "upload",
+    //             component: UploadPicComponent
+    //         },
+    //         {
+    //             path: "create",
+    //             component: EmployerPostJobsComponent
+    //         }
+    //         // {
+    //         //     path: "calendar",
+    //         //     component: CalendarComponent
+    //         // }
+    //         // {
+    //         //     path: "delete",
+    //         //     component: DeleteComponent
+    //         // }
+    //     ]
+    // },
     {
         path: 'logout',
         component: LogoutComponent

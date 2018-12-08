@@ -1,0 +1,98 @@
+h3.top{
+    margin:0;
+    padding:0;
+    border:0;
+    font-size:100%;
+    /* font:inherit; */
+    vertical-align:baseline;
+    display: inline-block;
+}
+
+.post-job-btn {
+    float: right;
+    font-family: Open Sans;
+    font-size: 14px;
+    color: #ffffff;
+    padding: 13px 27px;
+    /* margin-top: 40px; */
+    
+    -webkit-border-radius: 23px;
+    -moz-border-radius: 23px;
+    -ms-border-radius: 23px;
+    -o-border-radius: 23px;
+    border-radius: 23px;
+
+    letter-spacing: 0.3px;
+    display:inline-block
+}
+
+.check:hover {
+    
+    background: #00ff6a;
+    border-color: #00ff6a;
+    color: #FFF;
+    
+}
+
+.cclose:hover {
+    
+    background: #FF2727;
+    border-color: #FF2727;
+    color: #FFF;
+    
+}
+
+.btn-group button {
+    -webkit-border-radius:0px;
+    -moz-border-radius:0px;
+    -ms-border-radius:0px;
+    -o-border-radius:0px;
+    border-radius:0px;
+    background-color: black; /* Green background */
+     /* Green border */
+    color: white; /* White text */
+    padding: 10px 24px;/* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+}
+
+.btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+    background-color: grey;
+}
+
+.top-btn {
+    display: inline-block;
+    margin: 5px;
+}
+
+.apply-thisjob2 {
+    /* float: left; */
+    /* display: inline; */
+    width: 100%;
+    border: 2px solid #8b91dd;
+    text-align: center;
+    color: #8b91dd;
+
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    border-radius: 8px;
+
+    padding: 20px 20px;
+    font-size: 15px;
+    font-family: Open Sans;
+    font-weight: bold;
+}

@@ -43,6 +43,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
   urlWEBSITE = undefined;
 
   id: string;
+  hrl = 0
 
   education = [];
   experience = [];
@@ -52,6 +53,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
   completed_jobs = [];
   terminated_jobs = [];
   terminate_reasons = [];
+  hire_requests = [];
 
   curr_emp = false
 
@@ -115,6 +117,10 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
     
     this.http.get("http://18.220.46.51:3000/api/Applicant/" + this.id).subscribe(
       data => {
+        if (data["error"] !== undefined) {
+          sessionStorage.setItem("accountType", "employer")
+          this.router.navigate(["/employer"])
+        }
         console.log(data)
         this.first = data["firstName"]
         this.last = data["lastName"]
@@ -224,10 +230,10 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
             var element = data["resume"]["experience"][i]
             var s = new Date(element["startDate"])
             element["startDate"] = this.monthNames[s.getMonth() + 1] + " " + s.getFullYear().toString()
-            
+            console.log(element.link)
             var e = new Date(element["endDate"])
             element["endDate"] = this.monthNames[e.getMonth() + 1] + " " + e.getFullYear().toString()
-            console.log(element)
+            // console.log(element)
             if (element.present == true || element.endDate == "undefined NaN") {
               element.endDate = "Present"
             }
@@ -283,6 +289,14 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
                 
               })
           }
+          this.hrl = data['hireRequests'].length
+          for (var i = 0; i < data["hireRequests"].length; i++){
+            var id = data["hireRequests"][i].split("#")[1].toString()
+            // // console.log("id" + id)
+            // // console.log(data["terminateReasons"][i])
+            this.hire_requests.push(id)
+          }
+
 
           // terminated
           // // console.log(data["terminatedJobs"].length)
@@ -372,6 +386,10 @@ reqVerify(id, jname, comp) {
   this.router.navigate(["applicant/requestVerification/" + id])
 }
 
+showJob(link) {
+  // console.log(link)
+  this.router.navigate([link])
+}
 downloadPDF(){
   
   const doc = new jsPDF();

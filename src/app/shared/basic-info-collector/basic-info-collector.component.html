@@ -31,23 +31,24 @@
                                         [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
                                     <i class="la la-envelope"></i>
                                 </div>
+                                <!-- <span style="font-size: 10px; font-weight: 500">Each box is optional. We respect your privacy so you may choose to have no location at all if necessary</span> -->
                                 <div class="cfield">                                
-                                    <input id="biaAddr" required type="text" placeholder="Address" class="form-control"
+                                    <input id="biaAddr" required type="text" placeholder="Address (optional)" class="form-control"
                                         [(ngModel)]="address" [ngModelOptions]="{standalone: true}">
                                     <i class="la la-map-marker"></i>
                                 </div>
                                 <div class="cfield">                                
-                                    <input id="biaCity" required type="text" placeholder="City" class="form-control"
+                                    <input id="biaCity" required type="text" placeholder="City (optional)" class="form-control"
                                         [(ngModel)]="city" [ngModelOptions]="{standalone: true}">
                                     <i class="la la-map-marker"></i>
                                 </div>
                                 <div class="cfield">                                
-                                    <input id="biaState" required type="text" placeholder="State" class="form-control"
+                                    <input id="biaState" required type="text" placeholder="State (optional)" class="form-control"
                                         [(ngModel)]="state" [ngModelOptions]="{standalone: true}">
                                     <i class="la la-map-marker"></i>
                                 </div>
                                 <div class="cfield">                                
-                                    <input id="biaCountry" required type="text" placeholder="Country" class="form-control"
+                                    <input id="biaCountry" required type="text" placeholder="Country (optional)" class="form-control"
                                         [(ngModel)]="country" [ngModelOptions]="{standalone: true}">
                                     <i class="la la-globe"></i>
                                 </div>
@@ -62,7 +63,7 @@
                             </form>	
                         </div>
 
-                        <div class="account-popup" *ngIf="intent=='Employer && collectInfoOn'">	
+                        <div class="account-popup" *ngIf="intent=='Employer' && collectInfoOn">	
                             <h1 style="color: #fb236a">Welcome to the Krow Network Employer Experience!</h1>	
                             <h3>We just need some basic info to get you started:</h3>
                             <div *ngIf="errorMessage!=null" class="alert alert-danger" style="color: #fb236a">

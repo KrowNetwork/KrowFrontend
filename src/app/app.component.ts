@@ -1,20 +1,21 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { AwsUtil } from "./service/aws.service";
 import { UserLoginService } from "./service/user-login.service";
 import { CognitoUtil, LoggedInCallback } from "./service/cognito.service";
 import { Router, NavigationEnd } from "@angular/router";
-
+import {GoogleAnalyticsService} from "./service/google-analytics.service"
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
   })
-export class AppComponent implements OnInit, LoggedInCallback {
+export class AppComponent implements OnInit, OnDestroy, LoggedInCallback {
 
   constructor(
     public awsUtil: AwsUtil, 
     public userService: UserLoginService, 
     public cognito: CognitoUtil,
-    private router: Router
+    private router: Router,
+    public ga: GoogleAnalyticsService
   ) {
 
     this.router.events.subscribe(
@@ -29,10 +30,17 @@ export class AppComponent implements OnInit, LoggedInCallback {
   }
 
   ngOnInit() {
-    if ((typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1)) {
-      alert("Mobile support is not fully integrated. Proceed at your own risk. Use PC or Mac for full functionality.")
-    } // this.userService.isAuthenticated(this);
+    // if ((typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1)) {
+    //   alert("Mobile support is not fully integrated. Proceed at your own risk. Use PC or Mac for full functionality.")
+    // } // this.userService.isAuthenticated(this);
+    this.ga.subscribe()
   }
+
+  ngOnDestroy() {
+    this.ga.unsubscribe()
+  }
+
+
   
 
   isLoggedIn(message: string, isLoggedIn: boolean) {

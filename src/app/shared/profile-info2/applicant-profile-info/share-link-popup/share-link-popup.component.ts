@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalService } from '../../../../service/modal.service';
 import { CustomHttpService } from '../../../../service/custom-http.service'
-import { HttpErrorResponse } from '../../../../../../node_modules/@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-share-link-popup',

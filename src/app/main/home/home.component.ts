@@ -48,31 +48,22 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
         this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).subscribe(
             data => {
-                console.log(data)
-                if (data['error'] === undefined) {
-
-                    sessionStorage.setItem("accountType", "applicant")
-                    this.router.navigate(['/applicant']); 
-                } else {     
-                    console.log("f") 
+                sessionStorage.setItem("accountType", "applicant")
+                this.router.navigate(['/applicant']); 
+            },
+            (err: HttpErrorResponse) => {
                 this.http.head("http://18.220.46.51:3000/api/Employer/" + this.user).subscribe(
-                data => {
-                    if (data['error'] === undefined) {
-
+                    data => {
                         sessionStorage.setItem("accountType", "employer")
-                        this.router.navigate(['/employer']);        
-                    } else {
-                        console.log("here")
-                        this.show = true
-                    }
-                    
-                }
-                                // console.log("User does not have an applicant acco        // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
-            )
+                        this.router.navigate(['/employer']);    
+                    },
+                    (err: HttpErrorResponse) => {
+                        console.log(err)
+                        localStorage.clear()
+                        this.router.navigate(["/login"])
+                    })
+            })
 
-            } }
-            
-        )
     }
 
     initializeApplicant(){

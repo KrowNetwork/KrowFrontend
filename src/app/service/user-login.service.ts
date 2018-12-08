@@ -6,8 +6,9 @@ import * as AWS from "aws-sdk/global";
 import * as STS from "aws-sdk/clients/sts";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { CustomHttpService } from "./custom-http.service"
-import { createAotUrlResolver } from "../../../node_modules/@angular/compiler";
-
+import { createAotUrlResolver } from "@angular/compiler";
+import {GoogleAnalyticsService} from "./google-analytics.service"
+declare var gtag: Function;
 @Injectable()
 export class UserLoginService {
 
@@ -41,7 +42,8 @@ export class UserLoginService {
     
     constructor(
         public cognitoUtil: CognitoUtil,
-        private http: CustomHttpService) {
+        private http: CustomHttpService,
+        private ga: GoogleAnalyticsService) {
     }
     getUser(username) {
         let userData = {
@@ -72,15 +74,14 @@ export class UserLoginService {
         let cognitoUser = new CognitoUser(userData);
         // console.log("UserLoginService: config is " + AWS.config);
         cognitoUser.authenticateUser(authenticationDetails, {
+            
             newPasswordRequired: (userAttributes, requiredAttributes) => callback.cognitoCallback(`User needs to set password.`, null),
+            
             onSuccess: result => {
-                (<any>window).ga('send', 'event', { //GA tracking code
-                    eventCategory: 'login',
-                    eventLabel: 'login',
-                    eventAction: 'login',
-                    eventValue: 10
-                  });
-                console.log("GA SENT")
+                // console.log((<any>window).ga)
+                
+                this.ga.identifyUser()
+                this.ga.sendLoginEvent()
                 this.onLoginSuccess(callback, result)
             },
             onFailure: err => this.onLoginError(callback, err),

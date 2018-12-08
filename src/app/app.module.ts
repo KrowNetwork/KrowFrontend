@@ -27,10 +27,10 @@ import { ForgotPassword2Component, ForgotPasswordStep1Component } from './main/f
 import { ResendCodeComponent } from './main/resend/resendCode.component';
 
 // Employer components
-import { EmployerProfileComponent } from './employer/employer-profile/employer-profile.component';
+// import { EmployerProfileComponent } from './employer/employer-profile/employer-profile.component';
 
 // Job components
-import { JobProfileComponent } from './job/job-profile/job-profile.component';
+import { JobProfileComponent } from './shared/profile-info2/job-profile/job-profile.component';
 
 
 // Applicant components
@@ -80,7 +80,7 @@ import { HelpComponent } from './shared/help/help.component';
 import { ProfileInfo2Component } from './shared/profile-info2/profile-info2.component';
 import { ApplicantProfileInfoPrivateComponent } from './shared/profile-info2/applicant-profile-info/applicant-profile-info.component';
 import { EditComponent } from "./shared/edit/edit.component";
-import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-profile-info/employer-profile-info.component';
+// import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-profile-info/employer-profile-info.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { FAQsComponent } from './faqs/faqs.component';
 import { UploadPicComponent } from './upload-pic/upload-pic.component'
@@ -113,13 +113,17 @@ import {PrivacypolicyComponent} from "./privacypolicy/privacypolicy.component"
 import { AdminLoginComponent } from "./admin/admin-login/admin-login.component";
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { UserSearchComponent } from './admin/user-search/user-search.component'
-import {ShareLinkPopupComponent} from "./shared/profile-info2/applicant-profile-info/share-link-popup/share-link-popup.component"
-
+import {ShareLinkPopupComponent} from "./shared/profile-info2/applicant-profile-info/share-link-popup/share-link-popup.component";
+// import { EmployerPostJobsComponent } from './shared/employer-post-jobs/employer-post-jobs.component'
+// import {JobProfileComponent}
+import {GoogleAnalyticsService} from "./service/google-analytics.service";
+// import { EditJobComponent } from './shared/edit-job/edit-job.component';
+// import { HireRequestsComponent } from "./shared/profile-info2/applicant-profile-info/hire-requests/hire-requests.component"
 @NgModule({
   declarations: [
     // VIVEK (Add module declarations here, I'll worry about splitting it up later)
     AppComponent,
-    EmployerProfileComponent,
+    // EmployerProfileComponent,
     ApplicantProfileComponent,
     ProfileInfoComponent,
     ApplicantResumeComponent,
@@ -155,7 +159,7 @@ import {ShareLinkPopupComponent} from "./shared/profile-info2/applicant-profile-
     ProfileInfo2Component,
     ApplicantProfileInfoPrivateComponent,
     EditComponent,
-    EmployerProfileInfoComponent,
+    // EmployerProfileInfoComponent,
     HomepageComponent,
     FAQsComponent,
     UploadPicComponent,
@@ -173,7 +177,10 @@ import {ShareLinkPopupComponent} from "./shared/profile-info2/applicant-profile-
     AdminLoginComponent,
     AdminHomeComponent,
     UserSearchComponent,
-    ShareLinkPopupComponent
+    ShareLinkPopupComponent,
+    // EmployerPostJobsComponent,
+    // EditJobComponent,
+    // HireRequestsComponent
     // DeleteComponent
     
   ],
@@ -217,7 +224,8 @@ import {ShareLinkPopupComponent} from "./shared/profile-info2/applicant-profile-
     CustomHttpService,
     PreviousRouteService,
     DomService,
-    ModalService
+    ModalService,
+    GoogleAnalyticsService
   ],
   bootstrap: [ 
     AppComponent 

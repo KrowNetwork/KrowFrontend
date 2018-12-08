@@ -4,7 +4,7 @@ import { CreateUserService } from '../service/create-user.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { UserLoginService } from '../service/user-login.service';
 import { CustomHttpService } from '../service/custom-http.service';
-import { StringDoubleMap } from '../../../node_modules/aws-sdk/clients/gamelift';
+import { StringDoubleMap } from 'aws-sdk/clients/gamelift';
 declare var $: any;
 
 @Component({
@@ -34,25 +34,25 @@ export class HomepageComponent implements OnInit {
     this.userService.isAuthenticated(this);
 
     var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
-    this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
-    data => {
-                sessionStorage.setItem("accountType", "applicant")
-                // this.router.navigate(['/applicant']);
+    // this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
+    // data => {
+    //             sessionStorage.setItem("accountType", "applicant")
+    //             // this.router.navigate(['/applicant']);
                 
                         
 
         
-    }, // Catch Errors
-    (err = HttpErrorResponse) => {      
-      this.http.head("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
-        data => {
-                sessionStorage.setItem("accountType", "employer")
-          }
-        )  
-                // this.router.navigate(['/employer']);        
-    } 
+    // }, // Catch Errors
+    // (err = HttpErrorResponse) => {      
+    //   this.http.head("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
+    //     data => {
+    //             sessionStorage.setItem("accountType", "employer")
+    //       }
+    //     )  
+    //             // this.router.navigate(['/employer']);        
+    // } 
                         // console.log("User does not have an applicant acco        // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
-    )
+    
 
         
 
