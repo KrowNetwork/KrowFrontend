@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { AppComponent } from './app.component';
+import * as jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 
 // UI Materials
 /*
@@ -117,6 +120,7 @@ import {ShareLinkPopupComponent} from "./shared/profile-info2/applicant-profile-
 // import { EmployerPostJobsComponent } from './shared/employer-post-jobs/employer-post-jobs.component'
 // import {JobProfileComponent}
 import {GoogleAnalyticsService} from "./service/google-analytics.service";
+import { SearchJobComponent } from './search-job/search-job.component';
 // import { EditJobComponent } from './shared/edit-job/edit-job.component';
 // import { HireRequestsComponent } from "./shared/profile-info2/applicant-profile-info/hire-requests/hire-requests.component"
 @NgModule({
@@ -178,6 +182,7 @@ import {GoogleAnalyticsService} from "./service/google-analytics.service";
     AdminHomeComponent,
     UserSearchComponent,
     ShareLinkPopupComponent,
+    SearchJobComponent,
     // EmployerPostJobsComponent,
     // EditJobComponent,
     // HireRequestsComponent

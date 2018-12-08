@@ -11,6 +11,8 @@ import { ModalService } from '../../../service/modal.service';
 import { ShareLinkPopupComponent} from './share-link-popup/share-link-popup.component';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { join } from 'path';
+
 
 @Component({
   selector: 'app-applicant-profile-info',
@@ -229,6 +231,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           for (var i = 0; i < data["resume"]["experience"].length; i ++) {
             var element = data["resume"]["experience"][i]
             var s = new Date(element["startDate"])
+            // console.log
             element["startDate"] = this.monthNames[s.getMonth() + 1] + " " + s.getFullYear().toString()
             console.log(element.link)
             var e = new Date(element["endDate"])
@@ -447,7 +450,10 @@ downloadPDF(){
     doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.experience[i].startDate + ' to ' + this.experience[i].endDate, null, null, 'left');
     doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.experience[i].description , null, null, 'left');
     if(this.experience[i].skills != ''){
-      doc.text(25, this.addHeight(this.fontHeight, 5, doc), 'Skills: ' + this.experience[i].skills , null, null, 'left');
+      var s = this.experience[i].skills.replace(/\s+/g, " ")
+      s = s.replace(" ,", ",")
+      console.log(s)
+      doc.text(25, this.addHeight(this.fontHeight, 5, doc), 'Skills: ' + s , null, null, 'left');
     }
     doc.text(25, this.addHeight(this.fontHeight, 2, doc), '\n', null, null, 'left');
   }

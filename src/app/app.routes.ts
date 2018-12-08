@@ -64,6 +64,7 @@ import { UserSearchComponent } from './admin/user-search/user-search.component'
 // import { EmployerPostJobsComponent } from './shared/employer-post-jobs/employer-post-jobs.component'
 import { JobProfileComponent } from './shared/profile-info2/job-profile/job-profile.component';
 // import { EditJobComponent } from './shared/edit-job/edit-job.component'
+import { SearchJobComponent } from './search-job/search-job.component';
 
 
 const appRoutes: Routes = [
@@ -150,6 +151,10 @@ const appRoutes: Routes = [
     {
         path: "search",
         component: SearchComponent
+    },
+    {
+        path: "search-job",
+        component: SearchJobComponent
     },
     {
         path: "admin-login",
