@@ -429,6 +429,7 @@ downloadPDF(){
     doc.setFontType('bolditalic');
     doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.education[i].title , null, null, 'left');
     doc.setFontType('normal');
+    
     doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.education[i].description , null, null, 'left');
     doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.education[i].startDate + ' to ' + this.education[i].endDate, null, null, 'left');
     doc.text(25, this.addHeight(this.fontHeight, 2, doc), '\n', null, null, 'left');
@@ -440,16 +441,31 @@ downloadPDF(){
 
   doc.setFontType('normal');
   doc.setFontSize(12);
+
+  var splitDescription = null;
   for(var i = 0; i < this.experience.length; i++){
     doc.setFontType('bolditalic');
     doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.experience[i].title , null, null, 'left');
     doc.setFontType('normal');
     doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.experience[i].startDate + ' to ' + this.experience[i].endDate, null, null, 'left');
-    doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.experience[i].description , null, null, 'left');
+    splitDescription = doc.splitTextToSize(this.experience[i].description, 170);
+    doc.text(25, this.addHeight(this.fontHeight, 5, doc), splitDescription , null, null, 'left');
+    var splitSkills = null;
     if(this.experience[i].skills != ''){
-      doc.text(25, this.addHeight(this.fontHeight, 5, doc), 'Skills: ' + this.experience[i].skills , null, null, 'left');
+      splitSkills = doc.splitTextToSize("Skills:" + this.experience[i].skills, 170);
+      if(splitDescription === null){
+        doc.text(25, this.addHeight(this.fontHeight, 5, doc), splitSkills , null, null, 'left');
+      } else {
+        doc.text(25, this.addHeight(this.fontHeight, (splitDescription.length)*5, doc), splitSkills , null, null, 'left');
+      }
+      
     }
-    doc.text(25, this.addHeight(this.fontHeight, 2, doc), '\n', null, null, 'left');
+    if(splitSkills === null){
+      doc.text(25, this.addHeight(this.fontHeight, 2, doc), '\n', null, null, 'left');
+    } else {
+      doc.text(25, this.addHeight(this.fontHeight, (splitSkills.length-1)*5+2, doc), '\n', null, null, 'left');
+    }
+    
   }
   
   doc.save('resume.pdf');

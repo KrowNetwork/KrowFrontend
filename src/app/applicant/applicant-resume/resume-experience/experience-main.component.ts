@@ -64,7 +64,7 @@ export class ExperienceMainComponent implements InterfaceComponent {
     // }
 
     var data = skill.target.value 
-    // console.log()
+    console.log(data)
     skill.target.value = ""
     // var src = skill.path[1]
     var src = skill.composedPath()[1]
