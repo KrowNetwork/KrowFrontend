@@ -151,9 +151,9 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
 
         // bioTag.innerHTML = this.bio;
 
-        if (data["address"] != "") {
-          this.location += data["address"]
-        }
+        // if (data["address"] != "") {
+        //   this.location += data["address"]
+        // }
 
         if (data["city"] != "") {
           if (this.location != "") {
