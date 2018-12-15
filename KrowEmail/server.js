@@ -178,7 +178,7 @@ app.get("/get-job", (req, res, next) => {
       
         
         const request = {
-            name: jobName,
+            name: name,
         };
   
         var sessionId = "UNKNOWN"
