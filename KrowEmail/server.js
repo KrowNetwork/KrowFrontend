@@ -87,6 +87,7 @@ app.use(function(req, res, next) {
     }
     var q = req.query.q
     var id = req.query.id
+    var location = req.query.location
     google.auth.getApplicationDefault(async (err, authClient) => {
         if (err) {
           console.error('Failed to acquire credentials');
@@ -109,6 +110,9 @@ app.use(function(req, res, next) {
         
         const jobQuery = {
           query: q,
+          locationFilters: {
+              address: location
+          }
         };
   
         var sessionId = "UNKNOWN"
