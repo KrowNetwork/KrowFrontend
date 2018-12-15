@@ -18,7 +18,7 @@ var fs = require('fs');
 console.log("k")
 
 if (process.platform != "win32")
-    process.env['GOOGLE_APPLICATION_CREDENTIALS'] = "home/Ubuntu/KrowFrontend/KrowEmail.privatekey.json"
+    process.env['GOOGLE_APPLICATION_CREDENTIALS'] = "home/Ubuntu/KrowFrontend/KrowEmail/privatekey.json"
 
 
 // var options = {
