@@ -147,6 +147,68 @@ app.use(function(req, res, next) {
   
       });
 })
+
+app.get("/get-job", (req, res, next) => {
+    var projectId = "krow-network-1533419444055"
+    // var jobService = undefined
+    // var request = {
+    //     parent: "projects/" + this.jobService
+    // }
+    // var q = req.query.q
+    var name = req.query.name
+    // var location = req.query.location
+    google.auth.getApplicationDefault(async (err, authClient) => {
+        if (err) {
+          console.error('Failed to acquire credentials');
+          console.error(err);
+          return;
+        }
+      
+        if (authClient.createScopedRequired && authClient.createScopedRequired()) {
+          authClient = authClient.createScoped([
+            'https://www.googleapis.com/auth/jobs'
+          ]);
+        }
+      
+        // Instantiates an authorized client
+        const jobService = google.jobs({
+          version: 'v3',
+          auth: authClient
+        });
+      
+        
+        const request = {
+            name: jobName,
+        };
+  
+        var sessionId = "UNKNOWN"
+        var userId = "UNKNOWN"
+  
+        if (id !== undefined) {
+          sessionId = id
+          userId = id
+        }
+        
+        var METADATA = {
+          "domain": "https://krownetwork.com",
+          "sessionId": sessionId,
+          "userId": userId
+        }
+  
+        // const request = {
+        //   resource: {
+        //     jobQuery: jobQuery,
+        //     requestMetadata: METADATA,
+        //     searchMode: 'JOB_SEARCH',
+        //   },
+        //     parent: 'projects/' + projectId,
+        // };
+        var result = await jobService.projects.jobs.get(request)
+        // console.log(JSON.stringify(result.data))
+        res.send(result.data)
+  
+      });
+})
     
 
 //     var accessTokenFromClient = req.query.token;
