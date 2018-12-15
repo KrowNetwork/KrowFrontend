@@ -17,6 +17,10 @@ var privatekey = require("./privatekey.json");
 var fs = require('fs');
 console.log("k")
 
+if (process.platform != "win32")
+    process.env['GOOGLE_APPLICATION_CREDENTIALS'] = "home/Ubuntu/KrowFrontend/KrowEmail.privatekey.json"
+
+
 // var options = {
 //   key: fs.readFileSync('credentials/privatekey.pem'),
 //   cert: fs.readFileSync('credentials/server.crt')
