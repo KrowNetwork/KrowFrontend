@@ -180,29 +180,7 @@ app.get("/get-job", (req, res, next) => {
         const request = {
             name: name,
         };
-  
-        var sessionId = "UNKNOWN"
-        var userId = "UNKNOWN"
-  
-        if (id !== undefined) {
-          sessionId = id
-          userId = id
-        }
-        
-        var METADATA = {
-          "domain": "https://krownetwork.com",
-          "sessionId": sessionId,
-          "userId": userId
-        }
-  
-        // const request = {
-        //   resource: {
-        //     jobQuery: jobQuery,
-        //     requestMetadata: METADATA,
-        //     searchMode: 'JOB_SEARCH',
-        //   },
-        //     parent: 'projects/' + projectId,
-        // };
+
         var result = await jobService.projects.jobs.get(request)
         // console.log(JSON.stringify(result.data))
         res.send(result.data)
