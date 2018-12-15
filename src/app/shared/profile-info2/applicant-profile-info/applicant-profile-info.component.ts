@@ -456,7 +456,12 @@ downloadPDF(){
     var splitSkills = null;
     if(this.experience[i].skills != ''){
 
-      splitSkills = doc.splitTextToSize("Skills:" + this.experience[i].skills, 170);
+      var s = this.experience[i].skills.replace(/\s+/g, " ")
+      s = s.replace(" ,", ",")
+      console.log(s)
+      // doc.text(25, this.addHeight(this.fontHeight, 5, doc), 'Skills: ' + s , null, null, 'left');
+
+      splitSkills = doc.splitTextToSize("Skills:" + s, 170);
       if(splitDescription === null){
         doc.text(25, this.addHeight(this.fontHeight, 5, doc), splitSkills , null, null, 'left');
       } else {

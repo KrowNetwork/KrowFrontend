@@ -31,6 +31,10 @@ export class CustomHttpService{
   //   this.token = token;
   // }
 
+  getGCTalentKey() {
+    return this.http.get("https://api.krownetwork.com/google-api-key?token=" + this.token)
+  }
+
   getKey() {
     return this.http.get("https://api.krownetwork.com/hckey?token=" + this.token)
     // .map((res: Response) => {
