@@ -19,7 +19,7 @@ export class EditComponent implements OnInit {
     public http2: HttpClient,
     private createUser: CreateUserService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {
     // console.log("constructor created")
 
@@ -482,5 +482,9 @@ export class EditComponent implements OnInit {
     // )
     // // console.log(data)
 
+  }
+
+  uploadAndParseResume(event){
+    console.log('upload',document.getElementsByClassName("upload-and-parse"))
   }
 }

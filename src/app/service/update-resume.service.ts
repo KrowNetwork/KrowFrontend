@@ -35,8 +35,15 @@ export class UpdateResumeService {
                     itemClass = itemClass.slice(0, -1);
                 }
                 currJson.push({type:"$class", value:itemClass});
-                for(var k = 0; k < componentInputs.length; k++){
+                for(var k = 0; k < componentInputs.length; k++){ //-1 to ignore file at the end of the list
                     var input = componentInputs[k].children[1].children[0];
+                    // if(k === componentInputs.length-1 && input.value == ""){
+                    //     var value = null;
+                    // } else if(k === componentInputs.length-1){
+                    //     var value = input.value.split(/(\\|\/)/g).pop();
+                    // } else {
+                    //     var value = input.value;
+                    // }
                     var value = input.value;
                     if(value == ""){
                         input.setAttribute("style", "background-color: #ff4757; -webkit-text-fill-color: #fff");
@@ -102,7 +109,7 @@ export class UpdateResumeService {
                 }
             }
             if(i == componentsList.length - 1){
-                // console.log(json)
+                //console.log('json',json)
                 this.updateData(updateButton, json, currAttribute);
             }
         }

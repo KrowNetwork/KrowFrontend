@@ -9,6 +9,10 @@
     
         <button *ngIf="profileType == 'Applicant'" [routerLink]="['/applicant/upload']">Upload Profile Picture</button>
         <button *ngIf="profileType != 'Applicant'" [routerLink]="['/employer/upload']">Upload Profile Picture</button>
+
+        <input hidden type="file" class="upload-and-parse" #uploader (change)="uploadAndParseResume($event)"/>
+        <button *ngIf="profileType == 'Applicant'" (click)="uploader.click()">Upload Resume</button>
+        <button *ngIf="profileType != 'Applicant'" (click)="uploader.click()">Upload Resume</button>
     </div>
     
     <div class="social-edit" style="margin-top: 10px">

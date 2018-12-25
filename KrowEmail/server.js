@@ -12,6 +12,7 @@ const PROD = false;
 const https = require('https');
 const http = require('http');
 const AWS = require("aws-sdk")
+var jre = require('node-jre');
 
 var fs = require('fs');
 console.log("k")
@@ -37,6 +38,10 @@ const cognitoExpress = new cognito({
 });
  
 
+app.set('port', process.env.PORT || 3000);
+var server = app.listen(app.get('port'), function() {
+  console.log('Express server listening on port ' + server.address().port);
+});
 
 AWS.config.update({accessKeyId: "AKIAJZJ4OX6ZEI5CTMOA", secretAccessKey: "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", region: "us-east-2"});
 AWS.config.update({region: "us-east-2"})
@@ -60,6 +65,21 @@ app.use(function(req, res, next) {
   // parse application/json
   app.use(bodyParser.json())
 
+  app.get('/resumeParse', async (req, res, next) => {
+
+    var output = await jre.spawnSync(  // call synchronously
+        ['../ResumeParser/ResumeTransducer/bin/*', '../ResumeParser/GATEFiles/lib/*', '../ResumeParser/GATEFILES/bin/gate.jar', '../ResumeParser/ResumeTransducer/lib/*'],
+        'code4goal.antony.resumeparser.ResumeParserProgram',  
+        ['../ResumeParser/ResumeTransducer/UnitTests/AntonyDeepakThomas.pdf', '../ResumeParser/ResumeTransducer/UnitTests/parsed_result.json'],      
+        { encoding: 'utf8' }     // encode output as string
+      ).stdout;           // take output from stdout as trimmed String
+
+    await fs.readFile('../ResumeParser/ResumeTransducer/UnitTests/parsed_result.json', 'utf8', await function(err, contents) {
+        res.send({Krow: JSON.parse(contents)})
+    });
+
+    
+  })
 
   app.get("/hckey", (req, res, next) => {
 
@@ -644,10 +664,10 @@ app.post("/accept-hire", (req, res, next) => {
     })
 })
 
-https.createServer(options, app).listen(443, function (err) {
-    if (err) {
-      throw err
-    }
-    // // console.log(`worker ${process.pid} started`);
+// https.createServer(options, app).listen(443, function (err) {
+//     if (err) {
+//       throw err
+//     }
+//     // // console.log(`worker ${process.pid} started`);
 
-})
+// })

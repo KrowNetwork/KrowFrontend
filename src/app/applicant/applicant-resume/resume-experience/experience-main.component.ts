@@ -1,6 +1,7 @@
 import { Component, Input }  from '@angular/core';
 
 import { InterfaceComponent } from '../../../shared/interface-component.component';
+import { S3Service } from "../../../service/s3.service"
 //TODO: Fontawesome icons for Work
 @Component({
   templateUrl: `experience-main.component.html`
@@ -96,5 +97,7 @@ export class ExperienceMainComponent implements InterfaceComponent {
     event.target.closest("app-resume-experience").children[0].children[1].children[1].setAttribute("style","display:show");
     event.target.parentNode.remove();
   }
+
+  
 }
 

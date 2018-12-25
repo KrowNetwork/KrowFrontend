@@ -465,9 +465,7 @@ downloadPDF(){
     } else {
       doc.text(25, this.addHeight(this.fontHeight, (splitSkills.length-1)*5+2, doc), '\n', null, null, 'left');
     }
-    
   }
-  
   doc.save('resume.pdf');
 }
 
