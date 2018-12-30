@@ -11,15 +11,23 @@
 									<h4>Explore Thousand Of Jobs With Just Simple Search...</h4>
 									<form>
 										<div class="row">
-											<div class="col-lg-11">
+											<div class="col-lg-8">
 												<div class="job-field">
-													<input type="text" placeholder="Name" [(ngModel)]="name" [ngModelOptions]="{standalone: true}"/>
+													<input type="text" placeholder="Job Title" [(ngModel)]="term" [ngModelOptions]="{standalone: true}"/>
+													
+													<i class="la la-keyboard-o"></i>
+												</div>
+											</div>
+											<div class="col-lg-3">
+												<div class="job-field">
+													<input type="text" placeholder="Location" [(ngModel)]="location" style="float:right" [ngModelOptions]="{standalone: true}"/>
+													
 													<i class="la la-keyboard-o"></i>
 												</div>
 											</div>
 											
 											<div class="col-lg-1">
-												<button type="submit" (click)="go(name)"><i class="la la-search"></i></button>
+												<button type="submit" (click)="go(term, location)"><i class="la la-search"></i></button>
 											</div>
 										</div>
 									</form>
@@ -48,13 +56,16 @@
 						 <div class="job-list-modern">
 						 	<div class="job-listings-sec no-border">
 
-								<div class="job-listing wtabs" *ngFor="let person of people; let myIndex = index">
+								<div class="job-listing wtabs" *ngFor="let job of results.matchingJobs; let myIndex = index">
 									<div class="job-title-sec">
-										<div class="c-logo" style="width: 90px"> <img src="{{ person.image }}" alt="" /> </div>
-										<h3 style="padding-left:10px"><a href="https://www.krownetwork.com/applicant/profile-info/{{person.id}}" title="">{{ person.name }}</a></h3>
+										<!-- <div class="c-logo" style="width: 90px"> <img src="{{ person.image }}" alt="" /> </div> -->
+										<h3 style="padding-left:10px"><a title="">{{ job.job.title }}</a></h3> 
+										<p style="font-size: 14px;padding-left:10px; margin-bottom: 0px">{{job.job.companyDisplayName}}</p>
+										<p style="font-size: 14px;padding-left:10px; margin-bottom: 0px">{{job.job.addresses[0]}}</p>
+										<!-- <span style="font-size: 14px;padding-left:10px">{{job.searchTextSnippet}}</span> -->
 									</div>
 									<div class="job-style-bx">
-										<a class="job-is ft" href="https://www.krownetwork.com/applicant/profile-info/{{person.id}}">View</a>
+										<a class="job-is ft" (click)="visit(job.job.name)" >View</a> <!--href="{{job.job.applicationInfo.uris[0]}}"-->
 										<!-- <span class="fav-job"><i class="la la-heart-o"></i></span> -->
 										<!-- <i>5 months ago</i> -->
 									</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef  } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ViewEncapsulation  } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { HttpClient, HttpErrorResponse, HttpBackend  } from '@angular/common/http';
 import { CreateUserService } from '../../../service/create-user.service';
@@ -6,8 +6,11 @@ import { log } from 'util';
 import { encodeUriFragment } from '@angular/router/src/url_tree';
 import { CustomHttpService } from '../../../service/custom-http.service';
 import { Overlay } from 'ngx-modialog';
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import { Modal } from 'ngx-modialog/plugins/bootstrap'
 import { UserLoginService } from '../../../service/user-login.service';
+import {GcTalentService} from "../../../service/gc-talent.service"
+import remarkable from 'remarkable';
+import { CompareService } from "../../../service/compare.service"
 
 // bootstrap4Mode()
 // import { post } from '../../../../node_modules/@types/selenium-webdriver/http';
@@ -19,7 +22,8 @@ import { UserLoginService } from '../../../service/user-login.service';
 @Component({
   selector: 'app-job-details',
   templateUrl: './job-profile.component.html',
-  styleUrls: ['./job-profile.component.css']
+  styleUrls: ['./job-profile.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class JobProfileComponent implements OnInit {
   show_applicants = false;
@@ -29,6 +33,7 @@ export class JobProfileComponent implements OnInit {
   location: string;
   tags: string;
   created: string;
+  created2: string;
   lastUpdated: string; 
   startDate: string;
   requestCompletedDate: string;
@@ -89,6 +94,10 @@ export class JobProfileComponent implements OnInit {
 
   id: string;
 
+  name: string;
+  companyName: string;
+  main_source: string;
+
   // msg = undefined
 
   constructor(
@@ -97,37 +106,41 @@ export class JobProfileComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     public modal: Modal,
-    public userService: UserLoginService
+    public userService: UserLoginService,
+    public g: GcTalentService,
+    public cs: CompareService
+    
+    // public sd: showdown
         // private viewRef: ViewContainerRef
   ) { 
 
-    if (sessionStorage.getItem("accountType") == "applicant") {
-      this.userService.isAuthenticated(this);
-      if (sessionStorage.getItem("canAcceptJob") == "true") {
-        // console.log("yass")
-        this.hide_accept = false
-        this.hide_apply = true
-      } else {
-        this.hide_accept = true
-        this.hide_apply = false 
-      }
-      this.hide_view_employer = false
+    // if (sessionStorage.getItem("accountType") == "applicant") {
+    //   this.userService.isAuthenticated(this);
+    //   if (sessionStorage.getItem("canAcceptJob") == "true") {
+    //     // console.log("yass")
+    //     this.hide_accept = false
+    //     this.hide_apply = true
+    //   } else {
+    //     this.hide_accept = true
+    //     this.hide_apply = false 
+    //   }
+    //   this.hide_view_employer = false
       
-    } else if (sessionStorage.getItem("accountType") == "employer") {
-      this.userService.isAuthenticated(this);
-      this.hide_accept = true
-      this.hide_employer_buttons = false
-      this.hide_apply = true
-      this.hide_view_employer = true
-    } else {
-      this.hide_accept = true
-      this.hide_employer_buttons = true
-      this.hide_apply = true
-      this.hide_view_employer = true
-      this.canAcceptJob = false
-      this.canApply = false
-      this.getDataExt = true
-    }
+    // } else if (sessionStorage.getItem("accountType") == "employer") {
+    //   this.userService.isAuthenticated(this);
+    //   this.hide_accept = true
+    //   this.hide_employer_buttons = false
+    //   this.hide_apply = true
+    //   this.hide_view_employer = true
+    // } else {
+    //   this.hide_accept = true
+    //   this.hide_employer_buttons = true
+    //   this.hide_apply = true
+    //   this.hide_view_employer = true
+    //   this.canAcceptJob = false
+    //   this.canApply = false
+    //   this.getDataExt = true
+    // }
   }
   
 
@@ -336,7 +349,7 @@ export class JobProfileComponent implements OnInit {
     if (month.length < 2) month = '0' + month;
     if (day.length < 2) day = '0' + day;
 
-    return  [year, month, day].join("-")
+    return  [month, day, year].join("/")
   }
   hire_requests = []
   h_data = []
@@ -615,14 +628,35 @@ export class JobProfileComponent implements OnInit {
     );
     // this.applicants = sessionStorage.getItem("applicants")
   }
-  
+  job = {}
+  // url = ""
   ngOnInit() {
 
     this.activatedRoute.params.subscribe(params => {this.jobID = params["jobID"]});
+    this.g.getJob("projects/krow-network-1533419444055/jobs/" + this.jobID).subscribe(data => {
+      console.log(data)
+      // this.description = data.description
+      this.title = data["title"]
+
+      this.companyName = data["companyDisplayName"]
+
+      this.main_source = data["customAttributes"]["main_source"]["stringValues"][0]
+      this.url = data["applicationInfo"]["uris"][0]
+
+      var md = new remarkable()
+      this.description = md.render(data["description"])
+
+      this.location = data["addresses"][0]
+
+      this.created = Math.ceil((new Date().getTime() - new Date(data["postingPublishTime"]).getTime())/(86400000)).toString()
+      this.created2 = this.formatDate(new Date(data["postingPublishTime"]))
+      // var c = new this.sd.Converter()
+      // console.log(this.sd.makeHtml(this.description))
+    })
     this.id = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
     // console.log("Current job:")
     // console.log(this.jobID)
-    this.load(this.jobID)
+    // this.load(this.jobID)
 
     // // console.log(this.employerID)
     

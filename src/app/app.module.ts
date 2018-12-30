@@ -99,6 +99,7 @@ import { ContractComponent } from './contract/contract.component';
 
 import { ModalModule } from 'ngx-modialog';
 import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
+// import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { MessagingComponent } from './messaging/messaging.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
@@ -121,6 +122,8 @@ import {ShareLinkPopupComponent} from "./shared/profile-info2/applicant-profile-
 // import {JobProfileComponent}
 import {GoogleAnalyticsService} from "./service/google-analytics.service";
 import { SearchJobComponent } from './search-job/search-job.component';
+import { MarkdownModule } from 'ngx-markdown';
+// import { CompareService } from './service/compare.service'
 // import { EditJobComponent } from './shared/edit-job/edit-job.component';
 // import { HireRequestsComponent } from "./shared/profile-info2/applicant-profile-info/hire-requests/hire-requests.component"
 @NgModule({
@@ -199,6 +202,7 @@ import { SearchJobComponent } from './search-job/search-job.component';
     BootstrapModalModule,
     VirtualScrollModule,
     ContextMenuModule.forRoot(),
+    MarkdownModule.forRoot()
     // luegg.directives
     // Websocket
     // Modal,

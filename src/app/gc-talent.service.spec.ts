@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { GcTalentService } from './gc-talent.service';
+import { GcTalentService } from './service/gc-talent.service';
 
 describe('GcTalentService', () => {
   beforeEach(() => {
