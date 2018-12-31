@@ -86,6 +86,11 @@ export class CustomHttpService{
       return this.http.post(oUrl, data)
   }
 
+  post_(url, data) {
+    var oUrl = url 
+      return this.http.post(oUrl, data)
+  }
+
   head(url, options=undefined) {
     var oUrl = "https://api.krownetwork.com/h?url=" + url
     // console.log(oUrl)

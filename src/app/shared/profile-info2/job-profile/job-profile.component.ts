@@ -97,7 +97,7 @@ export class JobProfileComponent implements OnInit {
   name: string;
   companyName: string;
   main_source: string;
-
+  can_compare = false
   // msg = undefined
 
   constructor(
@@ -114,7 +114,11 @@ export class JobProfileComponent implements OnInit {
         // private viewRef: ViewContainerRef
   ) { 
 
-    // if (sessionStorage.getItem("accountType") == "applicant") {
+    if (sessionStorage.getItem("accountType") == "applicant") {
+      this.can_compare = true
+      this.get_comparison()
+      console.log("c")
+    }
     //   this.userService.isAuthenticated(this);
     //   if (sessionStorage.getItem("canAcceptJob") == "true") {
     //     // console.log("yass")
@@ -630,6 +634,7 @@ export class JobProfileComponent implements OnInit {
   }
   job = {}
   // url = ""
+  save_desc = ""
   ngOnInit() {
 
     this.activatedRoute.params.subscribe(params => {this.jobID = params["jobID"]});
@@ -645,6 +650,7 @@ export class JobProfileComponent implements OnInit {
 
       var md = new remarkable()
       this.description = md.render(data["description"])
+      this.save_desc = data["description"]
 
       this.location = data["addresses"][0]
 
@@ -1131,5 +1137,29 @@ openNewDialog() {
       }
     })
 }
-  
+
+get_comparison() {
+  this.http.get("http://18.220.46.51:3000/api/Applicant/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
+    data => {
+      console.log(data)
+      var comps = []
+      for (var i = 0; i < data["resume"]["experience"].length; i ++) {
+        var payload = {
+          "data1": data["resume"]["experience"][i]["position"] + "\n" + data["resume"]["experience"][i]["description"],
+          "data2": this.save_desc
+        }
+        this.http.post_("http://35.237.230.100:5000/predict", payload).subscribe(
+          res => {
+            console.log(res)
+            comps.push([data["resume"]["experience"][i]["position"], res])
+            console.log(comps)
+          }
+        )
+      }
+      console.log(comps)
+    }
+  )
+}
+
+
 }

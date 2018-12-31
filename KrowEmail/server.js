@@ -330,6 +330,34 @@ app.get("/get-job", (req, res, next) => {
         
     }});
 
+    app.post("/p2", (req, res, next) => {
+        var url = req.query.url
+        var accessTokenFromClient = req.query.token;
+        var data = req.body
+        // // console.log(data)
+    
+        cognitoExpress.validate(accessTokenFromClient, function(err, response) {
+            if (err) {
+                errorHandler(next, 401, "incorrect access token")
+            } else {
+                request.post(url, {json: data}, function(err, res2) {
+                    if (err) {
+                        // // console.log(err)
+                        errorHandler(next, 400, err)
+                    } else {
+                        res.send(200, res2.body)
+                    }
+                })
+              }
+            })
+                //     if (err) res.send(400, {"res": "error"});
+                //     else res.send(200, {"res": "success"})
+                // })
+    
+                // qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv
+            
+        });
+
 
     app.post("/p", (req, res, next) => {
         var url = req.query.url

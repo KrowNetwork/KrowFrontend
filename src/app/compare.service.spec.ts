@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { CompareService } from './compare.service';
+import { CompareService } from './service/compare.service';
 
 describe('CompareService', () => {
   beforeEach(() => {
