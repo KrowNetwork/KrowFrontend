@@ -340,7 +340,7 @@ app.get("/get-job", (req, res, next) => {
             if (err) {
                 errorHandler(next, 401, "incorrect access token")
             } else {
-                request.post("http://35.237.230.100:5000/predict", {json: data}, function(err, res2) {
+                request.post("http://35.237.230.100:5000/predict", {form: data}, function(err, res2) {
                     if (err) {
                         // // console.log(err)
                         errorHandler(next, 400, err)

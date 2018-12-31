@@ -1146,8 +1146,9 @@ get_comparison() {
       for (var i = 0; i < data["resume"]["experience"].length; i ++) {
         var payload = {
           "data1": data["resume"]["experience"][i]["position"] + "\n" + data["resume"]["experience"][i]["description"],
-          "data2": this.save_desc
+          "data2": "test"//this.save_desc
         }
+        console.log(payload)
         this.http.post_("http://35.237.230.100:5000/predict", payload).subscribe(
           res => {
             console.log(res)
