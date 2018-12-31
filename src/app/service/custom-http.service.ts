@@ -87,7 +87,7 @@ export class CustomHttpService{
   }
 
   post_(url, data) {
-    var oUrl = url 
+    var oUrl = "https://api.krownetwork.com/compare?token=" + this.token
       return this.http.post(oUrl, data)
   }
 
