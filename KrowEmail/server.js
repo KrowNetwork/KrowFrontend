@@ -334,7 +334,7 @@ app.get("/get-job", (req, res, next) => {
         var url = req.query.url
         var accessTokenFromClient = req.query.token;
         var data = req.body
-        // // console.log(data)
+        console.log(data)
     
         cognitoExpress.validate(accessTokenFromClient, function(err, response) {
             if (err) {
