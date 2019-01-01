@@ -39,7 +39,8 @@
         "js/jquery.scrollbar.min.js",
         "js/tag.js",
         "js/maps3.js",
-        "js/analytics.js"
+        "js/analytics.js",
+        "node_modules/marked/lib/marked.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

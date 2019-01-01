@@ -1,0 +1,92 @@
+<app-top-bar></app-top-bar>
+	<section class="overlape">
+		<div class="block no-padding">
+			<!-- <div data-velocity="-.1" style="background: url(http://placehold.it/1600x800) repeat scroll 50% 422.28px transparent;" class="parallax scrolly-invisible no-parallax"></div>PARALLAX BACKGROUND IMAGE -->
+			<div class="container fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="inner-header wform">
+							<div class="job-search-sec">
+								<div class="job-search">
+									<h4>Explore Thousands Of Jobs With a Simple Search</h4>
+									<form>
+										<div class="row">
+											<div class="col-lg-8">
+												<div class="job-field">
+													<input type="text" placeholder="Job Title" [(ngModel)]="term" [ngModelOptions]="{standalone: true}"/>
+
+													<i class="la la-keyboard-o"></i>
+												</div>
+											</div>
+											<div class="col-lg-3">
+												<div class="job-field">
+													<input type="text" placeholder="Location" [(ngModel)]="location" style="float:right" [ngModelOptions]="{standalone: true}"/>
+
+													<i class="la la-keyboard-o"></i>
+												</div>
+											</div>
+
+											<div class="col-lg-1">
+												<button type="submit" (click)="go(term, location)"><i class="la la-search"></i></button>
+											</div>
+										</div>
+									</form>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div class="block remove-top">
+			<div class="container">
+				 <div class="row no-gape">
+
+				 	<div class="col-lg-12 column">
+				 		<div class="modrn-joblist np">
+					 		<div class="filterbar">
+
+					 			<h5>Results</h5>
+					 		</div>
+						 </div><!-- MOdern Job LIst -->
+						 <div class="job-list-modern">
+						 	<div class="job-listings-sec no-border">
+
+								<div class="job-listing wtabs" *ngFor="let job of results.matchingJobs; let myIndex = index">
+									<div class="job-title-sec">
+										<!-- <div class="c-logo" style="width: 90px"> <img src="{{ person.image }}" alt="" /> </div> -->
+										<h3 style="padding-left:10px"><a title="">{{ job.job.title }}</a></h3>
+										<p style="font-size: 14px;padding-left:10px; margin-bottom: 0px">{{job.job.companyDisplayName}}</p>
+										<p style="font-size: 14px;padding-left:10px; margin-bottom: 0px">{{job.job.addresses[0]}}</p>
+										<!-- <span style="font-size: 14px;padding-left:10px">{{job.searchTextSnippet}}</span> -->
+									</div>
+									<div class="job-style-bx">
+										<a class="job-is ft" (click)="visit(job.job.name)" >View</a> <!--href="{{job.job.applicationInfo.uris[0]}}"-->
+										<!-- <span class="fav-job"><i class="la la-heart-o"></i></span> -->
+										<!-- <i>5 months ago</i> -->
+									</div>
+                </div>
+
+
+							</div>
+							<!-- <div class="pagination">
+								<ul>
+									<li class="prev"><a href=""><i class="la la-long-arrow-left"></i> Prev</a></li>
+									<li><a href="">1</a></li>
+									<li class="active"><a href="">2</a></li>
+									<li><a href="">3</a></li>
+									<li><span class="delimeter">...</span></li>
+									<li><a href="">14</a></li>
+									<li class="next"><a href="">Next <i class="la la-long-arrow-right"></i></a></li>
+								</ul>
+							</div> -->
+						 </div>
+					 </div>
+				 </div>
+			</div>
+		</div>
+	</section>

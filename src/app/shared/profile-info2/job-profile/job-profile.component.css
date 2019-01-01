@@ -96,3 +96,11 @@ h3.top{
     font-family: Open Sans;
     font-weight: bold;
 }
+
+.desc > ul {
+    list-style-type: circle;
+}
+.desc > ul > li  {
+    margin-left: 35px;
+    margin-bottom: 19px
+}

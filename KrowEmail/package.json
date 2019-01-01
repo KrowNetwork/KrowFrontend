@@ -18,6 +18,7 @@
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "express-fileupload": "^1.0.0",
+    "googleapis": "^36.0.0",
     "greenlock": "^2.3.8",
     "greenlock-express": "^2.3.2",
     "jsonwebtoken": "^8.3.0",

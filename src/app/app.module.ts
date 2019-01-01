@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { AppComponent } from './app.component';
+import * as jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 
 // UI Materials
 /*
@@ -100,6 +103,7 @@ import { ContractComponent } from './contract/contract.component';
 
 import { ModalModule } from 'ngx-modialog';
 import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
+// import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { MessagingComponent } from './messaging/messaging.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
@@ -121,6 +125,9 @@ import {ShareLinkPopupComponent} from "./shared/profile-info2/applicant-profile-
 // import { EmployerPostJobsComponent } from './shared/employer-post-jobs/employer-post-jobs.component'
 // import {JobProfileComponent}
 import {GoogleAnalyticsService} from "./service/google-analytics.service";
+import { SearchJobComponent } from './search-job/search-job.component';
+import { MarkdownModule } from 'ngx-markdown';
+// import { CompareService } from './service/compare.service'
 // import { EditJobComponent } from './shared/edit-job/edit-job.component';
 // import { HireRequestsComponent } from "./shared/profile-info2/applicant-profile-info/hire-requests/hire-requests.component"
 @NgModule({
@@ -185,6 +192,7 @@ import {GoogleAnalyticsService} from "./service/google-analytics.service";
     AdminHomeComponent,
     UserSearchComponent,
     ShareLinkPopupComponent,
+    SearchJobComponent,
     // EmployerPostJobsComponent,
     // EditJobComponent,
     // HireRequestsComponent
@@ -201,6 +209,7 @@ import {GoogleAnalyticsService} from "./service/google-analytics.service";
     BootstrapModalModule,
     VirtualScrollModule,
     ContextMenuModule.forRoot(),
+    MarkdownModule.forRoot()
     // luegg.directives
     // Websocket
     // Modal,

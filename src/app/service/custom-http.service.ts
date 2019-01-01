@@ -31,6 +31,13 @@ export class CustomHttpService{
   //   this.token = token;
   // }
 
+  searchJob(term, location) {
+    return this.http.get("https://api.krownetwork.com/search-jobs", {params: {q: term, location: location}})
+  }
+  getJob(name) {
+    return this.http.get("https://api.krownetwork.com/get-job", {params: {name: name}})
+  }
+
   getKey() {
     return this.http.get("https://api.krownetwork.com/hckey?token=" + this.token)
     // .map((res: Response) => {
@@ -76,6 +83,11 @@ export class CustomHttpService{
 
   post(url, data) {
     var oUrl = "https://api.krownetwork.com/p?url=" + url + "&token=" + this.token
+      return this.http.post(oUrl, data)
+  }
+
+  post_(url, data) {
+    var oUrl = "https://api.krownetwork.com/compare?token=" + this.token
       return this.http.post(oUrl, data)
   }
 

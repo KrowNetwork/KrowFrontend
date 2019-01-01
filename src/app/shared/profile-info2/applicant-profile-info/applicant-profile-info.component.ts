@@ -11,6 +11,8 @@ import { ModalService } from '../../../service/modal.service';
 import { ShareLinkPopupComponent} from './share-link-popup/share-link-popup.component';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { join } from 'path';
+
 
 @Component({
   selector: 'app-applicant-profile-info',
@@ -230,6 +232,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           for (var i = 0; i < data["resume"]["experience"].length; i ++) {
             var element = data["resume"]["experience"][i]
             var s = new Date(element["startDate"])
+            // console.log
             element["startDate"] = this.monthNames[s.getMonth() + 1] + " " + s.getFullYear().toString()
             console.log(element.link)
             var e = new Date(element["endDate"])
@@ -453,7 +456,13 @@ downloadPDF(){
     doc.text(25, this.addHeight(this.fontHeight, 5, doc), splitDescription , null, null, 'left');
     var splitSkills = null;
     if(this.experience[i].skills != ''){
-      splitSkills = doc.splitTextToSize("Skills:" + this.experience[i].skills, 170);
+
+      var s = this.experience[i].skills.replace(/\s+/g, " ")
+      s = s.replace(" ,", ",")
+      console.log(s)
+      // doc.text(25, this.addHeight(this.fontHeight, 5, doc), 'Skills: ' + s , null, null, 'left');
+
+      splitSkills = doc.splitTextToSize("Skills:" + s, 170);
       if(splitDescription === null){
         doc.text(25, this.addHeight(this.fontHeight, 5, doc), splitSkills , null, null, 'left');
       } else {
