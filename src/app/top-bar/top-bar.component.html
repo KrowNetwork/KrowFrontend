@@ -4,8 +4,7 @@
 
 
 		<div class="responsive-header">
-				
-			<p>test</p>
+
 			<script async src="https://www.googletagmanager.com/gtag/js?id=UA-123402433-1"></script>
 			<!-- <script src="https://jsconsole.com/js/remote.js?2b72d5cf-df17-4bc3-abb7-d1cdbd9bf842"></script> -->
 			<script>
@@ -78,13 +77,14 @@
 					</div>
 				</div>
 			</div>
-		
+
+
     <header class="stick-top">
-			<div class="feedback-top" *ngIf="!isFeedbackOn">
+			<!-- <div class="feedback-top" *ngIf="!isFeedbackOn">
 					<a role="button" (click)="goToFeedback()">Do you have any feedback? Click here to get in contact with us!</a>
 					<a role="button" (click)="hideFeedback()" style="float:right">x</a>
 			</div>
-
+-->
       <div class="menu-sec">
         <div class="container">
           <div class="logo">
@@ -101,9 +101,9 @@
 					<!-- </div>Btn Extras -->
           <nav class="nav">
             <ul>
-							<li *ngIf="allowSearchBarDisplay()">
+							<!--<li *ngIf="allowSearchBarDisplay()">
 									<input class="top-bar-search" type="text" placeholder="Search Full Name" [(ngModel)]="term" [ngModelOptions]="{standalone: true}" (keydown)="keyDown($event)"/>
-							</li>
+							</li> -->
               <li>
                 <a [routerLink]="['/']" routerLinkActive="active">Home</a>
               </li>
@@ -112,12 +112,15 @@
               </li>
               <li *ngIf="isLoggedInB">
                 <!-- <a role="button" (click)="goToProfile()" style="color:#ffffff">Profile</a> -->
-								<a role="button" [routerLink]="['/secureHome']" style="color:#ffffff;">Profile</a>
-							</li>   
-							
+								<a role="button" [routerLink]="['/secureHome']" style="color:#ffffff;">Resume</a>
+							</li>
+							<li *ngIf="isLoggedInB">
+								<!-- <a role="button" (click)="goToProfile()" style="color:#ffffff">Profile</a> -->
+								<a role="button" [routerLink]="['/search-job']" style="color:#ffffff;">Search</a>
+							</li>
 							<li *ngIf="isLoggedInB">
                 <a role="button" (click)="goToFeedback()" style="color:#ffffff">Feedback</a>
-              </li>              
+              </li>
 							<!-- <li> -->
 
               <li>
@@ -129,7 +132,6 @@
 							</li>
 							<li>
 									<a *ngIf="isLoggedInB" [routerLink]="['/logout']" routerLinkActive="active"  title=""><i class="la la-external-link-square"></i>LogOut</a>
-									<a *ngIf="!isLoggedInB" [routerLink]="['/login']" routerLinkActive="active"  title="">Log in</a>
 							</li>
 
             </ul>
@@ -140,4 +142,3 @@
     </header>
 <div id="modal-container" class="hidden"></div>
 <div id="overlay" (click)="removeModal()" class="hidden"></div>
-
