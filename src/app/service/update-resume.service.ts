@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { CustomHttpService } from "./custom-http.service";
+import { S3Service } from "./s3.service"
 
 @Injectable()
 export class UpdateResumeService {
-    constructor(private http: CustomHttpService) { }
+    constructor(private http: CustomHttpService, public s3service: S3Service) { }
 
     user: string;
     guid() {
@@ -24,6 +25,7 @@ export class UpdateResumeService {
         console.log(componentsList)
         var updateButton = dom.children[0].children[1].children[1];
         var json = {data: []};
+        this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
         for(var i = 0; i < componentsList.length; i++){
             var currentComponent = componentsList[i].children[0].children[0];
             if(currentComponent.tagName != 'DIV'){
@@ -35,16 +37,42 @@ export class UpdateResumeService {
                     itemClass = itemClass.slice(0, -1);
                 }
                 currJson.push({type:"$class", value:itemClass});
-                for(var k = 0; k < componentInputs.length; k++){ //-1 to ignore file at the end of the list
+                for(var k = 0; k < componentInputs.length; k++){
                     var input = componentInputs[k].children[1].children[0];
-                    // if(k === componentInputs.length-1 && input.value == ""){
-                    //     var value = null;
-                    // } else if(k === componentInputs.length-1){
-                    //     var value = input.value.split(/(\\|\/)/g).pop();
-                    // } else {
-                    //     var value = input.value;
-                    // }
-                    var value = input.value;
+                    
+                    if(k === componentInputs.length-1 && input.value == ""){
+                        var value = null;
+                    } else if(k === componentInputs.length-1){
+                        console.log('here',componentInputs[k].children[1])
+                        if(input.getAttribute("secret") == "fileName"){
+                            var value = input.value.split(/(\\|\/)/g).pop();
+                            currJson.push({
+                                type: "fileUrl",
+                                value: "https://s3.us-east-2.amazonaws.com/krow-network-experience-files/files/" + i + "-" + this.user + "-" + value
+                            });
+                        } else {
+                            console.log('checked?', componentInputs[k].children[1].children[0].children[1].getAttribute("ng-reflect-model"))
+                            if(componentInputs[k].children[1].children[0].children[1].getAttribute("ng-reflect-model") == "true"){
+                                //if true -- delete file from aws
+                                this.deleteFile(componentInputs[k].children[1].children[0].children[0].getAttribute("href")) 
+                                currJson.push({
+                                    type: "fileUrl",
+                                    value: null
+                                });
+
+                                currJson.push({
+                                    type: "fileName",
+                                    value: null
+                                });
+                                console.log('deleting file...')
+                            } 
+                            continue;
+                        }
+                        
+                    } else {
+                        var value = input.value;
+                    }
+
                     if(value == ""){
                         input.setAttribute("style", "background-color: #ff4757; -webkit-text-fill-color: #fff");
                         input.addEventListener("keydown", function(input){
@@ -88,8 +116,8 @@ export class UpdateResumeService {
                                     type: currType,
                                     value: false
                                 });
-                           
-                        } } else {
+                           } 
+                        } else {
                             currJson.push({
                                 type: currType,
                                 value: value
@@ -109,7 +137,7 @@ export class UpdateResumeService {
                 }
             }
             if(i == componentsList.length - 1){
-                //console.log('json',json)
+                console.log('json',json)
                 this.updateData(updateButton, json, currAttribute);
             }
         }
@@ -128,6 +156,25 @@ export class UpdateResumeService {
             }
         }
     }
+
+    deleteFile(url){
+        let user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+
+        let path = url.split('/');
+        const bucketName = 'krow-network-experience-files';
+        let s3 = this.s3service.getBucket(bucketName);
+        s3.deleteObject({ 
+            Key: "files/" + path[path.length-1],
+            Bucket: bucketName,
+          }, function (err, data) {
+              if (err) {
+                console.log(err, 'there was an error uploading your file');
+              } else {
+                console.log(data)
+              }
+        });
+    }
+
 
     updateData(updateButton, jsonData, attribute){
         console.log(attribute)

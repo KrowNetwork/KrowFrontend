@@ -10,6 +10,7 @@ export class ExperienceMainComponent implements InterfaceComponent {
   @Input() data: any;
 
   deletedElements = new Array();
+  isChecked = false;
 
   deleteItem(event){
     this.changeHandler(event);

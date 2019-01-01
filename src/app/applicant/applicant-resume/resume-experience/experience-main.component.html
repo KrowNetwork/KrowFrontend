@@ -79,8 +79,17 @@
                         </div>
                         <div class="col-lg-12">
                             <span class="pf-title" style="margin-top:0px">File</span>
-                            <div>
-                                <input type="file" class="experienceFile" name={{data.verifyID}} secret="fileName" (click)="changeHandler($event)"/>
+
+                            <div *ngIf="data.fileName == null || data.fileName == undefined" class="col-lg-12">
+                                <input type="file" class="experienceFile" secret="fileName" (click)="changeHandler($event)"/>
+                            </div> 
+
+                            <div *ngIf="data.fileName != null || data.fileName != undefined" class="pf-field">
+                                
+                                <div class="pf-field">
+                                    <a href={{data.fileUrl}}>{{data.fileName}}</a>
+                                    <input (click)="changeHandler($event)" class="experienceFile" name={{data.fileName}} id={{data.fileName}} secret="deleteFile" [(ngModel)]=isChecked type="checkbox"/><label for={{data.fileName}}>Delete</label>
+                                </div>
                             </div> 
                         </div>
                     </div>

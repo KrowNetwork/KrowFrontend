@@ -155,6 +155,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           this.bio = data["resume"]["biography"]
         }
 
+
         // bioTag.innerHTML = this.bio;
 
         // if (data["address"] != "") {

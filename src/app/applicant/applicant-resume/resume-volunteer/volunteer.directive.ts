@@ -1,8 +1,8 @@
 import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
-  selector: '[volunteer-host]',
+  selector: '[volunteers-host]',
 })
-export class EducationDirective {
+export class VolunteerDirective {
   constructor(public viewContainerRef: ViewContainerRef) { }
 }

@@ -11,8 +11,9 @@ var request = require('request');
 const PROD = false;
 const https = require('https');
 const http = require('http');
-const AWS = require("aws-sdk")
+const AWS = require("aws-sdk");
 var jre = require('node-jre');
+const fileUpload = require('express-fileupload');
 
 var fs = require('fs');
 console.log("k")
@@ -65,21 +66,45 @@ app.use(function(req, res, next) {
   // parse application/json
   app.use(bodyParser.json())
 
-  app.get('/resumeParse', async (req, res, next) => {
+  app.use(fileUpload({limits: { fileSize: 5 * 1024 * 1024 } })); //limits to 5MB
 
-    var output = await jre.spawnSync(  // call synchronously
-        ['../ResumeParser/ResumeTransducer/bin/*', '../ResumeParser/GATEFiles/lib/*', '../ResumeParser/GATEFILES/bin/gate.jar', '../ResumeParser/ResumeTransducer/lib/*'],
-        'code4goal.antony.resumeparser.ResumeParserProgram',  
-        ['../ResumeParser/ResumeTransducer/UnitTests/AntonyDeepakThomas.pdf', '../ResumeParser/ResumeTransducer/UnitTests/parsed_result.json'],      
-        { encoding: 'utf8' }     // encode output as string
-      ).stdout;           // take output from stdout as trimmed String
+  app.post('/resumeParse', async (req, res, next) => {
+    // if (Object.keys(req.files).length == 0) {
+    //     return res.status(400).send('No files were uploaded.');
+    // }
 
-    await fs.readFile('../ResumeParser/ResumeTransducer/UnitTests/parsed_result.json', 'utf8', await function(err, contents) {
-        res.send({Krow: JSON.parse(contents)})
+    let file = req.files.resumeFile;
+
+    // Use the mv() method to place the file somewhere on your server
+    await file.mv(`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, async function(err) {
+        if (err){
+            console.log(err);
+        } else {
+            console.log('File uploaded!');
+        }
+
+        var output = await jre.spawnSync(  // call synchronously
+            ['../ResumeParser/ResumeTransducer/bin/*', '../ResumeParser/GATEFiles/lib/*', '../ResumeParser/GATEFILES/bin/gate.jar', '../ResumeParser/ResumeTransducer/lib/*'],
+            'code4goal.antony.resumeparser.ResumeParserProgram',  
+            [`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, '../ResumeParser/ResumeTransducer/UnitTests/parsed_result.json'],      
+            { encoding: 'utf8' }     // encode output as string
+          ).stdout;           // take output from stdout as trimmed String
+        
+        let name_without_extension = file.name.replace(/\.[^/.]+$/, "");
+        await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, (err) =>{
+            //console.log(err);
+        });
+        await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
+            //console.log(err);
+        });
+    
+        await fs.readFile('../ResumeParser/ResumeTransducer/UnitTests/parsed_result.json', 'utf8', await function(err, contents) {
+            res.send({Krow: JSON.parse(contents)})
+        });
+        
     });
 
-    
-  })
+  });
 
   app.get("/hckey", (req, res, next) => {
 
@@ -664,10 +689,10 @@ app.post("/accept-hire", (req, res, next) => {
     })
 })
 
-// https.createServer(options, app).listen(443, function (err) {
-//     if (err) {
-//       throw err
-//     }
-//     // // console.log(`worker ${process.pid} started`);
+https.createServer(options, app).listen(443, function (err) {
+    if (err) {
+      throw err
+    }
+    // // console.log(`worker ${process.pid} started`);
 
-// })
+})

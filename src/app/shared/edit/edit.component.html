@@ -10,7 +10,7 @@
         <button *ngIf="profileType == 'Applicant'" [routerLink]="['/applicant/upload']">Upload Profile Picture</button>
         <button *ngIf="profileType != 'Applicant'" [routerLink]="['/employer/upload']">Upload Profile Picture</button>
 
-        <input hidden type="file" class="upload-and-parse" #uploader (change)="uploadAndParseResume($event)"/>
+        <input hidden type="file" class="upload-and-parse" name="resumeFile" #uploader (change)="uploadAndParseResume($event)"/>
         <button *ngIf="profileType == 'Applicant'" (click)="uploader.click()">Upload Resume</button>
         <button *ngIf="profileType != 'Applicant'" (click)="uploader.click()">Upload Resume</button>
     </div>
@@ -27,7 +27,7 @@
         <div id="app-responsive-component-profile-first" class="col-lg-6">
           <span class="pf-title"></span>
           <div class="pf-field">
-            <input (keydown)="changeHandler($event)" type="text" placeholder="" id=""
+            <input (keydown)="changeHandler($event)" type="text" placeholder="" id="first"
               [(ngModel)]="first" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-user"></i>
           </div>
@@ -37,7 +37,7 @@
         <div id="app-responsive-component-profile-second" class="col-lg-12" >
           <span class="pf-title"></span> 
           <div class="pf-field">
-            <input (keydown)="changeHandler($event)" type="text" placeholder="" id=""
+            <input (keydown)="changeHandler($event)" type="text" placeholder="" id="second"
               [(ngModel)]="second" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-users"></i>
           </div>
@@ -54,7 +54,7 @@
 
 
       </div>
-      <div class="col-lg-12" style="display:none; padding:0">
+      <div class="col-lg-12" id="updateName" style="display:none; padding:0">
         <a (click)="buttonPressed($event)" class="post-job-btn" style="float:right" ng-disabled="false">UPDATE</a>
       </div>
     </form>
@@ -73,8 +73,8 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-12" style="display:none; padding:0">
-            <a (click)="buttonPressed($event)" class="post-job-btn" style="float:right" ng-disabled="false">UPDATE</a>
+        <div class="col-lg-12" id="updateBio" style="display:none; padding:0">
+            <a (click)="buttonPressed($event)" class="post-job-btn" style="float:right"  ng-disabled="false">UPDATE</a>
           </div>
       </form>
     </div>
@@ -116,7 +116,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-12" style="display:none; padding:0">
+      <div class="col-lg-12" id="updateAddress" style="display:none; padding:0">
         <a (click)="buttonPressed($event)" class="post-job-btn" style="float:right" ng-disabled="false">UPDATE</a>
       </div>
     </form>
@@ -187,4 +187,12 @@
 <div class="social-edit"  id="sn" *ngIf="userType == 'applicant'">
   <h3>Experience</h3>
   <app-resume-experience></app-resume-experience>
+</div>
+<div class="social-edit"  id="sn" *ngIf="userType == 'applicant'">
+  <h3>Achievement</h3>
+  <app-resume-achievements></app-resume-achievements>
+</div>
+<div class="social-edit"  id="sn" *ngIf="userType == 'applicant'">
+  <h3>Volunteer Experience</h3>
+  <app-resume-volunteers></app-resume-volunteers>
 </div>

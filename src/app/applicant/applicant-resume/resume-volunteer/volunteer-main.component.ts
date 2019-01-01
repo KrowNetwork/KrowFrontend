@@ -3,9 +3,9 @@ import { Component, Input }  from '@angular/core';
 import { InterfaceComponent } from '../../../shared/interface-component.component';
 
 @Component({
-  templateUrl: `./education-main.component.html`
+  templateUrl: `./volunteer-main.component.html`
 })
-export class EducationMainComponent implements InterfaceComponent {
+export class VolunteerMainComponent implements InterfaceComponent {
   @Input() data: any;
 
   deletedElements = new Array();

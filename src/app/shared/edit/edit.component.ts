@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { CreateUserService } from '../../service/create-user.service';
-import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
+import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { log } from 'util';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { CustomHttpService } from '../../service/custom-http.service';
+
+import{ ResumeVolunteerComponent } from '../../applicant/applicant-resume/resume-volunteer/resume-volunteer.component'
 var aws = require('aws-sdk');
 
 @Component({
@@ -23,7 +25,7 @@ export class EditComponent implements OnInit {
   ) {
     // console.log("constructor created")
 
-   }
+  }
 
   user: string;
   first: string;
@@ -31,10 +33,10 @@ export class EditComponent implements OnInit {
   bio: string;
   address: string;
   city: string;
-  state: string; 
+  state: string;
   country: string;
   phoneNumber: string;
-  email: string; 
+  email: string;
   urlFACEBOOK: string;
   urlTWITTER: string;
   urlLINKEDIN: string;
@@ -48,12 +50,16 @@ export class EditComponent implements OnInit {
   canDelete = false;
   showDel = false;
 
+  // updateName = false;
+  // updateBio = false;
+  // updateAddress = false;
+
 
   updateInfo(children) {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     // Test Id, get from login in the future
-    
-    
+
+
 
     // Url to API
     var url = "http://18.220.46.51:3000/api/" + this.profileType + "/" + this.user;
@@ -62,7 +68,7 @@ export class EditComponent implements OnInit {
     this.http.get(url).subscribe(
       data => {
         var change = false;
-        for(var i = 0; i < children.length; i++){
+        for (var i = 0; i < children.length; i++) {
           var event = children[i].children[1].children[0];
 
           // Get element id that triggered event
@@ -77,12 +83,12 @@ export class EditComponent implements OnInit {
           } else {
 
             valueToChange = event.attributes[1].value;
-            elValue = event.value; 
+            elValue = event.value;
             var found = true
           }
 
           // Value of element
-           
+
 
 
           // Check if values match, in which case, do nothing
@@ -92,19 +98,19 @@ export class EditComponent implements OnInit {
               data["resume"]["biography"] = elValue
               change = true;
             }
-          } else if(data[valueToChange] != elValue) {
-          
+          } else if (data[valueToChange] != elValue) {
+
 
             // Check for empty entry
-        
-            
+
+
             // Check if url, in which case, map as json
-            if(valueToChange.slice(0, 3) == "url"){
+            if (valueToChange.slice(0, 3) == "url") {
               var found = false;
               // Loop through current links looking for a match to update
-              for(var k = 0; k < data["links"].length; k++){
-                if(data["links"][k]["type"][0] == valueToChange[3]){
-                  if(data["links"][k]["url"] != elValue){
+              for (var k = 0; k < data["links"].length; k++) {
+                if (data["links"][k]["type"][0] == valueToChange[3]) {
+                  if (data["links"][k]["url"] != elValue) {
                     data["links"][k]["url"] = elValue;
                     change = true;
                   }
@@ -112,7 +118,7 @@ export class EditComponent implements OnInit {
                 }
               }
               // If no matches are found, create new instance
-              if(found == false){
+              if (found == false) {
                 var type = valueToChange.slice(3);
                 data["links"].push(
                   {
@@ -124,7 +130,7 @@ export class EditComponent implements OnInit {
                 change = true;
               }
             }
-            else{
+            else {
               // Change data value
               data[valueToChange] = elValue;
               console.log(data[valueToChange])
@@ -133,7 +139,7 @@ export class EditComponent implements OnInit {
           }
         }
 
-        if(change != false){
+        if (change != false) {
 
           // Get timestamp and change data timestamp
           var timestamp = new Date();
@@ -150,7 +156,7 @@ export class EditComponent implements OnInit {
                 // console.log("Client-side error occured.");
               } else {
                 // console.log("Server-side error occured.");
-              } 
+              }
               console.log(err)
             }
           );
@@ -172,7 +178,7 @@ export class EditComponent implements OnInit {
     });
   };
 
-  async buttonPressed(event){
+  async buttonPressed(event) {
     event.target.attributes[2].value = true;
     event.target.style = "float:right; background-color:gray; border-color: gray; opacity=0.8";
     var children = event.target.closest("form").children[0].children;
@@ -182,7 +188,7 @@ export class EditComponent implements OnInit {
     event.target.attributes[2].value = false;
   }
 
-  changeHandler(event){
+  changeHandler(event) {
     event.target.closest("form").children[1].style = "display:show";
   }
 
@@ -206,8 +212,8 @@ export class EditComponent implements OnInit {
     // Test Id, get from login in the future
     var hidden = document.getElementById("test-ID");
     var profileType = hidden.attributes["value"].value;
-    if(sessionStorage.getItem("accountType") == "employer"){
-      
+    if (sessionStorage.getItem("accountType") == "employer") {
+
 
       // Set Company/Name 
       document.getElementById("app-responsive-component-profile").innerText = "Company";
@@ -250,18 +256,18 @@ export class EditComponent implements OnInit {
           }
 
           // Split url links
-          for(var i = 0; i < data["links"].length; i++){
+          for (var i = 0; i < data["links"].length; i++) {
             var curr = data["links"][i];
-            if(curr["type"] == "FACEBOOK"){
+            if (curr["type"] == "FACEBOOK") {
               this.urlFACEBOOK = curr["url"];
             }
-            else if(curr["type"] == "TWITTER"){
+            else if (curr["type"] == "TWITTER") {
               this.urlTWITTER = curr["url"];
             }
-            else if(curr["type"] == "LINKEDIN"){
+            else if (curr["type"] == "LINKEDIN") {
               this.urlLINKEDIN = curr["url"];
             }
-            else if(curr["type"] == "WEBSITE"){
+            else if (curr["type"] == "WEBSITE") {
               this.urlWEBSITE = curr["url"];
             }
           }
@@ -275,10 +281,10 @@ export class EditComponent implements OnInit {
         }
       );
     }
-    else if(sessionStorage.getItem("accountType") == "applicant") {
+    else if (sessionStorage.getItem("accountType") == "applicant") {
 
       if (this.user == this.id || this.id === undefined) {
-      // if (sessionStorage.getItem("view") !== undefined && sessionStorage.getItem("view") == "potApplicant") {
+        // if (sessionStorage.getItem("view") !== undefined && sessionStorage.getItem("view") == "potApplicant") {
         // this.id = this.user
         this.disabled = false
         this.id = this.user
@@ -304,7 +310,7 @@ export class EditComponent implements OnInit {
       lastName.children[1].children[0].attributes[1].value = "lastName";
 
       var url = "http://18.220.46.51:3000/api/Applicant/" + this.id;
-      
+
       // Get Data
       this.http.get(url).subscribe(
         data => {
@@ -328,18 +334,18 @@ export class EditComponent implements OnInit {
           // console.log(this.canDelete)
 
           // Split url links
-          for(var i = 0; i < data["links"].length; i++){
+          for (var i = 0; i < data["links"].length; i++) {
             var curr = data["links"][i];
-            if(curr["type"] == "FACEBOOK"){
+            if (curr["type"] == "FACEBOOK") {
               this.urlFACEBOOK = curr["url"];
             }
-            else if(curr["type"] == "TWITTER"){
+            else if (curr["type"] == "TWITTER") {
               this.urlTWITTER = curr["url"];
             }
-            else if(curr["type"] == "LINKEDIN"){
+            else if (curr["type"] == "LINKEDIN") {
               this.urlLINKEDIN = curr["url"];
             }
-            else if(curr["type"] == "WEBSITE"){
+            else if (curr["type"] == "WEBSITE") {
               this.urlWEBSITE = curr["url"];
             }
           }
@@ -353,7 +359,7 @@ export class EditComponent implements OnInit {
         }
       );
     }
-    
+
   }
   is_disabled() {
     return this.disabled
@@ -369,7 +375,7 @@ export class EditComponent implements OnInit {
 
   delete() {
     var i = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
-    this.http2.post("https://api.krownetwork.com/delete?token=" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt."+ i +".accessToken") + "&id=" + i, {id: i}).subscribe(
+    this.http2.post("https://api.krownetwork.com/delete?token=" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt." + i + ".accessToken") + "&id=" + i, { id: i }).subscribe(
       data => {
         // console.log(data)
       }, // Catch Errors
@@ -389,7 +395,7 @@ export class EditComponent implements OnInit {
     console.log(err)
   }
 
-  
+
 
   requestToHire() {
     // // console.log(this.profileType)
@@ -402,8 +408,8 @@ export class EditComponent implements OnInit {
     // // console.log(applicantUrl)
     // // console.log(jobUrl)
     // // console.log(employerUrl)
-    
-    
+
+
 
     var data =
     {
@@ -412,8 +418,8 @@ export class EditComponent implements OnInit {
       "job": sessionStorage.getItem("fromJob")
     }
 
-          // jobData.tags = jobData.toString().split(",")
-          
+    // jobData.tags = jobData.toString().split(",")
+
 
     this.http.post(url, data).subscribe(
       data => {
@@ -430,14 +436,14 @@ export class EditComponent implements OnInit {
                 this.http.post("https://api.krownetwork.com/hire-request", mailData).subscribe(
                   data => {
                     alert("The applicant has been notified!")
-                  }, 
+                  },
                   (err: HttpErrorResponse) => {
                     if (err.error instanceof Error) {
                       // console.log("Client-side error occured.");
                     } else {
                       // console.log("Server-side error occured.");
                       // console.log(err);
-                    alert (err)
+                      alert(err)
                     }
                   }) // closing email
               },
@@ -447,7 +453,7 @@ export class EditComponent implements OnInit {
                 } else {
                   // console.log("Server-side error occured.");
                   // console.log(err);
-                alert (err)
+                  alert(err)
                 }
               }) //closing job_data
           },
@@ -457,7 +463,7 @@ export class EditComponent implements OnInit {
             } else {
               // console.log("Server-side error occured.");
               // console.log(err);
-            alert (err)
+              alert(err)
             }
           }) // closing emp_data
       },
@@ -467,14 +473,14 @@ export class EditComponent implements OnInit {
         } else {
           // console.log("Server-side error occured.");
           // console.log(err);
-          alert ("You have already requested to hire this applicant")
+          alert("You have already requested to hire this applicant")
         }
       }
-    
-  )
-    
-    
-   
+
+    )
+
+
+
 
     //           }
     //       }
@@ -484,7 +490,62 @@ export class EditComponent implements OnInit {
 
   }
 
-  uploadAndParseResume(event){
-    console.log('upload',document.getElementsByClassName("upload-and-parse"))
+  uploadAndParseResume(event) {
+    let file = event.target.files
+    const formData: FormData = new FormData();
+    formData.append('resumeFile', file[0]);
+
+    this.http2.post('http://localhost:3000/resumeParse', formData).subscribe(data => {
+      console.log('parsed resume', data)
+      console.log(document.getElementById("updateName"));
+      data = data['Krow']
+      if (data['basics']['name'] != null || data['basics']['name'] != undefined){
+          if(data['basics']['name']['firstName'] != null || data['basics']['name']['firstName'] != undefined){
+             this.first = data['basics']['name']['firstName']
+             document.getElementById("updateName").style.display = "show";
+          }
+
+          if(data['basics']['name']['surname'] != null || data['basics']['name']['surname'] != undefined){
+            this.second = data['basics']['name']['surname']
+            document.getElementById("updateName").style.display = "show";
+          }
+      }
+      if (data['summary'] !== null || data['summary'] !== undefined) {
+        console.log('summary', data['summary'])
+        this.bio = data['summary'][0][Object.keys(data['summary'][0])[0]].trim();
+        document.getElementById("updateBio").style.display = "show";
+      }
+
+
+      // if (data['basics']['name'] != null || data['basics']['name'] != undefined){
+      //   if(data['basics']['name']['firstName'] != null || data['basics']['name']['firstName'] != undefined){
+      //      this.first = data['basics']['name']['firstName']
+      //      this.updateName = true;
+      //   }
+
+      //   if(data['basics']['address'] != null || data['basics']['address'] != undefined){
+      //     let str = data['basics']['address'][0].split(',');
+      //     if(str[0] != null || str[0] != undefined){
+      //       this.address = str[0];
+      //       this.updateAddress = true;
+      //     }
+      //     if(str[1] != null || str[1] != undefined){
+      //       this.city = str[1];
+      //       this.updateAddress = true;
+      //     }
+      //     if(str[2] != null || str[2] != undefined){
+      //       this.state = str[2];
+      //       this.updateAddress = true;
+      //     }
+      //   }
+      // }
+
+      if(data['education_and_training'] != null || data['education_and_training'] != undefined){
+          //this.resumeVolunteer.loadComponent()
+          for(let i = 0; i < data['education_and_training'].length; i++ ){
+            
+          }
+      }
+    })
   }
 }

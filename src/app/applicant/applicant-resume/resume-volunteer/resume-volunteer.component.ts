@@ -4,8 +4,8 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 
 
 import { ItemType } from '../../../shared/item-type-constructor';
-import { EducationMainComponent } from './volunteer-main.component';
-import { EducationDirective } from './volunteer.directive';
+import { VolunteerMainComponent } from './volunteer-main.component';
+import { VolunteerDirective } from './volunteer.directive';
 import { log } from 'util';
 import { InterfaceComponent } from '../../../shared/interface-component.component';
 import { UpdateResumeService } from '../../../service/update-resume.service';
@@ -13,13 +13,13 @@ import { CustomHttpService } from '../../../service/custom-http.service';
 
 
 @Component({
-  selector: 'app-resume-volunteer',
+  selector: 'app-resume-volunteers',
   templateUrl: './resume-volunteer.component.html',
   styleUrls: ['../resume-elements.component.css']
 })
-export class ResumeEducationComponent implements OnInit {
+export class ResumeVolunteerComponent implements OnInit {
 
-  @ViewChild(EducationDirective) educationHost: EducationDirective;
+  @ViewChild(VolunteerDirective) volunteerHost: VolunteerDirective;
 
   constructor(
     private http: CustomHttpService, 
@@ -31,15 +31,15 @@ export class ResumeEducationComponent implements OnInit {
 
   updateResume(event){
     // console.log(event.target.closest("app-resume-education"))
-    this.updateResumeService.updateMain(event.target.closest("app-resume-education"));
+    this.updateResumeService.updateMain(event.target.closest("app-resume-volunteers"));
   }
   
-  loadComponent(educations) {
+  loadComponent(volunteers) {
     // // console.log()
-    if(educations == "empty"){
-      educations = new Array<ItemType>();
-      educations.push(
-        new ItemType(EducationMainComponent, {
+    if(volunteers == "empty"){
+      volunteers = new Array<ItemType>();
+      volunteers.push(
+        new ItemType(VolunteerMainComponent, {
           title: "",
           description: "",
           startDate: "",
@@ -48,15 +48,15 @@ export class ResumeEducationComponent implements OnInit {
       );
     }
 
-    for(var i = 0; i < educations.length; i++){
-      let educationItem = educations[i];
+    for(var i = 0; i < volunteers.length; i++){
+      let volunteerItems = volunteers[i];
 
-      let componentFactory = this.componentFactoryResolver.resolveComponentFactory(educationItem.component);
+      let componentFactory = this.componentFactoryResolver.resolveComponentFactory(volunteerItems.component);
 
-      let viewContainerRef = this.educationHost.viewContainerRef;
+      let viewContainerRef = this.volunteerHost.viewContainerRef;
 
       let componentRef = viewContainerRef.createComponent(componentFactory);
-      (<InterfaceComponent>componentRef.instance).data = educationItem.data;
+      (<InterfaceComponent>componentRef.instance).data = volunteerItems.data;
     }
   }
   formatDate(date) {
@@ -84,26 +84,26 @@ export class ResumeEducationComponent implements OnInit {
     this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
       data => {
         
-        var resumeEducations = data["resume"]["education"];
-        var educations = new Array<ItemType>();
-        for(var k = 0; k < resumeEducations.length; k++){
-          var sd =  resumeEducations[k]["startDate"].split('T')[0].slice(0, -3);
-          var ed =  resumeEducations[k]["endDate"].split('T')[0].slice(0, -3);
+        var resumeVolunteer = data["resume"]["volunteers"];
+        var volunteers = new Array<ItemType>();
+        for(var k = 0; k < resumeVolunteer.length; k++){
+          var sd =  resumeVolunteer[k]["startDate"].split('T')[0].slice(0, -3);
+          var ed =  resumeVolunteer[k]["endDate"].split('T')[0].slice(0, -3);
           console.log(sd, ed)
-          educations.push(
-            new ItemType(EducationMainComponent, {
-              title: resumeEducations[k]["title"],
-              description: resumeEducations[k]["description"],
+          volunteers.push(
+            new ItemType(VolunteerMainComponent, {
+              title: resumeVolunteer[k]["title"],
+              description: resumeVolunteer[k]["description"],
               startDate: sd,
               endDate: ed
             })
           );
         }
-        if(educations.length == 0){
+        if(volunteers.length == 0){
           this.loadComponent("empty");
         }
         else{
-          this.loadComponent(educations);
+          this.loadComponent(volunteers);
         }
       }, // Catch Errors
       (err: HttpErrorResponse) => {
