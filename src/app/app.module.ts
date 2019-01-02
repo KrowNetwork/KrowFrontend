@@ -56,6 +56,9 @@ import { ResumeAchievementsComponent } from './applicant/applicant-resume/resume
 import { ResumeAffiliationsComponent } from './applicant/applicant-resume/resume-affiliations/resume-affiliations.component';
   import { AffiliationsMainComponent } from './applicant/applicant-resume/resume-affiliations/affiliations-main.component';
 
+import { ResumeVolunteerComponent } from './applicant/applicant-resume/resume-volunteer/resume-volunteer.component';
+  import { VolunteerMainComponent } from './applicant/applicant-resume/resume-volunteer/volunteer-main.component';
+
 // Shared components
 import { ProfileInfoComponent } from './shared/profile-info/profile-info.component';
 import { BasicInfoCollectorComponent } from './shared/basic-info-collector/basic-info-collector.component';
@@ -77,6 +80,7 @@ import { ModalService } from "./service/modal.service";
 import { EducationDirective } from './applicant/applicant-resume/resume-education/education.directive';
 import { ExperienceDirective } from './applicant/applicant-resume/resume-experience/experience.directive';
 import { AchievementDirective } from './applicant/applicant-resume/resume-achievements/achievement.directive';
+import { VolunteerDirective } from './applicant/applicant-resume/resume-volunteer/volunteer.directive';
 import { AffiliationsDirective } from './applicant/applicant-resume/resume-affiliations/affiliations.directive';
 import { BottomBarComponent } from './bottom-bar/bottom-bar.component';
 import { HelpComponent } from './shared/help/help.component';
@@ -141,6 +145,7 @@ import { MarkdownModule } from 'ngx-markdown';
     ResumeExperienceComponent,
     ResumeAchievementsComponent,
     ResumeAffiliationsComponent, 
+    ResumeVolunteerComponent,
     ComingSoonComponent,
     PageNotFoundComponent,
     AchievementsMainComponent,
@@ -150,6 +155,8 @@ import { MarkdownModule } from 'ngx-markdown';
     EducationDirective,
     ExperienceMainComponent,
     ExperienceDirective,
+    VolunteerMainComponent,
+    VolunteerDirective,
     AffiliationsMainComponent,
     SkillsMainComponent,
     NewPasswordComponent,
@@ -218,6 +225,7 @@ import { MarkdownModule } from 'ngx-markdown';
     SkillsMainComponent,
     EducationMainComponent,
     AchievementsMainComponent,
+    VolunteerMainComponent,
     MessagingPopupComponent,
     NewEventCalendarPopupComponent,
     ShareLinkPopupComponent

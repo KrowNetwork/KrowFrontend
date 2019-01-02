@@ -8,30 +8,30 @@
 						<div class="inner-header wform">
 							<div class="job-search-sec">
 								<div class="job-search">
-									<h4>Explore Thousand Of Jobs With Just Simple Search...</h4>
+									<h4>Explore Thousands Of Jobs With a Simple Search</h4>
 									<form>
 										<div class="row">
 											<div class="col-lg-8">
 												<div class="job-field">
 													<input type="text" placeholder="Job Title" [(ngModel)]="term" [ngModelOptions]="{standalone: true}"/>
-													
+
 													<i class="la la-keyboard-o"></i>
 												</div>
 											</div>
 											<div class="col-lg-3">
 												<div class="job-field">
 													<input type="text" placeholder="Location" [(ngModel)]="location" style="float:right" [ngModelOptions]="{standalone: true}"/>
-													
+
 													<i class="la la-keyboard-o"></i>
 												</div>
 											</div>
-											
+
 											<div class="col-lg-1">
 												<button type="submit" (click)="go(term, location)"><i class="la la-search"></i></button>
 											</div>
 										</div>
 									</form>
-									
+
 								</div>
 							</div>
 						</div>
@@ -45,11 +45,11 @@
 		<div class="block remove-top">
 			<div class="container">
 				 <div class="row no-gape">
-				 	
+
 				 	<div class="col-lg-12 column">
 				 		<div class="modrn-joblist np">
 					 		<div class="filterbar">
-					 			
+
 					 			<h5>Results</h5>
 					 		</div>
 						 </div><!-- MOdern Job LIst -->
@@ -59,7 +59,7 @@
 								<div class="job-listing wtabs" *ngFor="let job of results.matchingJobs; let myIndex = index">
 									<div class="job-title-sec">
 										<!-- <div class="c-logo" style="width: 90px"> <img src="{{ person.image }}" alt="" /> </div> -->
-										<h3 style="padding-left:10px"><a title="">{{ job.job.title }}</a></h3> 
+										<h3 style="padding-left:10px"><a title="">{{ job.job.title }}</a></h3>
 										<p style="font-size: 14px;padding-left:10px; margin-bottom: 0px">{{job.job.companyDisplayName}}</p>
 										<p style="font-size: 14px;padding-left:10px; margin-bottom: 0px">{{job.job.addresses[0]}}</p>
 										<!-- <span style="font-size: 14px;padding-left:10px">{{job.searchTextSnippet}}</span> -->
@@ -70,8 +70,8 @@
 										<!-- <i>5 months ago</i> -->
 									</div>
                 </div>
-                
-								
+
+
 							</div>
 							<!-- <div class="pagination">
 								<ul>
@@ -90,5 +90,3 @@
 			</div>
 		</div>
 	</section>
-
-	

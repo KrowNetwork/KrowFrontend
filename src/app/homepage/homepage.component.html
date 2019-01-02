@@ -2,7 +2,6 @@
 <div class="theme-layout" id="scrollup">
 
 
-
 	<section>
 		<div class="block no-padding">
 			<div class="container fluid">
@@ -10,47 +9,38 @@
 					<div class="col-lg-12">
 						<div class="main-featured-sec">
 							<ul class="main-slider-sec">
-								<li class="slideHome"><img src="https://images.pexels.com/photos/948887/pexels-photo-948887.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800&w=1600"></li>
-							</ul>
+	              <li class="slideHome"><img src="https://ak5.picdn.net/shutterstock/videos/3265525/thumb/1.jpg"></li>
+	            </ul>
 							<div class="job-search-sec">
-								<div class="job-search style2">
-									<h3>Search Smart Resumes</h3>
-									<span>Enter your candidate's name below to access their resume</span>
+								<div class="job-search">
+									<h3>Search Thousands of Jobs Instantly</h3>
 									<form>
 										<div class="row">
-											<div class="col-lg-11 col-md-5 col-sm-5 col-xs-12">
+											<div class="col-lg-7 col-md-5 col-sm-5 col-xs-12">
 												<div class="job-field">
-													<input type="text" placeholder="Search Full Name" [(ngModel)]="term" [ngModelOptions]="{standalone: true}" (keydown)="keyDown($event)"/>
+													<input type="text" placeholder="Enter a job title, company, skills, etc." [(ngModel)]="term" [ngModelOptions]="{standalone: true}"/>
 													<i class="la la-keyboard-o"></i>
 												</div>
 											</div>
-
-											<!--This is the location bar
-
 											<div class="col-lg-4 col-md-5 col-sm-5 col-xs-12">
 												<div class="job-field">
-													<select data-placeholder="City, province or region" class="chosen-city">
-														<option>Istanbul</option>
-														<option>New York</option>
-														<option>London</option>
-														<option>Russia</option>
-													</select>
+													<input type="text" placeholder="Location" [(ngModel)]="location" style="float:right" [ngModelOptions]="{standalone: true}"/>
 													<i class="la la-map-marker"></i>
 												</div>
-											</div> -->
-
+											</div>
 											<div class="col-lg-1 col-md-2 col-sm-2 col-xs-12">
-												<button type="button" (click)="search()"><i class="la la-search"></i></button>
+												<button type="submit" (click)="go(term, location)"><i class="la la-search"></i></button>
 											</div>
 										</div>
 									</form>
-									<!-- <div class="or-browser">
-										<span>Advanced Options: </span>
-										<a href="#" title="">Location</a>
-										<a href="#" title="">Skill Set</a>
-										<a href="#" title="">College</a>
-									</div> -->
+									<div class="or-browser">
+										<span>Use your Resume to Find Jobs </span>
+										<a href="/register" title="">Upload Now</a>
+									</div>
 								</div>
+							</div>
+							<div class="scroll-to">
+								<a href="#scroll-here" title=""><i class="la la-arrow-down"></i></a>
 							</div>
 						</div>
 					</div>
@@ -65,24 +55,115 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="heading">
-							<h2>How It Works</h2>
+							<h2>Popular Cities</h2>
+							<span>We help grow the job hunt in these cities</span>
 						</div><!-- Heading -->
-						<div class="how-to-sec">
-							<div class="how-to">
-								<span class="how-icon"><i class="la la-user"></i></span>
-
-								<h3>Create a Smart Resume</h3>
-								<p>Create your personalized resume by signing up, where you will be able to easily build your resume.</p>
+						<div class="cat-sec">
+							<div class="row no-gape">
+								<div class="col-lg-3 col-md-3 col-sm-6">
+									<div class="p-category">
+										<a href="/search-job?q=&location=Newark" title="">
+											<span>Newark, NJ</span>
+											<p>(220 open positions)</p>
+										</a>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6">
+									<div class="p-category">
+										<a href="/search-job?q=&location=New%20york%20city" title="">
+											<span>New York City, NY</span>
+											<p>(604 open positions)</p>
+										</a>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6">
+									<div class="p-category">
+										<a href="/search-job?q=&location=Los%20Angeles" title="">
+											<span>Los Angeles, CA</span>
+											<p>(306 open positions)</p>
+										</a>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6">
+									<div class="p-category">
+										<a href="/search-job?q=&location=Philadelphia" title="">
+											<span>Philadelphia, PA</span>
+											<p>(421 open positions)</p>
+										</a>
+									</div>
+								</div>
 							</div>
-							<div class="how-to">
-								<span class="how-icon"><i class="la la-file-archive-o"></i></span>
-								<h3>Apply For the Job</h3>
-								<p>By clicking the share icon on your resume, you will be able to share it instantly with any potential employer via email or with a link</p>
+						</div>
+						<div class="cat-sec">
+							<div class="row no-gape">
+								<div class="col-lg-3 col-md-3 col-sm-6">
+									<div class="p-category">
+										<a href="/search-job?q=&location=chicago" title="">
+											<span>Chicago, IL</span>
+											<p>(212 open positions)</p>
+										</a>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6">
+									<div class="p-category">
+										<a href="/search-job?q=&location=san%20diego" title="">
+											<span>San Diego, CA</span>
+											<p>(458 open positions)</p>
+										</a>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6">
+									<div class="p-category">
+										<a href="/search-job?q=&location=austin" title="">
+											<span>Austin, TX</span>
+											<p>(328 open positions)</p>
+										</a>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6">
+									<div class="p-category">
+										<a href="/search-job?q=&location=san%20francisco" title="">
+											<span>San Francisco, CA</span>
+											<p>(467 open positions)</p>
+										</a>
+									</div>
+								</div>
 							</div>
-							<div class="how-to">
-								<span class="how-icon"><i class="la la-list"></i></span>
-								<h3>Get Hired</h3>
-								<p>The smart resume is different, which is why employers like it. It shows more about you than any piece of paper could.</p>
+						</div>
+						<div class="cat-sec">
+							<div class="row no-gape">
+								<div class="col-lg-3 col-md-3 col-sm-6">
+									<div class="p-category">
+										<a href="/search-job?q=&location=seattle" title="">
+											<span>Seattle, WA</span>
+											<p>(316 open positions)</p>
+										</a>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6">
+									<div class="p-category">
+										<a href="/search-job?q=&location=Gainesville" title="">
+											<span>Gainesville, FL</span>
+											<p>(188 open positions)</p>
+										</a>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6">
+									<div class="p-category">
+										<a href="/search-job?q=&location=Washington%20DC" title="">
+											<span>Washington D.C.</span>
+											<p>(359 open positions)</p>
+										</a>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6">
+									<div class="p-category">
+										<a href="/search-job?q=&location=jersey%20city" title="">
+											<span>Jersey City, NJ</span>
+											<p>(67 open positions)</p>
+										</a>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -98,9 +179,9 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="simple-text-block">
-							<h3>Get your Next Job with a Smart Resume!</h3>
-							<span>Your resume will be ready in minutes with Krow's resume assistant!</span>
-							<a href="/register" title="">Create a resume</a>
+							<h3>Apply to your Next Job with a Krow Resume</h3>
+							<span>Our AI scans your resume and finds the perfect job opportunities for you</span>
+							<a href="/register" title="">Upload Resume</a>
 						</div>
 					</div>
 				</div>
@@ -108,63 +189,30 @@
 		</div>
 	</section>
 
-	<section>
-		<div class="block gray">
+	<section id="scroll-here">
+		<div class="block">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="heading">
-							<h2>Career Tips</h2>
-							<span>We want to help you get the job</span>
+							<h2>What We Do</h2>
 						</div><!-- Heading -->
-						<div class="blog-sec">
-							<div class="row">
-								<div class="col-lg-4">
-									<div class="my-blog">
-										<div class="blog-thumb">
-											<a href="https://www.usatoday.com/story/money/careers/2018/11/13/resume-tips-heres-when-you-should-take-past-internships-off-list/1944116002/" title=""><img src="https://i.imgur.com/RggfeCC.jpg" alt="" /></a>
-											<div class="blog-date">
-												<a href="#" title="">2018 <i>November 13</i></a>
-											</div>
-										</div>
-										<div class="blog-details">
-											<h3><a href="#" title="">When Should I Take Past Internships Off My Resume?</a></h3>
-											<p> And How they can Sabotage your Chances</p>
-											<a href="https://www.usatoday.com/story/money/careers/2018/11/13/resume-tips-heres-when-you-should-take-past-internships-off-list/1944116002/" title="">Read More <i class="la la-long-arrow-right"></i></a>
+						<div class="how-to-sec">
+							<div class="how-to">
+								<span class="how-icon"><i class="la la-user"></i></span>
 
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-4">
-									<div class="my-blog">
-										<div class="blog-thumb">
-											<a href="https://www.nature.com/articles/d41586-018-07427-5" title=""><img src="https://i.imgur.com/o4oIWBR.jpg" alt="" /></a>
-											<div class="blog-date">
-												<a href="#" title="">2018 <i>November 14</i></a>
-											</div>
-										</div>
-										<div class="blog-details">
-											<h3><a href="#" title="">How To Make Undergraduate Research Worthwhile</a></h3>
-											<p>Use It to Leverage For That Dream Job</p>
-											<a href="https://www.nature.com/articles/d41586-018-07427-5" title="">Read More <i class="la la-long-arrow-right"></i></a>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-4">
-									<div class="my-blog">
-										<div class="blog-thumb">
-											<a href="https://www.cnbc.com/2018/11/14/amazon-has-promise-to-create-50000-new-jobsheres-how-to-land-one.html" title=""><img src="https://i.imgur.com/DORSoMZ.jpg" alt="" /></a>
-											<div class="blog-date">
-												<a href="#" title="">2018 <i>November 14</i></a>
-											</div>
-										</div>
-										<div class="blog-details">
-											<h3><a href="https://www.cnbc.com/2018/11/14/amazon-has-promise-to-create-50000-new-jobsheres-how-to-land-one.html" title="">Amazon Says It Will Bring 50,000 Jobs to Its Two New Headquarters</a></h3>
-											<p>Here's How to Land a Job at the Company</p>
-											<a href="#" title="">Read More <i class="la la-long-arrow-right"></i></a>
-										</div>
-									</div>
-								</div>
+								<h3>Strengthen Your Resume</h3>
+								<p>Our AI takes in your resume, and returns a better customized Krow resume.</p>
+							</div>
+							<div class="how-to">
+								<span class="how-icon"><i class="la la-file-archive-o"></i></span>
+								<h3>Find You Jobs</h3>
+								<p>Your resume will match you to jobs that match its strength, or you can easily search.</p>
+							</div>
+							<div class="how-to">
+								<span class="how-icon"><i class="la la-list"></i></span>
+								<h3>Get You Hired</h3>
+								<p>You'll have the ultimate edge over your competition!</p>
 							</div>
 						</div>
 					</div>
@@ -172,6 +220,40 @@
 			</div>
 		</div>
 	</section>
+
+<!--
+	<section>
+		<div class="block">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="heading">
+							<h2>Companies Featured</h2>
+							<span>Some of the companies we've helped recruit excellent applicants</span>
+						</div><!- - Heading - ->
+						<div class="comp-sec">
+							<div class="company-img">
+								<a title=""><img src="https://i.imgur.com/fn53wGM.png" alt="" /></a>
+							</div><!- - Client  - ->
+							<div class="company-img">
+								<a title=""><img src="https://i.imgur.com/rid8Ckg.png" alt="" /></a>
+							</div><!- - Client  - ->
+							<div class="company-img">
+								<a title=""><img src="http://placehold.it/180x80" alt="" /></a>
+							</div><!- - Client  - ->
+							<div class="company-img">
+								<a title=""><img src="https://i.imgur.com/ZW4mdwO.png" alt="" /></a>
+							</div><!- - Client  - ->
+							<div class="company-img">
+								<a title=""><img src="http://placehold.it/180x80" alt="" /></a>
+							</div><!- - Client  - ->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+-->
 
 	<section>
 		<div class="block gray">
@@ -506,7 +588,7 @@
 	</div>
 </div><!-- LOGIN POPUP -->
 
-<div class="account-popup-area signup-popup-box">
+<div class="account-popup-area signup-popup-box" id="pop">
 	<div class="account-popup">
 		<span class="close-popup"><i class="la la-close"></i></span>
 		<h3>Sign Up</h3>

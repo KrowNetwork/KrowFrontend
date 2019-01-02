@@ -7,7 +7,7 @@ import { ExperienceMainComponent } from './experience-main.component';
 import { ExperienceDirective } from './experience.directive';
 import { InterfaceComponent } from '../../../shared/interface-component.component';
 import { UpdateResumeService } from '../../../service/update-resume.service';
-
+import { S3Service } from "../../../service/s3.service"
 import { CustomHttpService } from '../../../service/custom-http.service';
 
 
@@ -24,9 +24,11 @@ export class ResumeExperienceComponent implements OnInit {
     private http: CustomHttpService, 
     private componentFactoryResolver: ComponentFactoryResolver,
     private updateResumeService: UpdateResumeService,
-    private router: Router
+    private router: Router,
+    public s3service: S3Service
 
-  ) {}
+  ) {
+  }
   skills = []
   guid() {
 
@@ -38,10 +40,12 @@ export class ResumeExperienceComponent implements OnInit {
       .toString(16)
       .substring(1);
   }
-  updateResume(event){
+  async updateResume(event){
     var x = document.getElementsByClassName("tags")
     var y = document.getElementsByClassName("cbp")
     var z = []
+    this.updateFiles(document.getElementsByClassName("experienceFile"));
+    
     for (var s = 0; s < y.length; s ++) {
       z.push(y[s].getAttribute("ng-reflect-model"))
     }
@@ -69,6 +73,35 @@ export class ResumeExperienceComponent implements OnInit {
   this.updateResumeService.updateMain(event.target.closest("app-resume-experience"), skills_arr, z);
   }
 
+  updateFiles(fileUploads){
+    //console.log(fileUploads)
+
+    let user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+
+    const bucketName = 'krow-network-experience-files';
+    let s3 = this.s3service.getBucket(bucketName);
+    for(let i = 0; i <  fileUploads.length; i++){
+      
+      if(fileUploads[i].getAttribute("secret") != "deleteFile" && fileUploads[i].files.length !== 0){
+        console.log('file', fileUploads[i].files)
+          s3.upload({ 
+            Key: "files/" + i + '-' + user + '-' + fileUploads[i].files[0].name,
+            Bucket: bucketName,
+            Body: fileUploads[i].files[0], 
+            ACL: 'public-read',
+          }, function (err, data) {
+              if (err) {
+                console.log(err, 'there was an error uploading your file');
+              } else {
+                console.log(data)
+              }
+        });
+        
+      }
+    }
+ 
+  
+  }
 
   loadComponent(experiences) {
     if(experiences == "empty"){
@@ -84,19 +117,19 @@ export class ResumeExperienceComponent implements OnInit {
           verified: false,
           verifyID: this.guid(),
           present: true,
-          skills: []
+          skills: [],
+          fileName: null,
+          fileUrl: null
         })
       );
     }
     console.log(experiences.length)
     for(var i = 0; i < experiences.length; i++){
       let experienceItem = experiences[i];
-      
       let componentFactory = this.componentFactoryResolver.resolveComponentFactory(experienceItem.component);
 
       let viewContainerRef = this.achievementHost.viewContainerRef;
       let componentRef = viewContainerRef.createComponent(componentFactory);
-
       (<InterfaceComponent>componentRef.instance).data = experienceItem.data;
     }
   }
@@ -131,7 +164,9 @@ export class ResumeExperienceComponent implements OnInit {
             verified: resumeExperiences[k]['verified'],
             verifyID: resumeExperiences[k]['verifyID'],
             present: resumeExperiences[k]["present"],
-            skills: resumeExperiences[k]["skills"]
+            skills: resumeExperiences[k]["skills"],
+            fileName: resumeExperiences[k]["fileName"],
+            fileUrl: resumeExperiences[k]["fileUrl"]
           }
           // this.skills = resumeExperiences[k]['skills']
           // this.skills.forEach(element => {

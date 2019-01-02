@@ -157,6 +157,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           this.bio = data["resume"]["biography"]
         }
 
+
         // bioTag.innerHTML = this.bio;
 
         // if (data["address"] != "") {
@@ -474,26 +475,8 @@ downloadPDF(){
     } else {
       doc.text(25, this.addHeight(this.fontHeight, (splitSkills.length-1)*5+2, doc), '\n', null, null, 'left');
     }
-    
   }
-  
   doc.save('resume.pdf');
-
-  // let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF  
-  
-  // var content = this.content.nativeElement;
-  //   html2canvas(content).then(contentCanvas => {  
-  //     // Few necessary setting options  
-  //     var imgWidth = 208;   
-  //     var pageHeight = 295;    
-  //     var imgHeight = contentCanvas.height * imgWidth / contentCanvas.width;  
-  //     var heightLeft = imgHeight;  
-  
-  //     const contentDataURL = contentCanvas.toDataURL('image/png', 1.0)  
-  //     var position = 0;  
-  //     pdf.addImage(contentDataURL, 'PNG', 20, 20, imgWidth, imgHeight)  
-  //     pdf.save('MYPdf.pdf'); // Generated PDF   
-  //   });  
 }
 
 addHeight(height, size, pdf){
