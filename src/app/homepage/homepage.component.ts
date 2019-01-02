@@ -145,6 +145,11 @@ toggleMenu() {
     this.router.navigate(["/search"], { queryParams: { term: this.term } })
   }
 
+  go(term, location) {
+    this.router.navigate(["/search-job"], { queryParams: { q: term, location: location } })
+
+  }
+
   submit() {
     var d = {
       "email_address": this.email,
