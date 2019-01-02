@@ -1,20 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewContainerRef, ViewChild } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { CreateUserService } from '../../service/create-user.service';
 import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { log } from 'util';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { CustomHttpService } from '../../service/custom-http.service';
-
-import{ ResumeVolunteerComponent } from '../../applicant/applicant-resume/resume-volunteer/resume-volunteer.component'
+import { ItemType } from '../../shared/item-type-constructor';
+import { EducationMainComponent } from '../../applicant/applicant-resume/resume-education/education-main.component';
+import { ResumeVolunteerComponent } from '../../applicant/applicant-resume/resume-volunteer/resume-volunteer.component';
+import { ResumeExperienceComponent } from '../../applicant/applicant-resume/resume-experience/resume-experience.component';
+import { ResumeEducationComponent } from '../../applicant/applicant-resume/resume-education/resume-education.component';
+import { ResumeAchievementsComponent } from '../../applicant/applicant-resume/resume-achievements/resume-achievements.component';
+import { InternalFormsSharedModule } from '@angular/forms/src/directives';
+import { InterfaceComponent } from '../../shared/interface-component.component';
+import { VolunteerMainComponent } from '../../applicant/applicant-resume/resume-volunteer/volunteer-main.component';
+import { ExperienceMainComponent } from '../../applicant/applicant-resume/resume-experience/experience-main.component';
+import { v } from '@angular/core/src/render3';
 var aws = require('aws-sdk');
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css']
+  styleUrls: ['./edit.component.css'],
+  providers: [ ResumeVolunteerComponent, ResumeExperienceComponent, ResumeEducationComponent ]
 })
 export class EditComponent implements OnInit {
+
+  @ViewChild(ResumeEducationComponent) edu: ResumeEducationComponent;
+  @ViewChild(ResumeVolunteerComponent) vol: ResumeVolunteerComponent;
+  @ViewChild(ResumeAchievementsComponent) achieve: ResumeAchievementsComponent;
+  @ViewChild(ResumeExperienceComponent) exp: ResumeExperienceComponent;
 
   constructor(
     public http: CustomHttpService,
@@ -22,6 +37,9 @@ export class EditComponent implements OnInit {
     private createUser: CreateUserService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private resumeVolunteer: ResumeVolunteerComponent,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private viewContainerRef: ViewContainerRef
   ) {
     // console.log("constructor created")
 
@@ -501,51 +519,197 @@ export class EditComponent implements OnInit {
       data = data['Krow']
       if (data['basics']['name'] != null || data['basics']['name'] != undefined){
           if(data['basics']['name']['firstName'] != null || data['basics']['name']['firstName'] != undefined){
-             this.first = data['basics']['name']['firstName']
-             document.getElementById("updateName").style.display = "show";
+            this.first = data['basics']['name']['firstName']
+            document.getElementById("updateName").setAttribute("style","display: show");
           }
 
           if(data['basics']['name']['surname'] != null || data['basics']['name']['surname'] != undefined){
             this.second = data['basics']['name']['surname']
-            document.getElementById("updateName").style.display = "show";
+            document.getElementById("updateName").setAttribute("style","display: show");
           }
       }
       if (data['summary'] !== null || data['summary'] !== undefined) {
-        console.log('summary', data['summary'])
         this.bio = data['summary'][0][Object.keys(data['summary'][0])[0]].trim();
-        document.getElementById("updateBio").style.display = "show";
+        document.getElementById("updateBio").setAttribute("style","display: show");
       }
 
+      if (data['phone'] !== null || data['phone'] !== undefined) {
+        this.phoneNumber = data['basics']['phone'][0]
+        document.getElementById("updateSocial").setAttribute("style","display: show");
+      }
 
-      // if (data['basics']['name'] != null || data['basics']['name'] != undefined){
-      //   if(data['basics']['name']['firstName'] != null || data['basics']['name']['firstName'] != undefined){
-      //      this.first = data['basics']['name']['firstName']
-      //      this.updateName = true;
-      //   }
+      if (data['email'] !== null || data['email'] !== undefined) {
+        this.email = data['basics']['email'][0]
+        document.getElementById("updateSocial").setAttribute("style","display: show");
+      }
 
-      //   if(data['basics']['address'] != null || data['basics']['address'] != undefined){
-      //     let str = data['basics']['address'][0].split(',');
-      //     if(str[0] != null || str[0] != undefined){
-      //       this.address = str[0];
-      //       this.updateAddress = true;
-      //     }
-      //     if(str[1] != null || str[1] != undefined){
-      //       this.city = str[1];
-      //       this.updateAddress = true;
-      //     }
-      //     if(str[2] != null || str[2] != undefined){
-      //       this.state = str[2];
-      //       this.updateAddress = true;
-      //     }
-      //   }
+          if(data['basics']['address'] != null || data['basics']['address'] != undefined){
+            let str = data['basics']['address'][0].split(',');
+            if(str[0] != null || str[0] != undefined){
+              this.address = str[0];
+              document.getElementById("updateAddress").setAttribute("style","display: show");
+            }
+            if(str[1] != null || str[1] != undefined){
+              this.city = str[1];
+              document.getElementById("updateAddress").setAttribute("style","display: show");
+            }
+            if(str[2] != null || str[2] != undefined){
+              this.state = str[2];
+              document.getElementById("updateAddress").setAttribute("style","display: show");
+            }
+          }
       // }
 
       if(data['education_and_training'] != null || data['education_and_training'] != undefined){
-          //this.resumeVolunteer.loadComponent()
           for(let i = 0; i < data['education_and_training'].length; i++ ){
+            for(let j = 0; j < Object.keys(data['education_and_training'][i]).length; j ++){
+              
+            let edu_info = data['education_and_training'][i][Object.keys(data['education_and_training'][i])[j]].split(',');
+            let educations = new Array<ItemType>();
+            educations.push(
+              new ItemType(EducationMainComponent, {
+                title: edu_info[0],
+                description: edu_info[1],
+                startDate: "0000-00",
+                endDate: "0000-00",
+              })
+            );
+
+            this.edu.loadComponent(educations);
+            document.getElementById("education-button").setAttribute("style","display: show");
             
           }
+        }
+      } 
+
+      if(data['extracurricular'] != null || data['extracurricular'] != undefined){
+        for(let i = 0; i < data['extracurricular'].length; i++ ){
+          if(data['extracurricular'][i]["Volunteer Experience"] != null || data['extracurricular'][i]["Volunteer Experience"] != undefined ){
+            let vol_info = data['extracurricular'][i]["Volunteer Experience"].split(',');
+            let volunteers = new Array<ItemType>();
+            volunteers.push(
+              new ItemType(VolunteerMainComponent, {
+                title: vol_info[0],
+                description: vol_info[1],
+                startDate: "0000-00",
+                endDate: "0000-00",
+              })
+            );
+
+            this.vol.loadComponent(volunteers);
+            document.getElementById("volunteers-button").setAttribute("style","display: show");
+          }
+        }
       }
+
+      if(data['work_experience'] != null || data['work_experience'] != undefined){
+        for(let i = 0; i < data['work_experience'].length; i++ ){
+
+          var startDate = null;
+          var endDate = null;
+          var description = null;
+          var position = null;
+          var title = null;
+
+          if(data['work_experience'][i]["date_start"] != null || data['work_experience'][i]["date_start"] != undefined){
+            var dates = data['work_experience'][i]["date_start"].split(/[ ,]+/);
+            switch(dates[0].toUpperCase()){
+              case "JAN" || "JANUARY":
+                startDate = dates[1] + "-01" 
+              case "FEB" || "FEBRUARY":
+                startDate = dates[1] + "-02"
+              case "MAR" || "MARCH":
+                startDate = dates[1] + "-03" 
+              case "APR" || "APRIL":
+                startDate = dates[1] + "-04" 
+              case "MAY" || "MAY":
+                startDate = dates[1] + "-05" 
+              case "JUN" || "JUN":
+                startDate = dates[1] + "-06" 
+              case "JUL" || "JULY":
+                startDate = dates[1] + "-07" 
+              case "AUG" || "AUGUST":
+                startDate = dates[1] + "-08" 
+              case "SEP" || "SEPTEMBER":
+                startDate = dates[1] + "-09" 
+              case "OCT" || "OCTOBER":
+                startDate = dates[1] + "-10" 
+              case "NOV" || "NOVEMBER":
+                startDate = dates[1] + "-11" 
+              case "DEC" || "DECEMBER":
+                startDate = dates[1] + "-12" 
+
+            }
+          }
+
+          if(data['work_experience'][i]["date_end"] != null || data['work_experience'][i]["date_end"] != undefined){
+            var dates = data['work_experience'][i]["date_end"].split(/[ ,]+/);
+            switch(dates[0].toUpperCase()){
+              case "JAN" || "JANUARY":
+                endDate = dates[1] + "-01" 
+              case "FEB" || "FEBRUARY":
+                endDate = dates[1] + "-02"
+              case "MAR" || "MARCH":
+                endDate = dates[1] + "-03" 
+              case "APR" || "APRIL":
+                endDate = dates[1] + "-04" 
+              case "MAY" || "MAY":
+                endDate = dates[1] + "-05" 
+              case "JUN" || "JUN":
+                endDate = dates[1] + "-06" 
+              case "JUL" || "JULY":
+                endDate = dates[1] + "-07" 
+              case "AUG" || "AUGUST":
+                endDate = dates[1] + "-08" 
+              case "SEP" || "SEPTEMBER":
+                endDate = dates[1] + "-09" 
+              case "OCT" || "OCTOBER":
+                endDate = dates[1] + "-10" 
+              case "NOV" || "NOVEMBER":
+                endDate = dates[1] + "-11" 
+              case "DEC" || "DECEMBER":
+                endDate = dates[1] + "-12" 
+
+            }
+          }
+
+          if(data['work_experience'][i]["jobtitle"] != null || data['work_experience'][i]["jobtitle"] != undefined){
+            position = data['work_experience'][i]["jobtitle"];
+          }
+
+          if(data['work_experience'][i]["text"] != null || data['work_experience'][i]["text"] != undefined){
+            description = data['work_experience'][i]["text"];
+          }
+
+          if(data['work_experience'][i]["organization"] != null || data['work_experience'][i]["organization"] != undefined){
+            title = data['work_experience'][i]["organization"];
+          }
+
+          
+            let experiences = new Array<ItemType>();
+            experiences.push(
+              new ItemType(ExperienceMainComponent, {
+                type: "",
+                position: position,
+                title: title,
+                description: description,
+                startDate: startDate,
+                endDate: endDate,
+                verified: false,
+                verifyID: this.exp.guid(),
+                present: true,
+                skills: [],
+                fileName: null,
+                fileUrl: null
+              })
+            );
+
+            this.exp.loadComponent(experiences);
+            document.getElementById("experience-button").setAttribute("style","display: show");
+        }
+      }
+
+
     })
   }
 }

@@ -126,6 +126,7 @@ export class ResumeExperienceComponent implements OnInit {
     console.log(experiences.length)
     for(var i = 0; i < experiences.length; i++){
       let experienceItem = experiences[i];
+      console.log('exp item', experienceItem)
       let componentFactory = this.componentFactoryResolver.resolveComponentFactory(experienceItem.component);
 
       let viewContainerRef = this.achievementHost.viewContainerRef;

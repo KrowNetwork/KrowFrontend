@@ -174,7 +174,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-12" style="display:none; padding:0">
+      <div class="col-lg-12" id="updateSocial" style="display:none; padding:0">
         <a (click)="buttonPressed($event)" class="post-job-btn" style="float:right" ng-disabled="false">UPDATE</a>
       </div>
     </form>
@@ -182,17 +182,17 @@
 </div>
 <div class="social-edit"  id="sn" *ngIf="userType == 'applicant'">
   <h3>Education</h3>
-  <app-resume-education></app-resume-education>
+  <app-resume-education #edu></app-resume-education>
 </div>
 <div class="social-edit"  id="sn" *ngIf="userType == 'applicant'">
   <h3>Experience</h3>
-  <app-resume-experience></app-resume-experience>
+  <app-resume-experience #exp></app-resume-experience>
 </div>
 <div class="social-edit"  id="sn" *ngIf="userType == 'applicant'">
   <h3>Achievement</h3>
-  <app-resume-achievements></app-resume-achievements>
+  <app-resume-achievements #achieve></app-resume-achievements>
 </div>
 <div class="social-edit"  id="sn" *ngIf="userType == 'applicant'">
   <h3>Volunteer Experience</h3>
-  <app-resume-volunteers></app-resume-volunteers>
+  <app-resume-volunteers #vol></app-resume-volunteers>
 </div>
