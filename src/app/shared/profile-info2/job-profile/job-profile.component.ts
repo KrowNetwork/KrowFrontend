@@ -114,11 +114,7 @@ export class JobProfileComponent implements OnInit {
         // private viewRef: ViewContainerRef
   ) { 
 
-    if (sessionStorage.getItem("accountType") == "applicant") {
-      this.can_compare = true
-      this.get_comparison()
-      console.log("c")
-    }
+    
     //   this.userService.isAuthenticated(this);
     //   if (sessionStorage.getItem("canAcceptJob") == "true") {
     //     // console.log("yass")
@@ -658,8 +654,14 @@ export class JobProfileComponent implements OnInit {
       this.created2 = this.formatDate(new Date(data["postingPublishTime"]))
       // var c = new this.sd.Converter()
       // console.log(this.sd.makeHtml(this.description))
+      if (localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") !== undefined) {
+        this.can_compare = true
+        this.get_comparison(this.save_desc)
+        console.log(this.save_desc)
+      }
     })
     this.id = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
+    
     // console.log("Current job:")
     // console.log(this.jobID)
     // this.load(this.jobID)
@@ -1137,27 +1139,43 @@ openNewDialog() {
       }
     })
 }
-
-get_comparison() {
+comparisons = []
+get_comparison(desc) {
   this.http.get("http://18.220.46.51:3000/api/Applicant/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
     data => {
       console.log(data)
-      var comps = []
-      for (var i = 0; i < data["resume"]["experience"].length; i ++) {
+      // var comp = []
+      data["resume"]["experience"].forEach(element => {
+        var skills = element['skills'].toString().replace(/\s+/g, " ")
+        skills = skills.replace(" ,", ",")
+        // console.log(document.getElementById("desc").textContent)
         var payload = {
-          "data1": data["resume"]["experience"][i]["position"] + "\n" + data["resume"]["experience"][i]["description"],
-          "data2": "test"//this.save_desc
+          "data1": element["position"] + " " + element["description"] + " " + skills,
+          "data2": desc
         }
         console.log(payload)
+        var comp = element["position"]
+        console.log(comp)
+        // console.log(payload)
         this.http.post_("http://35.237.230.100:5000/predict", payload).subscribe(
           res => {
-            console.log(res)
-            comps.push([data["resume"]["experience"][i]["position"], res])
-            console.log(comps)
+            res = (Number(res.toString()) * 100).toString()
+
+            // console.log(res)
+            // comp.push(res)
+            console.log([res, comp])
+            // console.log(i)
+            this.comparisons.push([res, comp])
+
+            console.log(this.comparisons)
           }
         )
+        // comp = []
       }
-      console.log(comps)
+      );
+        
+        
+      // console.log(comps)
     }
   )
 }

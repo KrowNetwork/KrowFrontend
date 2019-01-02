@@ -51,7 +51,7 @@ var ddb = new AWS.DynamoDB({apiVersion: '2012-10-08'})
 function errorHandler(next, code, message) {
     var e = new Error(message)
     e.status = code
-    throw e
+    return e
 }
 
 
@@ -269,7 +269,7 @@ app.get("/get-job", (req, res, next) => {
     request.get(url, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
         if (err) {
             // // console.log(err)
-            errorHandler(next, 400, err)
+            res.send(400, errorHandler(next, 400, err))
             // res.status(400).send({status: 400, message: new Error(err)});
         } else {
             
