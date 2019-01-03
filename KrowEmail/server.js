@@ -121,7 +121,7 @@ app.use(function(req, res, next) {
         if (err) {
             // res.send(401, {error: "incorrect access token"})
             // res.CreateErrorResponse(401, "test")
-            throw new Error({"error": "incorrect access token"})
+            res.status(401).send({"error": "incorrect access token"})
         } else {
             res.send({"api": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"})
         }
@@ -379,7 +379,7 @@ app.get("/get-job", (req, res, next) => {
         var url = req.query.url
         var accessTokenFromClient = req.query.token;
         var data = req.body
-        console.log(data)
+        // console.log(data)
     
         cognitoExpress.validate(accessTokenFromClient, function(err, response) {
             if (err) {
