@@ -17,6 +17,7 @@ const fileUpload = require('express-fileupload');
 
 const {google} = require('googleapis');
 var privatekey = require("./privatekey.json");
+const multer = require('multer');
 console.log("k")
 
 if (process.platform != "win32")
@@ -35,6 +36,18 @@ var options = {
 };
 
 var port = 443
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, `../ResumeParser/ResumeTransducer/UnitTests/`)
+    },
+    filename: function (req, file, cb) {
+        //console.log(req.body)
+        cb(null, file.originalname)
+    }
+});
+
+const upload = multer({ storage: storage })
 
 const cognitoExpress = new cognito({
     region: "us-east-2",
@@ -71,54 +84,85 @@ app.use(function(req, res, next) {
   // parse application/json
   app.use(bodyParser.json())
 
-  app.use(fileUpload({limits: { fileSize: 5 * 1024 * 1024 } })); //limits to 5MB
+  //app.use(fileUpload({limits: { fileSize: 5 * 1024 * 1024 } })); //limits to 5MB
 
-  app.post('/resumeParse', async (req, res, next) => {
-    // if (Object.keys(req.files).length == 0) {
-    //     return res.status(400).send('No files were uploaded.');
-    // }
+  app.post('/resumeParse', upload.single('resumeFile'), async (req, res, next) => {
+    
+    console.log('file :', req.file)
+    let file = req.file;
+    try{
+        var d = new Date()
+        let name_without_extension = file.originalname.replace(/\.[^/.]+$/, "");
+        var dest_file = `../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension}.json`
+       
+        var output = await jre.spawnSync(  // call synchronously
+            ['../ResumeParser/ResumeTransducer/bin/*', '../ResumeParser/GATEFiles/lib/*', '../ResumeParser/GATEFILES/bin/gate.jar', '../ResumeParser/ResumeTransducer/lib/*'],
+            'code4goal.antony.resumeparser.ResumeParserProgram',  
+            [`../ResumeParser/ResumeTransducer/UnitTests/${file.originalname}`, dest_file],      
+            { encoding: 'utf8' }     // encode output as string
+            ).stdout;           // take output from stdout as trimmed String
+        
+        
+        
+        // await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, (err) =>{
+        //     console.log(err);
+        // });
+        // await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
+        //     console.log(err);
+        // });
+        await fs.readFile(dest_file, 'utf8', async function(err, contents) {
+            finalContent = contents
+            console.log(err)
+            res.send({Krow: JSON.parse(finalContent)})
+        });
+    } catch(error){
+        console.log(error)
+    }
+    // try {
 
-    let file = req.files.resumeFile;
+    
+    // // Use the mv() method to place the file somewhere on your server
+    // await file.mv(`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, async function(err) {
+    //     if (err){
+    //         console.log(err);
+    //     } else {
+    //         console.log('File uploaded!');
+    //     }
 
-    // Use the mv() method to place the file somewhere on your server
-    await file.mv(`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, async function(err) {
-        if (err){
-            console.log(err);
-        } else {
-            console.log('File uploaded!');
-        }
-
-        try{
-            var d = new Date()
-            var dest_file = `../ResumeParser/ResumeTransducer/UnitTests/${d.getHours() + "-" + d.getMinutes() + "-" + d.getSeconds() + "-" + d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear() + "-" + file.name}.json`
-            var output = await jre.spawnSync(  // call synchronously
-                ['../ResumeParser/ResumeTransducer/bin/*', '../ResumeParser/GATEFiles/lib/*', '../ResumeParser/GATEFILES/bin/gate.jar', '../ResumeParser/ResumeTransducer/lib/*'],
-                'code4goal.antony.resumeparser.ResumeParserProgram',  
-                [`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, dest_file],      
-                { encoding: 'utf8' }     // encode output as string
-              ).stdout;           // take output from stdout as trimmed String
+    //     try{
+    //         var d = new Date()
+    //         var dest_file = `../ResumeParser/ResumeTransducer/UnitTests/${file.name}.json`
+    //         var output = await jre.spawnSync(  // call synchronously
+    //             ['../ResumeParser/ResumeTransducer/bin/*', '../ResumeParser/GATEFiles/lib/*', '../ResumeParser/GATEFILES/bin/gate.jar', '../ResumeParser/ResumeTransducer/lib/*'],
+    //             'code4goal.antony.resumeparser.ResumeParserProgram',  
+    //             [`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, dest_file],      
+    //             { encoding: 'utf8' }     // encode output as string
+    //           ).stdout;           // take output from stdout as trimmed String
             
-            let name_without_extension = file.name.replace(/\.[^/.]+$/, "");
+    //         let name_without_extension = file.name.replace(/\.[^/.]+$/, "");
             
-            // await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, (err) =>{
-            //     console.log(err);
-            // });
-            // await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
-            //     console.log(err);
-            // });
-            await fs.readFile(dest_file, 'utf8', async function(err, contents) {
-                finalContent = contents
-                console.log(err)
-                res.send({Krow: JSON.parse(finalContent)})
-            });
-        } catch(error){
-            console.log(error)
-        }
+    //         // await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, (err) =>{
+    //         //     console.log(err);
+    //         // });
+    //         // await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
+    //         //     console.log(err);
+    //         // });
+    //         await fs.readFile(dest_file, 'utf8', async function(err, contents) {
+    //             finalContent = contents
+    //             console.log(err)
+    //             res.send({Krow: JSON.parse(finalContent)})
+    //         });
+    //     } catch(error){
+    //         console.log(error)
+    //     }
     
         
 
         
-    });
+    // });
+    // } catch (err){
+    //     console.log(err)
+    // }
 
   });
 
