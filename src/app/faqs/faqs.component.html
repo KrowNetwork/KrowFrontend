@@ -47,7 +47,7 @@
                 <div>
                   <span style="display: inline; margin:5px"><a (click)="anchorClick('general')" target="_self">General</a></span>
                   <span style="display: inline; margin:5px"><a (click)="anchorClick('applicant')" target="_self">Individual</a></span>
-                  <span style="display: inline; margin:5px"><a (click)="anchorClick('employer')" target="_self">Company</a></span>
+                  <span style="display: inline; margin:5px"><a (click)="anchorClick('comparisons')" target="_self">Comparisons</a></span>
                   <span style="display: inline; margin:5px"><a (click)="anchorClick('other')" target="_self">Other</a></span>
                 </div>
 								<!-- <h3><bold>F</bold>requently <bold>A</bold>sked <bold>Q</bold>uestions</h3> -->
@@ -86,7 +86,7 @@
 							<div class="faq-box">
 								<h2>Is this free?<i class="la la-minus"></i></h2>
 								<div class="contentbox">
-									<p>Using the Krow application is 100% free for both individuals and companies.</p>
+									<p>Using the Krow application is 100% free.</p>
 								</div>
 							</div>
 
@@ -117,13 +117,6 @@
                 </div>
 
                 <div class="faq-box">
-                  <h2>How can I verify an experience?<i class="la la-minus"></i></h2>
-                  <div class="contentbox">
-                    <p>Once you create a new experience, a button will appear next to it that allows you to get the experience verified. Experiences are verified via email, so ensure that you have the correct information about a previous employer/HR department. If you enter an email that does not represent the employer, you will be notified and may risk losing your ability to verify the experience.</p>
-                  </div>
-                </div>
-
-                <div class="faq-box">
                   <h2>How do I edit my resume? <i class="la la-minus"></i></h2>
                   <div class="contentbox">
                     <p>Click the edit button on your profile.</p>
@@ -137,65 +130,28 @@
                   </div>
                 </div>
 
+     
+
+                <div class="faq-box">
+                  <div id="comparisons"></div>
+                  <h3>Comparisons</h3>
                   <div class="faq-box">
-                      <h2>How do I get into contact with my previous employer? <i class="la la-minus"></i></h2>
-                      <div class="contentbox">
-                        <p>If they are a company attempt to search the web for an HR email or reference a co-worker that currently works at the company. We will verify that they are associated with the named company, and display the verification directly on your resume.</p>
-                      </div>
+                    <h2>What are the "comparisons"<i class="la la-minus"></i></h2>
+                    <div class="contentbox">
+                      <p>The comparisons are an artifical intelligence based system that scores how similar your experiences are to the job you are currently viewing. The model is updated every day, leading to more and more accurate results. However, if the comparison says 78%, for example, that does NOT mean you have a 78% chance of getting that job. That is just how similar that experience is to the job you are viewing.</p>
                     </div>
-
-
-                    <div class="faq-box">
-                        <div id="employer"></div>
-                        <h3>Company</h3>
-                        <h2>How do I create a company account? <i class="la la-minus"></i></h2>
-                        <div class="contentbox">
-                          <p>Sign up using either the button on the top menu or the button on the homepage. Once you've verified your email, you will be able to log in and choose the "Individual" option. From there, you will be prompted to create your account.</p>
-                        </div>
-                      </div>
-                      <div class="faq-box">
-
-                        <h2>How do I search for a person's resume?<i class="la la-minus"></i></h2>
-                        <div class="contentbox">
-                          <p>You can search for a person's name through the search bar on the homepage or on the top menu bar. You must have an account to access the search engine.</p>
-                        </div>
-                      </div>
-
-                      <div class="faq-box">
-                        <h2>How do I recieve a resume? <i class="la la-minus"></i></h2>
-                        <div class="contentbox">
-                          <p>If the individual is applying for your job in person, give them your email or phone number and they will be able to send you their resume in seconds. If the individual is found through the search engine, look for their email address or phone number and get into contact with them.</p>
-                        </div>
-                      </div>
-
-                      <div class="faq-box">
-                        <h2>Why should I use this service? <i class="la la-minus"></i></h2>
-                        <div class="contentbox">
-                          <p>The paper resume doesn't show enough about the person, and is prone to being filled with lies. We allow users to verify the experience so you don't have to worry about hiring the wrong person or getting an HR department. Resumes in the future will show off more attributes about the person and include a full portfolio for companies to view.</p>
-                        </div>
-                      </div>
-
-                      <div class="faq-box">
-                        <h2>How do I verify that an employee worked at my company? <i class="la la-minus"></i></h2>
-                        <div class="contentbox">
-                          <p>The employee must have a resume on the platform and they must create the experience on their resume. Now, they can click the "Verify Experience" button next the resume and enter your email. You will recieve an email where you click the link and enter any information about the job and verify whether or not it is real.</p>
-                        </div>
-                      </div>
-
-                      <div class="faq-box">
-                          <h2>How do I know a verification is real? <i class="la la-minus"></i></h2>
-                          <div class="contentbox">
-                            <p>You will be able to click on any experience that is verified and view information from our blockchain. This information includes time & date of verification, contact information of the verifier and more.</p>
-                          </div>
-                        </div>
-
-                          <div class="faq-box">
-                              <h2>Somebody is claiming my company but I didn't verify them.<i class="la la-minus"></i></h2>
-                              <div class="contentbox">
-                                <p>On their resume you will have the ability to report their account. You may also file a ticket for support or email us at help@krow.network.</p>
-                              </div>
-                            </div>
-
+                  </div>
+  
+                  <div class="faq-box">
+                    <h2>How do I improve my score?<i class="la la-minus"></i></h2>
+                    <div class="contentbox">
+                      <p>Please be as detailed as possible in your experiences, but be truthful. If the score is low, that may mean you are not ready for that job. You can go take classes and learn more about that particular topic, add a new experience, and that score could be very similar. Remember, employers look at your resume holsitically. You can have your different experiences spread across all of your resume.</p>
+                    </div>
+                  </div>
+  
+                
+  
+              </div>
 
                 <div class="faq-box">
                     <div id="other"></div>
@@ -222,6 +178,8 @@
                 </div>
                 </div>
               </div>
+
+              
 
 
 

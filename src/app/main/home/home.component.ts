@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
                 sessionStorage.setItem("accountType", "applicant")
                 this.router.navigate(['/applicant']); 
             })
-            this.initializeApplicant()
+            // this.initializeApplicant()
             
 
     }
