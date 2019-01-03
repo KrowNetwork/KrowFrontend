@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreateUserService } from '../../service/create-user.service';
+import { EditComponent } from '../edit/edit.component';
 
 @Component({
     selector: 'basic-info-collector',
@@ -8,11 +9,13 @@ import { CreateUserService } from '../../service/create-user.service';
     // template: '<p>test</p>',
 })
 export class BasicInfoCollectorComponent implements OnInit {
+    
+    @ViewChild(EditComponent) edit: EditComponent 
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private initializeUser: CreateUserService
+        private initializeUser: CreateUserService,
     ) { }
 
     user: string;
@@ -29,7 +32,7 @@ export class BasicInfoCollectorComponent implements OnInit {
     errorMessage = null;
     collectInfoOn = true;
     uploadImageOn = false;
-  
+
     ngOnInit() {
         this.route
             .queryParams
@@ -44,11 +47,12 @@ export class BasicInfoCollectorComponent implements OnInit {
     }
 
     submitInfo(){
+        console.log('edit', this.edit);
         if(!this.user || !this.intent){
             this.errorMessage = "Something went wrong, please go back.";
             return;
         }
-        if(!this.first || !this.second || !this.email){
+        if(!this.edit.first || !this.edit.second || !this.edit.email){
             this.errorMessage = "First Name, Last Name and Email are required";
             return;
         }
@@ -57,28 +61,28 @@ export class BasicInfoCollectorComponent implements OnInit {
             if (this.intent == "Applicant") {
                 var obj = {
                     user: this.user,
-                    first: this.first,
-                    second: this.second,
-                    email: this.email,
-                    bio: this.bio,
-                    address: this.address,
-                    state: this.state,
-                    city: this.city,
-                    country: this.country,
-                    phoneNumber: this.phoneNumber
+                    first: this.edit.first,
+                    second: this.edit.second,
+                    email: this.edit.email,
+                    bio: this.edit.bio,
+                    address: this.edit.address,
+                    state: this.edit.state,
+                    city: this.edit.city,
+                    country: this.edit.country,
+                    phoneNumber: this.edit.phoneNumber
                 }
             } else {
                 var obj = {
                     user: this.user,
-                    first: this.first,
-                    second: this.second,
-                    email: this.email,
+                    first: this.edit.first,
+                    second: this.edit.second,
+                    email: this.edit.email,
                     bio: "",
-                    address: this.address,
-                    state: this.state,
-                    city: this.city,
-                    country: this.country,
-                    phoneNumber: this.phoneNumber
+                    address: this.edit.address,
+                    state: this.edit.state,
+                    city: this.edit.city,
+                    country: this.edit.country,
+                    phoneNumber: this.edit.phoneNumber
                 }
             }
             

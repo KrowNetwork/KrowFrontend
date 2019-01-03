@@ -49,6 +49,8 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
 
   education = [];
   experience = [];
+  achievement =[];
+  volunteer = [];
   cityState: string;
 
   in_progress_jobs = [];
@@ -67,13 +69,15 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
   location=""
 
   fontHeight = 0;
-  logo = '../../../../assets/images/krow-logo.png'
+  default_profile_pic = '../../../../assets/images/default_profile_pic.png'
+  logo = '../../../../assets/images/krow-logo-new.png'
 
   @ViewChild('content') content: ElementRef;
   
 
   constructor(
     public http: CustomHttpService,
+    public http2: HttpClient,
     private userService: UserLoginService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -106,10 +110,14 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
     this.urlTWITTER = false
     this.urlFACEBOOK = false
     this.urlLINKEDIN = false
-
     this.imgURL = "https://krow-network-profile-pics.s3.us-east-2.amazonaws.com/pics/" + this.id +".png"
     console.log(this.imgURL)
-
+    this.http2.get(this.imgURL).subscribe(pic =>
+    {}, (error) => {
+        if(error.status == 404){
+          this.imgURL = this.default_profile_pic
+        }
+    });
     // this.http.get("https://s3.us-east-2.amazonaws.com/krow-network-profile-pics/pics/352fa0c7-5921-4782-b476-43e97f9295d1.png").subscribe(
     //   data => {
     //     this.img = data;
@@ -247,6 +255,47 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
             this.experience.push(element)
           }
         }
+
+        if (data["resume"]["volunteers"].length == 0 || data["resume"]["volunteers"] === undefined) {
+          this.volunteer = []
+
+        } else {
+          this.volunteer = []
+          for (var i = 0; i < data["resume"]["volunteers"].length; i ++) {
+            var element = data["resume"]["volunteers"][i]
+            var d = new Date(element["startDate"])
+            element["startDate"] = this.monthNames[d.getMonth() + 1] + " " + d.getFullYear().toString()
+            
+            //((element["startDate"].getMonth() + 1).toString())  + '/' +  element["startDate"].getFullYear().toString()
+            
+            d = new Date(element["endDate"])
+            element["endDate"] = this.monthNames[d.getMonth() + 1] + " " + d.getFullYear().toString()
+            this.volunteer.push(element)
+            console.log(element)
+          }
+
+        }
+
+        if (data["resume"]["achievements"].length == 0 || data["resume"]["achievements"] === undefined) {
+          this.achievement = []
+
+        } else {
+          this.achievement = []
+          for (var i = 0; i < data["resume"]["achievements"].length; i ++) {
+            var element = data["resume"]["achievements"][i]
+            var d = new Date(element["startDate"])
+            element["startDate"] = this.monthNames[d.getMonth() + 1] + " " + d.getFullYear().toString()
+            
+            //((element["startDate"].getMonth() + 1).toString())  + '/' +  element["startDate"].getFullYear().toString()
+            
+            d = new Date(element["endDate"])
+            element["endDate"] = this.monthNames[d.getMonth() + 1] + " " + d.getFullYear().toString()
+            this.achievement.push(element)
+            console.log(element)
+          }
+
+        }
+
           // JOBS
 
           // in progress
@@ -420,62 +469,107 @@ downloadPDF(){
 
   doc.setFontType('normal');
   doc.setFontSize(12);
-  doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.bio, null, null, 'left');
-  doc.text(25, this.addHeight(this.fontHeight, this.bio.split("\n").length*5, doc), '\n', null, null, 'left');
+  var splitBio = doc.splitTextToSize(this.bio, 170)
+  doc.text(25, this.addHeight(this.fontHeight, 5, doc), splitBio, null, null, 'left');
+  doc.text(25, this.addHeight(this.fontHeight, (splitBio.length)*5, doc), '\n', null, null, 'left');
+  if(this.education.length != 0){
+    doc.setFontType('bold');
+    doc.setFontSize(14);
+    doc.text(20, this.addHeight(this.fontHeight, 0, doc), 'Education', null, null, 'left');
 
-  doc.setFontType('bold');
-  doc.setFontSize(14);
-  doc.text(20, this.addHeight(this.fontHeight, 0, doc), 'Education', null, null, 'left');
-
-  doc.setFontType('normal');
-  doc.setFontSize(12);
-  for(var i = 0; i < this.education.length; i++){
-    doc.setFontType('bolditalic');
-    doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.education[i].title , null, null, 'left');
     doc.setFontType('normal');
-    
-    doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.education[i].description , null, null, 'left');
-    doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.education[i].startDate + ' to ' + this.education[i].endDate, null, null, 'left');
-    doc.text(25, this.addHeight(this.fontHeight, 2, doc), '\n', null, null, 'left');
-  }
- 
-  doc.setFontType('bold');
-  doc.setFontSize(14);
-  doc.text(20, this.addHeight(this.fontHeight, 5, doc), 'Experience', null, null, 'left');
-
-  doc.setFontType('normal');
-  doc.setFontSize(12);
-
-  var splitDescription = null;
-  for(var i = 0; i < this.experience.length; i++){
-    doc.setFontType('bolditalic');
-    doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.experience[i].title , null, null, 'left');
-    doc.setFontType('normal');
-    doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.experience[i].startDate + ' to ' + this.experience[i].endDate, null, null, 'left');
-    splitDescription = doc.splitTextToSize(this.experience[i].description, 170);
-    doc.text(25, this.addHeight(this.fontHeight, 5, doc), splitDescription , null, null, 'left');
-    var splitSkills = null;
-    if(this.experience[i].skills != ''){
-
-      var s = this.experience[i].skills.replace(/\s+/g, " ")
-      s = s.replace(" ,", ",")
-      console.log(s)
-      // doc.text(25, this.addHeight(this.fontHeight, 5, doc), 'Skills: ' + s , null, null, 'left');
-
-      splitSkills = doc.splitTextToSize("Skills:" + s, 170);
-      if(splitDescription === null){
-        doc.text(25, this.addHeight(this.fontHeight, 5, doc), splitSkills , null, null, 'left');
-      } else {
-        doc.text(25, this.addHeight(this.fontHeight, (splitDescription.length)*5, doc), splitSkills , null, null, 'left');
-      }
+    doc.setFontSize(12);
+    for(var i = 0; i < this.education.length; i++){
+      doc.setFontType('bolditalic');
+      doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.education[i].title , null, null, 'left');
+      doc.setFontType('normal');
       
-    }
-    if(splitSkills === null){
+      doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.education[i].description , null, null, 'left');
+      doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.education[i].startDate + ' to ' + this.education[i].endDate, null, null, 'left');
       doc.text(25, this.addHeight(this.fontHeight, 2, doc), '\n', null, null, 'left');
-    } else {
-      doc.text(25, this.addHeight(this.fontHeight, (splitSkills.length-1)*5+2, doc), '\n', null, null, 'left');
+    }
+
+  }
+  
+  if(this.experience.length != 0){
+    doc.setFontType('bold');
+    doc.setFontSize(14);
+    doc.text(20, this.addHeight(this.fontHeight, 5, doc), 'Experience', null, null, 'left');
+
+    doc.setFontType('normal');
+    doc.setFontSize(12);
+
+    var splitDescription = null;
+    for(var i = 0; i < this.experience.length; i++){
+      doc.setFontType('bolditalic');
+      doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.experience[i].title , null, null, 'left');
+      doc.setFontType('normal');
+      doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.experience[i].startDate + ' to ' + this.experience[i].endDate, null, null, 'left');
+      splitDescription = doc.splitTextToSize(this.experience[i].description, 170);
+      doc.text(25, this.addHeight(this.fontHeight, 5, doc), splitDescription , null, null, 'left');
+      var splitSkills = null;
+      if(this.experience[i].skills != ''){
+
+        var s = this.experience[i].skills.replace(/\s+/g, " ")
+        s = s.replace(" ,", ",")
+        console.log(s)
+        // doc.text(25, this.addHeight(this.fontHeight, 5, doc), 'Skills: ' + s , null, null, 'left');
+
+        splitSkills = doc.splitTextToSize("Skills:" + s, 170);
+        if(splitDescription === null){
+          doc.text(25, this.addHeight(this.fontHeight, 5, doc), splitSkills , null, null, 'left');
+        } else {
+          doc.text(25, this.addHeight(this.fontHeight, (splitDescription.length)*5, doc), splitSkills , null, null, 'left');
+        }
+        
+      }
+      if(splitSkills === null){
+        doc.text(25, this.addHeight(this.fontHeight, 2, doc), '\n', null, null, 'left');
+      } else {
+        doc.text(25, this.addHeight(this.fontHeight, (splitSkills.length-1)*5+2, doc), '\n', null, null, 'left');
+      }
     }
   }
+  
+
+  if(this.volunteer.length != 0){
+    doc.setFontType('bold');
+    doc.setFontSize(14);
+    doc.text(20, this.addHeight(this.fontHeight, 5, doc), 'Volunteer Experience', null, null, 'left');
+
+    doc.setFontType('normal');
+    doc.setFontSize(12);
+    for(var i = 0; i < this.volunteer.length; i++){
+      doc.setFontType('bolditalic');
+      doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.volunteer[i].title , null, null, 'left');
+      doc.setFontType('normal');
+      
+      doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.volunteer[i].description , null, null, 'left');
+      doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.volunteer[i].startDate + ' to ' + this.volunteer[i].endDate, null, null, 'left');
+      doc.text(25, this.addHeight(this.fontHeight, 2, doc), '\n', null, null, 'left');
+    }
+
+  }
+
+  if(this.achievement.length != 0){
+    doc.setFontType('bold');
+    doc.setFontSize(14);
+    doc.text(20, this.addHeight(this.fontHeight, 5, doc), 'Achievements', null, null, 'left');
+
+    doc.setFontType('normal');
+    doc.setFontSize(12);
+    for(var i = 0; i < this.achievement.length; i++){
+      doc.setFontType('bolditalic');
+      doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.achievement[i].title , null, null, 'left');
+      doc.setFontType('normal');
+      
+      doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.achievement[i].description , null, null, 'left');
+      doc.text(25, this.addHeight(this.fontHeight, 5, doc), this.achievement[i].startDate + ' to ' + this.achievement[i].endDate, null, null, 'left');
+      doc.text(25, this.addHeight(this.fontHeight, 2, doc), '\n', null, null, 'left');
+    }
+
+  }
+
   doc.save('resume.pdf');
 }
 

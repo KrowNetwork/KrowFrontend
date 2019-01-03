@@ -231,7 +231,7 @@ export class EditComponent implements OnInit {
     // Test Id, get from login in the future
     var hidden = document.getElementById("test-ID");
     var profileType = hidden.attributes["value"].value;
-    if (sessionStorage.getItem("accountType") == "employer" || this.isSignup  == 'false') {
+    if (sessionStorage.getItem("accountType") == "employer") {
 
 
       // Set Company/Name 
@@ -300,7 +300,7 @@ export class EditComponent implements OnInit {
         }
       );
     }
-    else if (sessionStorage.getItem("accountType") == "applicant" || this.isSignup  == 'true') {
+    else if (sessionStorage.getItem("accountType") == "applicant") {
 
       if (this.user == this.id || this.id === undefined) {
         // if (sessionStorage.getItem("view") !== undefined && sessionStorage.getItem("view") == "potApplicant") {

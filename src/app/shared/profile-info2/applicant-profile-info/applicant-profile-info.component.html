@@ -87,7 +87,55 @@
 															<!-- <h3 style="margin-left:25px; margin-top:0px">Add experience by editing your profile!</h3> -->
 													</div>
 											</div>
-				 						</div>
+										 </div>
+										 
+										 <div class="edu-history-sec" id="volunteer">
+												<h2>Volunteering</h2>
+												<div *ngIf="volunteer.length != 0">
+												<div class="edu-history style2" *ngFor="let vol of volunteer; let i = index">
+												   <!-- <i></i> -->
+												   <i class="la la-check-circle"  [ngClass]="{ 'verified': vol.verified == true}" style="font-size: 16px;  padding: 0px;"></i>
+													<div class="edu-hisinfo" style="display: inline-block;">
+															<h3>{{ vol.title }}</h3>
+															<i>{{ vol.description }}</i>
+															<i>{{ vol.startDate }} to {{ vol.endDate }}</i>
+													</div>
+													<div style="display: inline-block; float:right">
+														   <button *ngIf="vol.verified" (click)="showJob(vol.link)">View</button>
+													</div>
+													<!-- <button *ngIf="exp.verified != true && owner == true" (click)="reqVerify(exp.verifyID, exp.position, exp.title)" style="font-size:15px; right: -25%; position: absolute">Verify Experience</button> -->
+												</div>
+											   </div>
+												<div *ngIf="volunteer.length == 0">
+													   <div class="edu-hisinfo">
+															   <!-- <h3 style="margin-left:25px; margin-top:0px">Add experience by editing your profile!</h3> -->
+													   </div>
+											   </div>
+											</div>
+
+											<div class="edu-history-sec" id="achievement">
+												<h2>Achievements</h2>
+												<div *ngIf="achievement.length != 0">
+												<div class="edu-history style2" *ngFor="let acc of achievement; let i = index">
+												   <!-- <i></i> -->
+												   <i class="la la-check-circle"  [ngClass]="{ 'verified': acc.verified == true}" style="font-size: 16px;  padding: 0px;"></i>
+													<div class="edu-hisinfo" style="display: inline-block;">
+															<h3>{{ acc.title }}</h3>
+															<i>{{ acc.description }}</i>
+															<i>{{ acc.startDate }} to {{ acc.endDate }}</i>
+													</div>
+													<div style="display: inline-block; float:right">
+														   <button *ngIf="acc.verified" (click)="showJob(acc.link)">View</button>
+													</div>
+													<!-- <button *ngIf="exp.verified != true && owner == true" (click)="reqVerify(exp.verifyID, exp.position, exp.title)" style="font-size:15px; right: -25%; position: absolute">Verify Experience</button> -->
+												</div>
+											   </div>
+												<div *ngIf="achievement.length == 0">
+													   <div class="edu-hisinfo">
+															   <!-- <h3 style="margin-left:25px; margin-top:0px">Add experience by editing your profile!</h3> -->
+													   </div>
+											   </div>
+											</div>
 				 						
 				 						
 				 					</div>

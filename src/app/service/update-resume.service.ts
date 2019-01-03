@@ -39,39 +39,44 @@ export class UpdateResumeService {
                 currJson.push({type:"$class", value:itemClass});
                 for(var k = 0; k < componentInputs.length; k++){
                     var input = componentInputs[k].children[1].children[0];
-                    
-                    if(k === componentInputs.length-1 && input.value == ""){
-                        var value = null;
-                    } else if(k === componentInputs.length-1){
-                        console.log('here',componentInputs[k].children[1])
-                        if(input.getAttribute("secret") == "fileName"){
-                            var value = input.value.split(/(\\|\/)/g).pop();
-                            currJson.push({
-                                type: "fileUrl",
-                                value: "https://s3.us-east-2.amazonaws.com/krow-network-experience-files/files/" + i + "-" + this.user + "-" + value
-                            });
-                        } else {
-                            console.log('checked?', componentInputs[k].children[1].children[0].children[1].getAttribute("ng-reflect-model"))
-                            if(componentInputs[k].children[1].children[0].children[1].getAttribute("ng-reflect-model") == "true"){
-                                //if true -- delete file from aws
-                                this.deleteFile(componentInputs[k].children[1].children[0].children[0].getAttribute("href")) 
+                    console.log('input',input)
+                    if(componentInputs.length == 4){
+                        var value = input.value;
+                    } else {
+                        if(k === componentInputs.length-1 && input.value == ""){
+                            var value = null;
+                        } else if(k === componentInputs.length-1){
+                            console.log('here',componentInputs[k].children[1])
+                            if(input.getAttribute("secret") == "fileName"){
+                                var value = input.value.split(/(\\|\/)/g).pop();
                                 currJson.push({
                                     type: "fileUrl",
-                                    value: null
+                                    value: "https://s3.us-east-2.amazonaws.com/krow-network-experience-files/files/" + i + "-" + this.user + "-" + value
                                 });
-
-                                currJson.push({
-                                    type: "fileName",
-                                    value: null
-                                });
-                                console.log('deleting file...')
-                            } 
-                            continue;
+                            } else {
+                                console.log('checked?', componentInputs[k].children[1].children[0].children[1].getAttribute("ng-reflect-model"))
+                                if(componentInputs[k].children[1].children[0].children[1].getAttribute("ng-reflect-model") == "true"){
+                                    //if true -- delete file from aws
+                                    this.deleteFile(componentInputs[k].children[1].children[0].children[0].getAttribute("href")) 
+                                    currJson.push({
+                                        type: "fileUrl",
+                                        value: null
+                                    });
+    
+                                    currJson.push({
+                                        type: "fileName",
+                                        value: null
+                                    });
+                                    console.log('deleting file...')
+                                } 
+                                continue;
+                            }
+                            
+                        } else {
+                            var value = input.value;
                         }
-                        
-                    } else {
-                        var value = input.value;
                     }
+                   
 
                     if(value == ""){
                         input.setAttribute("style", "background-color: #ff4757; -webkit-text-fill-color: #fff");
