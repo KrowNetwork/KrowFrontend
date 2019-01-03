@@ -49,7 +49,7 @@ export class BasicInfoCollectorComponent implements OnInit {
             return;
         }
         if(!this.first || !this.second || !this.email){
-            this.errorMessage = "All fields are required";
+            this.errorMessage = "First Name, Last Name and Email are required";
             return;
         }
         else{
