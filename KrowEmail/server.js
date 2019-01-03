@@ -91,6 +91,7 @@ app.use(function(req, res, next) {
         try{
             var d = new Date()
             var dest_file = `../ResumeParser/ResumeTransducer/UnitTests/${d.getHours() + "-" + d.getMinutes() + "-" + d.getSeconds() + "-" + d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear() + "-" + file.name}.json`
+            console.log(dest_file)
             fs.appendFile(dest_file, 'Hello content!', function (err) {
                 if (err) throw err;
                 console.log('Saved!');
