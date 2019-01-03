@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <!-- <div class="account-popup-area signin-popup-box static"> -->
-                        <div  *ngIf="intent=='Applicant' && collectInfoOn">	
+                        <div  *ngIf='collectInfoOn'>	
                             <h1 style="color: #fb236a">Welcome to the Krow Network Applicant Experience!</h1>	
                             <h3>We just need some basic info to get you started:</h3>
                             <div *ngIf="errorMessage!=null" class="alert alert-danger" style="color: #fb236a">
@@ -64,58 +64,7 @@
                             </form>	
                         </div>
 
-                        <div class="account-popup" *ngIf="intent=='Employer' && collectInfoOn">	
-                            <h1 style="color: #fb236a">Welcome to the Krow Network Employer Experience!</h1>	
-                            <h3>We just need some basic info to get you started:</h3>
-                            <div *ngIf="errorMessage!=null" class="alert alert-danger" style="color: #fb236a">
-                                {{ errorMessage }}
-                            </div>	
-                            <form class="form-signin" method="POST" action="#" role="form">
-                                <div class="cfield">
-                                    <input id="bieFirst" required type="text" placeholder="Company Name" class="form-control" 
-                                        [(ngModel)]="first" [ngModelOptions]="{standalone: true}">
-                                    <i class="la la-user"></i>
-                                </div>
-                                <div class="cfield">                                
-                                    <input id="bieSecond" required type="text" placeholder="Company Description" class="form-control"
-                                        [(ngModel)]="second" [ngModelOptions]="{standalone: true}">
-                                    <i class="la la-user"></i>
-                                </div>
-                                <div class="cfield">                                
-                                    <input id="biaPhone" required type="tel" placeholder="(000)-000-0000" class="form-control"
-                                        [(ngModel)]="phoneNumber" [ngModelOptions]="{standalone: true}">
-                                    <i class="la la-phone"></i>
-                                </div>
-                                <div class="cfield">                                
-                                    <input id="biaEmail" required type="email" placeholder="Professional Email" class="form-control"
-                                        [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
-                                    <i class="la la-envelope"></i>
-                                </div>
-                                <div class="cfield">                                
-                                    <input id="biaAddr" required type="text" placeholder="Address" class="form-control"
-                                        [(ngModel)]="address" [ngModelOptions]="{standalone: true}">
-                                    <i class="la la-map-marker"></i>
-                                </div>
-                                <div class="cfield">                                
-                                    <input id="biaCity" required type="text" placeholder="City" class="form-control"
-                                        [(ngModel)]="city" [ngModelOptions]="{standalone: true}">
-                                    <i class="la la-map-marker"></i>
-                                </div>
-                                <div class="cfield">                                
-                                    <input id="biaState" required type="text" placeholder="State" class="form-control"
-                                        [(ngModel)]="state" [ngModelOptions]="{standalone: true}">
-                                    <i class="la la-map-marker"></i>
-                                </div>
-                                <div class="cfield">                                
-                                    <input id="biaCountry" required type="text" placeholder="Country" class="form-control"
-                                        [(ngModel)]="country" [ngModelOptions]="{standalone: true}">
-                                    <i class="la la-globe"></i>
-                                </div>
-                                <button (click)="submitInfo()">
-                                    Next
-                                </button>
-                            </form>	
-                        </div>
+                        
 
                         <div class="account-popup" *ngIf="uploadImageOn">	
                             <h1 style="color: #fb236a">Welcome to the Krow Network Employer Experience!</h1>	
