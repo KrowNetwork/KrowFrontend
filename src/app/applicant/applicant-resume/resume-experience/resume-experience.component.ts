@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit, Input, Output, ViewChild, EventEmitter, ComponentFactoryResolver } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
@@ -18,6 +18,8 @@ import { CustomHttpService } from '../../../service/custom-http.service';
 })
 export class ResumeExperienceComponent implements OnInit {
   // check=false;
+  @Input() isSignup: string = 'false';
+  @Output() sendDataToParent = new EventEmitter<string>();
   @ViewChild(ExperienceDirective) achievementHost: ExperienceDirective;
 
   constructor(
@@ -41,6 +43,7 @@ export class ResumeExperienceComponent implements OnInit {
       .substring(1);
   }
   async updateResume(event){
+    console.log('exp',event);
     var x = document.getElementsByClassName("tags")
     var y = document.getElementsByClassName("cbp")
     var z = []
@@ -70,7 +73,7 @@ export class ResumeExperienceComponent implements OnInit {
     // console.log(el.closest("app-resume-experience"))
   }
   // console.log(z)
-  this.updateResumeService.updateMain(event.target.closest("app-resume-experience"), skills_arr, z);
+    return this.updateResumeService.updateMain(event.target.closest("app-resume-experience"), skills_arr, z);
   }
 
   updateFiles(fileUploads){
@@ -123,10 +126,10 @@ export class ResumeExperienceComponent implements OnInit {
         })
       );
     }
-    console.log(experiences.length)
+    //console.log(experiences.length)
     for(var i = 0; i < experiences.length; i++){
       let experienceItem = experiences[i];
-      console.log('exp item', experienceItem)
+      //console.log('exp item', experienceItem)
       let componentFactory = this.componentFactoryResolver.resolveComponentFactory(experienceItem.component);
 
       let viewContainerRef = this.achievementHost.viewContainerRef;
@@ -144,66 +147,70 @@ export class ResumeExperienceComponent implements OnInit {
   }
   
   ngOnInit() {
+    console.log('isSignup', this.isSignup)
     if (sessionStorage.getItem("accountType") == "employer") {
 			var user = this.router.url.split("/")[3]
 		} else {
 			var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
-		}
-    this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
-      data => {
-        var resumeExperiences = data["resume"]["experience"];
-        console.log(resumeExperiences)
-        var experiences = new Array<ItemType>();
-        for(var k = 0; k < resumeExperiences.length; k++){
-          var x = {
-            type: resumeExperiences[k]["type"],
-            position: resumeExperiences[k]["position"],
-            title: resumeExperiences[k]["title"],
-            description: resumeExperiences[k]["description"],
-            startDate: resumeExperiences[k]["startDate"].split('T')[0].slice(0, -3),
-            endDate: resumeExperiences[k]["endDate"],
-            verified: resumeExperiences[k]['verified'],
-            verifyID: resumeExperiences[k]['verifyID'],
-            present: resumeExperiences[k]["present"],
-            skills: resumeExperiences[k]["skills"],
-            fileName: resumeExperiences[k]["fileName"],
-            fileUrl: resumeExperiences[k]["fileUrl"]
+    }
+    
+    if(this.isSignup != 'true'){
+      this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
+        data => {
+          var resumeExperiences = data["resume"]["experience"];
+          console.log(resumeExperiences)
+          var experiences = new Array<ItemType>();
+          for(var k = 0; k < resumeExperiences.length; k++){
+            var x = {
+              type: resumeExperiences[k]["type"],
+              position: resumeExperiences[k]["position"],
+              title: resumeExperiences[k]["title"],
+              description: resumeExperiences[k]["description"],
+              startDate: resumeExperiences[k]["startDate"].split('T')[0].slice(0, -3),
+              endDate: resumeExperiences[k]["endDate"],
+              verified: resumeExperiences[k]['verified'],
+              verifyID: resumeExperiences[k]['verifyID'],
+              present: resumeExperiences[k]["present"],
+              skills: resumeExperiences[k]["skills"],
+              fileName: resumeExperiences[k]["fileName"],
+              fileUrl: resumeExperiences[k]["fileUrl"]
+            }
+            // this.skills = resumeExperiences[k]['skills']
+            // this.skills.forEach(element => {
+            //     // this.createNew(element)
+            // });
+            if (x.endDate !== undefined) {
+              x.endDate = x.endDate.split('T')[0].slice(0, -3)
+            }
+            // if (x.present == true) {
+            //   x.present = "on"
+            // } else {
+            //   // console.log("peepee")
+            //   x.present = "off"
+            // }
+            var y  = new ItemType(ExperienceMainComponent, x)
+            
+            experiences.push(
+              y
+            );
           }
-          // this.skills = resumeExperiences[k]['skills']
-          // this.skills.forEach(element => {
-          //     // this.createNew(element)
-          // });
-          if (x.endDate !== undefined) {
-            x.endDate = x.endDate.split('T')[0].slice(0, -3)
+          if(experiences.length == 0){
+            //this.loadComponent("empty");
           }
-          // if (x.present == true) {
-          //   x.present = "on"
-          // } else {
-          //   // console.log("peepee")
-          //   x.present = "off"
-          // }
-          var y  = new ItemType(ExperienceMainComponent, x)
-          
-          experiences.push(
-            y
-          );
+          else{
+            this.loadComponent(experiences);
+          }
+        }, // Catch Errors
+        (err: HttpErrorResponse) => {
+          // this.loadComponent("empty");
+          if (err.error instanceof Error) {
+            // console.log("Client-side error occured.");
+          } else {
+            // console.log("Server-side error occured.");
+          }
         }
-        if(experiences.length == 0){
-          this.loadComponent("empty");
-        }
-        else{
-          this.loadComponent(experiences);
-        }
-      }, // Catch Errors
-      (err: HttpErrorResponse) => {
-        // this.loadComponent("empty");
-        if (err.error instanceof Error) {
-          // console.log("Client-side error occured.");
-        } else {
-          // console.log("Server-side error occured.");
-        }
-      }
-    );
+      );
+    }
   }
 
 }

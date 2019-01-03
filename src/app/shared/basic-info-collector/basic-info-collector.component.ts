@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreateUserService } from '../../service/create-user.service';
 import { EditComponent } from '../edit/edit.component';
+import { ResumeExperienceComponent } from '../../applicant/applicant-resume/resume-experience/resume-experience.component'
 
 @Component({
     selector: 'basic-info-collector',
@@ -11,6 +12,9 @@ import { EditComponent } from '../edit/edit.component';
 export class BasicInfoCollectorComponent implements OnInit {
     
     @ViewChild(EditComponent) edit: EditComponent 
+    @ViewChild('volunteersButton') vol: ElementRef;
+    @ViewChild('experienceButton') exp: ElementRef;
+    @ViewChild('educationButton') edu: ElementRef;
 
     constructor(
         private route: ActivatedRoute,
@@ -46,8 +50,11 @@ export class BasicInfoCollectorComponent implements OnInit {
         
     }
 
-    submitInfo(){
+    async submitInfo(){
         console.log('edit', this.edit);
+        var updateButton = document.getElementById("submitButton");
+        updateButton.style.pointerEvents = 'none';
+        updateButton.innerText = "Updating...";
         if(!this.user || !this.intent){
             this.errorMessage = "Something went wrong, please go back.";
             return;
@@ -87,8 +94,35 @@ export class BasicInfoCollectorComponent implements OnInit {
             }
             
             //this.initializeUser.initializeUser(obj, this.intent, this.activate, this.router);
-            this.initializeUser.initializeUser(obj, this.intent, null, this.router);
-            this.next();
+            await this.initializeUser.initializeUser(obj, this.intent, null, this.router);
+            //console.log(this.edit)
+            var x = this;
+            await setTimeout(async function(){ 
+                await document.getElementById("experience-button").click();
+                // await document.getElementById("education-button").click();
+                // await document.getElementById("volunteers-button").click();
+                // await document.getElementById("achievement-button").click();
+                
+             }, 7000);
+
+             await setTimeout(async function(){ 
+                await document.getElementById("education-button").click();
+             }, 10000);
+
+             await setTimeout(async function(){ 
+                await document.getElementById("volunteers-button").click()
+                await document.getElementById("achievement-button").click();
+                
+                x.next();
+             }, 14000);
+
+            
+             
+            // this.edit.edu.updateResume(document.getElementById("education-button"))
+            // this.edit.achieve.updateResume(document.getElementById("achievement-button"))
+            // this.edit.exp.updateResume(document.getElementById("experience-button"))
+            // this.edit.vol.updateResume(document.getElementById("volunteer-button"))
+            
         }
     }
 

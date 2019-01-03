@@ -16,6 +16,7 @@ import { InterfaceComponent } from '../../shared/interface-component.component';
 import { VolunteerMainComponent } from '../../applicant/applicant-resume/resume-volunteer/volunteer-main.component';
 import { ExperienceMainComponent } from '../../applicant/applicant-resume/resume-experience/experience-main.component';
 import { v } from '@angular/core/src/render3';
+import { ConstantPool } from '@angular/compiler/src/constant_pool';
 var aws = require('aws-sdk');
 
 @Component({
@@ -25,7 +26,6 @@ var aws = require('aws-sdk');
   providers: [ ResumeVolunteerComponent, ResumeExperienceComponent, ResumeEducationComponent ]
 })
 export class EditComponent implements OnInit {
-  @Input() isSignup: string = 'false';
   @ViewChild(ResumeEducationComponent) edu: ResumeEducationComponent;
   @ViewChild(ResumeVolunteerComponent) vol: ResumeVolunteerComponent;
   @ViewChild(ResumeAchievementsComponent) achieve: ResumeAchievementsComponent;
@@ -45,7 +45,7 @@ export class EditComponent implements OnInit {
 
   }
   
-  
+  isSignup: string = 'false';
   user: string;
   first: string;
   second: string;
@@ -53,7 +53,7 @@ export class EditComponent implements OnInit {
   address: string;
   city: string;
   state: string;
-  country: string;
+  country: string = 'Undefined';
   phoneNumber: string;
   email: string;
   urlFACEBOOK: string;
@@ -208,10 +208,18 @@ export class EditComponent implements OnInit {
   }
 
   changeHandler(event) {
-    event.target.closest("form").children[1].style = "display:show";
+    if(this.isSignup != 'true'){
+      event.target.closest("form").children[1].style = "display:show";
+    }
   }
 
   ngOnInit() {
+    if(window.location.pathname == "/basicInfo"){
+      this.isSignup = 'true';
+    } else {
+      this.isSignup = 'false';
+    }
+    console.log('isSignup', this.isSignup)
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     this.id = this.router.url.split("/")[3]
     if (this.id === undefined) {
@@ -229,8 +237,8 @@ export class EditComponent implements OnInit {
     // // console.log(this.id)
     // // console.log("x")
     // Test Id, get from login in the future
-    var hidden = document.getElementById("test-ID");
-    var profileType = hidden.attributes["value"].value;
+    // var hidden = document.getElementById("test-ID");
+    // var profileType = hidden.attributes["value"].value;
     if (sessionStorage.getItem("accountType") == "employer") {
 
 
@@ -300,7 +308,7 @@ export class EditComponent implements OnInit {
         }
       );
     }
-    else if (sessionStorage.getItem("accountType") == "applicant") {
+    else if (sessionStorage.getItem("accountType") == "applicant" || this.isSignup == 'true') {
 
       if (this.user == this.id || this.id === undefined) {
         // if (sessionStorage.getItem("view") !== undefined && sessionStorage.getItem("view") == "potApplicant") {
@@ -330,13 +338,15 @@ export class EditComponent implements OnInit {
 
       var url = "http://18.220.46.51:3000/api/Applicant/" + this.id;
 
+
+      
       // Get Data
       this.http.get(url).subscribe(
         data => {
           // Display data fetched from API
           this.first = data["firstName"];
           this.second = data["lastName"];
-          this.bio = data["resume"]["biography"]
+          
           // console.log(this.bio)
           this.address = data["address"];
           this.city = data["city"];
@@ -346,6 +356,12 @@ export class EditComponent implements OnInit {
           this.email = data["email"];
           this.inProgressJobs = data["InprogressJobs"]
 
+          if(this.isSignup == 'true'){
+            this.bio = ''
+          } else{
+            this.bio = data["resume"]["biography"]
+          }
+
           if (this.inProgressJobs === undefined || this.inProgressJobs.length == 0) {
             this.canDelete = true
           }
@@ -353,21 +369,24 @@ export class EditComponent implements OnInit {
           // console.log(this.canDelete)
 
           // Split url links
-          for (var i = 0; i < data["links"].length; i++) {
-            var curr = data["links"][i];
-            if (curr["type"] == "FACEBOOK") {
-              this.urlFACEBOOK = curr["url"];
-            }
-            else if (curr["type"] == "TWITTER") {
-              this.urlTWITTER = curr["url"];
-            }
-            else if (curr["type"] == "LINKEDIN") {
-              this.urlLINKEDIN = curr["url"];
-            }
-            else if (curr["type"] == "WEBSITE") {
-              this.urlWEBSITE = curr["url"];
+          if(this.isSignup == 'false'){
+            for (var i = 0; i < data["links"].length; i++) {
+              var curr = data["links"][i];
+              if (curr["type"] == "FACEBOOK") {
+                this.urlFACEBOOK = curr["url"];
+              }
+              else if (curr["type"] == "TWITTER") {
+                this.urlTWITTER = curr["url"];
+              }
+              else if (curr["type"] == "LINKEDIN") {
+                this.urlLINKEDIN = curr["url"];
+              }
+              else if (curr["type"] == "WEBSITE") {
+                this.urlWEBSITE = curr["url"];
+              }
             }
           }
+          
         }, // Catch Errors
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -514,49 +533,81 @@ export class EditComponent implements OnInit {
     const formData: FormData = new FormData();
     formData.append('resumeFile', file[0]);
 
-    this.http2.post('http://localhost:3000/resumeParse', formData).subscribe(data => {
+    this.http2.post('https://api.krownetwork.com/resumeParse', formData).subscribe(data => {
       console.log('parsed resume', data)
       console.log(document.getElementById("updateName"));
       data = data['Krow']
       if (data['basics']['name'] != null || data['basics']['name'] != undefined){
           if(data['basics']['name']['firstName'] != null || data['basics']['name']['firstName'] != undefined){
             this.first = data['basics']['name']['firstName']
-            document.getElementById("updateName").setAttribute("style","display: show");
+            if(this.isSignup != 'true'){
+              document.getElementById("updateName").setAttribute("style","display: show");
+            }
+          } else {
+            this.first = 'Undfined'
           }
 
           if(data['basics']['name']['surname'] != null || data['basics']['name']['surname'] != undefined){
             this.second = data['basics']['name']['surname']
-            document.getElementById("updateName").setAttribute("style","display: show");
+            if(this.isSignup != 'true'){
+              document.getElementById("updateName").setAttribute("style","display: show");
+            }
+          } else {
+            this.second = 'Undfined'
           }
       }
       if (data['summary'] !== null || data['summary'] !== undefined) {
         this.bio = data['summary'][0][Object.keys(data['summary'][0])[0]].trim();
-        document.getElementById("updateBio").setAttribute("style","display: show");
+        if(this.isSignup != 'true'){
+          document.getElementById("updateBio").setAttribute("style","display: show");
+        }
+      } else {
+        this.bio = 'Undfined'
       }
 
       if (data['phone'] !== null || data['phone'] !== undefined) {
         this.phoneNumber = data['basics']['phone'][0]
-        document.getElementById("updateSocial").setAttribute("style","display: show");
+        if(this.isSignup != 'true'){
+          document.getElementById("updateSocial").setAttribute("style","display: show");
+        }
+      } else {
+        this.phoneNumber = '000-000-0000'
       }
 
       if (data['email'] !== null || data['email'] !== undefined) {
         this.email = data['basics']['email'][0]
-        document.getElementById("updateSocial").setAttribute("style","display: show");
+        if(this.isSignup != 'true'){
+          document.getElementById("updateSocial").setAttribute("style","display: show");
+        }
+      } else {
+        this.email = 'Undfined'
       }
 
           if(data['basics']['address'] != null || data['basics']['address'] != undefined){
             let str = data['basics']['address'][0].split(',');
             if(str[0] != null || str[0] != undefined){
               this.address = str[0];
-              document.getElementById("updateAddress").setAttribute("style","display: show");
+              if(this.isSignup != 'true'){
+                document.getElementById("updateAddress").setAttribute("style","display: show");
+              }
+            } else {
+              this.address = 'Undfined'
             }
             if(str[1] != null || str[1] != undefined){
               this.city = str[1];
-              document.getElementById("updateAddress").setAttribute("style","display: show");
+              if(this.isSignup != 'true'){
+                document.getElementById("updateAddress").setAttribute("style","display: show");
+              }
+            } else {
+              this.city = 'Undfined'
             }
             if(str[2] != null || str[2] != undefined){
               this.state = str[2];
-              document.getElementById("updateAddress").setAttribute("style","display: show");
+              if(this.isSignup != 'true'){
+                document.getElementById("updateAddress").setAttribute("style","display: show");
+              }
+            } else {
+              this.state = 'Undfined'
             }
           }
       // }
@@ -569,15 +620,17 @@ export class EditComponent implements OnInit {
             let educations = new Array<ItemType>();
             educations.push(
               new ItemType(EducationMainComponent, {
-                title: edu_info[0],
-                description: edu_info[1],
-                startDate: "0000-00",
-                endDate: "0000-00",
+                title: edu_info[0] || "Undefined",
+                description: edu_info[1] || "Undefined",
+                startDate: "2018-12",
+                endDate: "2018-12",
               })
             );
 
             this.edu.loadComponent(educations);
-            document.getElementById("education-button").setAttribute("style","display: show");
+            if(this.isSignup != 'true'){
+              document.getElementById("education-button").setAttribute("style","display: show");
+            }
             
           }
         }
@@ -590,15 +643,17 @@ export class EditComponent implements OnInit {
             let volunteers = new Array<ItemType>();
             volunteers.push(
               new ItemType(VolunteerMainComponent, {
-                title: vol_info[0],
-                description: vol_info[1],
-                startDate: "0000-00",
-                endDate: "0000-00",
+                title: vol_info[0] || "Undefined",
+                description: vol_info[1] || "Undefined",
+                startDate: "2018-12",
+                endDate: "2018-12",
               })
             );
 
             this.vol.loadComponent(volunteers);
-            document.getElementById("volunteers-button").setAttribute("style","display: show");
+            if(this.isSignup != 'true'){
+              document.getElementById("volunteers-button").setAttribute("style","display: show");
+            }
           }
         }
       }
@@ -639,7 +694,8 @@ export class EditComponent implements OnInit {
                 startDate = dates[1] + "-11" 
               case "DEC" || "DECEMBER":
                 startDate = dates[1] + "-12" 
-
+              default:
+                startDate ="2018-12"
             }
           }
 
@@ -670,6 +726,8 @@ export class EditComponent implements OnInit {
                 endDate = dates[1] + "-11" 
               case "DEC" || "DECEMBER":
                 endDate = dates[1] + "-12" 
+              default: 
+                endDate ="2018-12"
 
             }
           }
@@ -691,11 +749,11 @@ export class EditComponent implements OnInit {
             experiences.push(
               new ItemType(ExperienceMainComponent, {
                 type: "",
-                position: position,
-                title: title,
-                description: description,
-                startDate: startDate,
-                endDate: endDate,
+                position: position || "Undefined",
+                title: title || "Undefined",
+                description: description || "Undefined",
+                startDate: startDate || "2018-12",
+                endDate: endDate || "2018-12",
                 verified: false,
                 verifyID: this.exp.guid(),
                 present: true,
@@ -706,7 +764,9 @@ export class EditComponent implements OnInit {
             );
 
             this.exp.loadComponent(experiences);
-            document.getElementById("experience-button").setAttribute("style","display: show");
+            if(this.isSignup != 'true'){
+              document.getElementById("experience-button").setAttribute("style","display: show");
+            }
         }
       }
 

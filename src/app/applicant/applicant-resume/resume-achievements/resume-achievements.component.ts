@@ -19,7 +19,7 @@ import { CustomHttpService } from '../../../service/custom-http.service';
 })
 
 export class ResumeAchievementsComponent implements OnInit {
-
+	@Input() isSignup: string = 'false';rs
 	@ViewChild(AchievementDirective) achievementHost: AchievementDirective;
 
 	constructor(
@@ -31,7 +31,8 @@ export class ResumeAchievementsComponent implements OnInit {
 	) {}
 
 	updateResume(event){
-		this.updateResumeService.updateMain(event.target.closest("app-resume-achievements"));
+		console.log('ach',event);
+		return this.updateResumeService.updateMain(event.target.closest("app-resume-achievements"));
 	}
   
   loadComponent(achievements) {
@@ -60,42 +61,44 @@ export class ResumeAchievementsComponent implements OnInit {
 	}
 	
 	ngOnInit() {
+		console.log('isSignup', this.isSignup)
 		if (sessionStorage.getItem("accountType") == "employer") {
 			var user = this.router.url.split("/")[3]
 		} else {
 			var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
 		}
-		
-		this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
-			data => {
-				var resumeAchievements = data["resume"]["achievements"];
-				var achievements = new Array<ItemType>();
-				for(var k = 0; k < resumeAchievements.length; k++){
-					achievements.push(
-						new ItemType(AchievementsMainComponent, {
-							title: resumeAchievements[k]["title"],
-							description: resumeAchievements[k]["description"],
-							startDate: new Date(resumeAchievements[k]["startDate"]).toString().slice(0, 15),
-							endDate: new Date(resumeAchievements[k]["endDate"]).toString().slice(0, 15),
-						})
-					);
-				}
-				if(achievements.length == 0){
+		if(this.isSignup != 'true'){
+			this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
+				data => {
+					var resumeAchievements = data["resume"]["achievements"];
+					var achievements = new Array<ItemType>();
+					for(var k = 0; k < resumeAchievements.length; k++){
+						achievements.push(
+							new ItemType(AchievementsMainComponent, {
+								title: resumeAchievements[k]["title"],
+								description: resumeAchievements[k]["description"],
+								startDate: new Date(resumeAchievements[k]["startDate"]).toString().slice(0, 15),
+								endDate: new Date(resumeAchievements[k]["endDate"]).toString().slice(0, 15),
+							})
+						);
+					}
+					if(achievements.length == 0){
+						//this.loadComponent("empty");
+					}
+					else{
+						this.loadComponent(achievements);
+					}
+				}, // Catch Errors
+				(err: HttpErrorResponse) => {
 					this.loadComponent("empty");
+					if (err.error instanceof Error) {
+						// console.log("Client-side error occured.");
+					} else {
+						// console.log("Server-side error occured.");
+					}
 				}
-				else{
-					this.loadComponent(achievements);
-				}
-			}, // Catch Errors
-			(err: HttpErrorResponse) => {
-				this.loadComponent("empty");
-				if (err.error instanceof Error) {
-					// console.log("Client-side error occured.");
-				} else {
-					// console.log("Server-side error occured.");
-				}
-			}
-		);
+			);
+		}
 	}
 
 }

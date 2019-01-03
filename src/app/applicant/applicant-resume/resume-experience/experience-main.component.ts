@@ -8,7 +8,7 @@ import { S3Service } from "../../../service/s3.service"
 })
 export class ExperienceMainComponent implements InterfaceComponent {
   @Input() data: any;
-
+  @Input() isSignup: string = 'false';
   deletedElements = new Array();
   isChecked = false;
 
@@ -36,7 +36,9 @@ export class ExperienceMainComponent implements InterfaceComponent {
     // console.log(event.target)
     // console.log(event.target.closest("app-resume-experience"))
     // event.target.closest("app-resume-experience").children[0].children[1].children[1].style = "display:show";
-    event.target.closest("app-resume-experience").children[0].children[1].children[1].setAttribute("style","display:show");
+    if(this.isSignup != 'true'){
+      event.target.closest(".resumeContainer").children[1].children[1].style = "display:show";
+    };
     // console.log(event)
   }
 

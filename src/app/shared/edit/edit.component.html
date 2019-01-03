@@ -4,11 +4,11 @@
       <h3 id="app-responsive-component-profile"></h3>
 
     <div class = "container">
-        <button style="margin-left: 10px" *ngIf="profileType == 'Applicant'" (click)="showDelete()">Delete Account</button>
-        <button style="margin-left: 10px" *ngIf="profileType != 'Applicant'" (click)="showDelete()">Delete Account</button>
+        <button style="margin-left: 10px" *ngIf="profileType == 'Applicant' && isSignup == 'false'" (click)="showDelete()">Delete Account</button>
+        <button style="margin-left: 10px" *ngIf="profileType != 'Applicant' && isSignup == 'false'" (click)="showDelete()">Delete Account</button>
     
-        <button *ngIf="profileType == 'Applicant'" [routerLink]="['/applicant/upload']">Upload Profile Picture</button>
-        <button *ngIf="profileType != 'Applicant'" [routerLink]="['/employer/upload']">Upload Profile Picture</button>
+        <button *ngIf="profileType == 'Applicant' && isSignup == 'false'" [routerLink]="['/applicant/upload']">Upload Profile Picture</button>
+        <button *ngIf="profileType != 'Applicant' && isSignup == 'false'" [routerLink]="['/employer/upload']">Upload Profile Picture</button>
 
         <input hidden type="file" class="upload-and-parse" name="resumeFile" #uploader (change)="uploadAndParseResume($event)"/>
         <button *ngIf="profileType == 'Applicant'" (click)="uploader.click()">Upload Resume</button>
@@ -182,17 +182,17 @@
 </div>
 <div class="social-edit"  id="sn" *ngIf="userType == 'applicant'">
   <h3>Education</h3>
-  <app-resume-education #edu></app-resume-education>
+  <app-resume-education #edu [isSignup]="isSignup"></app-resume-education>
 </div>
 <div class="social-edit"  id="sn" *ngIf="userType == 'applicant'">
   <h3>Experience</h3>
-  <app-resume-experience #exp></app-resume-experience>
+  <app-resume-experience #exp [isSignup]="isSignup"></app-resume-experience>
 </div>
 <div class="social-edit"  id="sn" *ngIf="userType == 'applicant'">
   <h3>Achievement</h3>
-  <app-resume-achievements #achieve></app-resume-achievements>
+  <app-resume-achievements #achieve [isSignup]="isSignup"></app-resume-achievements>
 </div>
 <div class="social-edit"  id="sn" *ngIf="userType == 'applicant'">
   <h3>Volunteer Experience</h3>
-  <app-resume-volunteers #vol></app-resume-volunteers>
+  <app-resume-volunteers #vol [isSignup]="isSignup"></app-resume-volunteers>
 </div>

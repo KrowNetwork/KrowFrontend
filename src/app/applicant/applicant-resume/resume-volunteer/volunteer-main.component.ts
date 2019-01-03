@@ -7,7 +7,7 @@ import { InterfaceComponent } from '../../../shared/interface-component.componen
 })
 export class VolunteerMainComponent implements InterfaceComponent {
   @Input() data: any;
-
+  @Input() isSignup: string = 'false';
   deletedElements = new Array();
 
   deleteItem(event){
@@ -30,6 +30,8 @@ export class VolunteerMainComponent implements InterfaceComponent {
   }
 
   changeHandler(event){
-    event.target.closest(".resumeContainer").children[1].children[1].style = "display:show";
+    if(this.isSignup != 'true'){
+      event.target.closest(".resumeContainer").children[1].children[1].style = "display:show";
+    }
   }
 }

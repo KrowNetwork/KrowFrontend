@@ -18,7 +18,7 @@ import { CustomHttpService } from '../../../service/custom-http.service';
   styleUrls: ['../resume-elements.component.css']
 })
 export class ResumeEducationComponent implements OnInit {
-
+  @Input() isSignup: string = 'false';
   @ViewChild(EducationDirective) educationHost: EducationDirective;
 
   constructor(
@@ -30,8 +30,9 @@ export class ResumeEducationComponent implements OnInit {
   ) {}
 
   updateResume(event){
+    console.log('edu',event);
     // console.log(event.target.closest("app-resume-education"))
-    this.updateResumeService.updateMain(event.target.closest("app-resume-education"));
+    return this.updateResumeService.updateMain(event.target.closest("app-resume-education"));
   }
   
   loadComponent(educations) {
@@ -76,45 +77,50 @@ export class ResumeEducationComponent implements OnInit {
     return  [year, month, day].join("-")
   }
   ngOnInit() {
+    console.log('isSignup', this.isSignup)
     if (sessionStorage.getItem("accountType") == "employer") {
 			var user = this.router.url.split("/")[3]
 		} else {
 			var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
-		}
-    this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
-      data => {
-        
-        var resumeEducations = data["resume"]["education"];
-        var educations = new Array<ItemType>();
-        for(var k = 0; k < resumeEducations.length; k++){
-          var sd =  resumeEducations[k]["startDate"].split('T')[0].slice(0, -3);
-          var ed =  resumeEducations[k]["endDate"].split('T')[0].slice(0, -3);
-          console.log(sd, ed)
-          educations.push(
-            new ItemType(EducationMainComponent, {
-              title: resumeEducations[k]["title"],
-              description: resumeEducations[k]["description"],
-              startDate: sd,
-              endDate: ed
-            })
-          );
-        }
-        if(educations.length == 0){
+    }
+    
+    if(this.isSignup != 'true'){
+      this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
+        data => {
+          
+          var resumeEducations = data["resume"]["education"];
+          var educations = new Array<ItemType>();
+          for(var k = 0; k < resumeEducations.length; k++){
+            var sd =  resumeEducations[k]["startDate"].split('T')[0].slice(0, -3);
+            var ed =  resumeEducations[k]["endDate"].split('T')[0].slice(0, -3);
+            console.log(sd, ed)
+            educations.push(
+              new ItemType(EducationMainComponent, {
+                title: resumeEducations[k]["title"],
+                description: resumeEducations[k]["description"],
+                startDate: sd,
+                endDate: ed
+              })
+            );
+          }
+          if(educations.length == 0){
+            //this.loadComponent("empty");
+          }
+          else{
+            this.loadComponent(educations);
+          }
+        }, // Catch Errors
+        (err: HttpErrorResponse) => {
           this.loadComponent("empty");
+          if (err.error instanceof Error) {
+            // console.log("Client-side error occured.");
+          } else {
+            // console.log("Server-side error occured.");
+          }
         }
-        else{
-          this.loadComponent(educations);
-        }
-      }, // Catch Errors
-      (err: HttpErrorResponse) => {
-        this.loadComponent("empty");
-        if (err.error instanceof Error) {
-          // console.log("Client-side error occured.");
-        } else {
-          // console.log("Server-side error occured.");
-        }
-      }
-    );
+      );
+    }
+    
   }
 
 }

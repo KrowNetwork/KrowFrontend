@@ -57,8 +57,8 @@
                                         [(ngModel)]="bio" [ngModelOptions]="{standalone: true}"></textarea>
                                     <i class="la la-biography"></i>
                                 </div> -->
-                                <app-edit [isSignup]="isSignup" (sendCount)="getData($event)"></app-edit>
-                                <button (click)="submitInfo()">
+                                <app-edit (sendCount)="getData($event)"></app-edit>
+                                <button id="submitButton" (click)="submitInfo()">
                                     Next
                                 </button>
                             </form>	

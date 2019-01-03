@@ -18,7 +18,7 @@ import { CustomHttpService } from '../../../service/custom-http.service';
   styleUrls: ['../resume-elements.component.css']
 })
 export class ResumeVolunteerComponent implements OnInit {
-
+  @Input() isSignup: string = 'false';
   @ViewChild(VolunteerDirective) volunteerHost: VolunteerDirective;
 
   constructor(
@@ -31,7 +31,8 @@ export class ResumeVolunteerComponent implements OnInit {
 
   updateResume(event){
     // console.log(event.target.closest("app-resume-education"))
-    this.updateResumeService.updateMain(event.target.closest("app-resume-volunteers"));
+    console.log('vol',event);
+    return this.updateResumeService.updateMain(event.target.closest("app-resume-volunteers"));
   }
   
   loadComponent(volunteers) {
@@ -76,45 +77,48 @@ export class ResumeVolunteerComponent implements OnInit {
     return  [year, month, day].join("-")
   }
   ngOnInit() {
+    console.log('isSignup', this.isSignup)
     if (sessionStorage.getItem("accountType") == "employer") {
 			var user = this.router.url.split("/")[3]
 		} else {
 			var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
-		}
-    this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
-      data => {
-        
-        var resumeVolunteer = data["resume"]["volunteers"];
-        var volunteers = new Array<ItemType>();
-        for(var k = 0; k < resumeVolunteer.length; k++){
-          var sd =  resumeVolunteer[k]["startDate"].split('T')[0].slice(0, -3);
-          var ed =  resumeVolunteer[k]["endDate"].split('T')[0].slice(0, -3);
-          console.log(sd, ed)
-          volunteers.push(
-            new ItemType(VolunteerMainComponent, {
-              title: resumeVolunteer[k]["title"],
-              description: resumeVolunteer[k]["description"],
-              startDate: sd,
-              endDate: ed
-            })
-          );
-        }
-        if(volunteers.length == 0){
+    }
+    if(this.isSignup != 'true'){
+      this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
+        data => {
+          
+          var resumeVolunteer = data["resume"]["volunteers"];
+          var volunteers = new Array<ItemType>();
+          for(var k = 0; k < resumeVolunteer.length; k++){
+            var sd =  resumeVolunteer[k]["startDate"].split('T')[0].slice(0, -3);
+            var ed =  resumeVolunteer[k]["endDate"].split('T')[0].slice(0, -3);
+            console.log(sd, ed)
+            volunteers.push(
+              new ItemType(VolunteerMainComponent, {
+                title: resumeVolunteer[k]["title"],
+                description: resumeVolunteer[k]["description"],
+                startDate: sd,
+                endDate: ed
+              })
+            );
+          }
+          if(volunteers.length == 0){
+            //this.loadComponent("empty");
+          }
+          else{
+            this.loadComponent(volunteers);
+          }
+        }, // Catch Errors
+        (err: HttpErrorResponse) => {
           this.loadComponent("empty");
+          if (err.error instanceof Error) {
+            // console.log("Client-side error occured.");
+          } else {
+            // console.log("Server-side error occured.");
+          }
         }
-        else{
-          this.loadComponent(volunteers);
-        }
-      }, // Catch Errors
-      (err: HttpErrorResponse) => {
-        this.loadComponent("empty");
-        if (err.error instanceof Error) {
-          // console.log("Client-side error occured.");
-        } else {
-          // console.log("Server-side error occured.");
-        }
-      }
-    );
+      );
+    }
   }
 
 }

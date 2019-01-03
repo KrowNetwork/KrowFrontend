@@ -22,6 +22,7 @@ export class UpdateResumeService {
     async updateMain(dom, skills_arr=undefined, z=undefined){
         var currAttribute = dom.localName.slice(11);
         var componentsList = dom.children[0].children[0].children;
+        console.log('update main called')
         console.log(componentsList)
         var updateButton = dom.children[0].children[1].children[1];
         var json = {data: []};
@@ -39,7 +40,7 @@ export class UpdateResumeService {
                 currJson.push({type:"$class", value:itemClass});
                 for(var k = 0; k < componentInputs.length; k++){
                     var input = componentInputs[k].children[1].children[0];
-                    console.log('input',input)
+                    //console.log('input',input)
                     if(componentInputs.length == 4){
                         var value = input.value;
                     } else {
@@ -96,7 +97,7 @@ export class UpdateResumeService {
                             
                             value = skills_arr[0]
                             skills_arr.shift()
-                            console.log("v", value)
+                            //console.log("v", value)
                             currJson.push({
                                 type: "verified",
                                 value: false
@@ -107,7 +108,7 @@ export class UpdateResumeService {
                             })
                         }
                         // console.log(currType, value)
-                        console.log(z)
+                        //console.log(z)
                         if (currType == "present") {
                             value = z[0]
                             z.shift()
@@ -143,7 +144,7 @@ export class UpdateResumeService {
             }
             if(i == componentsList.length - 1){
                 console.log('json',json)
-                this.updateData(updateButton, json, currAttribute);
+                return this.updateData(updateButton, json, currAttribute);
             }
         }
         for(var j = 0; j < componentsList.length; j++){
@@ -191,7 +192,12 @@ export class UpdateResumeService {
 
         this.http.get(url).subscribe(
             data => {
+                console.log('this data', data)
                 // console.log(data['resume'])
+                if(data == null || data == undefined){
+                    data = new ArrayBuffer(16);
+                    data["resume"] = {}
+                }
 
                 if(attribute == "skills"){
                     data["resume"][attribute] = [];
@@ -227,6 +233,7 @@ export class UpdateResumeService {
                         }
                     } 
                     console.log(newData)
+                    console.log(data)
                     data["resume"][attribute] = [];
                     newData.forEach(element => {
                         console.log(element)
@@ -243,7 +250,7 @@ export class UpdateResumeService {
                 data["resume"]["lastUpdated"] = timestamp;
                 console.log(data)
                 // if (data['resume']['experiences'])
-                this.postData(data, url, updateButton);
+                return this.postData(data, url, updateButton);
 
             }, // Catch Errors
             (err: HttpErrorResponse) => {
@@ -268,6 +275,7 @@ export class UpdateResumeService {
                 updateButton.setAttribute("style", "display: none");
                 updateButton.innerText = "UPDATE";
                 updateButton.style.pointerEvents = 'auto';
+                return 'done'
             }, // Catch Errors
             (err: HttpErrorResponse) => {
                 alert("Could not post data!");
