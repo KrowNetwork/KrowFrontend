@@ -534,6 +534,7 @@ export class EditComponent implements OnInit {
     formData.append('resumeFile', file[0]);
 
     this.http2.post('https://api.krownetwork.com/resumeParse', formData).subscribe(data => {
+     // this.http2.post('http://localhost:3000/resumeParse', formData).subscribe(data => {
       console.log('parsed resume', data)
       console.log(document.getElementById("updateName"));
       data = data['Krow']
@@ -556,7 +557,7 @@ export class EditComponent implements OnInit {
             this.second = 'Undfined'
           }
       }
-      if (data['summary'] !== null || data['summary'] !== undefined) {
+      if (data['summary'] != null || data['summary'] != undefined) {
         this.bio = data['summary'][0][Object.keys(data['summary'][0])[0]].trim();
         if(this.isSignup != 'true'){
           document.getElementById("updateBio").setAttribute("style","display: show");
@@ -565,7 +566,7 @@ export class EditComponent implements OnInit {
         this.bio = 'Undfined'
       }
 
-      if (data['phone'] !== null || data['phone'] !== undefined) {
+      if (data['phone'] != null || data['phone'] != undefined) {
         this.phoneNumber = data['basics']['phone'][0]
         if(this.isSignup != 'true'){
           document.getElementById("updateSocial").setAttribute("style","display: show");
@@ -574,7 +575,7 @@ export class EditComponent implements OnInit {
         this.phoneNumber = '000-000-0000'
       }
 
-      if (data['email'] !== null || data['email'] !== undefined) {
+      if (data['email'] != null || data['email'] != undefined) {
         this.email = data['basics']['email'][0]
         if(this.isSignup != 'true'){
           document.getElementById("updateSocial").setAttribute("style","display: show");
