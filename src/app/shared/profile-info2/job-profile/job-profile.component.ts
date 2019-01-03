@@ -1159,17 +1159,19 @@ get_comparison(desc) {
         // console.log(payload)
         this.http.post_("http://35.237.230.100:5000/predict", payload).subscribe(
           res => {
-            res = (Number(res.toString()) * 100).toString()
-
+            res = Number(res.toString()) * 100
+            
             // console.log(res)
             // comp.push(res)
-            console.log([res, comp])
+            var str = "Title: " + comp + " | Score: " + res.toString().substring(0, 5) + "%"
+            // console.log([res, comp])
             // console.log(i)
-            this.comparisons.push([res, comp])
-
-            console.log(this.comparisons)
+            this.comparisons.push([str, res])
+            // this.comparisons = this.order_by_2(this.comparisons)
+            // console.log(this.comparisons)
           }
         )
+        // console.log(this.comparisons)
         // comp = []
       }
       );
@@ -1180,5 +1182,16 @@ get_comparison(desc) {
   )
 }
 
+order_by_2(arr){
+  arr = arr.sort(function(a,b) {
+    return a[1] - b[1];
+  });
+  return arr
+}
 
+scroll(id) {
+  console.log(`scrolling to ${id}`);
+  let el = document.getElementById(id);
+  el.scrollIntoView();
+}
 }
