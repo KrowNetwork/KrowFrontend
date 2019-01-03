@@ -39,7 +39,7 @@ var port = 443
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, `ubuntu@52.15.219.10:/KrowFrontend/ResumeParser/ResumeTransducer/UnitTests/`)
+        cb(null, `~/KrowFrontend/ResumeParser/ResumeTransducer/UnitTests/`)
         //cb(null, `../ResumeParser/ResumeTransducer/UnitTests/`)
     },
     filename: function (req, file, cb) {
