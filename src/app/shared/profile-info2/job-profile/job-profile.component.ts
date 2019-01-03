@@ -1139,8 +1139,10 @@ openNewDialog() {
       }
     })
 }
-comparisons = []
+comparisons = [[]]
+total_resume_score = 0
 get_comparison(desc) {
+
   this.http.get("http://18.220.46.51:3000/api/Applicant/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
     data => {
       console.log(data)
@@ -1160,13 +1162,14 @@ get_comparison(desc) {
         this.http.post_("http://35.237.230.100:5000/predict", payload).subscribe(
           res => {
             res = Number(res.toString()) * 100
-            
+            this.total_resume_score += Number(res)
             // console.log(res)
             // comp.push(res)
             var str = "Title: " + comp + " | Score: " + res.toString().substring(0, 5) + "%"
             // console.log([res, comp])
             // console.log(i)
             this.comparisons.push([str, res])
+            
             // this.comparisons = this.order_by_2(this.comparisons)
             // console.log(this.comparisons)
           }
