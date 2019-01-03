@@ -129,7 +129,8 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
       data => {
         if (data["error"] !== undefined) {
           // sessionStorage.setItem("accountType", "employer")
-          this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
+          // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
+          this.router.navigate(['/'])
         }
         console.log(data)
         this.first = data["firstName"]
