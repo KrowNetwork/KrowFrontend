@@ -11,7 +11,7 @@
                                 {{ errorMessage }}
                             </div>	
                             <form class="form-signin" method="POST" action="#" role="form">
-                                <div class="cfield">
+                                <!-- <div class="cfield">
                                     <input id="biaFirst" required type="text" placeholder="First Name" class="form-control" 
                                         [(ngModel)]="first" [ngModelOptions]="{standalone: true}">
                                     <i class="la la-user"></i>
@@ -31,7 +31,7 @@
                                         [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
                                     <i class="la la-envelope"></i>
                                 </div>
-                                <!-- <span style="font-size: 10px; font-weight: 500">Each box is optional. We respect your privacy so you may choose to have no location at all if necessary</span> -->
+                                <span style="font-size: 10px; font-weight: 500">Each box is optional. We respect your privacy so you may choose to have no location at all if necessary</span>
                                 <div class="cfield">                                
                                     <input id="biaAddr" required type="text" placeholder="Address (optional)" class="form-control"
                                         [(ngModel)]="address" [ngModelOptions]="{standalone: true}">
@@ -56,7 +56,8 @@
                                     <textarea id="biaBio" required type="text" placeholder="Short Bio. Don't worry, you can change it later" class="form-control"
                                         [(ngModel)]="bio" [ngModelOptions]="{standalone: true}"></textarea>
                                     <i class="la la-biography"></i>
-                                </div>
+                                </div> -->
+                                <app-edit [isSignup]="isSignup"></app-edit>
                                 <button (click)="submitInfo()">
                                     Next
                                 </button>

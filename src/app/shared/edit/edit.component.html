@@ -4,11 +4,11 @@
       <h3 id="app-responsive-component-profile"></h3>
 
     <div class = "container">
-        <button style="margin-left: 10px" *ngIf="profileType == 'Applicant'" (click)="showDelete()">Delete Account</button>
-        <button style="margin-left: 10px" *ngIf="profileType != 'Applicant'" (click)="showDelete()">Delete Account</button>
+        <button style="margin-left: 10px" *ngIf="profileType == 'Applicant' && isSignup == 'false'" (click)="showDelete()">Delete Account</button>
+        <button style="margin-left: 10px" *ngIf="profileType != 'Applicant' && isSignup == 'false'" (click)="showDelete()">Delete Account</button>
     
-        <button *ngIf="profileType == 'Applicant'" [routerLink]="['/applicant/upload']">Upload Profile Picture</button>
-        <button *ngIf="profileType != 'Applicant'" [routerLink]="['/employer/upload']">Upload Profile Picture</button>
+        <button *ngIf="profileType == 'Applicant' && isSignup == 'false'" [routerLink]="['/applicant/upload']">Upload Profile Picture</button>
+        <button *ngIf="profileType != 'Applicant' && isSignup == 'false'" [routerLink]="['/employer/upload']">Upload Profile Picture</button>
 
         <input hidden type="file" class="upload-and-parse" name="resumeFile" #uploader (change)="uploadAndParseResume($event)"/>
         <button *ngIf="profileType == 'Applicant'" (click)="uploader.click()">Upload Resume</button>

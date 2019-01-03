@@ -25,12 +25,12 @@ var aws = require('aws-sdk');
   providers: [ ResumeVolunteerComponent, ResumeExperienceComponent, ResumeEducationComponent ]
 })
 export class EditComponent implements OnInit {
-
+  @Input() isSignup: string = 'false';
   @ViewChild(ResumeEducationComponent) edu: ResumeEducationComponent;
   @ViewChild(ResumeVolunteerComponent) vol: ResumeVolunteerComponent;
   @ViewChild(ResumeAchievementsComponent) achieve: ResumeAchievementsComponent;
   @ViewChild(ResumeExperienceComponent) exp: ResumeExperienceComponent;
-
+  
   constructor(
     public http: CustomHttpService,
     public http2: HttpClient,
@@ -41,10 +41,11 @@ export class EditComponent implements OnInit {
     private componentFactoryResolver: ComponentFactoryResolver,
     private viewContainerRef: ViewContainerRef
   ) {
-    // console.log("constructor created")
+    console.log("constructor created", this.isSignup)
 
   }
-
+  
+  
   user: string;
   first: string;
   second: string;
@@ -230,7 +231,7 @@ export class EditComponent implements OnInit {
     // Test Id, get from login in the future
     var hidden = document.getElementById("test-ID");
     var profileType = hidden.attributes["value"].value;
-    if (sessionStorage.getItem("accountType") == "employer") {
+    if (sessionStorage.getItem("accountType") == "employer" || this.isSignup  == 'false') {
 
 
       // Set Company/Name 
@@ -299,7 +300,7 @@ export class EditComponent implements OnInit {
         }
       );
     }
-    else if (sessionStorage.getItem("accountType") == "applicant") {
+    else if (sessionStorage.getItem("accountType") == "applicant" || this.isSignup  == 'true') {
 
       if (this.user == this.id || this.id === undefined) {
         // if (sessionStorage.getItem("view") !== undefined && sessionStorage.getItem("view") == "potApplicant") {
