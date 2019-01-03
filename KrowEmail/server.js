@@ -103,12 +103,12 @@ app.use(function(req, res, next) {
             await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/parsed_result.json`, (err) =>{
                 //console.log(err);
             });
-            await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, (err) =>{
-                //console.log(err);
-            });
-            await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
-                //console.log(err);
-            });
+            // await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, (err) =>{
+            //     //console.log(err);
+            // });
+            // await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
+            //     //console.log(err);
+            // });
             res.send({Krow: JSON.parse(finalContent)})
         });
 
