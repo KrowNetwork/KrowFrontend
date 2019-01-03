@@ -20,6 +20,7 @@ export class HomepageComponent implements OnInit {
   firstName: String
   lastName: String
   email: String
+  location: String;
   constructor(
     public http: CustomHttpService,
     public http2: HttpClient,

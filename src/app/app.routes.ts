@@ -15,7 +15,7 @@ import { ForgotPassword2Component, ForgotPasswordStep1Component } from './main/f
 import { ResendCodeComponent } from './main/resend/resendCode.component';
 
 // Employer components
-import { EmployerProfileComponent } from './employer/employer-profile/employer-profile.component';
+// import { EmployerProfileComponent } from './employer/employer-profile/employer-profile.component';
 
 import { SearchComponent } from './search/search.component';
 
