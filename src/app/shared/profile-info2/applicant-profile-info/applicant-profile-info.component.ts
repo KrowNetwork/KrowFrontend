@@ -120,8 +120,8 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
     this.http.get("http://18.220.46.51:3000/api/Applicant/" + this.id).subscribe(
       data => {
         if (data["error"] !== undefined) {
-          sessionStorage.setItem("accountType", "employer")
-          this.router.navigate(["/employer"])
+          // sessionStorage.setItem("accountType", "employer")
+          this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
         }
         console.log(data)
         this.first = data["firstName"]

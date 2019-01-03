@@ -51,19 +51,9 @@ export class HomeComponent implements OnInit {
                 console.log(data)
                 sessionStorage.setItem("accountType", "applicant")
                 this.router.navigate(['/applicant']); 
-            },
-            (err: HttpErrorResponse) => {
-                this.http.head("http://18.220.46.51:3000/api/Employer/" + this.user).subscribe(
-                    data => {
-                        sessionStorage.setItem("accountType", "employer")
-                        this.router.navigate(['/employer']);    
-                    },
-                    (err: HttpErrorResponse) => {
-                        console.log(err)
-                        localStorage.clear()
-                        this.router.navigate(["/login"])
-                    })
             })
+            this.initializeApplicant()
+            
 
     }
 
