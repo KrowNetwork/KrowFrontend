@@ -318,7 +318,7 @@ export class EditComponent implements OnInit {
       // Change First input value, id, title to match first name
       var firstName = document.getElementById("app-responsive-component-profile-first");
       firstName.children[0].innerHTML = "First";
-      firstName.children[1].children[0].attributes[2].value = "Will";
+      firstName.children[1].children[0].setAttribute("placeholder", "Will")// = "Will";
       firstName.children[1].children[0].attributes[1].value = "firstName";
 
       // Change Second input value, id, title to match last name

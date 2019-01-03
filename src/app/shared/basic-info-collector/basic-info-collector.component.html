@@ -3,8 +3,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="account-popup-area signin-popup-box static">
-                        <div class="account-popup" *ngIf="intent=='Applicant' && collectInfoOn">	
+                    <!-- <div class="account-popup-area signin-popup-box static"> -->
+                        <div  *ngIf="intent=='Applicant' && collectInfoOn">	
                             <h1 style="color: #fb236a">Welcome to the Krow Network Applicant Experience!</h1>	
                             <h3>We just need some basic info to get you started:</h3>
                             <div *ngIf="errorMessage!=null" class="alert alert-danger" style="color: #fb236a">
@@ -128,7 +128,7 @@
                                 <a [routerLink]="['/']" routerLinkActive="active">skip this step</a>
                             </form>	
                         </div>
-                    </div>
+                    <!-- </div> -->
                 </div>
             </div>
         </div>

@@ -4,11 +4,11 @@
       <h3 id="app-responsive-component-profile"></h3>
 
     <div class = "container">
-        <button style="margin-left: 10px" *ngIf="profileType == 'Applicant' && isSignup == 'false'" (click)="showDelete()">Delete Account</button>
-        <button style="margin-left: 10px" *ngIf="profileType != 'Applicant' && isSignup == 'false'" (click)="showDelete()">Delete Account</button>
+        <button style="margin-left: 10px" *ngIf="profileType == 'Applicant' && isSignup == false" (click)="showDelete()">Delete Account</button>
+        <button style="margin-left: 10px" *ngIf="profileType != 'Applicant' && isSignup == false" (click)="showDelete()">Delete Account</button>
     
-        <button *ngIf="profileType == 'Applicant' && isSignup == 'false'" [routerLink]="['/applicant/upload']">Upload Profile Picture</button>
-        <button *ngIf="profileType != 'Applicant' && isSignup == 'false'" [routerLink]="['/employer/upload']">Upload Profile Picture</button>
+        <button *ngIf="profileType == 'Applicant' && isSignup == false" [routerLink]="['/applicant/upload']">Upload Profile Picture</button>
+        <button *ngIf="profileType != 'Applicant' && isSignup == false" [routerLink]="['/employer/upload']">Upload Profile Picture</button>
 
         <input hidden type="file" class="upload-and-parse" name="resumeFile" #uploader (change)="uploadAndParseResume($event)"/>
         <button *ngIf="profileType == 'Applicant'" (click)="uploader.click()">Upload Resume</button>
@@ -27,17 +27,17 @@
         <div id="app-responsive-component-profile-first" class="col-lg-6">
           <span class="pf-title"></span>
           <div class="pf-field">
-            <input (keydown)="changeHandler($event)" type="text" placeholder="" id="first"
+            <input (keydown)="changeHandler($event)" type="text" placeholder="Will" id="first"
               [(ngModel)]="first" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-user"></i>
           </div>
         </div>
 
 
-        <div id="app-responsive-component-profile-second" class="col-lg-12" >
+        <div id="app-responsive-component-profile-second" class="col-lg-6" >
           <span class="pf-title"></span> 
           <div class="pf-field">
-            <input (keydown)="changeHandler($event)" type="text" placeholder="" id="second"
+            <input (keydown)="changeHandler($event)" type="text" placeholder="Smith" id="second"
               [(ngModel)]="second" [ngModelOptions]="{standalone: true}" [disabled]="is_disabled()"/>
             <i class="la la-users"></i>
           </div>
