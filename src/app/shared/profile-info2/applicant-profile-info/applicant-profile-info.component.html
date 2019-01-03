@@ -74,7 +74,7 @@
 				 									<i>{{ exp.startDate }} - {{ exp.endDate }}</i>
 													<p>{{ exp.description }}</p>
 													<p>Skills: {{ exp.skills }}</p>
-													<p>File: <a href={{exp.fileUrl}}>{{ exp.fileName }}</a></p>
+													<p *ngIf="exp.fileName !== undefined">File: <a href={{exp.fileUrl}}><span style="font-weight: bold">{{ exp.fileName }}</span></a></p>
 												 </div>
 												 <div style="display: inline-block; float:right">
 														<button *ngIf="exp.verified" (click)="showJob(exp.link)">View</button>
