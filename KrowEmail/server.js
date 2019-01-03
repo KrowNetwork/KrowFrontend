@@ -88,29 +88,34 @@ app.use(function(req, res, next) {
             console.log('File uploaded!');
         }
 
-        var output = await jre.spawnSync(  // call synchronously
-            ['../ResumeParser/ResumeTransducer/bin/*', '../ResumeParser/GATEFiles/lib/*', '../ResumeParser/GATEFILES/bin/gate.jar', '../ResumeParser/ResumeTransducer/lib/*'],
-            'code4goal.antony.resumeparser.ResumeParserProgram',  
-            [`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, '../ResumeParser/ResumeTransducer/UnitTests/parsed_result.json'],      
-            { encoding: 'utf8' }     // encode output as string
-          ).stdout;           // take output from stdout as trimmed String
-        
-        let name_without_extension = file.name.replace(/\.[^/.]+$/, "");
-        
-    
-        await fs.readFile('../ResumeParser/ResumeTransducer/UnitTests/parsed_result.json', 'utf8', async function(err, contents) {
-            finalContent = contents
-            await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/parsed_result.json`, (err) =>{
-                //console.log(err);
+        try{
+            var output = await jre.spawnSync(  // call synchronously
+                ['../ResumeParser/ResumeTransducer/bin/*', '../ResumeParser/GATEFiles/lib/*', '../ResumeParser/GATEFILES/bin/gate.jar', '../ResumeParser/ResumeTransducer/lib/*'],
+                'code4goal.antony.resumeparser.ResumeParserProgram',  
+                [`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, '../ResumeParser/ResumeTransducer/UnitTests/parsed_result.json'],      
+                { encoding: 'utf8' }     // encode output as string
+              ).stdout;           // take output from stdout as trimmed String
+            
+            let name_without_extension = file.name.replace(/\.[^/.]+$/, "");
+            
+            await fs.readFile('../ResumeParser/ResumeTransducer/UnitTests/parsed_result.json', 'utf8', async function(err, contents) {
+                finalContent = contents
+                await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/parsed_result.json`, (err) =>{
+                    //console.log(err);
+                });
+                // await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, (err) =>{
+                //     //console.log(err);
+                // });
+                // await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
+                //     //console.log(err);
+                // });
+                res.send({Krow: JSON.parse(finalContent)})
             });
-            // await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, (err) =>{
-            //     //console.log(err);
-            // });
-            // await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
-            //     //console.log(err);
-            // });
-            res.send({Krow: JSON.parse(finalContent)})
-        });
+        } catch(error){
+            console.log(error)
+        }
+    
+        
 
         
     });

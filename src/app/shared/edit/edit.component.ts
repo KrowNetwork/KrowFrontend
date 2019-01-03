@@ -534,7 +534,7 @@ export class EditComponent implements OnInit {
     formData.append('resumeFile', file[0]);
 
     this.http2.post('https://api.krownetwork.com/resumeParse', formData).subscribe(data => {
-    //  this.http2.post('http://localhost:3000/resumeParse', formData).subscribe(data => {
+      //this.http2.post('http://localhost:3000/resumeParse', formData).subscribe(data => {
       console.log('parsed resume', data)
       console.log(document.getElementById("updateName"));
       data = data['Krow']
