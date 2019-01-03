@@ -101,14 +101,14 @@ app.use(function(req, res, next) {
             let name_without_extension = file.name.replace(/\.[^/.]+$/, "");
             
             await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, (err) =>{
-                //console.log(err);
+                console.log(err);
             });
             await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
-                //console.log(err);
+                console.log(err);
             });
             await fs.readFile(dest_file, 'utf8', async function(err, contents) {
                 finalContent = contents
-                
+                console.log(err)
                 res.send({Krow: JSON.parse(finalContent)})
             });
         } catch(error){
