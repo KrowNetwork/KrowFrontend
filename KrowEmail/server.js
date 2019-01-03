@@ -79,7 +79,6 @@ app.use(function(req, res, next) {
     // }
 
     let file = req.files.resumeFile;
-    let finalContent;
 
     // Use the mv() method to place the file somewhere on your server
     await file.mv(`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, async function(err) {
@@ -97,19 +96,20 @@ app.use(function(req, res, next) {
           ).stdout;           // take output from stdout as trimmed String
         
         let name_without_extension = file.name.replace(/\.[^/.]+$/, "");
-        await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, (err) =>{
-            //console.log(err);
-        });
-        await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
-            //console.log(err);
-        });
+        
     
         await fs.readFile('../ResumeParser/ResumeTransducer/UnitTests/parsed_result.json', 'utf8', async function(err, contents) {
             finalContent = contents
             await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/parsed_result.json`, (err) =>{
                 //console.log(err);
             });
-            res.send(finalContent);
+            await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, (err) =>{
+                //console.log(err);
+            });
+            await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
+                //console.log(err);
+            });
+            res.send({Krow: JSON.parse(finalContent)})
         });
 
         
