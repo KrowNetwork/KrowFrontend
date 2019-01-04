@@ -91,7 +91,7 @@ app.use(function(req, res, next) {
         var x = this
         console.log('req',req.body)
 
-        await exec(`aws s3 cp s3://krow-network-experience-files/resumes/${req.body.resumeFileName} ./KrowFrontend/ResumeParser/ResumeTransducer/UnitTests/`, async (error, stdout, stderr) => 
+        await exec(`aws s3 cp s3://krow-network-experience-files/resumes/${req.body.resumeFileName} ../ResumeParser/ResumeTransducer/UnitTests/`, async (error, stdout, stderr) => 
         {
             if(error){
                 console.log(error)
@@ -104,6 +104,13 @@ app.use(function(req, res, next) {
                     [`../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName}`, dest_file],      
                     { encoding: 'utf8' }     // encode output as string
                 ).stdout;           // take output from stdout as trimmed String
+
+                await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName}`, (err) =>{
+                    console.log(err);
+                });
+                await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
+                    console.log(err);
+                });
 
                 await fs.readFile(dest_file, 'utf8', async function(err, contents) {
                         finalContent = contents
@@ -118,12 +125,7 @@ app.use(function(req, res, next) {
         
         
         
-        await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${file.name}`, (err) =>{
-            console.log(err);
-        });
-        await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
-            console.log(err);
-        });
+        
         // await fs.readFile(dest_file, 'utf8', async function(err, contents) {
         //     finalContent = contents
         //     console.log(err)
