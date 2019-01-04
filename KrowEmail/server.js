@@ -114,9 +114,17 @@ app.use(function(req, res, next) {
                     });
     
                     await fs.readFile(dest_file, 'utf8', async function(err, contents) {
-                            finalContent = contents
+                        if(err){
                             console.log(err)
+                        } else {
+                            finalContent = contents
+                            console.log(finalContent)
+                            // await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
+                            //     console.log(err);
+                            // });
                             res.send({Krow: JSON.parse(finalContent)})
+                        }
+                            
                     });
                 },3000)
                 
