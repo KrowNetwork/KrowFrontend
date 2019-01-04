@@ -100,12 +100,13 @@ app.use(function(req, res, next) {
                 var dest_file = `../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension}.json`
                 setTimeout(async function(){
                     console.log('ready to parse');
-                    var output = await jre.spawnSync(  // call synchronously
-                        ['../ResumeParser/ResumeTransducer/bin/*', '../ResumeParser/GATEFiles/lib/*', '../ResumeParser/GATEFILES/bin/gate.jar', '../ResumeParser/ResumeTransducer/lib/*'],
-                        'code4goal.antony.resumeparser.ResumeParserProgram',  
-                        [`../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName}`, dest_file],      
-                        { encoding: 'utf8' }     // encode output as string
-                    ).stdout;           // take output from stdout as trimmed String
+                    // var output = await jre.spawnSync(  // call synchronously
+                    //     ['../ResumeParser/ResumeTransducer/bin/*', '../ResumeParser/GATEFiles/lib/*', '../ResumeParser/GATEFILES/bin/gate.jar', '../ResumeParser/ResumeTransducer/lib/*'],
+                    //     'code4goal.antony.resumeparser.ResumeParserProgram',  
+                    //     [`../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName}`, dest_file],      
+                    //     { encoding: 'utf8' }     // encode output as string
+                    // ).stdout;           // take output from stdout as trimmed String
+                    exec(`java -cp '../ResumeParser/ResumeTransducer/bin/*;../ResumeParser/GATEFiles/lib/*;../ResumeParser/GATEFILES/bin/gate.jar;../ResumeParser/ResumeTransducer/lib/*' code4goal.antony.resumeparser.ResumeParserProgram ../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName} dest_file`)
                     console.log('parsing completed');
                 }, 5000, async function(){
                     console.log('ready to delete files')
