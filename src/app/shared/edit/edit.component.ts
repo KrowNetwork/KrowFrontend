@@ -532,26 +532,30 @@ export class EditComponent implements OnInit {
 
   async updateResume(fileUpload){
 
-    let user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+    let user = await localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
 
     const bucketName = 'krow-network-experience-files';
-    let s3 = this.s3service.getBucket(bucketName);
+    let s3 = await this.s3service.getBucket(bucketName);
       
     console.log('file', fileUpload.files)
-    await s3.upload({ 
-        Key: "resumes/" + user + '-' + fileUpload.files[0].name,
-        Bucket: bucketName,
-        Body: fileUpload.files[0], 
-        ACL: 'public-read',
-      }, function (err, data) {
-          if (err) {
-            console.log(err, 'there was an error uploading your file');
-          } else {
-            console.log(data)
-          }
-    });
+    return new Promise(async function(resolve, reject) {
+      await s3.upload({ 
+          Key: "resumes/" + user + '-' + fileUpload.files[0].name,
+          Bucket: bucketName,
+          Body: fileUpload.files[0], 
+          ACL: 'public-read',
+        }, function (err, data) {
+            if (err) {
+              console.log(err, 'there was an error uploading your file');
+              reject(err)
+            } else {
+              console.log(data)
+              resolve(user + '-' + fileUpload.files[0].name)
+            }
+      });
+    })
 
-    return user + '-' + fileUpload.files[0].name
+    // return user + '-' + fileUpload.files[0].name
 
     
       
@@ -561,18 +565,18 @@ export class EditComponent implements OnInit {
     let file = event.target.files
     let resumeName = await this.updateResume(event.target)
     console.log(resumeName);
-      var data = {
-        resumeFileName: resumeName
-      }
+    var data = {
+      resumeFileName: resumeName
+    }
 
 
-      this.http2.post('https://api.krownetwork.com/resumeParse', data).subscribe(data => {
-      //this.http2.post('http://localhost:3000/resumeParse', data).subscribe(data => {
-        // console.log('parsed resume', data)
-        // console.log(document.getElementById("updateName"));
-      
-        this.parsing(data)
-      })  
+    this.http2.post('https://api.krownetwork.com/resumeParse', data).subscribe(data => {
+    //this.http2.post('http://localhost:3000/resumeParse', data).subscribe(data => {
+      // console.log('parsed resume', data)
+      // console.log(document.getElementById("updateName"));
+    
+      this.parsing(data)
+    })  
   }
 
   async parsing(data){
