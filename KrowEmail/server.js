@@ -99,20 +99,23 @@ app.use(function(req, res, next) {
                 let name_without_extension = req.body.resumeFileName.replace(/\.[^/.]+$/, "");
                 var dest_file = `../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension}.json`
                 setTimeout(async function(){
+                    console.log('ready to parse');
                     var output = await jre.spawnSync(  // call synchronously
                         ['../ResumeParser/ResumeTransducer/bin/*', '../ResumeParser/GATEFiles/lib/*', '../ResumeParser/GATEFILES/bin/gate.jar', '../ResumeParser/ResumeTransducer/lib/*'],
                         'code4goal.antony.resumeparser.ResumeParserProgram',  
                         [`../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName}`, dest_file],      
                         { encoding: 'utf8' }     // encode output as string
                     ).stdout;           // take output from stdout as trimmed String
+                    console.log('parsing completed');
                 }, 5000, async function(){
+                    console.log('ready to delete files')
                     await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName}`, (err) =>{
                         console.log(err);
                     });
                     await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
                         console.log(err);
                     });
-    
+                    console.log('ready to read files')
                     await fs.readFile(dest_file, 'utf8', async function(err, contents) {
                         if(err){
                             console.log(err)
