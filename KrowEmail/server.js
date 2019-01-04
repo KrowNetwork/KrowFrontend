@@ -98,25 +98,30 @@ app.use(function(req, res, next) {
             } else {
                 let name_without_extension = req.body.resumeFileName.replace(/\.[^/.]+$/, "");
                 var dest_file = `../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension}.json`
-                var output = await jre.spawnSync(  // call synchronously
-                    ['../ResumeParser/ResumeTransducer/bin/*', '../ResumeParser/GATEFiles/lib/*', '../ResumeParser/GATEFILES/bin/gate.jar', '../ResumeParser/ResumeTransducer/lib/*'],
-                    'code4goal.antony.resumeparser.ResumeParserProgram',  
-                    [`../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName}`, dest_file],      
-                    { encoding: 'utf8' }     // encode output as string
-                ).stdout;           // take output from stdout as trimmed String
+                setTimeout(async function(){
+                    var output = await jre.spawnSync(  // call synchronously
+                        ['../ResumeParser/ResumeTransducer/bin/*', '../ResumeParser/GATEFiles/lib/*', '../ResumeParser/GATEFILES/bin/gate.jar', '../ResumeParser/ResumeTransducer/lib/*'],
+                        'code4goal.antony.resumeparser.ResumeParserProgram',  
+                        [`../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName}`, dest_file],      
+                        { encoding: 'utf8' }     // encode output as string
+                    ).stdout;           // take output from stdout as trimmed String
+                }, 5000, async function(){
+                    await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName}`, (err) =>{
+                        console.log(err);
+                    });
+                    await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
+                        console.log(err);
+                    });
+    
+                    await fs.readFile(dest_file, 'utf8', async function(err, contents) {
+                            finalContent = contents
+                            console.log(err)
+                            res.send({Krow: JSON.parse(finalContent)})
+                    });
+                },3000)
+                
 
-                await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName}`, (err) =>{
-                    console.log(err);
-                });
-                await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
-                    console.log(err);
-                });
-
-                await fs.readFile(dest_file, 'utf8', async function(err, contents) {
-                        finalContent = contents
-                        console.log(err)
-                        res.send({Krow: JSON.parse(finalContent)})
-                });
+                
             }
         })
         // console.log('file :', req.file)
