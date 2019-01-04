@@ -91,33 +91,33 @@ app.use(function(req, res, next) {
         var x = this
         console.log('req',req.body)
 
-        exec(`aws s3 cp s3://krow-network-experience-files/resumes/${req.body.resumeFileName} ../ResumeParser/ResumeTransducer/UnitTests/`, async (error, stdout, stderr) => 
+        await exec(`aws s3 cp s3://krow-network-experience-files/resumes/${req.body.resumeFileName} ../ResumeParser/ResumeTransducer/UnitTests/`, async (error, stdout, stderr) => 
         {
             if(error){
                 console.log(error)
             } else {
                 let name_without_extension = req.body.resumeFileName.replace(/\.[^/.]+$/, "");
                 var dest_file = `../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension}.json`
-                setTimeout(async function(){
+                await setTimeout(async function(){
                     console.log('ready to parse');
-                    var output = jre.spawnSync(  // call synchronously
-                        ['../ResumeParser/ResumeTransducer/bin/*', '../ResumeParser/GATEFiles/lib/*', '../ResumeParser/GATEFILES/bin/gate.jar', '../ResumeParser/ResumeTransducer/lib/*'],
-                        'code4goal.antony.resumeparser.ResumeParserProgram',  
-                        [`../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName}`, dest_file],      
-                        { encoding: 'utf8' }     // encode output as string
-                    ).stdout;           // take output from stdout as trimmed String
+                    // var output = jre.spawnSync(  // call synchronously
+                    //     ['../ResumeParser/ResumeTransducer/bin/*', '../ResumeParser/GATEFiles/lib/*', '../ResumeParser/GATEFILES/bin/gate.jar', '../ResumeParser/ResumeTransducer/lib/*'],
+                    //     'code4goal.antony.resumeparser.ResumeParserProgram',  
+                    //     [`../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName}`, dest_file],      
+                    //     { encoding: 'utf8' }     // encode output as string
+                    // ).stdout;           // take output from stdout as trimmed String
                     exec(`java -cp '../ResumeParser/ResumeTransducer/bin/*;../ResumeParser/GATEFiles/lib/*;../ResumeParser/GATEFILES/bin/gate.jar;../ResumeParser/ResumeTransducer/lib/*' code4goal.antony.resumeparser.ResumeParserProgram '../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName}' '../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension}.json'`)
                     console.log('parsing completed');
                 }, 5000, async function(){
                     console.log('ready to delete files')
-                    fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName}`, (err) =>{
+                    await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName}`, (err) =>{
                         console.log(err);
                     });
-                    fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
+                    await fs.unlink(`../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension + ".html"}`, (err) =>{
                         console.log(err);
                     });
                     console.log('ready to read files')
-                    fs.readFile(dest_file, 'utf8', async function(err, contents) {
+                    await fs.readFile(dest_file, 'utf8', async function(err, contents) {
                         if(err){
                             console.log(err)
                         } else {
