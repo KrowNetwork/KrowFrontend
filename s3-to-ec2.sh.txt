@@ -1,0 +1,3 @@
+#!/bin/bash
+
+aws s3 cp s3://krow-network-experience-files/resumes/$1 ./KrowFrontend/ResumeParser/ResumeTransducer/UnitTests/

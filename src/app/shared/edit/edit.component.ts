@@ -17,6 +17,7 @@ import { VolunteerMainComponent } from '../../applicant/applicant-resume/resume-
 import { ExperienceMainComponent } from '../../applicant/applicant-resume/resume-experience/experience-main.component';
 import { v } from '@angular/core/src/render3';
 import { ConstantPool } from '@angular/compiler/src/constant_pool';
+import { S3Service } from "../../service/s3.service"
 var aws = require('aws-sdk');
 
 @Component({
@@ -39,7 +40,8 @@ export class EditComponent implements OnInit {
     private router: Router,
     private resumeVolunteer: ResumeVolunteerComponent,
     private componentFactoryResolver: ComponentFactoryResolver,
-    private viewContainerRef: ViewContainerRef
+    private viewContainerRef: ViewContainerRef,
+    public s3service: S3Service
   ) {
     console.log("constructor created", this.isSignup)
 
@@ -528,15 +530,54 @@ export class EditComponent implements OnInit {
 
   }
 
-  uploadAndParseResume(event) {
-    let file = event.target.files
-    const formData: FormData = new FormData();
-    formData.append('resumeFile', file[0]);
+  async updateResume(fileUpload){
 
-    this.http2.post('https://api.krownetwork.com/resumeParse', formData).subscribe(data => {
-      //this.http2.post('http://localhost:3000/resumeParse', formData).subscribe(data => {
-      console.log('parsed resume', data)
-      console.log(document.getElementById("updateName"));
+    let user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+
+    const bucketName = 'krow-network-experience-files';
+    let s3 = this.s3service.getBucket(bucketName);
+      
+    console.log('file', fileUpload.files)
+    await s3.upload({ 
+        Key: "resumes/" + user + '-' + fileUpload.files[0].name,
+        Bucket: bucketName,
+        Body: fileUpload.files[0], 
+        ACL: 'public-read',
+      }, function (err, data) {
+          if (err) {
+            console.log(err, 'there was an error uploading your file');
+          } else {
+            console.log(data)
+          }
+    });
+
+    return user + '-' + fileUpload.files[0].name
+
+    
+      
+  }
+
+  async uploadAndParseResume(event) {
+    let file = event.target.files
+    let resumeName = await this.updateResume(event.target)
+    console.log(resumeName);
+      var data = {
+        resumeFileName: resumeName
+      }
+
+
+      //this.http2.post('https://api.krownetwork.com/resumeParse', formData).subscribe(data => {
+      this.http2.post('http://localhost:3000/resumeParse', data).subscribe(data => {
+        // console.log('parsed resume', data)
+        // console.log(document.getElementById("updateName"));
+      
+        this.parsing(data)
+      })  
+  }
+
+  async parsing(data){
+      // console.log('parsed resume', data)
+      // console.log(document.getElementById("updateName"));
       data = data['Krow']
       if (data['basics']['name'] != null || data['basics']['name'] != undefined){
           if(data['basics']['name']['firstName'] != null || data['basics']['name']['firstName'] != undefined){
@@ -771,7 +812,5 @@ export class EditComponent implements OnInit {
         }
       }
 
-
-    })
   }
 }
