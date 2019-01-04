@@ -106,7 +106,12 @@ app.use(function(req, res, next) {
                     //     [`../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName}`, dest_file],      
                     //     { encoding: 'utf8' }     // encode output as string
                     // ).stdout;           // take output from stdout as trimmed String
-                    exec(`java -cp '../ResumeParser/ResumeTransducer/bin/*;../ResumeParser/GATEFiles/lib/*;../ResumeParser/GATEFILES/bin/gate.jar;../ResumeParser/ResumeTransducer/lib/*' code4goal.antony.resumeparser.ResumeParserProgram '../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName}' '../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension}.json'`)
+                    exec(`java -cp 'bin/*:../GATEFiles/lib/*:../GATEFiles/bin/gate.jar:lib/*' code4goal.antony.resumeparser.ResumeParserProgram './UnitTests/AntonyDeepakThomas.pdf' './UnitTests/temp.json'`, {
+                        cwd: '../ResumeParser/ResumeTransducer'
+                      }, function(error, stdout, stderr) {
+                        // work with result
+                      });
+                    // exec(`java -cp '../ResumeParser/ResumeTransducer/bin/*;../ResumeParser/GATEFiles/lib/*;../ResumeParser/GATEFILES/bin/gate.jar;../ResumeParser/ResumeTransducer/lib/*' code4goal.antony.resumeparser.ResumeParserProgram '../ResumeParser/ResumeTransducer/UnitTests/${req.body.resumeFileName}' '../ResumeParser/ResumeTransducer/UnitTests/${name_without_extension}.json'`)
                     console.log('parsing completed');
                 }, 5000, async function(){
                     console.log('ready to delete files')
