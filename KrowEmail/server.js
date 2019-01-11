@@ -531,14 +531,14 @@ app.get("/get-job", (req, res, next) => {
 
         request.head("http://18.220.46.51:3000/api/Applicant/" + id,  {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
             if (res2.statusCode == 200) {
-                res.status(200).send("applicant")
+                res.status(200).send({response: "applicant"})
             } else if (res2.statusCode == 404) {
                 request.head("http://18.220.46.51:3000/api/Applicant/" + id,  {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res3) { 
 
                     if (res3.statusCode == 200) {
-                        res.status(200).send("employer")
+                        res.status(200).send({response: "employer"})
                     } else {
-                        res.status(404).send("unkown")
+                        res.status(404).send({response: "unkown"})
                     }
 
                 })
