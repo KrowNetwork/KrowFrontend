@@ -65,7 +65,7 @@ import { UserSearchComponent } from './shared/admin/user-search/user-search.comp
 import { JobProfileComponent } from './shared/profile-info2/job-profile/job-profile.component';
 // import { EditJobComponent } from './shared/edit-job/edit-job.component'
 import { SearchJobComponent } from './shared/search-job/search-job.component';
-
+import { EmployerProfileComponent } from "./employer/employer-profile/employer-profile.component"
 
 const appRoutes: Routes = [
     {
@@ -296,14 +296,14 @@ const secureHome: Routes = [
             }
         ]
     },
-    // { 
-    //     path: 'employer', 
-    //     component: EmployerProfileComponent, 
-    //     children: [
-    //         { 
-    //             path: '', 
-    //             component: EmployerProfileInfoComponent
-    //         },
+    { 
+        path: 'employer', 
+        component: EmployerProfileComponent, 
+        children: [
+            { 
+                path: '', 
+                component: EmployerProfileComponent
+            },
     //         { 
     //             path: 'profile-info',
     //             component: EmployerProfileInfoComponent
@@ -332,8 +332,8 @@ const secureHome: Routes = [
     //         //     path: "delete",
     //         //     component: DeleteComponent
     //         // }
-    //     ]
-    // },
+        ]
+    },
     {
         path: 'logout',
         component: LogoutComponent

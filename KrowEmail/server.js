@@ -517,6 +517,46 @@ app.get("/get-job", (req, res, next) => {
         })
     })
 
+    app.post("/check-user", (req, res, next) => {
+        var id = req.body.id
+        // console.log(id)
+        // var verifyID = req.body.verifyID 
+        // var verificationEmail = req.body.verificationEmail
+
+        // var data = {
+        //     applicant: applicant,
+        //     verifyID: verifyID,
+        //     verificationEmail: verificationEmail
+        // }
+
+        request.head("http://18.220.46.51:3000/api/Applicant/" + id,  {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
+            if (res2.statusCode == 200) {
+                res.status(200).send("applicant")
+            } else if (res2.statusCode == 404) {
+                request.head("http://18.220.46.51:3000/api/Applicant/" + id,  {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res3) { 
+
+                    if (res3.statusCode == 200) {
+                        res.status(200).send("employer")
+                    } else {
+                        res.status(404).send("unkown")
+                    }
+
+                })
+
+            }
+            
+            
+            // (err) {
+            //     console.log(err)
+            //     errorHandler(next, 400, err)
+            // } else {
+            //     console.log(res2.statusCode)
+            //     console.log(res2.body)
+            //     res.send(200, res2.body)
+            // }
+        })
+    })
+
     app.post("/pu", (req, res, next) => {
         var url = req.query.url
         var accessTokenFromClient = req.query.token;
@@ -887,11 +927,11 @@ app.post("/accept-hire", (req, res, next) => {
     })
 })
 
-https.createServer(options, app).listen(443, function (err) {
-    if (err) {
-      throw err
-    }
-    // // console.log(`worker ${process.pid} started`);
+// https.createServer(options, app).listen(443, function (err) {
+//     if (err) {
+//       throw err
+//     }
+//     // // console.log(`worker ${process.pid} started`);
 
-})
-// app.listen(4200, () => console.log(`Example app listening on port ${port}!`))
+// })
+app.listen(4200, () => console.log(`Example app listening on port ${port}!`))

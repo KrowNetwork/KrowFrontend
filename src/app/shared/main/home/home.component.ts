@@ -46,17 +46,30 @@ export class HomeComponent implements OnInit {
     // }
 
     ngOnInit() {
-        this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).subscribe(
+        this.http.post("https://api.krownetwork.com/check-user", {id: this.user}).subscribe(
             data => {
-                if (data["error"] !== undefined) {
-                    this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });                     
-                } else {
-                    console.log(data)
+                if (data == "applicant") {
                     sessionStorage.setItem("accountType", "applicant")
                     this.router.navigate(['/applicant']);
-                }
+                } else if (data == "employer") {
+                    sessionStorage.setItem("accountType", "employer")
+                    this.router.navigate(['/employer']);
+                // } else {
+                    
+                // }
+            
+        })
+        // this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).subscribe(
+        //     data => {
+        //         if (data["error"] !== undefined) {
+        //             this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });                     
+        //         } else {
+        //             console.log(data)
+        //             sessionStorage.setItem("accountType", "applicant")
+        //             this.router.navigate(['/applicant']);
+        //         }
                 
-            })
+        //     })
             // this.initializeApplicant()
             
 
