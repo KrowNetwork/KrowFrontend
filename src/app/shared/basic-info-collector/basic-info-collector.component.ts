@@ -23,7 +23,7 @@ export class BasicInfoCollectorComponent implements OnInit {
     ) { }
 
     user: string;
-    intent: "Applicant";
+    intent: "";
     first: string;
     second: string;
     email: string;
@@ -60,7 +60,11 @@ export class BasicInfoCollectorComponent implements OnInit {
             return;
         }
         if(!this.edit.first || !this.edit.second || !this.edit.email){
-            this.errorMessage = "First Name, Last Name and Email are required";
+            if (this.intent == "Applicant") {
+                this.errorMessage = "First Name, Last Name and Email are required";
+            } else if (this.intent == "Employer") {
+                this.errorMessage = "Company Name, Description and Email are required";
+            }
             return;
         }
         else{
@@ -77,7 +81,29 @@ export class BasicInfoCollectorComponent implements OnInit {
                     city: this.edit.city,
                     country: this.edit.country,
                     phoneNumber: this.edit.phoneNumber
+                    
                 }
+                await this.initializeUser.initializeUser(obj, this.intent, null, this.router);
+                //console.log(this.edit)
+                var x = this;
+                await setTimeout(async function(){ 
+                    await document.getElementById("experience-button").click();
+                    // await document.getElementById("education-button").click();
+                    // await document.getElementById("volunteers-button").click();
+                    // await document.getElementById("achievement-button").click();
+                    
+                }, 7000);
+
+                await setTimeout(async function(){ 
+                    await document.getElementById("education-button").click();
+                }, 10000);
+
+                await setTimeout(async function(){ 
+                    await document.getElementById("volunteers-button").click()
+                    await document.getElementById("achievement-button").click();
+                    
+                    x.next();
+                }, 14000);
             } else {
                 var obj = {
                     user: this.user,
@@ -91,30 +117,31 @@ export class BasicInfoCollectorComponent implements OnInit {
                     country: this.edit.country,
                     phoneNumber: this.edit.phoneNumber
                 }
+                await this.initializeUser.initializeUser(obj, this.intent, null, this.router);
+                //console.log(this.edit)
+                var x = this;
+                // await setTimeout(async function(){ 
+                //     await document.getElementById("experience-button").click();
+                //     // await document.getElementById("education-button").click();
+                //     // await document.getElementById("volunteers-button").click();
+                //     // await document.getElementById("achievement-button").click();
+                    
+                // }, 7000);
+
+                // await setTimeout(async function(){ 
+                //     await document.getElementById("education-button").click();
+                // }, 10000);
+
+                // await setTimeout(async function(){ 
+                //     await document.getElementById("volunteers-button").click()
+                //     await document.getElementById("achievement-button").click();
+                    
+                //     x.next();
+                // }, 14000);
             }
             
             //this.initializeUser.initializeUser(obj, this.intent, this.activate, this.router);
-            await this.initializeUser.initializeUser(obj, this.intent, null, this.router);
-            //console.log(this.edit)
-            var x = this;
-            await setTimeout(async function(){ 
-                await document.getElementById("experience-button").click();
-                // await document.getElementById("education-button").click();
-                // await document.getElementById("volunteers-button").click();
-                // await document.getElementById("achievement-button").click();
-                
-             }, 7000);
-
-             await setTimeout(async function(){ 
-                await document.getElementById("education-button").click();
-             }, 10000);
-
-             await setTimeout(async function(){ 
-                await document.getElementById("volunteers-button").click()
-                await document.getElementById("achievement-button").click();
-                
-                x.next();
-             }, 14000);
+            
 
             
              

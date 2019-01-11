@@ -72,45 +72,46 @@ export class CreateUserService {
             obj = this.createUserApplicantObj(userObj);
         }
         else if(intent == "Employer"){
+            console.log("here")
             obj = this.createUserEmployerObj(userObj);
         }
         var url = "http://18.220.46.51:3000/api/" + intent;
         // console.log(intent.toLowerCase());
-
+        
         this.http.post(url, obj).subscribe(
             data => {
 
-                if (obj["class"] == "network.krow.participants.Applicant") {
+        //         if (obj["class"] == "network.krow.participants.Applicant") {
                     
-                    AWS.config.update({region: "us-east-2"})
+        //             AWS.config.update({region: "us-east-2"})
     
-                    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                    IdentityPoolId : 'us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88', // your identity pool id here
-                        Logins : {
-                            'cognito-idp.us-east-2.amazonaws.com/us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88' : obj["applicantID"]
-                        }
-                    });
+        //             AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        //             IdentityPoolId : 'us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88', // your identity pool id here
+        //                 Logins : {
+        //                     'cognito-idp.us-east-2.amazonaws.com/us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88' : obj["applicantID"]
+        //                 }
+        //             });
                     
     
-                    this.user = obj["applicantID"]
-                    this.ddb = new AWS.DynamoDB({apiVersion: '2012-10-08'})
-                    var params = {
-                        TableName: "user_calendars",
-                        Item: {
-                            userID: {S: this.user},
-                            calendar: {M: {}}
-                        }
-                    }
+        //             this.user = obj["applicantID"]
+        //             this.ddb = new AWS.DynamoDB({apiVersion: '2012-10-08'})
+        //             var params = {
+        //                 TableName: "user_calendars",
+        //                 Item: {
+        //                     userID: {S: this.user},
+        //                     calendar: {M: {}}
+        //                 }
+        //             }
 
-                    this.ddb.putItem(params, function(err, data) {
-                        console.log(err)
-                    })
-                }
+        //             this.ddb.putItem(params, function(err, data) {
+        //                 console.log(err)
+        //             })
+        //         }
 
 
-                // console.log(intent + " account sucessfuly initialized for user " + userObj.user);
-                //callback(intent.toLowerCase(), userObj.user, router);
-                callback()
+        //         // console.log(intent + " account sucessfuly initialized for user " + userObj.user);
+        //         //callback(intent.toLowerCase(), userObj.user, router);
+            router.navigate(["/" + intent.toLowerCase() + ""]);
             }, // Catch Errors
             (err = HttpErrorResponse) => {
                 if (err instanceof Error) {
