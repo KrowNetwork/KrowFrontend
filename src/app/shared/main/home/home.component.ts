@@ -48,15 +48,17 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
         this.http.post("https://api.krownetwork.com/check-user", {id: this.user}).subscribe(
             data => {
-                if (data == "applicant") {
+                console.log(data["response"])
+                if (data["response"] == "applicant") {
                     sessionStorage.setItem("accountType", "applicant")
                     this.router.navigate(['/applicant']);
-                } else if (data == "employer") {
+                } else if (data["response"] == "employer") {
                     sessionStorage.setItem("accountType", "employer")
                     this.router.navigate(['/employer']);
-                // } else {
-                    
-                // }
+                
+                } else {
+                   this.show = true 
+                }
             
         })
         // this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).subscribe(
