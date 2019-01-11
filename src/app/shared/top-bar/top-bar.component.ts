@@ -63,20 +63,37 @@ export class TopBarComponent implements OnInit {
       
     // this.userService.verifyUserType(localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"))
     // console.log("Applicant Component: constructor");
-
-    if (sessionStorage.getItem("accountType") == "applicant") {
-      this.is_applicant = true
-      this.btnText = "Edit Resume"
-      // var x = document.getElementById("btn")
-      // console.log(x)
-      // x.setAttribute("class", "la la-search")
+    if (sessionStorage.getItem("accountType") === undefined) {
+      this.http.rget("https://api.krownetwork.com/check-user", {id: this.user}).subscribe(
+        data => {
+          var res = data["response"]
+          if (res == "applicant") {
+            this.is_applicant = true
+            this.btnText = "Edit Resume"
+          } else if (res == "employer") {
+            this.is_applicant = false
+            this.btnText = "Edit Profile"
+          } else {
+            this.is_applicant = false
+            this.btnText = "PLACEHOLDER"
+          }
+          sessionStorage.setItem("accountType", res)
+        }
+      )
     } else {
-      this.is_applicant = false
-      this.btnText = "Edit Profile"
-      // var x = document.getElementById("btn")
-      // console.log(x)
-      // x.setAttribute("class", "la la-plus")
+      var res = sessionStorage.getItem("accountType")
+      if (res == "applicant") {
+        this.is_applicant = true
+        this.btnText = "Edit Resume"
+      } else if (res == "employer") {
+        this.is_applicant = false
+        this.btnText = "Edit Profile"
+      } else {
+        this.is_applicant = false
+        this.btnText = "PLACEHOLDER"
+      }
     }
+  
 
     // // console.log(this.is_applicant)
   
