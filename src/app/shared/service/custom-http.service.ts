@@ -67,6 +67,16 @@ export class CustomHttpService{
       return x
   }
 
+  rget(url, data=undefined) {
+    // console.log(this.token)
+    var oUrl = url
+    // console.log(oUrl)
+    // let headers = new Headers();
+     var x =  this.http.get(oUrl, data);
+      // console.log(x)
+      return x
+  }
+
   query(data) {
     var url = "https://api.krownetwork.com/query?token=" + this.token
     console.log(url)
