@@ -5,24 +5,24 @@ import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Main components
-import { LoginComponent } from './main/login/login.component';
-import { RegisterComponent } from './main/register/register.component';
-import { PageNotFoundComponent } from './main/page-not-found/page-not-found.component';
-import { NewPasswordComponent } from './main/newpassword/newpassword.component';
-import { RegistrationConfirmationComponent, LogoutComponent } from './main/confirm/confirmRegistration.component';
-import { HomeComponent } from "./main/home/home.component";
-import { ForgotPassword2Component, ForgotPasswordStep1Component } from './main/forgot/forgotPassword.component';
-import { ResendCodeComponent } from './main/resend/resendCode.component';
+import { LoginComponent } from './shared/main/login/login.component';
+import { RegisterComponent } from './shared/main/register/register.component';
+import { PageNotFoundComponent } from './shared/main/page-not-found/page-not-found.component';
+import { NewPasswordComponent } from './shared/main/newpassword/newpassword.component';
+import { RegistrationConfirmationComponent, LogoutComponent } from './shared/main/confirm/confirmRegistration.component';
+import { HomeComponent } from "./shared/main/home/home.component";
+import { ForgotPassword2Component, ForgotPasswordStep1Component } from './shared/main/forgot/forgotPassword.component';
+import { ResendCodeComponent } from './shared/main/resend/resendCode.component';
 
 // Employer components
 // import { EmployerProfileComponent } from './employer/employer-profile/employer-profile.component';
 
-import { SearchComponent } from './search/search.component';
+import { SearchComponent } from './shared/search/search.component';
 
 // Job components
 
-import { UploadPicComponent } from './upload-pic/upload-pic.component'
-import { CalendarComponent } from './calendar/calendar.component';
+import { UploadPicComponent } from './shared/upload-pic/upload-pic.component'
+import { CalendarComponent } from './shared/calendar/calendar.component';
 
 // Applicant components
 import { ApplicantProfileComponent } from './applicant/applicant-profile/applicant-profile.component';
@@ -48,23 +48,23 @@ import { HelpComponent } from './shared/help/help.component';
 import { EditComponent } from "./shared/edit/edit.component"
 
 // import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-profile-info/employer-profile-info.component'
-import { HomepageComponent } from './homepage/homepage.component'
-import { FAQsComponent } from './faqs/faqs.component'
+import { HomepageComponent } from './shared/homepage/homepage.component'
+import { FAQsComponent } from './shared/faqs/faqs.component'
 // import { DeleteComponent } from './delete/delete.component';
-import { FeedbackComponent } from './feedback/feedback.component';
-import { MessagingComponent } from './messaging/messaging.component';
+import { FeedbackComponent } from './shared/feedback/feedback.component';
+import { MessagingComponent } from './shared/messaging/messaging.component';
 
-import { VerifyJobComponent } from './verify-job/verify-job.component';
-import {TermsComponent} from "./terms/terms.component"
-import {PrivacypolicyComponent} from "./privacypolicy/privacypolicy.component"
+import { VerifyJobComponent } from './shared/verify-job/verify-job.component';
+import {TermsComponent} from "./shared/terms/terms.component"
+import {PrivacypolicyComponent} from "./shared/privacypolicy/privacypolicy.component"
 
-import { AdminLoginComponent } from "./admin/admin-login/admin-login.component"
-import { AdminHomeComponent } from './admin/admin-home/admin-home.component'
-import { UserSearchComponent } from './admin/user-search/user-search.component'
+import { AdminLoginComponent } from "./shared/admin/admin-login/admin-login.component"
+import { AdminHomeComponent } from './shared/admin/admin-home/admin-home.component'
+import { UserSearchComponent } from './shared/admin/user-search/user-search.component'
 // import { EmployerPostJobsComponent } from './shared/employer-post-jobs/employer-post-jobs.component'
 import { JobProfileComponent } from './shared/profile-info2/job-profile/job-profile.component';
 // import { EditJobComponent } from './shared/edit-job/edit-job.component'
-import { SearchJobComponent } from './search-job/search-job.component';
+import { SearchJobComponent } from './shared/search-job/search-job.component';
 
 
 const appRoutes: Routes = [

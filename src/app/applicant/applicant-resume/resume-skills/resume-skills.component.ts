@@ -1,10 +1,10 @@
 import { Component, OnInit, ComponentFactoryResolver, ViewChild } from '@angular/core';
-import { UpdateResumeService } from '../../../service/update-resume.service';
+import { UpdateResumeService } from '../../../shared/service/update-resume.service';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { ItemType } from '../../../shared/item-type-constructor';
 import { SkillsMainComponent } from './skills-main.component';
 import {Router, ActivatedRoute, Params} from '@angular/router';
-import { CustomHttpService } from '../../../service/custom-http.service';
+import { CustomHttpService } from '../../../shared/service/custom-http.service';
 
 
 @Component({

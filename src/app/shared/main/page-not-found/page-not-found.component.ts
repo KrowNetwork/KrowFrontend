@@ -9,7 +9,7 @@ export class PageNotFoundComponent implements OnInit {
 
   constructor() { }
 
-  PNFIMAGE = require("../../../images/404.png");
+  PNFIMAGE = require("../../../../images/404.png");
 
   ngOnInit() { 
   }

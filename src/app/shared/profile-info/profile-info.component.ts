@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
-import { CreateUserService } from '../../service/create-user.service';
+import { CreateUserService } from '../../shared/service/create-user.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
 import { log } from 'util';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
 // import { splitAtColon } from '../../../../node_modules/@angular/compiler/src/util';
-import { CustomHttpService } from '../../service/custom-http.service';
+import { CustomHttpService } from '../../shared/service/custom-http.service';
 
 @Component({
   selector: 'app-profile-info',

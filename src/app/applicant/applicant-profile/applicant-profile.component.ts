@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserLoginService } from '../../service/user-login.service';
+import { UserLoginService } from '../../shared/service/user-login.service';
 import { log } from 'util';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
-import { CustomHttpService } from '../../service/custom-http.service';
+import { CustomHttpService } from '../../shared/service/custom-http.service';
 
 
 declare var require: any;

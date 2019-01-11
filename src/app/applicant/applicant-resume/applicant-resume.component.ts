@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
-import { CustomHttpService } from '../../service/custom-http.service';
+import { CustomHttpService } from '../../shared/service/custom-http.service';
 
 
 @Component({

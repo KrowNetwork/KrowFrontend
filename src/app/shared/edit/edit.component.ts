@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewContainerRef, ViewChild } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { CreateUserService } from '../../service/create-user.service';
+import { CreateUserService } from '../../shared/service/create-user.service';
 import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { log } from 'util';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
-import { CustomHttpService } from '../../service/custom-http.service';
+import { CustomHttpService } from '../../shared/service/custom-http.service';
 import { ItemType } from '../../shared/item-type-constructor';
 import { EducationMainComponent } from '../../applicant/applicant-resume/resume-education/education-main.component';
 import { ResumeVolunteerComponent } from '../../applicant/applicant-resume/resume-volunteer/resume-volunteer.component';
@@ -17,7 +17,7 @@ import { VolunteerMainComponent } from '../../applicant/applicant-resume/resume-
 import { ExperienceMainComponent } from '../../applicant/applicant-resume/resume-experience/experience-main.component';
 import { v } from '@angular/core/src/render3';
 import { ConstantPool } from '@angular/compiler/src/constant_pool';
-import { S3Service } from "../../service/s3.service"
+import { S3Service } from "../../shared/service/s3.service"
 var aws = require('aws-sdk');
 
 @Component({

@@ -1,16 +1,16 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation  } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { HttpClient, HttpErrorResponse, HttpBackend  } from '@angular/common/http';
-import { CreateUserService } from '../../../service/create-user.service';
+import { CreateUserService } from '../../../shared/service/create-user.service';
 import { log } from 'util';
 import { encodeUriFragment } from '@angular/router/src/url_tree';
-import { CustomHttpService } from '../../../service/custom-http.service';
+import { CustomHttpService } from '../../../shared/service/custom-http.service';
 import { Overlay } from 'ngx-modialog';
 import { Modal } from 'ngx-modialog/plugins/bootstrap'
-import { UserLoginService } from '../../../service/user-login.service';
-import {GcTalentService} from "../../../service/gc-talent.service"
+import { UserLoginService } from '../../../shared/service/user-login.service';
+import {GcTalentService} from "../../../shared/service/gc-talent.service"
 import remarkable from 'remarkable';
-import { CompareService } from "../../../service/compare.service"
+import { CompareService } from "../../../shared/service/compare.service"
 
 // bootstrap4Mode()
 // import { post } from '../../../../node_modules/@types/selenium-webdriver/http';

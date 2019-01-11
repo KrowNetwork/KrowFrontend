@@ -1,4 +1,4 @@
-import { environment } from "../../environments/environment";
+import { environment } from "../../../environments/environment";
 import { Injectable } from "@angular/core";
 import { CognitoCallback, CognitoUtil, LoggedInCallback } from "./cognito.service";
 import { AuthenticationDetails, CognitoUser, CognitoUserSession, CognitoRefreshToken } from "amazon-cognito-identity-js";

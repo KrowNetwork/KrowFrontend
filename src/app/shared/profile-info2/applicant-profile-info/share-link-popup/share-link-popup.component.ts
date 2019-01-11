@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalService } from '../../../../service/modal.service';
-import { CustomHttpService } from '../../../../service/custom-http.service'
+import { ModalService } from '../../../../shared/service/modal.service';
+import { CustomHttpService } from '../../../../shared/service/custom-http.service'
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({

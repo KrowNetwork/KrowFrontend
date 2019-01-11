@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { SaveResumeService } from './save-resume.service';
+import { SaveResumeService } from './shared/service/save-resume.service';
 
 describe('SaveResumeService', () => {
   beforeEach(() => {

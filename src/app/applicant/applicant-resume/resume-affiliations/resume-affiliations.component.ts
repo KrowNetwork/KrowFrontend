@@ -7,8 +7,8 @@ import { ItemType } from '../../../shared/item-type-constructor';
 import { AffiliationsMainComponent } from './affiliations-main.component';
 import { AffiliationsDirective } from './affiliations.directive';
 import { InterfaceComponent } from '../../../shared/interface-component.component';
-import { UpdateResumeService } from '../../../service/update-resume.service';
-import { CustomHttpService } from '../../../service/custom-http.service';
+import { UpdateResumeService } from '../../../shared/service/update-resume.service';
+import { CustomHttpService } from '../../../shared/service/custom-http.service';
 
 @Component({
   selector: 'app-resume-affiliations',

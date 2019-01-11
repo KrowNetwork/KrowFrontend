@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { CustomHttpService } from '../../service/custom-http.service';
+import { CustomHttpService } from '../../shared/service/custom-http.service';
 
 
 @Component({

@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { GoogleAnalyticsService } from './service/google-analytics.service';
+import { GoogleAnalyticsService } from './shared/service/google-analytics.service';
 
 describe('GoogleAnalyticsService', () => {
   beforeEach(() => {

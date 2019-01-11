@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { AwsUtil } from "./service/aws.service";
-import { UserLoginService } from "./service/user-login.service";
-import { CognitoUtil, LoggedInCallback } from "./service/cognito.service";
+import { AwsUtil } from "./shared/service/aws.service";
+import { UserLoginService } from "./shared/service/user-login.service";
+import { CognitoUtil, LoggedInCallback } from "./shared/service/cognito.service";
 import { Router, NavigationEnd } from "@angular/router";
-import {GoogleAnalyticsService} from "./service/google-analytics.service"
+import {GoogleAnalyticsService} from "./shared/service/google-analytics.service"
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'

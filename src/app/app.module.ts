@@ -19,15 +19,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { routing } from './app.routes';
 
 // Main components
-import { LoginComponent } from './main/login/login.component';
-import { RegisterComponent } from './main/register/register.component';
-import { PageNotFoundComponent } from './main/page-not-found/page-not-found.component';
+import { LoginComponent } from './shared/main/login/login.component';
+import { RegisterComponent } from './shared/main/register/register.component';
+import { PageNotFoundComponent } from './shared/main/page-not-found/page-not-found.component';
 import { ComingSoonComponent } from './shared/coming-soon/coming-soon.component';
-import { NewPasswordComponent } from './main/newpassword/newpassword.component';
-import { RegistrationConfirmationComponent, LogoutComponent } from './main/confirm/confirmRegistration.component';
-import { HomeComponent } from './main/home/home.component';
-import { ForgotPassword2Component, ForgotPasswordStep1Component } from './main/forgot/forgotPassword.component';
-import { ResendCodeComponent } from './main/resend/resendCode.component';
+import { NewPasswordComponent } from './shared/main/newpassword/newpassword.component';
+import { RegistrationConfirmationComponent, LogoutComponent } from './shared/main/confirm/confirmRegistration.component';
+import { HomeComponent } from './shared/main/home/home.component';
+import { ForgotPassword2Component, ForgotPasswordStep1Component } from './shared/main/forgot/forgotPassword.component';
+import { ResendCodeComponent } from './shared/main/resend/resendCode.component';
 
 // Employer components
 // import { EmployerProfileComponent } from './employer/employer-profile/employer-profile.component';
@@ -64,17 +64,17 @@ import { ProfileInfoComponent } from './shared/profile-info/profile-info.compone
 import { BasicInfoCollectorComponent } from './shared/basic-info-collector/basic-info-collector.component';
 
 // Services
-import { UpdateResumeService } from './service/update-resume.service';
-import { CognitoUtil } from './service/cognito.service';
-import { AwsUtil } from './service/aws.service';
-import { UserLoginService } from './service/user-login.service';
-import { UserParametersService } from './service/user-parameters.service';
-import { UserRegistrationService } from './service/user-registration.service';
-import { CreateUserService } from './service/create-user.service';
-import { CustomHttpService } from "./service/custom-http.service";
-import { PreviousRouteService } from "./service/previous-route.service";
-import { DomService } from "./service/dom.service";
-import { ModalService } from "./service/modal.service";
+import { UpdateResumeService } from './shared/service/update-resume.service';
+import { CognitoUtil } from './shared/service/cognito.service';
+import { AwsUtil } from './shared/service/aws.service';
+import { UserLoginService } from './shared/service/user-login.service';
+import { UserParametersService } from './shared/service/user-parameters.service';
+import { UserRegistrationService } from './shared/service/user-registration.service';
+import { CreateUserService } from './shared/service/create-user.service';
+import { CustomHttpService } from "./shared/service/custom-http.service";
+import { PreviousRouteService } from "./shared/service/previous-route.service";
+import { DomService } from "./shared/service/dom.service";
+import { ModalService } from "./shared/service/modal.service";
 
 // Directives
 import { EducationDirective } from './applicant/applicant-resume/resume-education/education.directive';
@@ -82,51 +82,56 @@ import { ExperienceDirective } from './applicant/applicant-resume/resume-experie
 import { AchievementDirective } from './applicant/applicant-resume/resume-achievements/achievement.directive';
 import { VolunteerDirective } from './applicant/applicant-resume/resume-volunteer/volunteer.directive';
 import { AffiliationsDirective } from './applicant/applicant-resume/resume-affiliations/affiliations.directive';
-import { BottomBarComponent } from './bottom-bar/bottom-bar.component';
+import { BottomBarComponent } from './shared/bottom-bar/bottom-bar.component';
 import { HelpComponent } from './shared/help/help.component';
 import { ProfileInfo2Component } from './shared/profile-info2/profile-info2.component';
 import { ApplicantProfileInfoPrivateComponent } from './shared/profile-info2/applicant-profile-info/applicant-profile-info.component';
 import { EditComponent } from "./shared/edit/edit.component";
 // import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-profile-info/employer-profile-info.component';
-import { HomepageComponent } from './homepage/homepage.component';
-import { FAQsComponent } from './faqs/faqs.component';
-import { UploadPicComponent } from './upload-pic/upload-pic.component'
+import { HomepageComponent } from './shared/homepage/homepage.component';
+import { FAQsComponent } from './shared/faqs/faqs.component';
+import { UploadPicComponent } from './shared/upload-pic/upload-pic.component'
 
 
 // import { ImageCropperModule } from 'ngx-image-cropper';
 // import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 import {ImageCropperModule } from "ng2-img-cropper";
-import { CalendarComponent } from './calendar/calendar.component';
-import { ContractComponent } from './contract/contract.component';
+import { CalendarComponent } from './shared/calendar/calendar.component';
+import { ContractComponent } from './shared/contract/contract.component';
 // import { DeleteComponent } from './delete/delete.component';
 
 
 import { ModalModule } from 'ngx-modialog';
 import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
 // import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
-import { FeedbackComponent } from './feedback/feedback.component';
-import { MessagingComponent } from './messaging/messaging.component';
-import { TopBarComponent } from './top-bar/top-bar.component';
+import { FeedbackComponent } from './shared/feedback/feedback.component';
+import { MessagingComponent } from './shared/messaging/messaging.component';
+import { TopBarComponent } from './shared/top-bar/top-bar.component';
 // import { VirtualListModule } from 'angular-virtual-list';
 import { VirtualScrollModule } from 'angular2-virtual-scroll';
 import { ContextMenuModule } from 'ngx-contextmenu';
-import { MessagingPopupComponent } from './messaging/messaging-popup/messaging-popup.component';
-import { NewEventCalendarPopupComponent } from './calendar/new-event-calendar-popup/new-event-calendar-popup.component';
-import { VerifyJobComponent } from './verify-job/verify-job.component';
-import { SearchComponent } from './search/search.component';
+import { MessagingPopupComponent } from './shared/messaging/messaging-popup/messaging-popup.component';
+import { NewEventCalendarPopupComponent } from './shared/calendar/new-event-calendar-popup/new-event-calendar-popup.component';
+import { VerifyJobComponent } from './shared/verify-job/verify-job.component';
+import { SearchComponent } from './shared/search/search.component';
 // import { ContextMenuService } from 'angular2-contextmenu/src/contextMenu.service';
 // import { luegg } from "angularjs-scroll-glue"
-import {TermsComponent} from "./terms/terms.component"
-import {PrivacypolicyComponent} from "./privacypolicy/privacypolicy.component"
-import { AdminLoginComponent } from "./admin/admin-login/admin-login.component";
-import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
-import { UserSearchComponent } from './admin/user-search/user-search.component'
+import {TermsComponent} from "./shared/terms/terms.component"
+import {PrivacypolicyComponent} from "./shared/privacypolicy/privacypolicy.component"
+import { AdminLoginComponent } from "./shared/admin/admin-login/admin-login.component";
+import { AdminHomeComponent } from './shared/admin/admin-home/admin-home.component';
+import { UserSearchComponent } from './shared/admin/user-search/user-search.component'
 import {ShareLinkPopupComponent} from "./shared/profile-info2/applicant-profile-info/share-link-popup/share-link-popup.component";
 // import { EmployerPostJobsComponent } from './shared/employer-post-jobs/employer-post-jobs.component'
 // import {JobProfileComponent}
-import {GoogleAnalyticsService} from "./service/google-analytics.service";
-import { SearchJobComponent } from './search-job/search-job.component';
+import {GoogleAnalyticsService} from "./shared/service/google-analytics.service";
+import { SearchJobComponent } from './shared/search-job/search-job.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { ManageJobsComponent } from './employer/manage-jobs/manage-jobs.component';
+import { PostJobsComponent } from './employer/post-jobs/post-jobs.component';
+import { EmployerProfileComponent } from './employer/employer-profile/employer-profile.component';
+import { CandidateListComponent } from './employer/candidate-list/candidate-list.component';
+import { EmployerEditComponent } from './employer/employer-edit/employer-edit.component';
 // import { CompareService } from './service/compare.service'
 // import { EditJobComponent } from './shared/edit-job/edit-job.component';
 // import { HireRequestsComponent } from "./shared/profile-info2/applicant-profile-info/hire-requests/hire-requests.component"
@@ -193,6 +198,11 @@ import { MarkdownModule } from 'ngx-markdown';
     UserSearchComponent,
     ShareLinkPopupComponent,
     SearchJobComponent,
+    ManageJobsComponent,
+    PostJobsComponent,
+    EmployerProfileComponent,
+    CandidateListComponent,
+    EmployerEditComponent,
     // EmployerPostJobsComponent,
     // EditJobComponent,
     // HireRequestsComponent

@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { DataShareService } from './data-share.service';
+import { DataShareService } from './shared/service/data-share.service';
 
 describe('DataShareService', () => {
   beforeEach(() => {

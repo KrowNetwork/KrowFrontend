@@ -1,7 +1,7 @@
 import { Component, Input }  from '@angular/core';
 
 import { InterfaceComponent } from '../../../shared/interface-component.component';
-import { S3Service } from "../../../service/s3.service"
+import { S3Service } from "../../../shared/service/s3.service"
 //TODO: Fontawesome icons for Work
 @Component({
   templateUrl: `experience-main.component.html`

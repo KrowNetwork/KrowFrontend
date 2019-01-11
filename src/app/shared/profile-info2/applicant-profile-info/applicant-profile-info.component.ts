@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient, HttpErrorResponse  } from '@angular/common/http';
 // import { CreateUserService } from '../../../service/create-user.service';
-import { UserLoginService } from '../../../service/user-login.service';
+import { UserLoginService } from '../../service/user-login.service';
 import {Router, ActivatedRoute, Params, NavigationEnd} from '@angular/router';
-import { S3Service } from "../../../service/s3.service"
-import { CustomHttpService } from "../../../service/custom-http.service"
+import { S3Service } from "../../service/s3.service"
+import { CustomHttpService } from "../../service/custom-http.service"
 import { log } from 'util';
-import { DataShareService } from "../../../service/data-share.service"
-import { ModalService } from '../../../service/modal.service'; 
+import { DataShareService } from "../../service/data-share.service"
+import { ModalService } from '../../service/modal.service'; 
 import { ShareLinkPopupComponent} from './share-link-popup/share-link-popup.component';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
