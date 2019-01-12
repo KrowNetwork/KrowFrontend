@@ -67,7 +67,7 @@ import { JobProfileComponent } from './shared/profile-info2/job-profile/job-prof
 // import { EditJobComponent } from './shared/edit-job/edit-job.component'
 import { SearchJobComponent } from './shared/search-job/search-job.component';
 import { EmployerProfileComponent } from "./employer/employer-profile/employer-profile.component"
-import { EmployerEditComponent } from "./employer/employer-edit/employer-edit.component"
+// import { EmployerEditComponent } from "./employer/employer-edit/employer-edit.component"
 
 const appRoutes: Routes = [
     {
