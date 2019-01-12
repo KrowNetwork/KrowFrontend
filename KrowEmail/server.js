@@ -14,14 +14,18 @@ const http = require('http');
 const AWS = require("aws-sdk");
 var jre = require('node-jre');
 const fileUpload = require('express-fileupload');
-
+const vision = require('@google-cloud/vision');
 const {google} = require('googleapis');
 var privatekey = require("./privatekey.json");
 const multer = require('multer');
 console.log("k")
+const IncomingForm = require('formidable').IncomingForm;
 
 if (process.platform != "win32")
     process.env['GOOGLE_APPLICATION_CREDENTIALS'] = "privatekey.json"
+else {
+    process.env['GOOGLE_APPLICATION_CREDENTIALS'] = "privatekey.json"
+}
 
 
 // var options = {
@@ -86,6 +90,33 @@ app.use(function(req, res, next) {
   app.use(bodyParser.json())
 
   //app.use(fileUpload({limits: { fileSize: 5 * 1024 * 1024 } })); //limits to 5MB
+  app.post('/ocr/:filename', function (req, res) {
+    var filename = path.basename(req.params.filename);
+    filename = path.resolve(__dirname, filename);
+    var form = new IncomingForm()
+    form.parse(req, async function (err, fields, files) {
+
+
+        console.log("imagePath:"+files.filepath.path);
+        const client = new vision.ImageAnnotatorClient();
+        const [result] = await client.textDetection(files.filepath.path);
+        const detections = result.textAnnotations;
+        res.send(detections)
+        console.log('Text:');
+        // detections.forEach(text => console.log(text));
+        //assume <input type = "file" name="filepath">
+        res.send("file uploaded");
+
+    });
+    console.log("here")
+    form.on("file", (field, file) => {
+        console.log(file)
+    })
+    form.on("end", () => {
+        res.status(200)
+    })
+  });
+
 
   app.post('/resumeParse', async (req, res, next) => {
         var x = this
@@ -437,6 +468,8 @@ app.get("/get-job", (req, res, next) => {
             
         });
 
+
+    
 
     app.post("/p", (req, res, next) => {
         var url = req.query.url

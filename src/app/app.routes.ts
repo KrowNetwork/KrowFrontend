@@ -68,7 +68,7 @@ import { JobProfileComponent } from './shared/profile-info2/job-profile/job-prof
 import { SearchJobComponent } from './shared/search-job/search-job.component';
 import { EmployerProfileComponent } from "./employer/employer-profile/employer-profile.component"
 // import { EmployerEditComponent } from "./employer/employer-edit/employer-edit.component"
-
+import { ResumeParserComponent } from "./shared/resume-parser/resume-parser.component"
 const appRoutes: Routes = [
     {
         path: '',
@@ -317,6 +317,10 @@ const secureHome: Routes = [
                 path: 'edit',
                 component: EmployerEditComponent,
             },
+            {
+                path: "resume-parser",
+                component: ResumeParserComponent
+            }
     //         {
     //             path: "upload",
     //             component: UploadPicComponent
