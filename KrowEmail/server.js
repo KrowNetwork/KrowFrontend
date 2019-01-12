@@ -104,7 +104,7 @@ app.use(function(req, res, next) {
 
         console.log("imagePath:"+files.filepath.path);
         const client = new vision.ImageAnnotatorClient();
-        const [result] = await client.textDetection(files.filepath.path);
+        const [result] = await client.documentTextDetection(files.filepath.path);
         const detections = result.textAnnotations;
         res.send(detections)
         console.log('Text:');
