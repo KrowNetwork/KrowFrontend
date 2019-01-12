@@ -87,6 +87,7 @@ import { HelpComponent } from './shared/help/help.component';
 import { ProfileInfo2Component } from './shared/profile-info2/profile-info2.component';
 import { ApplicantProfileInfoPrivateComponent } from './shared/profile-info2/applicant-profile-info/applicant-profile-info.component';
 import { EditComponent } from "./shared/edit/edit.component";
+
 // import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-profile-info/employer-profile-info.component';
 import { HomepageComponent } from './shared/homepage/homepage.component';
 import { FAQsComponent } from './shared/faqs/faqs.component';

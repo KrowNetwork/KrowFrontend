@@ -45,7 +45,8 @@ import { ProfileInfo2Component } from './shared/profile-info2/profile-info2.comp
 
 
 import { HelpComponent } from './shared/help/help.component';
-import { EditComponent } from "./shared/edit/edit.component"
+import { EditComponent } from "./shared/edit/edit.component";
+import { EmployerEditComponent } from './employer/employer-edit/employer-edit.component';
 
 // import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-profile-info/employer-profile-info.component'
 import { HomepageComponent } from './shared/homepage/homepage.component'
@@ -312,10 +313,10 @@ const secureHome: Routes = [
     //             path: 'profile-info/:employerID',
     //             component: EmployerProfileInfoComponent
     //         },
-    //         {
-    //             path: "edit",
-    //             component: EditComponent,
-    //         },
+            {
+                path: 'edit',
+                component: EmployerEditComponent,
+            },
     //         {
     //             path: "upload",
     //             component: UploadPicComponent

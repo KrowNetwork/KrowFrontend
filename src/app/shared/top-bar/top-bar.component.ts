@@ -64,7 +64,7 @@ export class TopBarComponent implements OnInit {
     // this.userService.verifyUserType(localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"))
     // console.log("Applicant Component: constructor");
     if (sessionStorage.getItem("accountType") === undefined) {
-      this.http.rget("https://api.krownetwork.com/check-user", {id: this.user}).subscribe(
+      this.http.get("https://api.krownetwork.com/check-user", {id: this.user}).subscribe(
         data => {
           var res = data["response"]
           if (res == "applicant") {
@@ -157,6 +157,7 @@ toggleMenu() {
     if (this.is_applicant) {
       this.router.navigate(["/applicant/edit"])
     } else {
+      console.log('is employer!')
       this.router.navigate(["/employer/edit"])
     }
   }
