@@ -86,16 +86,21 @@ app.use(function(req, res, next) {
   });
 
   app.use(bodyParser.urlencoded({ extended: false }))
+  app.use(bodyParser.json({limit: '50mb'}))
+  app.use(bodyParser.urlencoded({extended:true, limit:'50mb'}))
+//   app.use(bodyParser.)
   // parse application/json
-  app.use(bodyParser.json())
+//   app.use(bodyParser.json())
 
   //app.use(fileUpload({limits: { fileSize: 5 * 1024 * 1024 } })); //limits to 5MB
   app.post('/ocr/:filename', function (req, res) {
+      console.log("a")
     var filename = path.basename(req.params.filename);
     filename = path.resolve(__dirname, filename);
     var form = new IncomingForm()
     form.parse(req, async function (err, fields, files) {
-
+        console.log(err)
+        console.log(files)
 
         console.log("imagePath:"+files.filepath.path);
         const client = new vision.ImageAnnotatorClient();
@@ -960,11 +965,11 @@ app.post("/accept-hire", (req, res, next) => {
     })
 })
 
-https.createServer(options, app).listen(443, function (err) {
-    if (err) {
-      throw err
-    }
-    // // console.log(`worker ${process.pid} started`);
+// https.createServer(options, app).listen(443, function (err) {
+//     if (err) {
+//       throw err
+//     }
+//     // // console.log(`worker ${process.pid} started`);
 
-})
-// app.listen(4200, () => console.log(`Example app listening on port ${port}!`))
+// })
+app.listen(2000, () => console.log(`Example app listening on port ${port}!`))

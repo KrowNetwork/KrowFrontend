@@ -28,7 +28,12 @@
                     <embed src="http://support.lexmark.com/library/LEXMARK/Blank%20Page.jpg" width="395" height="642">
                    </div>
                   <div class="col-lg-6 column">
-                    <button>Upload Resume</button>
+                      <div>
+                          <input #fileUpload type="file" (click)="fileUpload.value = null" (change)="onFileChanged($event)" style="display:none;" name="userimage">
+                          <!-- <img [src]="url"> -->
+                      </div>
+                      <button mat-raised-button color="accent" (click)="fileUpload.click()">CHOOSE IMAGE</button>
+
                     <span class="pf-title"><h5>Experience</h5><button><i class="fa fa-plus" aria-hidden="true"></i></button></span>
                     <div class="pf-field">
                       <input type="textArea" placeholder="Drag any experiences directly from the resume into this box" />
