@@ -77,6 +77,19 @@ export class CustomHttpService{
       return x
   }
 
+  createFolder(url, params) {
+    // console.log(this.token)
+    var oUrl = url
+    // console.log(oUrl)
+    // let headers = new Headers();
+     var x =  this.http.get(oUrl, {params: {
+       folder: params["folder"],
+       id: params["id"]
+     }});
+      // console.log(x)
+      return x
+  }
+
   query(data) {
     var url = "https://api.krownetwork.com/query?token=" + this.token
     console.log(url)

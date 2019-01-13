@@ -8,6 +8,7 @@ import { CustomHttpService } from "../../shared/service/custom-http.service"
 })
 export class ManageJobsComponent implements OnInit {
   user: string
+  response = []
   constructor(
     public http: CustomHttpService
   ) { 
@@ -17,6 +18,7 @@ export class ManageJobsComponent implements OnInit {
   ngOnInit() {
     this.http.rget("https://api.krownetwork.com/get-employer-folders?id=" + this.user).subscribe(
       data => {
+        this.response = data["response"];
         console.log(data)
       }
     )

@@ -290,7 +290,7 @@ app.get("/get-employer-folders", (req, res, next) => {
     })
 })
 
-app.get("/create-employer-files", (req, res, next) => {
+app.get("/create-employer-folder", (req, res, next) => {
     var projectId = "krow-network-1533419444055"
     const storage = new Storage({
         projectId: projectId,
@@ -298,6 +298,8 @@ app.get("/create-employer-files", (req, res, next) => {
 
     var folder = req.query.folder
     var id = req.query.id
+    var bufferString = req.query.bufferString
+    console.log(bufferString)
     // var filename = req.body.filename
 
     // console.log(req.body)
@@ -318,27 +320,54 @@ app.get("/create-employer-files", (req, res, next) => {
 
     
     const path = require('path');
+    // console.log(err)
+        // console.log(files.filepath)
+    var f = bucket.file(id + "/" + folder + "/base.json") 
 
+    var buff = Buffer.from(bufferString, 'binary').toString('utf-8');
+
+	const stream = f.createWriteStream({
+		metadata: {
+			contentType: 'application/json'
+		}
+	});
+	stream.on('error', (err) => {
+		res.status(500).send({response: "err"})
+	});
+	stream.on('finish', () => {
+		res.status(200).send({response: "done"})
+	});
+	stream.end(new Buffer(buff).toString());
+
+
+    // f.createWriteStream()
+    // .on('error', function(err) {res.status(500).send({response: "err"})})
+    
+    // .on('finish', function() {
+    //     console.log("done")
+    //     res.status(200).send({response: "done"})
+    // // The file upload is complete.
+    // });
 
     // var filename = path.basename(req.params.filename);
     // filename = path.resolve(__dirname, filename);
-    var form = new IncomingForm()
-    form.parse(req, async function (err, fields, files) {
-        console.log(err)
-        // console.log(files.filepath)
-        var f = bucket.file(id + "/" + folder + "/" + files.filepath.name) 
+    // var form = new IncomingForm()
+    // form.parse(req, async function (err, fields, files) {
+    //     console.log(err)
+    //     // console.log(files.filepath)
+    //     var f = bucket.file(id + "/" + folder + "/" + files.filepath.name) 
 
 
-        fs.createReadStream(files.filepath.path)
-        .pipe(f.createWriteStream())
-        .on('error', function(err) {res.status(500).send({response: "err"})})
+    //     fs.createReadStream(files.filepath.path)
+    //     .pipe(f.createWriteStream())
+    //     .on('error', function(err) {res.status(500).send({response: "err"})})
         
-        .on('finish', function() {
-            console.log("done")
-            res.status(200).send({response: "done"})
-        // The file upload is complete.
-        });
-    });
+    //     .on('finish', function() {
+    //         console.log("done")
+    //         res.status(200).send({response: "done"})
+    //     // The file upload is complete.
+    //     });
+    // });
 })
 
 app.get("/get-job", (req, res, next) => {
