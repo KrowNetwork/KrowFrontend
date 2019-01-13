@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild,ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreateUserService } from '../../shared/service/create-user.service';
-import { EditComponent } from '../edit/edit.component';
+import { EditComponent } from '../../applicant/edit/edit.component';
 import { ResumeExperienceComponent } from '../../applicant/applicant-resume/resume-experience/resume-experience.component'
 
 @Component({

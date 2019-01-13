@@ -45,8 +45,12 @@ import { ProfileInfo2Component } from './shared/profile-info2/profile-info2.comp
 
 
 import { HelpComponent } from './shared/help/help.component';
-import { EditComponent } from "./shared/edit/edit.component";
+import { EditComponent } from "./applicant/edit/edit.component";
 import { EmployerEditComponent } from './employer/employer-edit/employer-edit.component';
+import { EmployerProfileInfoComponent } from './employer/employer-profile-info/employer-profile-info.component';
+import { ManageJobsComponent } from './employer/manage-jobs/manage-jobs.component';
+import { PostJobsComponent } from './employer/post-jobs/post-jobs.component';
+import { CandidateListComponent } from './employer/candidate-list/candidate-list.component';
 
 // import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-profile-info/employer-profile-info.component'
 import { HomepageComponent } from './shared/homepage/homepage.component'
@@ -300,10 +304,11 @@ const secureHome: Routes = [
     },
     { 
         path: 'employer',  
+        component: EmployerProfileComponent, 
         children: [
             { 
                 path: '', 
-                component: EmployerProfileComponent
+                component: EmployerProfileInfoComponent
             },
     //         { 
     //             path: 'profile-info',
@@ -320,12 +325,20 @@ const secureHome: Routes = [
             {
                 path: "resume-parser",
                 component: ResumeParserComponent
-            }
-    //         {
-    //             path: "upload",
-    //             component: UploadPicComponent
-    //         },
-    //         {
+            },
+            {
+                path: "upload",
+                component: UploadPicComponent
+            },
+            {
+                path: "manage-jobs",
+                component: ManageJobsComponent
+            },
+            {
+                path: "post-jobs",
+                component: PostJobsComponent
+            },
+            // {
     //             path: "create",
     //             component: EmployerPostJobsComponent
     //         }

@@ -86,7 +86,7 @@ import { BottomBarComponent } from './shared/bottom-bar/bottom-bar.component';
 import { HelpComponent } from './shared/help/help.component';
 import { ProfileInfo2Component } from './shared/profile-info2/profile-info2.component';
 import { ApplicantProfileInfoPrivateComponent } from './shared/profile-info2/applicant-profile-info/applicant-profile-info.component';
-import { EditComponent } from "./shared/edit/edit.component";
+import { EditComponent } from "./applicant/edit/edit.component";
 
 // import { EmployerProfileInfoComponent } from './shared/profile-info2/employer-profile-info/employer-profile-info.component';
 import { HomepageComponent } from './shared/homepage/homepage.component';
@@ -134,6 +134,7 @@ import { EmployerProfileComponent } from './employer/employer-profile/employer-p
 import { CandidateListComponent } from './employer/candidate-list/candidate-list.component';
 import { EmployerEditComponent } from './employer/employer-edit/employer-edit.component';
 import { ResumeParserComponent } from './shared/resume-parser/resume-parser.component';
+import { EmployerProfileInfoComponent } from './employer/employer-profile-info/employer-profile-info.component';
 // import { CompareService } from './service/compare.service'
 // import { EditJobComponent } from './shared/edit-job/edit-job.component';
 // import { HireRequestsComponent } from "./shared/profile-info2/applicant-profile-info/hire-requests/hire-requests.component"
@@ -206,6 +207,7 @@ import { ResumeParserComponent } from './shared/resume-parser/resume-parser.comp
     CandidateListComponent,
     EmployerEditComponent,
     ResumeParserComponent,
+    EmployerProfileInfoComponent,
     // EmployerPostJobsComponent,
     // EditJobComponent,
     // HireRequestsComponent
