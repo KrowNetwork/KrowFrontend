@@ -190,19 +190,32 @@ export class UserLoginService {
         //     localStorage.setItem("tokenCreation", new Date().toString())
         // }
     }
-
+    
     isAuthenticated(callback: LoggedInCallback, force = false) {
+        var CognitoRefreshToken = require('amazon-cognito-identity-js').CognitoRefreshToken;
         if (callback == null)
             throw("UserLoginService: Callback in isAuthenticated() cannot be null");
 
         let cognitoUser = this.cognitoUtil.getCurrentUser();
         var createNewToken=false;
+        console.log(cognitoUser)
         if (cognitoUser != null) {
+            var token = new CognitoRefreshToken({ RefreshToken: localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.0379a201-001b-4010-9a04-93f4a2ca9370.refreshToken") })
+            // cognitoUser.refreshSession(token, (err, session) => { console.log(session) });
+            // callback.isLoggedIn("", false)
+            // cognitoUser.signOut()
+            // localStorage.clear()
+            // sessionStorage.clear()
+            // callback.isLoggedIn("", false)
+            var self = this
             cognitoUser.getSession(function (err, session) {
                 if (err) {
                     // cognitoUser.refreshSession(refreshToken, (err, session) => {
                     //     if (err) {
+                        console.log(err)
+                        cognitoUser.signOut()
                         localStorage.clear()
+                        sessionStorage.clear()
                         callback.isLoggedIn(err, false)
                     //     } else {
                     //         callback.isLoggedIn(session, true)
@@ -210,7 +223,7 @@ export class UserLoginService {
                     //     }
 
                     } else {
-
+                        cognitoUser.refreshSession(token, (err, session) => { console.log(session) });
                         callback.isLoggedIn(err, true)
                     }})
 
@@ -221,7 +234,10 @@ export class UserLoginService {
                 else {
 
             // console.log("UserLoginService: can't retrieve the current user");
-            callback.isLoggedIn("Can't retrieve the CurrentUser", false);
+            // cognitoUser.signOut()
+            // localStorage.clear()
+            // sessionStorage.clear()
+            callback.isLoggedIn("UserLoginService: can't retrieve the current user", false)
             return
         }
         // if (createNewToken) {

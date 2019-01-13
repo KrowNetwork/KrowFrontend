@@ -20,6 +20,7 @@ var privatekey = require("./privatekey.json");
 const multer = require('multer');
 console.log("k")
 const IncomingForm = require('formidable').IncomingForm;
+const {Storage} = require('@google-cloud/storage');
 
 if (process.platform != "win32")
     process.env['GOOGLE_APPLICATION_CREDENTIALS'] = "privatekey.json"
@@ -261,6 +262,83 @@ app.use(function(req, res, next) {
         res.send(result.data)
   
       });
+})
+
+app.get("/get-employer-folders", (req, res, next) => {
+    var projectId = "krow-network-1533419444055"
+    const storage = new Storage({
+        projectId: projectId,
+    });
+
+    // var folder = req.query.folder
+    var id = req.query.id
+    // var filename = req.body.filename
+
+    // console.log(req.body)
+    // console.log(req.params)
+
+    const bucketName = 'employer-accounts';
+
+    var bucket = storage.bucket(bucketName)
+    results = []
+    bucket.getFiles({"prefix": id + "/"}, function(err, files) {
+        files.forEach(f => {
+            results.push(f.name.split("/")[1])
+            
+        })
+        res.status(200).send({results: results})
+    })
+})
+
+app.get("/create-employer-files", (req, res, next) => {
+    var projectId = "krow-network-1533419444055"
+    const storage = new Storage({
+        projectId: projectId,
+    });
+
+    var folder = req.query.folder
+    var id = req.query.id
+    // var filename = req.body.filename
+
+    // console.log(req.body)
+    // console.log(req.params)
+
+    const bucketName = 'employer-accounts';
+
+    var bucket = storage.bucket(bucketName)
+    // bucket.upload('test/', function(err, file) {
+    //     if (err) throw new Error(err);
+    // });
+
+    // bucket.get(function(err, bucket, apiResponse) {
+    //     console.log(err)
+    //     console.log(bucket)
+    //     console.log(apiResponse)
+    // })
+
+    
+    const path = require('path');
+
+
+    // var filename = path.basename(req.params.filename);
+    // filename = path.resolve(__dirname, filename);
+    var form = new IncomingForm()
+    form.parse(req, async function (err, fields, files) {
+        console.log(err)
+        // console.log(files.filepath)
+        var f = bucket.file(id + "/" + folder + "/" + files.filepath.name) 
+
+
+        fs.createReadStream(files.filepath.path)
+        .pipe(f.createWriteStream())
+        .on('error', function(err) {res.status(500).send({response: "err"})})
+        
+        .on('finish', function() {
+            console.log("done")
+            res.status(200).send({response: "done"})
+        // The file upload is complete.
+        });
+    });
 })
 
 app.get("/get-job", (req, res, next) => {
