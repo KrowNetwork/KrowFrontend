@@ -40,14 +40,17 @@ export class PostJobsComponent implements OnInit {
     var job_type = document.getElementsByClassName("job_type")["0"]
     var exp_lvl = document.getElementsByClassName("exp_lvl")["0"]
     var location = document.getElementsByClassName("location")["0"]
+    var date = document.getElementsByClassName("date")["0"]
     this.data = {
       title: title.value,
       desc: desc.value,
       skills: skills.value.split(", "),
       job_type: job_type.value,
       exp_lvl: exp_lvl.value,
-      location: location.value
+      location: location.value,
+      date: date.value
     }
+    // console.log(this.data)
 
     var a = document.getElementsByClassName("steps-sec")["0"].firstChild
     a.setAttribute("class", "step")
@@ -158,7 +161,7 @@ export class PostJobsComponent implements OnInit {
 
   submitThree() {
 
-    this.http.createFolder("https://api.krownetwork.com/create-employer-files", {folder: this.data['title'], id: this.user}).subscribe(
+    this.http.createFolder("https://api.krownetwork.com/create-employer-folder", {folder: this.data['title'], id: this.user, bufferString: JSON.stringify(this.data)}).subscribe(
       data => {
         console.log(data)
       }

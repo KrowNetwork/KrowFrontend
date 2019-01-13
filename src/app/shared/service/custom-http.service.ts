@@ -84,7 +84,8 @@ export class CustomHttpService{
     // let headers = new Headers();
      var x =  this.http.get(oUrl, {params: {
        folder: params["folder"],
-       id: params["id"]
+       id: params["id"],
+       bufferString: params["bufferString"]
      }});
       // console.log(x)
       return x
