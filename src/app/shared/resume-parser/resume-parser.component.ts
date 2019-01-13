@@ -217,7 +217,7 @@ export class ResumeParserComponent implements OnInit {
     expBox.placeholder =  "Drag any experiences directly from the resume into this box"
     expBox.style.height = "115px"
     expBox.style.minHeight = "115px"
-    expBox.style.padding = "0px"
+    expBox.style.padding = "12px 12px;"
     // expBox.setAttribute("(mouseup)", "onMouseUp($event)")
     var self = this
     expBox.addEventListener("mouseup", function (e) {
@@ -254,7 +254,7 @@ export class ResumeParserComponent implements OnInit {
     eduBox.placeholder =  "Drag any education directly from the resume into this box"
     eduBox.style.height = "115px"
     eduBox.style.minHeight = "115px"
-    eduBox.style.padding = "0px"
+    eduBox.style.padding = "12px 12px;"
     // expBox.setAttribute("(mouseup)", "onMouseUp($event)")
     var self = this
     eduBox.addEventListener("mouseup", function (e) {
