@@ -57,6 +57,11 @@ export class CustomHttpService{
     this.apiKey = key
   }
 
+  rpost(url, formData, params) {
+    var x = this.http.post(url, formData, {params: {folder: params["folder"], id: params["id"]}})
+    return x
+  }
+
   get(url, data=undefined) {
     // console.log(this.token)
     var oUrl = "https://api.krownetwork.com/g?url=" + url + "&token=" + this.token

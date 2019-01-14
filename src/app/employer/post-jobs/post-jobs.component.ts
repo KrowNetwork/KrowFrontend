@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomHttpService } from "../../shared/service/custom-http.service"
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 
 @Component({
   selector: 'app-post-jobs',
@@ -14,7 +15,8 @@ export class PostJobsComponent implements OnInit {
   files = []
   user = ""
   constructor(
-    public http: CustomHttpService
+    public http: CustomHttpService,
+    public http2: HttpClient,
   ) {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
    }
@@ -69,7 +71,8 @@ export class PostJobsComponent implements OnInit {
     i.addEventListener("change", function(e) {
       for (var i = 0; i < e.target["files"].length; i++) { 
         var f = e.target["files"][i]
-        if (f.type.split("/")[0] == "application") {
+        console.log(f)
+        if (f.type.split("/")[0] != "application") {
           console.log("oops")
         } else {
           self.files.push(f);
@@ -158,7 +161,7 @@ export class PostJobsComponent implements OnInit {
     document.getElementById("submitBtn").innerHTML = "Submit"
     this.two = false
   }
-
+  filename: string;
   submitThree() {
 
     this.http.createFolder("https://api.krownetwork.com/create-employer-folder", {folder: this.data['title'], id: this.user, bufferString: JSON.stringify(this.data)}).subscribe(
@@ -167,6 +170,51 @@ export class PostJobsComponent implements OnInit {
       }
     )
 
+    this.files.forEach(file => {
+      const formData = new FormData();
+      formData.append('filepath', file, file.name);
+      // formData.append("folder", )
+      console.log(formData.get("filepath"))
+      var params = {
+        folder: this.data["title"], id: this.user}
+      var reader = new FileReader();
+      this.filename = file.name
+      reader.onload = this._handleReaderLoaded.bind(this);
+      reader.readAsDataURL(file);
+      
+      this.http.rpost("http://localhost:2000/upload-employer-file", formData, params).subscribe(
+        data => {
+          console.log(data)
+        }
+      )
+      
+        
+    })
+    // this.files = event.target.files;
+     
+ }
+ filestring: any;
+ _handleReaderLoaded(readerEvt) {
+   console.log(this.filename)
+     var binaryString = readerEvt.target.result;
+    //  this.filestring = new Buffer(btoa(binaryString)).toString("base64"); 
+     var body = {
+      data: binaryString.split("data:application/pdf;base64,")[1],
+      filename: this.filename
+    }
+    console.log(body)
+    this.http2.post("https://www.rapidparser.com/api/rest/v1/parse", body, {headers: {Authorization: "Bearer 2535fde9-7970-406d-a6a0-420b75290dc7", "Content-Type": "application/json"}}).subscribe(
+      data => {
+        console.log("a", data)
+      }, (err: HttpErrorResponse) =>
+        {
+          console.log(err)
+        }
+      
+    ) // Converting binary string data.
+    
+}
+
   }
 
-}
+
