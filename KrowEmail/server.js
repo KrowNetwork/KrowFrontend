@@ -139,7 +139,7 @@ app.use(function(req, res, next) {
                         }
                         if (symbol.property.detectedBreak.type == "LINE_BREAK") {
                             line += ""
-                            para += line
+                            para += line + ". "
                             line = ""
                         }
                       }
@@ -702,6 +702,7 @@ app.get("/get-job", (req, res, next) => {
             var url = req.query.url
             var accessTokenFromClient = req.query.token;
             var data = req.body
+            console.log(data)
             // console.log(data)
         
             cognitoExpress.validate(accessTokenFromClient, function(err, response) {

@@ -163,13 +163,10 @@ export class PostJobsComponent implements OnInit {
     this.two = false
   }
   filename: string;
+  comps = []
   submitThree() {
 
-    this.http.createFolder("https://api.krownetwork.com/create-employer-folder", {folder: this.data['title'], id: this.user, bufferString: JSON.stringify(this.data)}).subscribe(
-      data => {
-        console.log(data)
-      }
-    )
+    
 
     this.files.forEach(file => {
       const formData = new FormData();
@@ -185,17 +182,27 @@ export class PostJobsComponent implements OnInit {
             data2: this.data["title"] + " " + this.data["desc"]
           }
           console.log(postData)
-          this.http2.post("https://api.krownetwork.com/compare-employer", postData).subscribe(
+          var accessToken = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.0379a201-001b-4010-9a04-93f4a2ca9370.accessToken")
+          this.http2.post("https://api.krownetwork.com/compare-employer?token=" + accessToken, postData).subscribe(
             data => {
               console.log(data)
+              var n = file.name
+              var obj = {}
+              obj[n] = data 
+              this.comps.push(obj)
             }
           )
           // console.log(data)
         }
       )
-      
-        
+
     })
+    this.data["comparisons"] = this.comps
+    this.http.createFolder("https://api.krownetwork.com/create-employer-folder", {folder: this.data['title'], id: this.user, bufferString: JSON.stringify(this.data)}).subscribe(
+      data => {
+        console.log(data)
+      }
+    )
     // this.files = event.target.files;
      
  }
