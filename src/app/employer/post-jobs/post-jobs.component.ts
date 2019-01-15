@@ -22,17 +22,38 @@ export class PostJobsComponent implements OnInit {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
    }
 
+  folders = []
+  folder = ""
   ngOnInit() {
-
+    this.http2.get("https://api.krownetwork.com/get-employer-folders", {params: {id: this.user}}).subscribe(
+      data => {
+        this.folders = data["results"]
+        console.log(data)
+      })
   }
-
-  submitHandler() {
+  async submitHandler() {
     if (this.one) {
       this.submitOne()
     } else if (this.two) {
       this.submitTwo()
     } else if (this.three) {
-      this.submitThree()
+      // var folder = ""
+      var array = new Uint32Array(1);
+
+        if (this.folders.indexOf(this.data["title"]) > -1) {
+          this.folder = this.data["title"] + "_" + window.crypto.getRandomValues(array).toString();
+      } else {
+        this.folder = this.data["title"]
+      }
+      console.log(this.folder)
+
+      await this.submitThree()
+      console.log("ya" + this.data)
+      this.http.createFolder("https://api.krownetwork.com/create-employer-folder", {folder: this.folder, id: this.user, bufferString: JSON.stringify(this.data)}).subscribe(
+        data => {
+          console.log(data)
+        }
+      )
     }
   }
 
@@ -61,9 +82,10 @@ export class PostJobsComponent implements OnInit {
     var a = document.getElementsByClassName("steps-sec")["0"].children[1]
     a.setAttribute("class", "step active")
 
-    document.getElementsByClassName("profile-form-edit")["0"].firstChild.style.display = "none"
+    document.getElementsByClassName("profile-form-edit")["0"].removeChild(document.getElementsByClassName("profile-form-edit")["0"].firstChild)
     var p = document.createElement("button")
     var i = document.createElement("input")
+    // i.id = "fileReader"
     i.type = "file"
     i.multiple = true 
     i.id = "file"
@@ -87,13 +109,23 @@ export class PostJobsComponent implements OnInit {
     
     document.getElementsByClassName("profile-form-edit")["0"].appendChild(i)
     // document.getElementsByClassName("profile-form-edit")["0"].appendChild(p)
-
+    var back_btn = document.createElement("button")
+    var self = this
+    back_btn.addEventListener("click", function(e) {self.back()})
+    back_btn.style.cssFloat = "left"
+    back_btn.innerHTML = "Back"
+    back_btn.id = "backBtn"
+    document.getElementById("submitBtn").parentElement.appendChild(back_btn)
     this.one = false
   }
 
   submitTwo() {
     // console.log(document.getElementsByClassName("profile-form-edit")["0"])
-    document.getElementsByClassName("profile-form-edit")["0"].children[1].style.display = "none"
+    try {
+      document.getElementsByClassName("profile-form-edit")["0"].removeChild(document.getElementsByClassName("profile-form-edit")["0"].children[1])
+
+    } catch {
+      document.getElementsByClassName("profile-form-edit")["0"].removeChild(document.getElementsByClassName("profile-form-edit")["0"].children[0])    }
     
     var a = document.getElementsByClassName("steps-sec")["0"].children[1]
     a.setAttribute("class", "step")
@@ -103,7 +135,6 @@ export class PostJobsComponent implements OnInit {
 
     var confirmHtml = 
     `
-    <form>
       <div class="row">
         <div class="col-lg-12">
           <span class="pf-title">Job Title</span>
@@ -129,7 +160,7 @@ export class PostJobsComponent implements OnInit {
           </div>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-4">
           <span class="pf-title">Job Type</span>
           <div class="pf-field">
             <select data-placeholder="Please Select a Type" class="chosen job_type" value="` + this.data["job_type"] +  `" disabled>
@@ -138,7 +169,7 @@ export class PostJobsComponent implements OnInit {
           </div>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-4">
           <span class="pf-title">Experience Level</span>
           <div class="pf-field">
             <select data-placeholder="Please Select Experience Level" class="chosen exp_lvl" value="` + this.data["exp_lvl"] +  `" disabled>
@@ -146,6 +177,14 @@ export class PostJobsComponent implements OnInit {
             </select>
           </div>
         </div>
+
+        <div class="col-lg-4">
+          <span class="pf-title">Expiration Date</span>
+          <div class="pf-field">
+            <input class="date" type="date" value="` + this.data["date"] + `">
+          </div>
+        </div>
+
 
         <div class="col-lg-12">
           <span class="pf-title">Job Location</span>
@@ -155,56 +194,241 @@ export class PostJobsComponent implements OnInit {
         </div>
 
       </div>
-    </form>
     `
-
-    document.getElementsByClassName("profile-form-edit")["0"].innerHTML = confirmHtml
+    var f = document.createElement("form")
+    f.innerHTML = confirmHtml
+    document.getElementsByClassName("profile-form-edit")["0"].appendChild(f)
+    // document.getElementsByClassName("profile-form-edit")["0"].innerHTML = confirmHtml
     document.getElementById("submitBtn").innerHTML = "Submit"
+    
     this.two = false
   }
   filename: string;
   comps = []
-  submitThree() {
+
+//   Array.prototype.contains = function ( needle ) {
+//     for (i in this) {
+//        if (this[i] == needle) return true;
+//     }
+//     return false;
+//  }
+  async submitThree() {
 
     
+    this.data["comparisons"] = []
+    // this.http.createFolder("https://api.krownetwork.com/create-employer-folder", {folder: this.data['title'], id: this.user, bufferString: JSON.stringify(this.data)}).subscribe(
+    //   data => {
+    //     console.log(data)
+    //   }
+    // )
+    var folder = this.folder
 
-    this.files.forEach(file => {
+    this.files.forEach(async file => {
       const formData = new FormData();
       formData.append('filepath', file, file.name);
       // formData.append("folder", )
       console.log(formData.get("filepath"))
+
       
-      
-      this.http2.post("https://api.krownetwork.com/ocr/getText/test.jpg", formData).subscribe(
+
+      await this.http2.post("https://api.krownetwork.com/upload-employer-file", formData, {params: {folder: folder, id: this.user}}).subscribe(
         data => {
+          console.log(data)
+        }
+      )
+      
+      await this.http2.post("https://api.krownetwork.com/ocr/getText/test.jpg", formData).subscribe(
+        async data => {
           var postData = {
             data1: data["res"],
             data2: this.data["title"] + " " + this.data["desc"]
           }
           console.log(postData)
           var accessToken = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.0379a201-001b-4010-9a04-93f4a2ca9370.accessToken")
-          this.http2.post("https://api.krownetwork.com/compare-employer?token=" + accessToken, postData).subscribe(
+          await this.http2.post("https://api.krownetwork.com/compare-employer?token=" + accessToken, postData).subscribe(
             data => {
               console.log(data)
               var n = file.name
               var obj = {}
               obj[n] = data 
-              this.comps.push(obj)
+              // this.comps.push(obj)
+              this.data["comparisons"].push(obj)
+              var bString = {
+                text: postData.data1,
+                comp_score: data
+              }
+              console.log(bString)
+              this.http2.get("https://api.krownetwork.com/create-employer-file", {params: {folder: folder, file: file.name + "info.json", id: this.user, bufferString: JSON.stringify(bString)}}).subscribe(
+                data => {
+                  console.log("info created")
+                }
+              )
+              
             }
           )
+          console.log(this.data)
           // console.log(data)
         }
       )
 
+
     })
-    this.data["comparisons"] = this.comps
-    this.http.createFolder("https://api.krownetwork.com/create-employer-folder", {folder: this.data['title'], id: this.user, bufferString: JSON.stringify(this.data)}).subscribe(
-      data => {
-        console.log(data)
-      }
-    )
+    // while (this.data["comparisons"].length != this.files.length) {
+    //   console.log(this.data["comparisons"].length)
+    // }
+    
+    //  = this.comps
+    
     // this.files = event.target.files;
-     
+     return this.data
+ }
+
+ back() {
+   if (this.two == true) {
+     // go back to one
+     var a = document.getElementsByClassName("steps-sec")["0"].firstChild
+     a.setAttribute("class", "step active")
+ 
+     var a = document.getElementsByClassName("steps-sec")["0"].children[1]
+     a.setAttribute("class", "step")
+
+    //  if (this.data["exp_lvl"])
+    var ops_exp = [
+      "Full-Time",
+      "Part-Time",
+      "Freelancing",
+      "Internship/Co-Op",
+      "Other"
+    ]
+
+    ops_exp.splice(ops_exp.indexOf(this.data["job_type"]), 1)
+
+
+    var ops_lvl = [
+      "High",
+      "Medium",
+      "Low",
+      "N/A"
+    ]
+
+    ops_lvl.splice(ops_lvl.indexOf(this.data["exp_lvl"]), 1)
+
+
+     var redisplay = 
+    `
+      <div class="row">
+        <div class="col-lg-12">
+          <span class="pf-title">Job Title</span>
+          <div class="pf-field">
+            <input type="text" placeholder="Designer" id="title" class="title" value="` + this.data["title"] +  `"/>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <span class="pf-title">Short Description</span>
+          <div class="pf-field">
+            <textarea class="desc" placeholder="Working on tax breaks on Wall Street. Have had moderate success investing in Yugos on Wall Street. Has managed a small team buying and selling pogo sticks for farmers.">` + this.data["desc"] +`</textarea>
+          </div>
+        </div>
+
+        <div class="col-lg-12">
+          <span class="pf-title">Skill Requirements (Enter as Many as Possible for Better Results) </span>
+          <div class="pf-field">
+            <ul class="tags">
+                    <li class="tagAdd taglist">
+                          <input class="skills" placeholder="Split by comma. Example: programming, sales, managment" type="text" id="search-field" value="` + this.data["skills"].join(", ") +  `">
+                    </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <span class="pf-title">Job Type</span>
+          <div class="pf-field">
+            <select data-placeholder="Please Select a Type" class="chosen job_type" value="` + this.data["job_type"] +  `">
+              <option>` + this.data["job_type"] + `</option>
+              <option>` + ops_exp[0] + `</option>
+              <option>` + ops_exp[1] + `</option>
+              <option>` + ops_exp[2] + `</option>
+              <option>` + ops_exp[3] + `</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <span class="pf-title">Experience Level</span>
+          <div class="pf-field">
+            <select data-placeholder="Please Select Experience Level" class="chosen exp_lvl" value="` + this.data["exp_lvl"] +  `">
+              <option>` + this.data["exp_lvl"] + `</option>
+              <option>` + ops_lvl[0] + `</option>
+              <option>` + ops_lvl[1] + `</option>
+              <option>` + ops_lvl[2] + `</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <span class="pf-title">Expiration Date</span>
+          <div class="pf-field">
+            <input class="date" type="date" value="` + this.data["date"] + `">
+          </div>
+        </div>
+
+        <div class="col-lg-12">
+          <span class="pf-title">Job Location</span>
+          <div class="pf-field">
+            <input class="location" type="text" placeholder="New York City" value="` + this.data["location"] +  `"/>
+          </div>
+        </div>
+
+      </div>
+    
+    `
+    var f = document.createElement("form")
+    f.innerHTML = redisplay
+    document.getElementsByClassName("profile-form-edit")["0"].appendChild(f)
+    console.log(document.getElementsByClassName("profile-form-edit")["0"])
+    document.getElementsByClassName("profile-form-edit")["0"].removeChild(document.getElementById("file"))
+    this.one = true
+    // this.two = true
+    
+    document.getElementById("submitBtn").parentElement.removeChild(document.getElementById("backBtn"))
+   } else {
+     console.log(document.getElementsByClassName("profile-form-edit")["0"].firstChild)
+    document.getElementsByClassName("profile-form-edit")["0"].removeChild(document.getElementsByClassName("profile-form-edit")["0"].firstChild)
+    var i = document.createElement("input")
+    // i.id = "fileReader"
+    i.type = "file"
+    i.multiple = true 
+    i.id = "file"
+
+    var self = this
+    i.addEventListener("change", function(e) {
+      for (var i = 0; i < e.target["files"].length; i++) { 
+        var f = e.target["files"][i]
+        console.log(f)
+        // if (f.type.split("/")[0] != "application") {
+        //   console.log("oops")
+        // } else {
+          self.files.push(f);
+        // }
+      }
+      
+    })
+
+    // p.innerHTML = "Select Resumes"
+    // p.addEventListener("click", function(e) {})
+    
+    document.getElementsByClassName("profile-form-edit")["0"].appendChild(i)
+    document.getElementById("submitBtn").innerHTML = "Next"
+
+    var a = document.getElementsByClassName("steps-sec")["0"].children[1]
+    a.setAttribute("class", "step active")
+
+    var a = document.getElementsByClassName("steps-sec")["0"].children[2]
+    a.setAttribute("class", "step")
+    this.two = true
+    this.three = true
+   }
  }
 //  filestring: any;
 //  _handleReaderLoaded(readerEvt) {

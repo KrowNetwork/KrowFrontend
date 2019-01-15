@@ -151,7 +151,7 @@ app.use(function(req, res, next) {
                       bounds.push(word.boundingBox)
                 })
                 if (feature == 3)
-                    bounds.push(para.replace("•", ".").replace("•", "."))
+                    bounds.push(para.replace("•", ".").replace("•", ".").replace("..", "."))
               })
               if (feature == 2)
                   bounds.push(block.boundingBox)
