@@ -406,6 +406,69 @@ app.get("/create-employer-folder", (req, res, next) => {
     
 })
 
+app.get("/create-employer-file", (req, res, next) => {
+    var projectId = "krow-network-1533419444055"
+    const storage = new Storage({
+        projectId: projectId,
+    });
+
+    var folder = req.query.folder
+    var filen = req.query.file
+    var id = req.query.id
+    var bufferString = req.query.bufferString
+    console.log(bufferString)
+    // var filename = req.body.filename
+
+    // console.log(req.body)
+    // console.log(req.params)
+
+    const bucketName = 'employer-accounts';
+
+    var bucket = storage.bucket(bucketName)
+    // bucket.upload('test/', function(err, file) {
+    //     if (err) throw new Error(err);
+    // });
+
+    // bucket.get(function(err, bucket, apiResponse) {
+    //     console.log(err)
+    //     console.log(bucket)
+    //     console.log(apiResponse)
+    // })
+
+    
+    const path = require('path');
+    // console.log(err)
+        // console.log(files.filepath)
+    var f = bucket.file(id + "/" + folder + "/" + filen) 
+
+    var buff = Buffer.from(bufferString, 'binary').toString('utf-8');
+
+	const stream = f.createWriteStream({
+		metadata: {
+			contentType: 'application/json'
+		}
+	});
+	stream.on('error', (err) => {
+		res.status(500).send({response: "err"})
+	});
+	stream.on('finish', () => {
+		res.status(200).send({response: "done"})
+	});
+	stream.end(new Buffer(buff).toString());
+
+
+    // f.createWriteStream()
+    // .on('error', function(err) {res.status(500).send({response: "err"})})
+    
+    // .on('finish', function() {
+    //     console.log("done")
+    //     res.status(200).send({response: "done"})
+    // // The file upload is complete.
+    // });
+
+    
+})
+
 app.post("/upload-employer-file", (req, res, next) => {
     var projectId = "krow-network-1533419444055"
     const storage = new Storage({
