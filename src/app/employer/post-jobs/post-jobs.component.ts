@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomHttpService } from "../../shared/service/custom-http.service"
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
+import { post } from '../../../../node_modules/@types/selenium-webdriver/http';
 
 @Component({
   selector: 'app-post-jobs',
@@ -72,11 +73,11 @@ export class PostJobsComponent implements OnInit {
       for (var i = 0; i < e.target["files"].length; i++) { 
         var f = e.target["files"][i]
         console.log(f)
-        if (f.type.split("/")[0] != "application") {
-          console.log("oops")
-        } else {
+        // if (f.type.split("/")[0] != "application") {
+        //   console.log("oops")
+        // } else {
           self.files.push(f);
-        }
+        // }
       }
       
     })
@@ -175,16 +176,21 @@ export class PostJobsComponent implements OnInit {
       formData.append('filepath', file, file.name);
       // formData.append("folder", )
       console.log(formData.get("filepath"))
-      var params = {
-        folder: this.data["title"], id: this.user}
-      var reader = new FileReader();
-      this.filename = file.name
-      reader.onload = this._handleReaderLoaded.bind(this);
-      reader.readAsDataURL(file);
       
-      this.http.rpost("http://localhost:2000/upload-employer-file", formData, params).subscribe(
+      
+      this.http2.post("http://localhost:2000/ocr/getText/test.jpg", formData).subscribe(
         data => {
-          console.log(data)
+          var postData = {
+            data1: data["res"],
+            data2: this.data["title"] + " " + this.data["desc"]
+          }
+          console.log(postData)
+          this.http2.post("https://api.krownetwork.com/compare-employer", postData).subscribe(
+            data => {
+              console.log(data)
+            }
+          )
+          // console.log(data)
         }
       )
       
@@ -193,27 +199,27 @@ export class PostJobsComponent implements OnInit {
     // this.files = event.target.files;
      
  }
- filestring: any;
- _handleReaderLoaded(readerEvt) {
-   console.log(this.filename)
-     var binaryString = readerEvt.target.result;
-    //  this.filestring = new Buffer(btoa(binaryString)).toString("base64"); 
-     var body = {
-      data: binaryString.split("data:application/pdf;base64,")[1],
-      filename: this.filename
-    }
-    console.log(body)
-    this.http2.post("https://www.rapidparser.com/api/rest/v1/parse", body, {headers: {Authorization: "Bearer 2535fde9-7970-406d-a6a0-420b75290dc7", "Content-Type": "application/json"}}).subscribe(
-      data => {
-        console.log("a", data)
-      }, (err: HttpErrorResponse) =>
-        {
-          console.log(err)
-        }
+//  filestring: any;
+//  _handleReaderLoaded(readerEvt) {
+//    console.log(this.filename)
+//      var binaryString = readerEvt.target.result;
+//     //  this.filestring = new Buffer(btoa(binaryString)).toString("base64"); 
+//      var body = {
+//       data: binaryString.split("data:application/pdf;base64,")[1],
+//       filename: this.filename
+//     }
+//     console.log(body)
+//     this.http2.post("https://api.krownetwork.com/ocr/getText/dontmatter.jpg", body, {headers: {Authorization: "Bearer 2535fde9-7970-406d-a6a0-420b75290dc7", "Content-Type": "application/json"}}).subscribe(
+//       data => {
+//         console.log("a", data)
+//       }, (err: HttpErrorResponse) =>
+//         {
+//           console.log(err)
+//         }
       
-    ) // Converting binary string data.
+//     ) // Converting binary string data.
     
-}
+// }
 
   }
 
