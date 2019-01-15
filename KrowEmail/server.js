@@ -139,7 +139,7 @@ app.use(function(req, res, next) {
                         }
                         if (symbol.property.detectedBreak.type == "LINE_BREAK") {
                             line += ""
-                            para += line + ". "
+                            para += line
                             line = ""
                         }
                       }
@@ -151,7 +151,7 @@ app.use(function(req, res, next) {
                       bounds.push(word.boundingBox)
                 })
                 if (feature == 3)
-                    bounds.push(para)
+                    bounds.push(para.replace("•", "."))
               })
               if (feature == 2)
                   bounds.push(block.boundingBox)
