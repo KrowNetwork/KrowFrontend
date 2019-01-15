@@ -406,7 +406,7 @@ app.get("/create-employer-folder", (req, res, next) => {
     
 })
 
-app.get("/create-employer-file", (req, res, next) => {
+app.post("/create-employer-file", (req, res, next) => {
     var projectId = "krow-network-1533419444055"
     const storage = new Storage({
         projectId: projectId,
