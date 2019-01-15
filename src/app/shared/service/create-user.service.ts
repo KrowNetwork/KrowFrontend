@@ -47,18 +47,19 @@ export class CreateUserService {
         var obj = new Object();
         obj["$class"] = "network.krow.participants.Employer";
         obj["employerID"] = userObj.user;
-        obj["employerName"] = userObj.first;
-        obj["description"] = userObj.second;
+        obj["employerName"] = userObj.company;
+        obj["description"] = userObj.bio;
         obj["completedJobs"] = [];
         obj["terminatedJobs"] = [];
         obj["inprogressJobs"] = [];
         obj["availableJobs"] = [];
-        obj["country"] = userObj.country;
-        obj["state"] = userObj.state;
-        obj["city"] = userObj.city;
-        obj["address"] = userObj.address;
+        obj["location"] = userObj.location;
+        obj["year"] = userObj.year;
         obj["email"] = userObj.email;
         obj["phoneNumber"] = userObj.phoneNumber;
+        obj["size"] = "";
+        obj["jobType"] = "";
+        obj["keyWords"] = [];
         obj["links"] = [];
         obj["created"] = new Date();
         obj["lastUpdated"] = new Date();
@@ -80,6 +81,7 @@ export class CreateUserService {
         
         this.http.post(url, obj).subscribe(
             data => {
+                console.log(data);
 
         //         if (obj["class"] == "network.krow.participants.Applicant") {
                     

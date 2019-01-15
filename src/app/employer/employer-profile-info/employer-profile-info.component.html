@@ -9,10 +9,10 @@
                <div class="row">
                  <div class="col-lg-10">
                    <div class="job-single-head3 emplye">
-                     <div class="job-thumb"> <img src="http://placehold.it/120x95" alt="" /></div>
+                     <div class="job-thumb"> <img src="{{ imgURL }}" alt="" /></div>
                      <div class="job-single-info3">
-                       <h3>Company Name</h3>
-                       <span><i class="la la-map-marker"></i>Sacramento, California</span><span class="job-is ft">Full Time</span><span class="job-is ft">Part Time</span><span class="job-is ft">Freelancing</span>
+                       <h3>{{ company }}</h3>
+                       <span><i class="la la-map-marker"></i>{{ location }}</span><span class="job-is ft">{{ companyJobType }}</span>
                        <ul class="tags-jobs">
                          <li><i class="la la-file-text"></i>Currently Hiring</li>
                        </ul>
@@ -21,7 +21,9 @@
                  </div>
                  <div class="col-lg-2">
                    <div class="share-bar">
-                     <a href="#" title="" class="share-linkedin"><i class="la la-linkedin"></i></a><a href="#" title="" class="share-fb"><i class="fa fa-facebook"></i></a><a href="#" title="" class="share-twitter"><i class="fa fa-twitter"></i></a>
+                     <a href="{{ linkedin }}" title="" class="share-linkedin"><i class="la la-linkedin"></i></a>
+                     <a href="{{ facebook }}" title="" class="share-fb"><i class="fa fa-facebook"></i></a>
+                     <a href="{{ twitter }}" title="" class="share-twitter"><i class="fa fa-twitter"></i></a>
                    </div>
                  </div>
                </div>
@@ -31,7 +33,7 @@
                  <div class="col-lg-8 column">
                    <div class="job-details">
                      <h3>About Company</h3>
-                     <p>Far much that one rank beheld bluebird after outside ignobly allegedly more when oh arrogantly vehement irresistibly fussy penguin insect additionally wow absolutely crud meretriciously hastily dalmatian a glowered inset one echidna cassowary some parrot and much as goodness some froze the sullen much connected bat wonderfully on instantaneously eel valiantly petted this along across highhandedly much. </p>
+                     <p>{{ description }}</p>
 
                    </div>
 
@@ -68,8 +70,8 @@
                        <li><i class="la la-file-text"></i><h3>Jobs Created</h3><span>4</span></li>
                        <li><i class="la la-map"></i><h3>Headquarters</h3><span>United States, San Diego</span></li>
                        <li><i class="la la-bars"></i><h3>Market Type</h3><span>Arts, Design, Media</span></li>
-                       <li><i class="la la-clock-o"></i><h3>Founded</h3><span>2002</span></li>
-                       <li><i class="la la-users"></i><h3>Team Size</h3><span>15</span></li>
+                       <li><i class="la la-clock-o"></i><h3>Founded</h3><span>{{ year }}</span></li>
+                       <li><i class="la la-users"></i><h3>Team Size</h3><span>{{ companySize }}</span></li>
                      </ul>
                    </div><!-- Job Overview -->
                    <div class="quick-form-job">

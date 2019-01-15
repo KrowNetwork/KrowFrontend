@@ -17,6 +17,7 @@ export class TopBarComponent implements OnInit {
   isLoggedInB = false;
   isFeedbackOn = false;
   btnText: string;
+  resume_text: string;
   term: String;
   user = ""
   
@@ -70,12 +71,15 @@ export class TopBarComponent implements OnInit {
           if (res == "applicant") {
             this.is_applicant = true
             this.btnText = "Edit Resume"
+            this.resume_text = "Resume"
           } else if (res == "employer") {
             this.is_applicant = false
             this.btnText = "Edit Profile"
+            this.resume_text = "Company"
           } else {
             this.is_applicant = false
             this.btnText = "PLACEHOLDER"
+            this.resume_text = "PLACEHOLDER"
           }
           sessionStorage.setItem("accountType", res)
         }
@@ -85,12 +89,15 @@ export class TopBarComponent implements OnInit {
       if (res == "applicant") {
         this.is_applicant = true
         this.btnText = "Edit Resume"
+        this.resume_text = "Resume"
       } else if (res == "employer") {
         this.is_applicant = false
         this.btnText = "Edit Profile"
+        this.resume_text = "Company"
       } else {
         this.is_applicant = false
         this.btnText = "PLACEHOLDER"
+        this.resume_text = "PLACEHOLDER"
       }
     }
   
