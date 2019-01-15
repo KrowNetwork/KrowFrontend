@@ -416,7 +416,11 @@ app.post("/create-employer-file", (req, res, next) => {
     var filen = req.query.file
     var id = req.query.id
     var bufferString = req.query.bufferString
+    console.log(folder)
+    console.log(filen)
+    console.log(id)
     console.log(bufferString)
+    console.log(req.query.bufferString)
     // var filename = req.body.filename
 
     // console.log(req.body)
