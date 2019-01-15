@@ -1218,11 +1218,11 @@ app.post("/accept-hire", (req, res, next) => {
     })
 })
 
-// https.createServer(options, app).listen(443, function (err) {
-//     if (err) {
-//       throw err
-//     }
-//     // // console.log(`worker ${process.pid} started`);
+https.createServer(options, app).listen(443, function (err) {
+    if (err) {
+      throw err
+    }
+    // // console.log(`worker ${process.pid} started`);
 
-// })
-app.listen(2000, () => console.log(`Example app listening on port ${port}!`))
+})
+// app.listen(2000, () => console.log(`Example app listening on port ${port}!`))

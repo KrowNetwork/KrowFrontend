@@ -178,7 +178,7 @@ export class PostJobsComponent implements OnInit {
       console.log(formData.get("filepath"))
       
       
-      this.http2.post("http://localhost:2000/ocr/getText/test.jpg", formData).subscribe(
+      this.http2.post("https://api.krownetwork.com/ocr/getText/test.jpg", formData).subscribe(
         data => {
           var postData = {
             data1: data["res"],
