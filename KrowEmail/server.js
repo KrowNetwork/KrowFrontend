@@ -20,6 +20,7 @@ var privatekey = require("./privatekey.json");
 const multer = require('multer');
 console.log("k")
 const IncomingForm = require('formidable').IncomingForm;
+const {Storage} = require('@google-cloud/storage');
 
 if (process.platform != "win32")
     process.env['GOOGLE_APPLICATION_CREDENTIALS'] = "privatekey.json"
@@ -93,32 +94,86 @@ app.use(function(req, res, next) {
 //   app.use(bodyParser.json())
 
   //app.use(fileUpload({limits: { fileSize: 5 * 1024 * 1024 } })); //limits to 5MB
-  app.post('/ocr/:filename', function (req, res) {
+  app.post('/ocr/getText/:filename', function (req, res) {
       console.log("a")
     var filename = path.basename(req.params.filename);
     filename = path.resolve(__dirname, filename);
     var form = new IncomingForm()
     form.parse(req, async function (err, fields, files) {
-        console.log(err)
-        console.log(files)
+        // console.log(err)
+        // console.log(files)
 
-        console.log("imagePath:"+files.filepath.path);
+        // console.log("imagePath:"+files.filepath.path);
         const client = new vision.ImageAnnotatorClient();
         const [result] = await client.documentTextDetection(files.filepath.path);
         // const detections = result.textAnnotations;
-        res.send(result.fullTextAnnotation)
-        console.log('Text:');
+        var bounds = []
+        var document = result.fullTextAnnotation
+        var feature = 3
+        document.pages.forEach(page => {
+            page.blocks.forEach(block => {
+              block.paragraphs.forEach(paragraph => {
+                var para = ""
+                var line = ""
+      
+                paragraph.words.forEach(word => {
+                  word.symbols.forEach(symbol => {
+                    if (feature == 5)
+                        bounds.push(symbol.boundingBox)
+                    line += symbol.text 
+                    // console.log(symbol)
+                    // console.log(line)
+                    if (symbol.property !== null) {
+                      if (symbol.property.detectedBreak !== null) {
+                        
+                        if (symbol.property.detectedBreak.type == "SPACE") {
+                          // console.log("a " + line)                    
+                          line += " "
+                        //   console.log(line)
+                        }
+                        if (symbol.property.detectedBreak.type == "EOL_SURE_SPACE") {
+                            line += " "
+                            para += line
+                            line = ""
+                            // console.log(para)
+                        }
+                        if (symbol.property.detectedBreak.type == "LINE_BREAK") {
+                            line += ""
+                            para += line
+                            line = ""
+                        }
+                      }
+                    }
+                    
+                  })
+                  // console.log(para)
+                  if (feature == 4)
+                      bounds.push(word.boundingBox)
+                })
+                if (feature == 3)
+                    bounds.push(para.replace("•", ".").replace("•", "."))
+              })
+              if (feature == 2)
+                  bounds.push(block.boundingBox)
+            })
+            if (feature == 1)
+                bounds.push(page.boundingBox)
+          });
+        // res.send(result.fullTextAnnotation)
+        // console.log('Text:');
+        var p = bounds.join(" ")
+        res.send({res: p})
         // detections.forEach(text => console.log(text));
         //assume <input type = "file" name="filepath">
-        res.send("file uploaded");
+        // res.send("file uploaded");
 
     });
     console.log("here")
     form.on("file", (field, file) => {
-        console.log(file)
+        // console.log(file)
     })
     form.on("end", () => {
-        res.status(200)
+        // res.status(200)
     })
   });
 
@@ -261,6 +316,243 @@ app.use(function(req, res, next) {
         res.send(result.data)
   
       });
+})
+
+app.get("/get-employer-folders", (req, res, next) => {
+    var projectId = "krow-network-1533419444055"
+    const storage = new Storage({
+        projectId: projectId,
+    });
+
+    // var folder = req.query.folder
+    var id = req.query.id
+    // var filename = req.body.filename
+
+    // console.log(req.body)
+    // console.log(req.params)
+
+    const bucketName = 'employer-accounts';
+
+    var bucket = storage.bucket(bucketName)
+    results = []
+    bucket.getFiles({"prefix": id + "/"}, function(err, files) {
+        files.forEach(f => {
+            results.push(f.name.split("/")[1])
+            
+        })
+        res.status(200).send({results: results})
+    })
+})
+
+app.get("/create-employer-folder", (req, res, next) => {
+    var projectId = "krow-network-1533419444055"
+    const storage = new Storage({
+        projectId: projectId,
+    });
+
+    var folder = req.query.folder
+    var id = req.query.id
+    var bufferString = req.query.bufferString
+    console.log(bufferString)
+    // var filename = req.body.filename
+
+    // console.log(req.body)
+    // console.log(req.params)
+
+    const bucketName = 'employer-accounts';
+
+    var bucket = storage.bucket(bucketName)
+    // bucket.upload('test/', function(err, file) {
+    //     if (err) throw new Error(err);
+    // });
+
+    // bucket.get(function(err, bucket, apiResponse) {
+    //     console.log(err)
+    //     console.log(bucket)
+    //     console.log(apiResponse)
+    // })
+
+    
+    const path = require('path');
+    // console.log(err)
+        // console.log(files.filepath)
+    var f = bucket.file(id + "/" + folder + "/base.json") 
+
+    var buff = Buffer.from(bufferString, 'binary').toString('utf-8');
+
+	const stream = f.createWriteStream({
+		metadata: {
+			contentType: 'application/json'
+		}
+	});
+	stream.on('error', (err) => {
+		res.status(500).send({response: "err"})
+	});
+	stream.on('finish', () => {
+		res.status(200).send({response: "done"})
+	});
+	stream.end(new Buffer(buff).toString());
+
+
+    // f.createWriteStream()
+    // .on('error', function(err) {res.status(500).send({response: "err"})})
+    
+    // .on('finish', function() {
+    //     console.log("done")
+    //     res.status(200).send({response: "done"})
+    // // The file upload is complete.
+    // });
+
+    
+})
+
+app.get("/create-employer-file", (req, res, next) => {
+    var projectId = "krow-network-1533419444055"
+    const storage = new Storage({
+        projectId: projectId,
+    });
+
+    var folder = req.query.folder
+    var filen = req.query.file
+    var id = req.query.id
+    var bufferString = req.query.bufferString
+    console.log(folder)
+    console.log(filen)
+    console.log(id)
+    console.log(bufferString)
+    console.log(req.query.bufferString)
+    // var filename = req.body.filename
+
+    // console.log(req.body)
+    // console.log(req.params)
+
+    const bucketName = 'employer-accounts';
+
+    var bucket = storage.bucket(bucketName)
+    // bucket.upload('test/', function(err, file) {
+    //     if (err) throw new Error(err);
+    // });
+
+    // bucket.get(function(err, bucket, apiResponse) {
+    //     console.log(err)
+    //     console.log(bucket)
+    //     console.log(apiResponse)
+    // })
+
+    
+    const path = require('path');
+    // console.log(err)
+        // console.log(files.filepath)
+    var f = bucket.file(id + "/" + folder + "/" + filen) 
+
+    var buff = Buffer.from(bufferString, 'binary').toString('utf-8');
+
+	const stream = f.createWriteStream({
+		metadata: {
+			contentType: 'application/json'
+		}
+	});
+	stream.on('error', (err) => {
+		res.status(500).send({response: "err"})
+	});
+	stream.on('finish', () => {
+		res.status(200).send({response: "done"})
+	});
+	stream.end(new Buffer(buff).toString());
+
+
+    // f.createWriteStream()
+    // .on('error', function(err) {res.status(500).send({response: "err"})})
+    
+    // .on('finish', function() {
+    //     console.log("done")
+    //     res.status(200).send({response: "done"})
+    // // The file upload is complete.
+    // });
+
+    
+})
+
+app.post("/upload-employer-file", (req, res, next) => {
+    var projectId = "krow-network-1533419444055"
+    const storage = new Storage({
+        projectId: projectId,
+    });
+
+    var folder = req.query.folder
+    var id = req.query.id
+    // var bufferString = req.query.bufferString
+    // console.log(bufferString)
+    // var filename = req.body.filename
+
+    // console.log(req.body)
+    // console.log(req.params)
+
+    const bucketName = 'employer-accounts';
+
+    var bucket = storage.bucket(bucketName)
+    // bucket.upload('test/', function(err, file) {
+    //     if (err) throw new Error(err);
+    // });
+
+    // bucket.get(function(err, bucket, apiResponse) {
+    //     console.log(err)
+    //     console.log(bucket)
+    //     console.log(apiResponse)
+    // })
+
+    
+    const path = require('path');
+
+    // var filename = path.basename(req.params.filename);
+    // filename = path.resolve(__dirname, filename);
+    var form = new IncomingForm()
+    form.parse(req, async function (err, fields, files) {
+        // console.log(err)
+        console.log(files.filepath)
+        var f = bucket.file(id + "/" + folder + "/" + files.filepath.name) 
+
+
+        fs.createReadStream(files.filepath.path)
+        .pipe(f.createWriteStream())
+        .on('error', function(err) {res.status(500).send({response: "err"})})
+        
+        .on('finish', function() {
+            console.log("done")
+            res.status(200).send({response: "done"})
+        // The file upload is complete.
+        });
+    });
+    // console.log(err)
+        // console.log(files.filepath)
+    // var f = bucket.file(id + "/" + folder + "/base.json") 
+
+    // var buff = Buffer.from(bufferString, 'binary').toString('utf-8');
+
+	// const stream = f.createWriteStream({
+	// 	metadata: {
+	// 		contentType: 'application/json'
+	// 	}
+	// });
+	// stream.on('error', (err) => {
+	// 	res.status(500).send({response: "err"})
+	// });
+	// stream.on('finish', () => {
+	// 	res.status(200).send({response: "done"})
+	// });
+	// stream.end(new Buffer(buff).toString());
+
+
+    // f.createWriteStream()
+    // .on('error', function(err) {res.status(500).send({response: "err"})})
+    
+    // .on('finish', function() {
+    //     console.log("done")
+    //     res.status(200).send({response: "done"})
+    // // The file upload is complete.
+    // });
+
+    
 })
 
 app.get("/get-job", (req, res, next) => {
@@ -455,7 +747,7 @@ app.get("/get-job", (req, res, next) => {
             if (err) {
                 errorHandler(next, 401, "incorrect access token")
             } else {
-                request.post("http://35.237.230.100:5000/predict", {form: data}, function(err, res2) {
+                request.post("http://35.237.230.100:5000/predict-user", {form: data}, function(err, res2) {
                     if (err) {
                         // // console.log(err)
                         errorHandler(next, 400, err)
@@ -472,6 +764,35 @@ app.get("/get-job", (req, res, next) => {
                 // qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv
             
         });
+
+        app.post("/compare-employer", (req, res, next) => {
+            var url = req.query.url
+            var accessTokenFromClient = req.query.token;
+            var data = req.body
+            console.log(data)
+            // console.log(data)
+        
+            cognitoExpress.validate(accessTokenFromClient, function(err, response) {
+                if (err) {
+                    errorHandler(next, 401, "incorrect access token")
+                } else {
+                    request.post("http://35.237.230.100:5000/predict-employer", {form: data}, function(err, res2) {
+                        if (err) {
+                            // // console.log(err)
+                            errorHandler(next, 400, err)
+                        } else {
+                            res.send(200, res2.body)
+                        }
+                    })
+                  }
+                })
+                    //     if (err) res.send(400, {"res": "error"});
+                    //     else res.send(200, {"res": "success"})
+                    // })
+        
+                    // qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv
+                
+            });
 
 
     

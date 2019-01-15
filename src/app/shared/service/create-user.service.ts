@@ -113,7 +113,8 @@ export class CreateUserService {
 
         //         // console.log(intent + " account sucessfuly initialized for user " + userObj.user);
         //         //callback(intent.toLowerCase(), userObj.user, router);
-            //router.navigate(["/" + intent.toLowerCase() + ""]);
+                
+            router.navigate(["/" + intent.toLowerCase() + ""]);
             }, // Catch Errors
             (err = HttpErrorResponse) => {
                 if (err instanceof Error) {

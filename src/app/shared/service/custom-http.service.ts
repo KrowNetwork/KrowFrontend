@@ -57,6 +57,11 @@ export class CustomHttpService{
     this.apiKey = key
   }
 
+  rpost(url, formData, params) {
+    var x = this.http.post(url, formData, {params: {folder: params["folder"], id: params["id"]}})
+    return x
+  }
+
   get(url, data=undefined) {
     // console.log(this.token)
     var oUrl = "https://api.krownetwork.com/g?url=" + url + "&token=" + this.token
@@ -73,6 +78,20 @@ export class CustomHttpService{
     // console.log(oUrl)
     // let headers = new Headers();
      var x =  this.http.get(oUrl, data);
+      // console.log(x)
+      return x
+  }
+
+  createFolder(url, params) {
+    // console.log(this.token)
+    var oUrl = url
+    // console.log(oUrl)
+    // let headers = new Headers();
+     var x =  this.http.get(oUrl, {params: {
+       folder: params["folder"],
+       id: params["id"],
+       bufferString: params["bufferString"]
+     }});
       // console.log(x)
       return x
   }

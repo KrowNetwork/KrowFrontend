@@ -1,18 +1,3 @@
-<app-top-bar></app-top-bar>
-<section class="overlape">
-	<div class="block no-padding">
-		<div data-velocity="-.1" class="parallax scrolly-invisible no-parallax"></div>
-		<div class="container fluid">
-			<div class="row">
-				<div class="col-lg-12">
-						<div class="inner-header" id="responsive-title">
-								<h3>Resume Parser</h3>
-							</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
 <section>
   <div class="block no-padding">
     <div class="container">
@@ -24,8 +9,13 @@
              <div class="emply-resume-list round">
               <div class="emply-list-sec">
                  <div class="row" id="masonry">
+                   
                    <div class="col-lg-5 col-md-4 col-sm-6 col-xs-12">
-                    <img [src]="url" width="395" height="642"/>
+                    
+                      <canvas #layout width="395" height="642"
+                      (dragstart)="drag($event)">
+                          <!-- <img [src]="url" /> -->
+                      </canvas>
                    </div>
                   <div class="col-lg-6 column">
                       <div>
@@ -34,16 +24,23 @@
                       </div>
                       <button mat-raised-button color="accent" (click)="fileUpload.click()">CHOOSE IMAGE</button>
 
-                    <span class="pf-title"><h5>Experience</h5><button><i class="fa fa-plus" aria-hidden="true"></i></button></span>
-                    <div class="pf-field">
-                      <input type="textArea" placeholder="Drag any experiences directly from the resume into this box" />
-                      <i class="fa fa-trash" aria-hidden="true"></i>
+                    <span class="pf-title"><h5>Experience</h5><button (click)="addNewExperience()"><i class="fa fa-plus" aria-hidden="true"></i></button></span>
+                    <div class="experiences">
+                        <div class="pf-field" id="experiences">
+                            <!-- <div class="exp"> -->
+                              <input type="text" placeholder="Add the title here" (mouseup)="onMouseUp($event)"/>
+                              <textarea placeholder="Drag any experiences directly from the resume into this box" style="height: 115px; min-height: 115px; margin-top: 5px; padding: 12px 12px;" (mouseup)="onMouseUp($event)"></textarea>
+                              <i class="fa fa-trash" aria-hidden="true" (click)="delete_exp($event)"></i>
+                            <!-- </div> -->
+                          </div>      
                     </div>
-
-                    <span class="pf-title"><h5>Education</h5><button><i class="fa fa-plus" aria-hidden="true"></i></button></span>
-                    <div class="pf-field">
-                      <input type="textArea" placeholder="Drag any education directly from the resume into this box" />
-                      <i class="fa fa-trash" aria-hidden="true"></i>
+                    
+                    <span class="pf-title"><h5>Education</h5><button (click)="addNewEducation()"><i class="fa fa-plus" aria-hidden="true"></i></button></span>
+                    <div class="education">
+                        <div class="pf-field" id="education">
+                            <textarea style="height: 115px; min-height: 115px; margin-top: 5px; padding: 12px 12px;" placeholder="Drag any education directly from the resume into this box" (mouseup)="onMouseUp($event)"></textarea>
+                            <i class="fa fa-trash" aria-hidden="true" (click)="delete_edu($event)"></i>
+                        </div>
                     </div>
                 </div>
              </div>

@@ -35,7 +35,7 @@
 					 				</div>
 					 				<div class="step">
 					 					<p><i class="la  la-check-circle"></i></p>
-					 					<span>Find your Candidate</span>
+					 					<span>Confirm</span>
 					 				</div>
 					 			</div>
 					 		</div>
@@ -45,31 +45,31 @@
 					 					<div class="col-lg-12">
 					 						<span class="pf-title">Job Title</span>
 					 						<div class="pf-field">
-					 							<input type="text" placeholder="Designer" />
+					 							<input type="text" placeholder="Designer" id="title" class="title" required/>
 					 						</div>
 					 					</div>
 					 					<div class="col-lg-12">
 					 						<span class="pf-title">Short Description</span>
 					 						<div class="pf-field">
-					 							<textarea>Working on tax breaks on Wall Street. Have had moderate success investing in Yugos on Wall Street. Has managed a small team buying and selling pogo sticks for farmers.</textarea>
+					 							<textarea class="desc" placeholder="Working on tax breaks on Wall Street. Have had moderate success investing in Yugos on Wall Street. Has managed a small team buying and selling pogo sticks for farmers." required></textarea>
 					 						</div>
 					 					</div>
 
 										<div class="col-lg-12">
-					 						<span class="pf-title">Skill Requirements (Enter as Many as Possible for Better Results)</span>
+					 						<span class="pf-title">Skill Requirements (Enter as Many as Possible for Better Results) </span>
 					 						<div class="pf-field">
 						 						<ul class="tags">
 							            			<li class="tagAdd taglist">
-							              				 <input type="text" id="search-field">
+							              				 <input class="skills" placeholder="Split by comma. Example: programming, sales, managment" type="text" id="search-field" required>
 										            </li>
 												</ul>
 											</div>
 					 					</div>
 
-					 					<div class="col-lg-6">
+					 					<div class="col-lg-4">
 					 						<span class="pf-title">Job Type</span>
 					 						<div class="pf-field">
-					 							<select data-placeholder="Please Select a Type" class="chosen">
+					 							<select data-placeholder="Please Select a Type" class="chosen job_type">
 													<option>Full-Time</option>
 													<option>Part-Time</option>
 													<option>Freelancing</option>
@@ -79,22 +79,28 @@
 					 						</div>
 					 					</div>
 
-					 					<div class="col-lg-6">
+					 					<div class="col-lg-4">
 					 						<span class="pf-title">Experience Level</span>
 					 						<div class="pf-field">
-					 							<select data-placeholder="Please Select Experience Level" class="chosen">
+					 							<select data-placeholder="Please Select Experience Level" class="chosen exp_lvl">
 													<option>High</option>
 													<option>Medium</option>
 													<option>Low</option>
 													<option>N/A</option>
 												</select>
 					 						</div>
-					 					</div>
+										 </div>
+										 <div class="col-lg-4">
+											<span class="pf-title">Expiration Date</span>
+											<div class="pf-field">
+												<input class="date" type="date">
+											</div>
+										</div>
 
 					 					<div class="col-lg-12">
 					 						<span class="pf-title">Job Location</span>
 											<div class="pf-field">
-					 							<input type="text" placeholder="New York City" />
+					 							<input class="location" type="text" placeholder="New York City" required/>
 					 						</div>
 					 					</div>
 
@@ -105,7 +111,7 @@
 					 			<form>
 
 					 					<div class="col-lg-12">
-					 						<button type="submit">Next</button>
+					 						<button id="submitBtn" (click)="submitHandler()">Next</button>
 					 					</div>
 					 			</form>
 					 		</div>
