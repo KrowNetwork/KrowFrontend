@@ -2,9 +2,10 @@
     <div class="block remove-bottom">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12" style="vertical-align: middle">
                     <!-- <div class="account-popup-area signin-popup-box static"> -->
-                        <div  *ngIf='collectInfoOn'>	
+                        <div  *ngIf='collectInfoOn'>
+                            <div *ngIf="this.intent== 'Applicant'">
                             <h1 style="color: #fb236a">Welcome to the Krow Network Applicant Experience!</h1>	
                             <h3>We just need some basic info to get you started:</h3>
                             <div *ngIf="errorMessage!=null" class="alert alert-danger" style="color: #fb236a">
@@ -62,6 +63,87 @@
                                     Next
                                 </button>
                             </form>	
+                        </div>
+                            <div class="col-md-6 offset-md-3" *ngIf="this.intent== 'Employer'">
+                            <h1 style="color: #fb236a">Welcome to the Krow Network Applicant Experience!</h1>	
+                            <h3>We just need some basic info to get you started:</h3>
+                            <div *ngIf="errorMessage!=null" class="alert alert-danger" style="color: #fb236a">
+                                {{ errorMessage }}
+                            </div>	
+                            <form class="form-signin" method="POST" action="#" role="form">
+                                    <div class="cfield">
+                                        <i class="la la-user"></i>
+                                        <input id="biaCompany" required type="text" placeholder="Company Name" class="form-control" 
+                                            [(ngModel)]="company" [ngModelOptions]="{standalone: true}">
+                                        
+                                    </div>
+                                    <!-- <div class="cfield">    
+                                        <i class="la la-clipboard"></i>
+                                        <select data-placeholder="Please Select the Types of Jobs your Company Offers" class="form-control" formControlName="jobType">
+                                            <option value="" selected>-Choose Type of Jobs Offered-</option>
+                                            <option value="1">Full Time</option>
+                                            <option value="2">Part Time</option>
+                                            <option value="3">Freelancing</option>
+                                            <option value="4">Other</option>
+                                        </select>
+                                        <br>
+                                    </div>
+                                    <div class="cfield">    
+                                            <i class="la la-group"></i>
+                                            <select id="team-size-select" formControlName="size" class="form-control">
+                                                    <option value="" selected>-Choose Size of Your Company-</option>
+                                                    <option value="1">1-10</option>
+                                                    <option value="2">11-100</option>
+                                                    <option value="3">101-1000</option>
+                                                    <option value="4">1001-5000</option>
+                                                    <option value="5">5001-10000</option>
+                                                    <option value="6">10000+</option>
+                                                </select>
+                                            <br>
+                                        </div> -->
+                                    <div class="cfield">    
+                                        <i class="la la-phone"></i>                            
+                                        <input id="biaPhone" required type="text" placeholder="Phone Number" class="form-control"
+                                            [(ngModel)]="phoneNumber" [ngModelOptions]="{standalone: true}">
+                                        
+                                    </div>
+                                    <div class="cfield"> 
+                                        <i class="la la-envelope"></i>                               
+                                        <input id="biaEmail" required type="email" placeholder="Company Email" class="form-control"
+                                            [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
+                                        
+                                    </div>
+                                    <!-- <span style="font-size: 10px; font-weight: 500">Each box is optional. We respect your privacy so you may choose to have no location at all if necessary</span> -->
+                                    <div class="cfield"> 
+                                        <i class="la la-map-marker"></i>                               
+                                        <input required type="text" placeholder="Year Established" class="form-control"
+                                            [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                    <!-- <div class="cfield">
+                                        <i class="la la-check-square" ></i>  
+                                        <span style="font-size: 10px; font-weight: 500">Key Words</span>                                
+                                        <ul class="tags">
+                                            <li class="tagAdd taglist" >
+                                                    <input type="text" formControlName="keyWords" id="search-field">
+                                            </li>
+                                        </ul>
+                                    </div> -->
+                                    <div class="cfield">    
+                                        <i class="la la-compass"></i>                            
+                                        <input id="biaLocation" required type="text" placeholder="Location" class="form-control"
+                                            [(ngModel)]="location" [ngModelOptions]="{standalone: true}">
+                                        
+                                    </div>
+                                    <div class="cfield"> 
+                                        <i class="la la-biography"></i>                               
+                                        <textarea id="biaBio" required type="text" placeholder="Description of your company" class="form-control"
+                                            [(ngModel)]="bio" [ngModelOptions]="{standalone: true}"></textarea>
+                                    </div>
+                                    <button id="submitButton" (click)="submitInfo()">
+                                        Next
+                                    </button>
+                                </form>	
+                            </div>
                         </div>
 
                         

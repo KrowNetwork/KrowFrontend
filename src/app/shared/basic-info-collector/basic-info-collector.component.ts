@@ -24,15 +24,26 @@ export class BasicInfoCollectorComponent implements OnInit {
 
     user: string;
     intent: "";
+    
+    //applicant
     first: string;
     second: string;
-    email: string;
-    bio: string;
     address: string;
     state: string;
     city: string;
     country: string;
+    
+    //employer
+    company: string;
+    year: string;
+    location: string;
+
+
+    //both
+    bio: string;
+    email: string;
     phoneNumber: string;
+
     errorMessage = null;
     collectInfoOn = true;
     uploadImageOn = false;
@@ -59,15 +70,12 @@ export class BasicInfoCollectorComponent implements OnInit {
             this.errorMessage = "Something went wrong, please go back.";
             return;
         }
-        if(!this.edit.first || !this.edit.second || !this.edit.email){
-            if (this.intent == "Applicant") {
-                this.errorMessage = "First Name, Last Name and Email are required";
-            } else if (this.intent == "Employer") {
-                this.errorMessage = "Company Name, Description and Email are required";
-            }
-            return;
+        if(this.intent == "Applicant" && (!this.edit.first || !this.edit.second || !this.edit.email)){
+            this.errorMessage = "First Name, Last Name and Email are required";
         }
-        else{
+        else if(this.intent == "Employer" && (!this.company || !this.email || !this.bio) ){
+            this.errorMessage = "Company Name, Description and Email are required";
+        } else{
             this.errorMessage = null;
             if (this.intent == "Applicant") {
                 var obj = {
@@ -105,21 +113,20 @@ export class BasicInfoCollectorComponent implements OnInit {
                     x.next();
                 }, 14000);
             } else {
-                var obj = {
+                var employerObj = {
                     user: this.user,
-                    first: this.edit.first,
-                    second: this.edit.second,
-                    email: this.edit.email,
-                    bio: "",
-                    address: this.edit.address,
-                    state: this.edit.state,
-                    city: this.edit.city,
-                    country: this.edit.country,
-                    phoneNumber: this.edit.phoneNumber
+                    company: this.company,
+                    email: this.email,
+                    bio: this.bio,
+                    location: this.location,
+                    year: this.year,
+                    phoneNumber: this.phoneNumber,
                 }
-                await this.initializeUser.initializeUser(obj, this.intent, null, this.router);
-                //console.log(this.edit)
+                await this.initializeUser.initializeUser(employerObj, this.intent, null, this.router);
                 var x = this;
+                x.next();
+                //console.log(this.edit)
+                
                 // await setTimeout(async function(){ 
                 //     await document.getElementById("experience-button").click();
                 //     // await document.getElementById("education-button").click();

@@ -1,7 +1,7 @@
 // Main imports
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppComponent } from './app.component';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -218,6 +218,7 @@ import { EmployerProfileInfoComponent } from './employer/employer-profile-info/e
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     routing,
     ImageCropperModule,
     ModalModule.forRoot(),
