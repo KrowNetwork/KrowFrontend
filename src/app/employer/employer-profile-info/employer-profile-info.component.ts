@@ -88,13 +88,13 @@ export class EmployerProfileInfoComponent implements OnInit {
           for (var i = 0; i < data["links"].length; i++) {
             var curr = data["links"][i];
             if (curr["type"] == "FACEBOOK") {
-              this.facebook = curr["url"];
+              this.facebook = "https://" + curr["url"];
             }
             else if (curr["type"] == "TWITTER") {
-              this.twitter = curr["url"];
+              this.twitter = "https://" + curr["url"];
             }
             else if (curr["type"] == "LINKEDIN") {
-              this.linkedin = curr["url"];
+              this.linkedin = "https://" + curr["url"];
             }
             else if (curr["type"] == "WEBSITE") {
               this.website = curr["url"];
