@@ -138,7 +138,7 @@ app.use(function(req, res, next) {
                             // console.log(para)
                         }
                         if (symbol.property.detectedBreak.type == "LINE_BREAK") {
-                            line += ""
+                            line += "."
                             para += line
                             line = ""
                         }
