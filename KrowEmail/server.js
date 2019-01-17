@@ -357,6 +357,8 @@ app.get("/get-employer-folder-base", (req, res, next) => {
 
     // console.log(req.body)
     // console.log(req.params)
+    console.log(id)
+    console.log(folder)
 
     const bucketName = 'employer-accounts';
 
