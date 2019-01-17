@@ -366,8 +366,8 @@ app.get("/get-employer-folder-base", (req, res, next) => {
     results = []
     bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
         files.forEach(f => {
-            console.log(f)
-            if (f.name == "base.json") {
+            console.log(f.name)
+            if (f.name == id + "/" + folder + "/base.json") {
                 results.push(f)
             }
         })
