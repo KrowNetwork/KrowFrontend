@@ -351,7 +351,7 @@ app.get("/get-employer-folder-base", (req, res, next) => {
         projectId: projectId,
     });
 
-    // var folder = req.query.folder
+    var folder = req.query.folder
     var id = req.query.id
     // var filename = req.body.filename
 
@@ -369,6 +369,34 @@ app.get("/get-employer-folder-base", (req, res, next) => {
             }
         })
         res.status(200).send({results: results})
+    })
+})
+
+app.get("/get-employer-folder-resume-count", (req, res, next) => {
+    var projectId = "krow-network-1533419444055"
+    const storage = new Storage({
+        projectId: projectId,
+    });
+
+    var folder = req.query.folder
+    var id = req.query.id
+    // var filename = req.body.filename
+
+    // console.log(req.body)
+    // console.log(req.params)
+
+    const bucketName = 'employer-accounts';
+
+    var bucket = storage.bucket(bucketName)
+    results = []
+    bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
+        files.forEach(f => {
+            // if (f.name.split(".") == "base.json") {
+            //     results.push(f)
+            // }
+            results.push(f.name)
+        })
+        res.status(200).send({results: (results.length - 1) / 2})
     })
 })
 
