@@ -368,10 +368,13 @@ app.get("/get-employer-folder-base", (req, res, next) => {
         files.forEach(f => {
             console.log(f.name)
             if (f.name == id + "/" + folder + "/base.json") {
-                results.push(f)
+                f.download(function(err, contents) {
+                    results.push(contents)
+                    res.status(200).send({results: results})
+                })
             }
         })
-        res.status(200).send({results: results})
+        
     })
 })
 
