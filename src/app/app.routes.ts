@@ -338,6 +338,10 @@ const secureHome: Routes = [
                 path: "post-jobs",
                 component: PostJobsComponent
             },
+            {
+                path: "candidate-list",
+                component: CandidateListComponent
+            },
             // {
     //             path: "create",
     //             component: EmployerPostJobsComponent
