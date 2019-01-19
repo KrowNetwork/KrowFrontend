@@ -32,6 +32,8 @@ export class PostJobsComponent implements OnInit {
         this.folders = data["results"]
       })
   }
+  wait = true 
+  msg = ""
   async submitHandler() {
     if (this.one) {
       this.submitOne()
@@ -47,6 +49,8 @@ export class PostJobsComponent implements OnInit {
         this.folder = this.data["title"]
       }
 
+      this.msg = "Do not leave this page. The page will auto-redirect when done."
+      this.wait = false
       var a = await this.submitThree()
       
 
@@ -94,12 +98,11 @@ export class PostJobsComponent implements OnInit {
     i.addEventListener("change", function(e) {
       for (var i = 0; i < e.target["files"].length; i++) { 
         var f = e.target["files"][i]
-        console.log(f)
-        // if (f.type.split("/")[0] != "application") {
-        //   console.log("oops")
-        // } else {
+        if (f.type != "application/pdf") {
+          alert("All files need to be PDFs")
+        } else {
           self.files.push(f);
-        // }
+        }
       }
       
     })
@@ -231,6 +234,14 @@ async asyncForEach(array, callback) {
       return data
     })
   }
+  ocr2(folder, filename) {
+    console.log(folder)
+    console.log(filename)
+    console.log(this.user)
+    return this.http2.post("https://api.krownetwork.com/ocr/getText/test.jpg", {params:{folder: folder, id: this.user, fileName: filename}}).map( data =>{
+      return data
+    })
+  }
 
   compare(accessToken, postData) {
     return this.http2.post("https://api.krownetwork.com/compare-employer?token=" + accessToken, postData).map(
@@ -249,7 +260,7 @@ async asyncForEach(array, callback) {
   }
 //  }
   async submitThree() {
-    alert("Do not leave this page. The page will auto-redirect when done.")
+    
 
     this.data["comparisons"] = []
     // this.http.createFolder("https://api.krownetwork.com/create-employer-folder", {folder: this.data['title'], id: this.user, bufferString: JSON.stringify(this.data)}).subscribe(
@@ -267,7 +278,11 @@ async asyncForEach(array, callback) {
 
       
       await this.uploadFile(formData, folder).toPromise()
-      var data = await this.ocr(formData).toPromise()
+      console.log(folder)
+      console.log(file.name)
+      console.log(this.user)
+      var data = await this.ocr2(folder, file.name).toPromise()
+      // var data = await this.ocr(formData).toPromise()
       var postData = {
         data1: data["res"],
         data2: this.data["title"] + " " + this.data["desc"]
@@ -430,11 +445,11 @@ async asyncForEach(array, callback) {
       for (var i = 0; i < e.target["files"].length; i++) { 
         var f = e.target["files"][i]
         console.log(f)
-        // if (f.type.split("/")[0] != "application") {
-        //   console.log("oops")
-        // } else {
+        if (f.type != "application/pdf") {
+          alert("All files need to be PDFs")
+        } else {
           self.files.push(f);
-        // }
+        }
       }
       
     })

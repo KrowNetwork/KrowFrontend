@@ -80,7 +80,7 @@ export class ManageJobsComponent implements OnInit {
         var obj = {}
         var buff = new Buffer(res["results"][0]["data"])
         var base = JSON.parse(buff.toString())
-        // console.log(base)
+        console.log(base)
         this.bases.push(base)
         var d = new Date(base.date_posted.toString())
         var date = this.months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear()
@@ -104,7 +104,9 @@ export class ManageJobsComponent implements OnInit {
     console.log("start")
     this.getFolders().subscribe(async folders => {
       console.log(folders.length)
+      console.log(folders)
       await this.asyncForEach(folders, async folder => {
+        console.log(folder)
         var obj = await this.getBase(folder).toPromise()
         console.log(obj)
         // var count = await this.getCount(folder).toPromise()
