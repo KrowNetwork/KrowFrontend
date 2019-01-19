@@ -158,7 +158,63 @@ app.use(function(req, res, next) {
             console.log(f.name)
             if (f.name.endsWith(".json")) {
                 f.download(function(err, contents) {
-                    console.log(JSON.parse(contents.toString()).responses)
+                    var document = JSON.parse(contents.toString()).responses.fullTextAnnotation
+                    document.pages.forEach(page => {
+                        page.blocks.forEach(block => {
+                          block.paragraphs.forEach(paragraph => {
+                            var para = ""
+                            var line = ""
+                  
+                            paragraph.words.forEach(word => {
+                              word.symbols.forEach(symbol => {
+                                if (feature == 5)
+                                    bounds.push(symbol.boundingBox)
+                                line += symbol.text 
+                                // console.log(symbol)
+                                // console.log(line)
+                                if (symbol.property !== null) {
+                                  if (symbol.property.detectedBreak !== null) {
+                                    
+                                    if (symbol.property.detectedBreak.type == "SPACE") {
+                                      // console.log("a " + line)                    
+                                      line += " "
+                                    //   console.log(line)
+                                    }
+                                    if (symbol.property.detectedBreak.type == "EOL_SURE_SPACE") {
+                                        line += " "
+                                        para += line
+                                        line = ""
+                                        // console.log(para)
+                                    }
+                                    if (symbol.property.detectedBreak.type == "LINE_BREAK") {
+                                        line += "."
+                                        para += line
+                                        line = ""
+                                    }
+                                  }
+                                }
+                                
+                              })
+                              // console.log(para)
+                              if (feature == 4)
+                                  bounds.push(word.boundingBox)
+                            })
+                            if (feature == 3)
+                                bounds.push(para.replace("•", ".").replace("•", ".").replace("..", "."))
+                          })
+                          if (feature == 2)
+                              bounds.push(block.boundingBox)
+                        })
+                        if (feature == 1)
+                            bounds.push(page.boundingBox)
+                      });
+                    // res.send(result.fullTextAnnotation)
+                    // console.log('Text:');
+                    var p = bounds.join(" ")
+                    res.send({res: p})
+                    // detections.forEach(text => console.log(text));
+                    //assume <input type = "file" name="filepath">
+                    // res.send("file uploaded");
                     // res.status(200).send({results: results})
                 })
             }
@@ -173,62 +229,7 @@ app.use(function(req, res, next) {
     //     var bounds = []
     //     var document = result.fullTextAnnotation
     //     var feature = 3
-    //     document.pages.forEach(page => {
-    //         page.blocks.forEach(block => {
-    //           block.paragraphs.forEach(paragraph => {
-    //             var para = ""
-    //             var line = ""
-      
-    //             paragraph.words.forEach(word => {
-    //               word.symbols.forEach(symbol => {
-    //                 if (feature == 5)
-    //                     bounds.push(symbol.boundingBox)
-    //                 line += symbol.text 
-    //                 // console.log(symbol)
-    //                 // console.log(line)
-    //                 if (symbol.property !== null) {
-    //                   if (symbol.property.detectedBreak !== null) {
-                        
-    //                     if (symbol.property.detectedBreak.type == "SPACE") {
-    //                       // console.log("a " + line)                    
-    //                       line += " "
-    //                     //   console.log(line)
-    //                     }
-    //                     if (symbol.property.detectedBreak.type == "EOL_SURE_SPACE") {
-    //                         line += " "
-    //                         para += line
-    //                         line = ""
-    //                         // console.log(para)
-    //                     }
-    //                     if (symbol.property.detectedBreak.type == "LINE_BREAK") {
-    //                         line += "."
-    //                         para += line
-    //                         line = ""
-    //                     }
-    //                   }
-    //                 }
-                    
-    //               })
-    //               // console.log(para)
-    //               if (feature == 4)
-    //                   bounds.push(word.boundingBox)
-    //             })
-    //             if (feature == 3)
-    //                 bounds.push(para.replace("•", ".").replace("•", ".").replace("..", "."))
-    //           })
-    //           if (feature == 2)
-    //               bounds.push(block.boundingBox)
-    //         })
-    //         if (feature == 1)
-    //             bounds.push(page.boundingBox)
-    //       });
-    //     // res.send(result.fullTextAnnotation)
-    //     // console.log('Text:');
-    //     var p = bounds.join(" ")
-    //     res.send({res: p})
-    //     // detections.forEach(text => console.log(text));
-    //     //assume <input type = "file" name="filepath">
-    //     // res.send("file uploaded");
+    
 
     // });
     // console.log("here")
