@@ -97,9 +97,9 @@ app.use(function(req, res, next) {
   app.post('/ocr/getText/:filename', async function (req, res) {
 
       console.log("a")
-    var filename = path.basename(req.params.filename);
-    filename = path.resolve(__dirname, filename);
-    var form = new IncomingForm()
+    // var filename = path.basename(req.params.filename);
+    // filename = path.resolve(__dirname, filename);
+    // var form = new IncomingForm()
     var folder = req.query.folder
     var id = req.query.id   
     var fileName = req.query.fileName
