@@ -158,7 +158,7 @@ app.use(function(req, res, next) {
             console.log(f.name)
             if (f.name.endsWith(".json")) {
                 f.download(function(err, contents) {
-                    console.log(JSON.parse(contents.toString()))
+                    console.log(JSON.parse(contents.toString()).responses)
                     // res.status(200).send({results: results})
                 })
             }
