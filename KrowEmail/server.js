@@ -106,6 +106,7 @@ app.use(function(req, res, next) {
     var fileName = req.body.params.fileName
     console.log(id, folder, fileName)
     var gcsSourceUri = "gs://employer-accounts/" + id + "/" + folder + "/" + fileName
+    var gcsSourceUri = "gs://employer-accounts/" + id + "/" + folder + "/" + fileName + "_output.json"
     const inputConfig = {
         // Supported mime_types are: 'application/pdf' and 'image/tiff'
         mimeType: 'application/pdf',
@@ -113,14 +114,18 @@ app.use(function(req, res, next) {
           uri: gcsSourceUri,
         },
       };
-
+      const outputConfig = {
+        gcsDestination: {
+          uri: gcsDestinationUri,
+        },
+      };
     const features = [{type: 'DOCUMENT_TEXT_DETECTION'}];
       const request = {
         requests: [
           {
             inputConfig: inputConfig,
             features: features,
-            // outputConfig: outputConfig,
+            outputConfig: outputConfig,
           },
         ],
       };
