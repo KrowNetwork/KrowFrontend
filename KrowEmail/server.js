@@ -132,10 +132,37 @@ app.use(function(req, res, next) {
     const client = new vision.ImageAnnotatorClient();
     const [result] = await client.asyncBatchAnnotateFiles(request);
     console.log(result)
-    const filesResponse = await result.promise();
-    console.log(filesResponse)
-    console.log(filesResponse[2])
-    console.log(filesResponse[2].response.value.toString())
+    const [filesResponse] = await result.promise();
+    var uri = filesResponse.responses[0].outputConfig.gcsDestination.uri;
+
+    const storage = new Storage({
+        projectId: projectId,
+    });
+
+    // var folder = req.query.folder
+    // var id = req.query.id
+    // var filename = req.body.filename
+
+    // console.log(req.body)
+    // // console.log(req.params)
+    // console.log(id)
+    // console.log(folder)
+
+    const bucketName = 'employer-accounts';
+
+    var bucket = storage.bucket(bucketName)
+    results = []
+    bucket.getFiles({"prefix": id + "/" + folder + "/" + fileName}, function(err, files) {
+        files.forEach(f => {
+            console.log(f.name)
+            if (f.name.endsWith(".json")) {
+                f.download(function(err, contents) {
+                    console.log(contents)
+                    // res.status(200).send({results: results})
+                })
+            }
+        })
+    })
     // form.parse(req, async function (err, fields, files) {
     //     // console.log(err)
     //     // console.log(files)
