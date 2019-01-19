@@ -132,8 +132,8 @@ app.use(function(req, res, next) {
     const client = new vision.ImageAnnotatorClient();
     const [result] = await client.asyncBatchAnnotateFiles(request);
     console.log(result)
-    const [filesResponse] = await result.promise();
-    console.log(filesResponse.responses)
+    const filesResponse = await result.promise();
+    console.log(filesResponse)
     // form.parse(req, async function (err, fields, files) {
     //     // console.log(err)
     //     // console.log(files)
