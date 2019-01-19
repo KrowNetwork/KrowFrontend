@@ -156,7 +156,7 @@ app.use(function(req, res, next) {
     bucket.getFiles({"prefix": id + "/" + folder + "/" + fileName}, function(err, files) {
         files.forEach(f => {
             console.log(f.name)
-            if (f.name.endsWith(".json")) {
+            if (f.name.includes('pdf_output.json')) {
                 f.download(function(err, contents) {
                     var feature = 3
                     var bounds = []
@@ -223,6 +223,7 @@ app.use(function(req, res, next) {
                     // res.send("file uploaded");
                     // res.status(200).send({results: results})
                 })
+                break
             }
         })
     })
