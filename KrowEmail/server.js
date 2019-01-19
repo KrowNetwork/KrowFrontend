@@ -159,6 +159,7 @@ app.use(function(req, res, next) {
             if (f.name.endsWith(".json")) {
                 f.download(function(err, contents) {
                     var feature = 3
+                    var bounds = []
                     var document = JSON.parse(contents.toString()).responses[0].fullTextAnnotation
                     console.log(document)
                     document.pages.forEach(page => {
