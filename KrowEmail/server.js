@@ -155,16 +155,16 @@ app.use(function(req, res, next) {
     results = []
     bucket.getFiles({"prefix": id + "/" + folder + "/" + fileName}, function(err, files) {
         files.forEach(f => {
-            console.log(f.name)
+            // console.log(f.name)
             if (f.name.includes('pdf_output.json')) {
                 f.download(function(err, contents) {
                     var feature = 3
                     var bounds = []
-                    console.log(contents.toString())
+                    // console.log(contents.toString())
                     var document = JSON.parse(contents.toString()).responses[0].fullTextAnnotation
-                    console.log(document)
+                    // console.log(document)
                     document.pages.forEach(page => {
-                        console.log(page)
+                        // console.log(page)
                         page.blocks.forEach(block => {
                           block.paragraphs.forEach(paragraph => {
                             var para = ""
@@ -217,7 +217,7 @@ app.use(function(req, res, next) {
                     // res.send(result.fullTextAnnotation)
                     // console.log('Text:');
                     var p = bounds.join(" ")
-                    res.send({res: p})
+                    res.status(200).send({res: p})
                     // detections.forEach(text => console.log(text));
                     //assume <input type = "file" name="filepath">
                     // res.send("file uploaded");
@@ -471,9 +471,12 @@ app.get("/get-employer-folder-resume-count", (req, res, next) => {
             // if (f.name.split(".") == "base.json") {
             //     results.push(f)
             // }
-            results.push(f.name)
+            if (f.name.endsWith(".pdf")) {
+
+                results.push(f.name)
+            }
         })
-        res.status(200).send({results: (results.length - 1) / 2})
+        res.status(200).send({results: results.length})
     })
 })
 

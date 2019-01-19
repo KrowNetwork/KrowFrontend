@@ -111,7 +111,8 @@
 					 			<form>
 
 					 					<div class="col-lg-12">
-					 						<button id="submitBtn" (click)="submitHandler()">Next</button>
+											 <button id="submitBtn" (click)="submitHandler()">Next</button>
+											 <p *ngIf="wait == false">{{ msg }}</p>
 					 					</div>
 					 			</form>
 					 		</div>
