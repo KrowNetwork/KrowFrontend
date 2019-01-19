@@ -103,7 +103,7 @@ app.use(function(req, res, next) {
     var folder = req.query.folder
     var id = req.query.id   
     var fileName = req.query.fileName
-    var gcsSourceUri = "gs//employer-accounts/" + id + "/" + folder + "/" + fileName
+    var gcsSourceUri = "gs://employer-accounts/" + id + "/" + folder + "/" + fileName
     const inputConfig = {
         // Supported mime_types are: 'application/pdf' and 'image/tiff'
         mimeType: 'application/pdf',
