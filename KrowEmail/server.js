@@ -95,86 +95,112 @@ app.use(function(req, res, next) {
 
   //app.use(fileUpload({limits: { fileSize: 5 * 1024 * 1024 } })); //limits to 5MB
   app.post('/ocr/getText/:filename', function (req, res) {
+
       console.log("a")
     var filename = path.basename(req.params.filename);
     filename = path.resolve(__dirname, filename);
     var form = new IncomingForm()
-    form.parse(req, async function (err, fields, files) {
-        // console.log(err)
-        // console.log(files)
+    var folder = req.query.folder
+    var id = req.query.id   
+    var fileName = req.query.fileName
+    var gcsSourceUri = "gs//employer-accounts/" + id + "/" + folder + "/" + fileName
+    const inputConfig = {
+        // Supported mime_types are: 'application/pdf' and 'image/tiff'
+        mimeType: 'application/pdf',
+        gcsSource: {
+          uri: gcsSourceUri,
+        },
+      };
 
-        // console.log("imagePath:"+files.filepath.path);
-        const client = new vision.ImageAnnotatorClient();
-        const [result] = await client.documentTextDetection(files.filepath.path);
-        // const detections = result.textAnnotations;
-        var bounds = []
-        var document = result.fullTextAnnotation
-        var feature = 3
-        document.pages.forEach(page => {
-            page.blocks.forEach(block => {
-              block.paragraphs.forEach(paragraph => {
-                var para = ""
-                var line = ""
+    const features = [{type: 'DOCUMENT_TEXT_DETECTION'}];
+      const request = {
+        requests: [
+          {
+            inputConfig: inputConfig,
+            features: features,
+            // outputConfig: outputConfig,
+          },
+        ],
+      };
+    const client = new vision.ImageAnnotatorClient();
+    const [result] = await client.asyncBatchAnnotateFiles(request);
+    console.log(result)
+    const [filesResponse] = await result.promise();
+    console.log(filesResponse)
+    // form.parse(req, async function (err, fields, files) {
+    //     // console.log(err)
+    //     // console.log(files)
+
+    //     // console.log("imagePath:"+files.filepath.path);
+    //     // const detections = result.textAnnotations;
+    //     var bounds = []
+    //     var document = result.fullTextAnnotation
+    //     var feature = 3
+    //     document.pages.forEach(page => {
+    //         page.blocks.forEach(block => {
+    //           block.paragraphs.forEach(paragraph => {
+    //             var para = ""
+    //             var line = ""
       
-                paragraph.words.forEach(word => {
-                  word.symbols.forEach(symbol => {
-                    if (feature == 5)
-                        bounds.push(symbol.boundingBox)
-                    line += symbol.text 
-                    // console.log(symbol)
-                    // console.log(line)
-                    if (symbol.property !== null) {
-                      if (symbol.property.detectedBreak !== null) {
+    //             paragraph.words.forEach(word => {
+    //               word.symbols.forEach(symbol => {
+    //                 if (feature == 5)
+    //                     bounds.push(symbol.boundingBox)
+    //                 line += symbol.text 
+    //                 // console.log(symbol)
+    //                 // console.log(line)
+    //                 if (symbol.property !== null) {
+    //                   if (symbol.property.detectedBreak !== null) {
                         
-                        if (symbol.property.detectedBreak.type == "SPACE") {
-                          // console.log("a " + line)                    
-                          line += " "
-                        //   console.log(line)
-                        }
-                        if (symbol.property.detectedBreak.type == "EOL_SURE_SPACE") {
-                            line += " "
-                            para += line
-                            line = ""
-                            // console.log(para)
-                        }
-                        if (symbol.property.detectedBreak.type == "LINE_BREAK") {
-                            line += "."
-                            para += line
-                            line = ""
-                        }
-                      }
-                    }
+    //                     if (symbol.property.detectedBreak.type == "SPACE") {
+    //                       // console.log("a " + line)                    
+    //                       line += " "
+    //                     //   console.log(line)
+    //                     }
+    //                     if (symbol.property.detectedBreak.type == "EOL_SURE_SPACE") {
+    //                         line += " "
+    //                         para += line
+    //                         line = ""
+    //                         // console.log(para)
+    //                     }
+    //                     if (symbol.property.detectedBreak.type == "LINE_BREAK") {
+    //                         line += "."
+    //                         para += line
+    //                         line = ""
+    //                     }
+    //                   }
+    //                 }
                     
-                  })
-                  // console.log(para)
-                  if (feature == 4)
-                      bounds.push(word.boundingBox)
-                })
-                if (feature == 3)
-                    bounds.push(para.replace("•", ".").replace("•", ".").replace("..", "."))
-              })
-              if (feature == 2)
-                  bounds.push(block.boundingBox)
-            })
-            if (feature == 1)
-                bounds.push(page.boundingBox)
-          });
-        // res.send(result.fullTextAnnotation)
-        // console.log('Text:');
-        var p = bounds.join(" ")
-        res.send({res: p})
-        // detections.forEach(text => console.log(text));
-        //assume <input type = "file" name="filepath">
-        // res.send("file uploaded");
+    //               })
+    //               // console.log(para)
+    //               if (feature == 4)
+    //                   bounds.push(word.boundingBox)
+    //             })
+    //             if (feature == 3)
+    //                 bounds.push(para.replace("•", ".").replace("•", ".").replace("..", "."))
+    //           })
+    //           if (feature == 2)
+    //               bounds.push(block.boundingBox)
+    //         })
+    //         if (feature == 1)
+    //             bounds.push(page.boundingBox)
+    //       });
+    //     // res.send(result.fullTextAnnotation)
+    //     // console.log('Text:');
+    //     var p = bounds.join(" ")
+    //     res.send({res: p})
+    //     // detections.forEach(text => console.log(text));
+    //     //assume <input type = "file" name="filepath">
+    //     // res.send("file uploaded");
 
-    });
-    console.log("here")
-    form.on("file", (field, file) => {
-        // console.log(file)
-    })
-    form.on("end", () => {
-        // res.status(200)
-    })
+    // });
+    // console.log("here")
+    // form.on("file", (field, file) => {
+    //     // console.log(file)
+    // })
+    // form.on("end", () => {
+    //     // res.status(200)
+    // })
   });
 
 
