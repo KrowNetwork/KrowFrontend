@@ -175,9 +175,9 @@ app.use(function(req, res, next) {
                                 line += symbol.text 
                                 // console.log(symbol)
                                 // console.log(line)
-                                if (symbol.property !== null) {
-                                  if (symbol.property.detectedBreak !== null) {
-                                      if (symbol.property.detectedBreak.type !== null) {
+                                if (symbol.property !== undefined) {
+                                  if (symbol.property.detectedBreak !== undefined) {
+                                      if (symbol.property.detectedBreak.type !== undefined) {
                                         if (symbol.property.detectedBreak.type == "SPACE") {
                                             // console.log("a " + line)                    
                                             line += " "
