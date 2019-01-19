@@ -100,6 +100,7 @@ app.use(function(req, res, next) {
     // var filename = path.basename(req.params.filename);
     // filename = path.resolve(__dirname, filename);
     // var form = new IncomingForm()
+    console.log(req)
     var folder = req.query.folder
     var id = req.query.id   
     var fileName = req.query.fileName
