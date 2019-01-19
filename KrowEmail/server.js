@@ -94,7 +94,7 @@ app.use(function(req, res, next) {
 //   app.use(bodyParser.json())
 
   //app.use(fileUpload({limits: { fileSize: 5 * 1024 * 1024 } })); //limits to 5MB
-  app.post('/ocr/getText/:filename', function (req, res) {
+  app.post('/ocr/getText/:filename', async function (req, res) {
 
       console.log("a")
     var filename = path.basename(req.params.filename);
