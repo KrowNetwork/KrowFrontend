@@ -223,7 +223,7 @@ app.use(function(req, res, next) {
                     // res.send("file uploaded");
                     // res.status(200).send({results: results})
                 })
-                break
+                
             }
         })
     })
