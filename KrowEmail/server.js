@@ -177,24 +177,24 @@ app.use(function(req, res, next) {
                                 // console.log(line)
                                 if (symbol.property !== null) {
                                   if (symbol.property.detectedBreak !== null) {
-                                      console.log(symbol)
-                                    
-                                    if (symbol.property.detectedBreak.type == "SPACE") {
-                                      // console.log("a " + line)                    
-                                      line += " "
-                                    //   console.log(line)
-                                    }
-                                    if (symbol.property.detectedBreak.type == "EOL_SURE_SPACE") {
-                                        line += " "
-                                        para += line
-                                        line = ""
-                                        // console.log(para)
-                                    }
-                                    if (symbol.property.detectedBreak.type == "LINE_BREAK") {
-                                        line += "."
-                                        para += line
-                                        line = ""
-                                    }
+                                      if (symbol.property.detectedBreak.type !== null) {
+                                        if (symbol.property.detectedBreak.type == "SPACE") {
+                                            // console.log("a " + line)                    
+                                            line += " "
+                                          //   console.log(line)
+                                          }
+                                          if (symbol.property.detectedBreak.type == "EOL_SURE_SPACE") {
+                                              line += " "
+                                              para += line
+                                              line = ""
+                                              // console.log(para)
+                                          }
+                                          if (symbol.property.detectedBreak.type == "LINE_BREAK") {
+                                              line += "."
+                                              para += line
+                                              line = ""
+                                          }
+                                      }
                                   }
                                 }
                                 
