@@ -162,6 +162,7 @@ app.use(function(req, res, next) {
                     var document = JSON.parse(contents.toString()).responses[0].fullTextAnnotation
                     console.log(document)
                     document.pages.forEach(page => {
+                        console.log(page)
                         page.blocks.forEach(block => {
                           block.paragraphs.forEach(paragraph => {
                             var para = ""
