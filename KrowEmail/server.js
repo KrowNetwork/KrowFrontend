@@ -134,7 +134,7 @@ app.use(function(req, res, next) {
     console.log(result)
     const filesResponse = await result.promise();
     console.log(filesResponse)
-    console.log(filesResponse.OperationMetadata)
+    console.log(filesResponse[0].OperationMetadata)
     // form.parse(req, async function (err, fields, files) {
     //     // console.log(err)
     //     // console.log(files)
