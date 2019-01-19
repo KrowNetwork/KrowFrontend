@@ -101,9 +101,9 @@ app.use(function(req, res, next) {
     // filename = path.resolve(__dirname, filename);
     // var form = new IncomingForm()
     console.log(req)
-    var folder = req.query.folder
-    var id = req.query.id   
-    var fileName = req.query.fileName
+    var folder = req.params.folder
+    var id = req.params.id   
+    var fileName = req.params.fileName
     console.log(id, folder, fileName)
     var gcsSourceUri = "gs://employer-accounts/" + id + "/" + folder + "/" + fileName
     const inputConfig = {
