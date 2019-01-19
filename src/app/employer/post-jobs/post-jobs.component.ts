@@ -308,7 +308,9 @@ async asyncForEach(array, callback) {
         data => {
         }
       )
+    console.log("delay")
 
+    await this.delay(1000)
       // alert("Please wait while the job data gets saved")
     this.router.navigate(["employer/manage-jobs"])
 
@@ -319,9 +321,12 @@ async asyncForEach(array, callback) {
     //  = this.comps
     
     // this.files = event.target.files;
+
      return this.data
  }
-
+ async delay(ms: number) {
+  return new Promise( resolve => setTimeout(resolve, ms) );
+}
  back() {
    if (this.two == true) {
      // go back to one
