@@ -158,7 +158,7 @@ app.use(function(req, res, next) {
             console.log(f.name)
             if (f.name.endsWith(".json")) {
                 f.download(function(err, contents) {
-                    var document = JSON.parse(contents.toString()).responses
+                    var document = JSON.parse(contents.toString()).responses[0]
                     console.log(document)
                     document.pages.forEach(page => {
                         page.blocks.forEach(block => {
