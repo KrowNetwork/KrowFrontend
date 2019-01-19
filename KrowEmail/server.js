@@ -177,6 +177,7 @@ app.use(function(req, res, next) {
                                 // console.log(line)
                                 if (symbol.property !== null) {
                                   if (symbol.property.detectedBreak !== null) {
+                                      console.log(symbol)
                                     
                                     if (symbol.property.detectedBreak.type == "SPACE") {
                                       // console.log("a " + line)                    
