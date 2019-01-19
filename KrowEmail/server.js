@@ -135,6 +135,7 @@ app.use(function(req, res, next) {
     const [filesResponse] = await result.promise();
     var uri = filesResponse.responses[0].outputConfig.gcsDestination.uri;
 
+    var projectId = "krow-network-1533419444055"
     const storage = new Storage({
         projectId: projectId,
     });
