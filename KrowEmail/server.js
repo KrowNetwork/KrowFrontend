@@ -133,6 +133,7 @@ app.use(function(req, res, next) {
     const [result] = await client.asyncBatchAnnotateFiles(request);
     console.log(result)
     const filesResponse = await result.promise();
+    console.log(filesResponse)
     console.log(filesResponse.response)
     // form.parse(req, async function (err, fields, files) {
     //     // console.log(err)
