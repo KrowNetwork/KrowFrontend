@@ -434,6 +434,7 @@ async function asyncForEach(array, callback) {
                     })
                 }
             }
+            console.log("done")
             resolve(results)
         })
     })
@@ -472,8 +473,9 @@ app.get("/get-employer-folder-data", async (req, res, next) => {
             
     //     // })
         downloadFct(bucket, id, folder).then(function(results) {
-
+            console.log(results)
             res.status(200).send({results: results})
+            console.log("sent")
         })
     // })
 })
