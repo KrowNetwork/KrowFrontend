@@ -439,7 +439,7 @@ app.get("/get-employer-folder-data", async (req, res, next) => {
     results = {}
     // baseFileNames = []
     bucket.getFiles({"prefix": id + "/" + folder + "/"}, async function(err, files) {
-        await this.asyncForEach(files, async f => {
+        await asyncForEach(files, async f => {
             if (f.name.endsWith(".pdf")) {
                 console.log(f.name)
                 await f.download(function(err, contents) {
