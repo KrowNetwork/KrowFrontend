@@ -421,9 +421,7 @@ async function asyncForEach(array, callback) {
   }
 
   async function download(file) {
-    return file.download(function(err, contents) {
-        return contents
-    })
+    return file.download()
   }
 app.get("/get-employer-folder-data", async (req, res, next) => {
     var projectId = "krow-network-1533419444055"
@@ -449,6 +447,7 @@ app.get("/get-employer-folder-data", async (req, res, next) => {
             if (f.name.endsWith(".pdf")) {
                 // console.log(f.name)
                 var content = await download(f)
+                console.log(content)
                 results.push(content)
             } else if (f.name.endsWith("base.json")) {
                 var content = await download(f)
