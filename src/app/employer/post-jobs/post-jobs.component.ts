@@ -34,6 +34,9 @@ export class PostJobsComponent implements OnInit {
   }
   wait = true 
   msg = ""
+  msgFunction(count) {
+    this.msg = "Do not leave this page. The page will auto-redirect when done. Resumes completed: " + count
+  }
   async submitHandler() {
     if (this.one) {
       this.submitOne()
@@ -49,7 +52,7 @@ export class PostJobsComponent implements OnInit {
         this.folder = this.data["title"]
       }
 
-      this.msg = "Do not leave this page. The page will auto-redirect when done."
+      this.msgFunction(0)
       this.wait = false
       var a = await this.submitThree()
       
@@ -270,7 +273,7 @@ async asyncForEach(array, callback) {
     // )
     var folder = this.folder
     
-
+    var completed = 0
     await this.asyncForEach(this.files, async file => {
       const formData = new FormData();
       formData.append('filepath', file, file.name);
@@ -300,7 +303,8 @@ async asyncForEach(array, callback) {
         comp_score: data
       }
       await this.createInfoJson(folder, file, bString).toPromise()
-
+      completed += 1
+      this.msgFunction(completed)
     })
 
     this.data["count"] = this.files.length + " Resumes"
@@ -309,7 +313,7 @@ async asyncForEach(array, callback) {
         }
       )
     console.log("delay")
-
+    this.msgFunction(completed + 1)
     await this.delay(1000)
       // alert("Please wait while the job data gets saved")
     this.router.navigate(["employer/manage-jobs"])

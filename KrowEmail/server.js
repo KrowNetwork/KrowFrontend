@@ -415,6 +415,44 @@ app.get("/get-employer-folders", (req, res, next) => {
     })
 })
 
+app.get("/get-employer-folder-data", (req, res, next) => {
+    var projectId = "krow-network-1533419444055"
+    const storage = new Storage({
+        projectId: projectId,
+    });
+
+    var folder = req.query.folder
+    var id = req.query.id
+    // var filename = req.body.filename
+
+    // console.log(req.body)
+    // console.log(req.params)
+
+    const bucketName = 'employer-accounts';
+
+    var bucket = storage.bucket(bucketName)
+    results = {}
+    // baseFileNames = []
+    bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
+        files.forEach(f => {
+            if (f.name.endsWith(".pdf")) {
+                f.download(function(err, contents) {
+                    results[f.name] = contents
+                })
+            } else if (f.name.endsWith("base.json")) {
+                f.download(function(err, contents) {
+                    results[f.name] = contents
+                })
+            }
+            
+            
+        })
+        res.status(200).send({results: results})
+    })
+})
+
+
+
 
 app.get("/get-employer-folder-base", (req, res, next) => {
     var projectId = "krow-network-1533419444055"
