@@ -421,7 +421,7 @@ async function asyncForEach(array, callback) {
   }
 
   async function download(file) {
-    return f.download(function(err, contents) {
+    return file.download(function(err, contents) {
         return contents
     })
   }
