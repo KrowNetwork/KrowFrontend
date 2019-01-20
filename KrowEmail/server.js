@@ -414,8 +414,12 @@ app.get("/get-employer-folders", (req, res, next) => {
         res.status(200).send({results: results})
     })
 })
-
-app.get("/get-employer-folder-data", (req, res, next) => {
+async function asyncForEach(array, callback) {
+    for (var i = 0; i < array.length; i ++) {
+      await callback(array[i])
+    }
+  }
+app.get("/get-employer-folder-data", async (req, res, next) => {
     var projectId = "krow-network-1533419444055"
     const storage = new Storage({
         projectId: projectId,
@@ -435,15 +439,15 @@ app.get("/get-employer-folder-data", (req, res, next) => {
     results = {}
     // baseFileNames = []
     bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
-        files.forEach(f => {
+        await this.asyncForEach(files, async f => {
             if (f.name.endsWith(".pdf")) {
                 console.log(f.name)
-                f.download(function(err, contents) {
+                await f.download(function(err, contents) {
                     results[f.name] = contents
                     console.log(results)
                 })
             } else if (f.name.endsWith("base.json")) {
-                f.download(function(err, contents) {
+                await f.download(function(err, contents) {
                     results[f.name] = contents
                 })
             }
