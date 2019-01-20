@@ -419,6 +419,12 @@ async function asyncForEach(array, callback) {
       await callback(array[i])
     }
   }
+
+  async function download(file) {
+    return f.download(function(err, contents) {
+        return contents
+    })
+  }
 app.get("/get-employer-folder-data", async (req, res, next) => {
     var projectId = "krow-network-1533419444055"
     const storage = new Storage({
@@ -441,15 +447,12 @@ app.get("/get-employer-folder-data", async (req, res, next) => {
     bucket.getFiles({"prefix": id + "/" + folder + "/"}, async function(err, files) {
         await asyncForEach(files, async f => {
             if (f.name.endsWith(".pdf")) {
-                console.log(f.name)
-                await f.download(function(err, contents) {
-                    results[f.name] = contents
-                    console.log(results)
-                })
+                // console.log(f.name)
+                var content = await download(f)
+                results[f.name] = content
             } else if (f.name.endsWith("base.json")) {
-                await f.download(function(err, contents) {
-                    results[f.name] = contents
-                })
+                var content = await download(f)
+                results[f.name] = content
             }
             
             
