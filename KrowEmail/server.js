@@ -429,9 +429,10 @@ async function asyncForEach(array, callback) {
             for (var i = 0; i < files.length; i ++) {
                 var f = files[i]
                 if (f.name.endsWith(".pdf")) {
-                    await f.download(function(err, contents) {
+                    await f.download().then(function(contents) {
                         results.push(contents)
                     })
+                    console.log(results)
                 }
             }
             console.log("done")
