@@ -437,12 +437,13 @@ app.get("/get-employer-folder-data", (req, res, next) => {
     bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
         files.forEach(f => {
             if (f.name.endsWith(".pdf")) {
+                console.log(f.name)
                 f.download(function(err, contents) {
-                    results[f.name] = contents
+                    results.push(contents)
                 })
             } else if (f.name.endsWith("base.json")) {
                 f.download(function(err, contents) {
-                    results[f.name] = contents
+                    results.push(contents)
                 })
             }
             
