@@ -443,21 +443,29 @@ app.get("/get-employer-folder-data", async (req, res, next) => {
     results = []
     // baseFileNames = []
     await bucket.getFiles({"prefix": id + "/" + folder + "/"}, async function(err, files) {
-        await asyncForEach(files, async f => {
+        // await asyncForEach(files, async f => {
+        //     if (f.name.endsWith(".pdf")) {
+        //         // console.log(f.name)
+        //         var content = await download(f)
+        //         console.log(content)
+        //         results.push(content)
+        //     } else if (f.name.endsWith("base.json")) {
+        //         var content = await download(f)
+        //         // results[f.name] = content
+        //     }
+            
+            
+        // })
+        for (var i = 0; i < files.length; i ++) {
+            var f = files[i]
             if (f.name.endsWith(".pdf")) {
-                // console.log(f.name)
-                var content = await download(f)
-                console.log(content)
-                results.push(content)
-            } else if (f.name.endsWith("base.json")) {
-                var content = await download(f)
-                // results[f.name] = content
+                f.download(function(err, contents) {
+                    results.push(contents)
+                })
             }
-            
-            
-        })
+        }
+        res.status(200).send({results: results})
     })
-    res.status(200).send({results: results})
 })
 
 
