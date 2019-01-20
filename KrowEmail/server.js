@@ -420,9 +420,21 @@ async function asyncForEach(array, callback) {
     }
   }
 
-  async function download(file) {
-    return file.download()
-  }
+ var downloadFct = function(id, folder) {
+     
+    return new Promise(function(resolve, reject) {
+        var results = []
+        for (var i = 0; i < files.length; i ++) {
+            var f = files[i]
+            if (f.name.endsWith(".pdf")) {
+                await f.download(function(err, contents) {
+                    results.push(contents)
+                })
+            }
+        }
+        resolve(results)
+    })
+ }
 app.get("/get-employer-folder-data", async (req, res, next) => {
     var projectId = "krow-network-1533419444055"
     const storage = new Storage({
@@ -442,30 +454,25 @@ app.get("/get-employer-folder-data", async (req, res, next) => {
     var bucket = storage.bucket(bucketName)
     results = []
     // baseFileNames = []
-    bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
-        // await asyncForEach(files, async f => {
-        //     if (f.name.endsWith(".pdf")) {
-        //         // console.log(f.name)
-        //         var content = await download(f)
-        //         console.log(content)
-        //         results.push(content)
-        //     } else if (f.name.endsWith("base.json")) {
-        //         var content = await download(f)
-        //         // results[f.name] = content
-        //     }
+    // bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
+    //     // await asyncForEach(files, async f => {
+    //     //     if (f.name.endsWith(".pdf")) {
+    //     //         // console.log(f.name)
+    //     //         var content = await download(f)
+    //     //         console.log(content)
+    //     //         results.push(content)
+    //     //     } else if (f.name.endsWith("base.json")) {
+    //     //         var content = await download(f)
+    //     //         // results[f.name] = content
+    //     //     }
             
             
-        // })
-        for (var i = 0; i < files.length; i ++) {
-            var f = files[i]
-            if (f.name.endsWith(".pdf")) {
-                f.download(function(err, contents) {
-                    results.push(contents)
-                })
-            }
-        }
-        res.status(200).send({results: results})
-    })
+    //     // })
+        downloadFct(id, folder).then(function(results) {
+
+            res.status(200).send({results: results})
+        })
+    // })
 })
 
 
