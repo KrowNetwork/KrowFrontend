@@ -12,9 +12,9 @@
                 <li class="inner-child">
                   <a [routerLink]="['/employer']" title=""><i class="la la-file-text"></i>Company Profile</a>
                 </li>
-                <li class="inner-child">
+                <!-- <li class="inner-child">
                   <a href="#" title=""><i class="la la-lock"></i>Settings</a>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
@@ -43,8 +43,8 @@
                   <div class="col-lg-2">
                     <span class="pf-title">Job(s) Offered</span>
                     <div class="pf-field">
-                      <select data-placeholder="Please Select the Types of Jobs your Company Offers" class="chosen"
-                        formControlName="jobType">
+                      <select (keydown)="changeHandler()" data-placeholder="Please Select the Types of Jobs your Company Offers"
+                        class="chosen" formControlName="jobType">
                         <option value="1">Full Time</option>
                         <option value="2">Part Time</option>
                         <option value="3">Freelancing</option>
@@ -55,7 +55,7 @@
                   <div class="col-lg-4">
                     <span class="pf-title">Team Size</span>
                     <div class="pf-field">
-                      <select id="team-size-select" formControlName="size">
+                      <select (keydown)="changeHandler()" id="team-size-select" formControlName="size">
                         <option value="">-Choose an option-</option>
                         <option value="1">1-10</option>
                         <option value="2">11-100</option>
@@ -69,40 +69,30 @@
                   <div class="col-lg-6">
                     <span class="pf-title">Year Established</span>
                     <div class="pf-field">
-                      <input type="text" formControlName="year" placeholder="2012" />
+                      <input (keydown)="changeHandler()" type="text" formControlName="year" placeholder="2012" />
                     </div>
                   </div>
 
                   <div class="col-lg-6">
                     <span class="pf-title">Industry Keywords (Enter text and click enter)</span>
                     <div class="pf-field">
-                      <!-- <ul class="tags">
-                        <li class="tagAdd taglist">
-                          <input type="text" formControlName="keyWords" id="search-field">
-						</li>
-					  </ul> -->
-					  
-					  <ul class="tags" id="ulTags" style="margin-bottom: 15px" formControlName="keyWords" >
-							<li class="addedTag" style="margin-bottom: 5px; margin-top: 5px" *ngFor="let keyWord of this.keyWords">
-								{{ keyWord }}
-							<span class="tagRemove" (click)="removeSkill($event);">x</span>
-							<input type="hidden" name="tags[]" value="{{ keyWord }}" [(ngModel)]=data.newskill >
-							</li>
-							<li class="tagAdd taglist" id="lastNode" style="margin-top: 5px">
-							  <input 
-								type="text" 
-								id="search-field" 
-								placeholder="Web Design" 
-								(keydown)="changeHandler($event)"
-								(keyup)="$event.keyCode == 13 ? submitHandler($event, data) : null">
-							</li>
-						  </ul>
+                      <ul class="tags" id="ulTags" style="margin-bottom: 15px" >
+                        <li class="addedTag" style="margin-bottom: 5px; margin-top: 5px" *ngFor="let keyWord of this.keyWords">
+                          {{ keyWord }}
+                          <span class="tagRemove" (click)="removeSkill($event);">x</span>
+                          <input type="hidden" name="tags[]" value="{{ keyWord }}" class="tagValue" >
+                        </li>
+                        <li class="tagAdd taglist" id="lastNode" style="margin-top: 5px">
+                          <input type="text" id="search-field" placeholder="Finance" (keydown)="changeHandler()"
+                            (keyup)="$event.keyCode == 13 ? submitHandler($event, data) : null">
+                        </li>
+                      </ul>
                     </div>
                   </div>
                   <div class="col-lg-12">
                     <span class="pf-title">Description</span>
                     <div class="pf-field">
-                      <textarea formControlName="description" placeholder="Describe your company as if your job depends on it"></textarea>
+                      <textarea (keydown)="changeHandler()" formControlName="description" placeholder="Describe your company as if your job depends on it"></textarea>
                     </div>
                   </div>
 
@@ -116,14 +106,14 @@
                   <div class="col-lg-6">
                     <span class="pf-title">Facebook</span>
                     <div class="pf-field">
-                      <input type="text" formControlName="facebook" placeholder="www.facebook.com/KrowNetwork" />
+                      <input (keydown)="changeHandler()" type="text" formControlName="facebook" placeholder="www.facebook.com/KrowNetwork" />
                       <i class="fa fa-facebook"></i>
                     </div>
                   </div>
                   <div class="col-lg-6">
                     <span class="pf-title">Twitter</span>
                     <div class="pf-field">
-                      <input type="text" formControlName="twitter" placeholder="www.twitter.com/KrowNetwork" />
+                      <input (keydown)="changeHandler()" type="text" formControlName="twitter" placeholder="www.twitter.com/KrowNetwork" />
                       <i class="fa fa-twitter"></i>
                     </div>
                   </div>
@@ -131,7 +121,7 @@
                 <div class="col-lg-6">
                   <span class="pf-title">Linkedin</span>
                   <div class="pf-field">
-                    <input type="text" formControlName="linkedin" placeholder="www.Linkedin.com/TeraPlaner" />
+                    <input (keydown)="changeHandler()" type="text" formControlName="linkedin" placeholder="www.Linkedin.com/TeraPlaner" />
                     <i class="la la-linkedin"></i>
                   </div>
                 </div>
@@ -144,28 +134,28 @@
                   <div class="col-lg-4">
                     <span class="pf-title">Phone Number</span>
                     <div class="pf-field">
-                      <input type="text" formControlName="phoneNumber" placeholder="+123 456 7890" />
+                      <input (keydown)="changeHandler()" type="text" formControlName="phoneNumber" placeholder="+123 456 7890" />
                     </div>
                   </div>
                   <div class="col-lg-4">
                     <span class="pf-title">Email</span>
                     <div class="pf-field">
-                      <input type="text" formControlName="email" placeholder="help@krow.network" />
+                      <input (keydown)="changeHandler()" type="text" formControlName="email" placeholder="help@krow.network" />
                     </div>
                   </div>
                   <div class="col-lg-4">
                     <span class="pf-title">Website</span>
                     <div class="pf-field">
-                      <input type="text" formControlName="website" placeholder="www.krow.network" />
+                      <input (keydown)="changeHandler()" type="text" formControlName="website" placeholder="www.krow.network" />
                     </div>
                   </div>
                   <div class="col-lg-12">
                     <span class="pf-title">Job Location</span>
                     <div class="pf-field">
-                      <input type="text" formControlName="location" placeholder="New York City" />
+                      <input (keydown)="changeHandler()" type="text" formControlName="location" placeholder="New York City" />
                     </div>
                   </div>
-                  <div class="col-lg-12">
+                  <div *ngIf="isChanged" class="col-lg-12">
                     <button type="submit" (click)="updateEmployer($event)">Update Profile</button>
                   </div>
                 </div>

@@ -32,11 +32,13 @@ export class EmployerEditComponent implements OnInit {
 
   size: number;
   jobType: number;
-  keywords = [];
+  keyWords = [];
 
   owner= false;
   forceLogin=false;
   curr_emp = false;
+
+  isChanged = false;
 
   constructor(
     private router: Router,
@@ -63,7 +65,7 @@ export class EmployerEditComponent implements OnInit {
       jobType:  new FormControl(this.jobType),
       size: new FormControl(this.size),
       year: new FormControl(this.year),
-      keyWords: new FormControl(this.keywords),
+      keyWords: new FormControl(this.keyWords),
       description: new FormControl(this.description)
     });
 
@@ -98,7 +100,7 @@ export class EmployerEditComponent implements OnInit {
           this.size = data["size"];
           this.jobType = data["jobType"];
           this.year = data["year"];
-          this.keywords = data["keyWords"]
+          this.keyWords = data["keyWords"]
           this.location = data["location"]
           this.phoneNumber = data["phoneNumber"];
           this.email = data["email"];
@@ -126,7 +128,6 @@ export class EmployerEditComponent implements OnInit {
             jobType:  this.jobType,
             size: this.size,
             year: this.year,
-            keyWords: this.keywords,
             description: this.description
           });
 
@@ -156,7 +157,8 @@ export class EmployerEditComponent implements OnInit {
     
   }
 
-  updateEmployer(event){
+  async updateEmployer(event){
+    this.isChanged = false;
     console.log(this.companyForm.get('company').value)
     var url = "http://18.220.46.51:3000/api/Employer/" + this.user;
 
@@ -164,11 +166,13 @@ export class EmployerEditComponent implements OnInit {
     this.http.get(url).subscribe(
       data => {
         console.log('data', data)
+        console.log(x.companyForm.get('keyWords'))
         data['employerName'] = x.companyForm.get('company').value;
         data['jobType'] = x.companyForm.get('jobType').value;
         data['size'] = x.companyForm.get('size').value;
         data['year'] = x.companyForm.get('year').value;
-        data['keyWords'] = x.companyForm.get('keyWords').value;
+        data['keyWords'] = x.getKeyWords();
+        // data['keyWords'] = [];
         data['description'] = x.companyForm.get('description').value;
 
         data['phoneNumber'] = x.contactForm.get('phoneNumber').value;
@@ -212,6 +216,17 @@ export class EmployerEditComponent implements OnInit {
     )
   }
 
+  getKeyWords(){
+    var collected_kws = document.getElementsByClassName("addedTag")
+    var returned_kws = []
+    console.log(collected_kws)
+
+    for(var i = 0; i < collected_kws.length; i++){
+      returned_kws.push(collected_kws[i].innerHTML.split("<")[0])
+    }
+    return returned_kws
+  }
+
   removeProfilePic(){
     var x = this;
     const bucketName = 'krow-network-profile-pics';
@@ -231,6 +246,59 @@ export class EmployerEditComponent implements OnInit {
        window.location.reload();
      }
     })
+  }
+
+  changeHandler() {
+    this.isChanged = true;
+  }
+
+  submitHandler(event, data){
+    if(event.target.value == ""){
+      return;
+    }
+    // console.log(event.target.value)
+    // event.target.value = data.newskill
+    this.createNew(event);
+    event.target.value = "";
+  }
+
+  createNew(skill){
+    // console.log(skill)
+    // if(/\S/.test(skill.data.skill.toString())){
+    //   // console.log("found something");
+    //   return;
+    // }
+
+    var data = skill.target.value 
+    console.log(data)
+    skill.target.value = ""
+    // var src = skill.path[1]
+    var src = skill.composedPath()[1]
+    var node = document.createElement("li");
+    var ul = src.closest(".tags");
+    
+    // ul.appendChild(node)
+    node.setAttribute("class", "addedTag");
+    node.setAttribute("style", "margin-bottom: 5px; margin-top: 5px");
+    // node.set
+    // console.log(node)
+    // console.log("test")
+    // var data = skill.data.skill.toString();
+    var span = "<span class='tagRemove'>x</span>";
+    var input = "<input type='hidden' name='tags[]' value='" + data + "'>";
+    node.innerHTML = (data + span + input);
+    node.children[0].addEventListener("click", function(){
+      this.isChanged = true;
+      this.parentNode.remove();
+    })
+    // var ul = src.closest(".tags");
+    // console.log(src)
+    ul.insertBefore(node, src.closest("li"));
+  }
+
+  removeSkill(event){
+    this.isChanged = true;
+    event.target.parentNode.remove();
   }
 
 }
