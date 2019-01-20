@@ -442,17 +442,17 @@ app.get("/get-employer-folder-data", async (req, res, next) => {
     const bucketName = 'employer-accounts';
 
     var bucket = storage.bucket(bucketName)
-    results = {}
+    results = []
     // baseFileNames = []
     await bucket.getFiles({"prefix": id + "/" + folder + "/"}, async function(err, files) {
         await asyncForEach(files, async f => {
             if (f.name.endsWith(".pdf")) {
                 // console.log(f.name)
                 var content = await download(f)
-                results[f.name] = content
+                results.push(content)
             } else if (f.name.endsWith("base.json")) {
                 var content = await download(f)
-                results[f.name] = content
+                // results[f.name] = content
             }
             
             
