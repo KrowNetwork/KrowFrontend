@@ -423,6 +423,7 @@ app.get("/get-employer-folder-data", (req, res, next) => {
 
     var folder = req.query.folder
     var id = req.query.id
+    console.log(id, folder)
     // var filename = req.body.filename
 
     // console.log(req.body)
