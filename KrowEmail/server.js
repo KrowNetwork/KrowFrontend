@@ -471,7 +471,7 @@ app.get("/get-employer-folder-data", async (req, res, next) => {
             
             
     //     // })
-        downloadFct(id, folder).then(function(results) {
+        downloadFct(bucket, id, folder).then(function(results) {
 
             res.status(200).send({results: results})
         })
