@@ -439,11 +439,12 @@ app.get("/get-employer-folder-data", (req, res, next) => {
             if (f.name.endsWith(".pdf")) {
                 console.log(f.name)
                 f.download(function(err, contents) {
-                    results.push(contents)
+                    results[f.name] = contents
+                    console.log(results)
                 })
             } else if (f.name.endsWith("base.json")) {
                 f.download(function(err, contents) {
-                    results.push(contents)
+                    results[f.name] = contents
                 })
             }
             
