@@ -420,19 +420,22 @@ async function asyncForEach(array, callback) {
     }
   }
 
- var downloadFct = function(id, folder) {
+ var downloadFct = async function(bucket, id, folder) {
      
     return new Promise(function(resolve, reject) {
+
         var results = []
-        for (var i = 0; i < files.length; i ++) {
-            var f = files[i]
-            if (f.name.endsWith(".pdf")) {
-                await f.download(function(err, contents) {
-                    results.push(contents)
-                })
+        bucket.getFiles({"prefix": id + "/" + folder + "/"}, async function(err, files) {
+            for (var i = 0; i < files.length; i ++) {
+                var f = files[i]
+                if (f.name.endsWith(".pdf")) {
+                    await f.download(function(err, contents) {
+                        results.push(contents)
+                    })
+                }
             }
-        }
-        resolve(results)
+            resolve(results)
+        })
     })
  }
 app.get("/get-employer-folder-data", async (req, res, next) => {
