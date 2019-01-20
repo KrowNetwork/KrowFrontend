@@ -223,7 +223,26 @@ export class UserLoginService {
                     //     }
 
                     } else {
-                        cognitoUser.refreshSession(token, (err, session) => { console.log(session) });
+                        // var self = self
+                        cognitoUser.refreshSession(token, (err, session) => { 
+                            self.http.post("https://api.krownetwork.com/check-user", {id: localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")}).subscribe(
+                            data => {
+                                console.log(data["response"])
+                                if (data["response"] == "applicant") {
+                                    sessionStorage.setItem("accountType", "applicant")
+                                    // this.router.navigate(['/applicant']);
+                                } else if (data["response"] == "employer") {
+                                    sessionStorage.setItem("accountType", "employer")
+                                    // this.router.navigate(['/employer']);
+                                
+                                // } else {
+                                //     // sessionStorage.setItem("accountType", "")
+                                // }
+                                }
+                            }
+                            
+                        )
+                        });
                         callback.isLoggedIn(err, true)
                     }})
 

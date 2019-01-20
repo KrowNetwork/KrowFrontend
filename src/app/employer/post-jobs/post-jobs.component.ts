@@ -1,13 +1,14 @@
+import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from '@angular/core';
-import { CustomHttpService } from "../../shared/service/custom-http.service"
-import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
-import { post } from '../../../../node_modules/@types/selenium-webdriver/http';
+import { CustomHttpService } from "../../shared/service/custom-http.service";
+import { Router } from "../../../../node_modules/@angular/router";
 
 @Component({
   selector: 'app-post-jobs',
   templateUrl: './post-jobs.component.html',
   styleUrls: ['./post-jobs.component.css']
 })
+
 export class PostJobsComponent implements OnInit {
   data = {}
   one = true 
@@ -18,6 +19,7 @@ export class PostJobsComponent implements OnInit {
   constructor(
     public http: CustomHttpService,
     public http2: HttpClient,
+    public router: Router
   ) {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
    }
@@ -28,8 +30,12 @@ export class PostJobsComponent implements OnInit {
     this.http2.get("https://api.krownetwork.com/get-employer-folders", {params: {id: this.user}}).subscribe(
       data => {
         this.folders = data["results"]
-        console.log(data)
       })
+  }
+  wait = true 
+  msg = ""
+  msgFunction(count) {
+    this.msg = "Do not leave this page. The page will auto-redirect when done. Resumes completed: " + count
   }
   async submitHandler() {
     if (this.one) {
@@ -45,15 +51,14 @@ export class PostJobsComponent implements OnInit {
       } else {
         this.folder = this.data["title"]
       }
-      console.log(this.folder)
 
-      await this.submitThree()
-      console.log("ya" + this.data)
-      this.http.createFolder("https://api.krownetwork.com/create-employer-folder", {folder: this.folder, id: this.user, bufferString: JSON.stringify(this.data)}).subscribe(
-        data => {
-          console.log(data)
-        }
-      )
+      this.msgFunction(0)
+      this.wait = false
+      var a = await this.submitThree()
+      
+
+
+      
     }
   }
 
@@ -72,7 +77,9 @@ export class PostJobsComponent implements OnInit {
       job_type: job_type.value,
       exp_lvl: exp_lvl.value,
       location: location.value,
-      date: date.value
+      date: date.value,
+      date_posted: new Date(),
+      type: "Active"
     }
     // console.log(this.data)
 
@@ -94,12 +101,11 @@ export class PostJobsComponent implements OnInit {
     i.addEventListener("change", function(e) {
       for (var i = 0; i < e.target["files"].length; i++) { 
         var f = e.target["files"][i]
-        console.log(f)
-        // if (f.type.split("/")[0] != "application") {
-        //   console.log("oops")
-        // } else {
+        if (f.type != "application/pdf") {
+          alert("All files need to be PDFs")
+        } else {
           self.files.push(f);
-        // }
+        }
       }
       
     })
@@ -181,7 +187,7 @@ export class PostJobsComponent implements OnInit {
         <div class="col-lg-4">
           <span class="pf-title">Expiration Date</span>
           <div class="pf-field">
-            <input class="date" type="date" value="` + this.data["date"] + `">
+            <input class="date" type="date" value="` + this.data["date"] + `" disabled>
           </div>
         </div>
 
@@ -211,10 +217,54 @@ export class PostJobsComponent implements OnInit {
 //        if (this[i] == needle) return true;
 //     }
 //     return false;
+
+async asyncForEach(array, callback) {
+  for (var i = 0; i < array.length; i ++) {
+    await callback(array[i])
+  }
+}
+
+  uploadFile(formData, folder) {
+    return this.http2.post("https://api.krownetwork.com/upload-employer-file", formData, {params: {folder: folder, id: this.user}}).map(
+      data => {
+        return data
+      }
+    )
+  }
+
+  ocr(formData) {
+    return this.http2.post("https://api.krownetwork.com/ocr/getText/test.jpg", formData).map( data =>{
+      return data
+    })
+  }
+  ocr2(folder, filename) {
+    console.log(folder)
+    console.log(filename)
+    console.log(this.user)
+    return this.http2.post("https://api.krownetwork.com/ocr/getText/test.jpg", {params:{folder: folder, id: this.user, fileName: filename}}).map( data =>{
+      return data
+    })
+  }
+
+  compare(accessToken, postData) {
+    return this.http2.post("https://api.krownetwork.com/compare-employer?token=" + accessToken, postData).map(
+      data => {
+        return data
+      }
+    )
+  }
+
+  createInfoJson(folder, file, bString) {
+    return this.http2.get("https://api.krownetwork.com/create-employer-file", {params: {folder: folder, file: file.name + "info.json", id: this.user, bufferString: JSON.stringify(bString)}}).map(
+        data => {
+          return data
+        }
+      )
+  }
 //  }
   async submitThree() {
-
     
+
     this.data["comparisons"] = []
     // this.http.createFolder("https://api.krownetwork.com/create-employer-folder", {folder: this.data['title'], id: this.user, bufferString: JSON.stringify(this.data)}).subscribe(
     //   data => {
@@ -222,57 +272,52 @@ export class PostJobsComponent implements OnInit {
     //   }
     // )
     var folder = this.folder
-
-    this.files.forEach(async file => {
+    
+    var completed = 0
+    await this.asyncForEach(this.files, async file => {
       const formData = new FormData();
       formData.append('filepath', file, file.name);
       // formData.append("folder", )
-      console.log(formData.get("filepath"))
 
       
+      await this.uploadFile(formData, folder).toPromise()
+      console.log(folder)
+      console.log(file.name)
+      console.log(this.user)
+      var data = await this.ocr2(folder, file.name).toPromise()
+      // var data = await this.ocr(formData).toPromise()
+      var postData = {
+        data1: data["res"],
+        data2: this.data["title"] + " " + this.data["desc"]
+      }
 
-      await this.http2.post("https://api.krownetwork.com/upload-employer-file", formData, {params: {folder: folder, id: this.user}}).subscribe(
-        data => {
-          console.log(data)
-        }
-      )
-      
-      await this.http2.post("https://api.krownetwork.com/ocr/getText/test.jpg", formData).subscribe(
-        async data => {
-          var postData = {
-            data1: data["res"],
-            data2: this.data["title"] + " " + this.data["desc"]
-          }
-          console.log(postData)
-          var accessToken = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.0379a201-001b-4010-9a04-93f4a2ca9370.accessToken")
-          await this.http2.post("https://api.krownetwork.com/compare-employer?token=" + accessToken, postData).subscribe(
-            data => {
-              console.log(data)
-              var n = file.name
-              var obj = {}
-              obj[n] = data 
-              // this.comps.push(obj)
-              this.data["comparisons"].push(obj)
-              var bString = {
-                text: postData.data1,
-                comp_score: data
-              }
-              console.log(bString)
-              this.http2.get("https://api.krownetwork.com/create-employer-file", {params: {folder: folder, file: file.name + "info.json", id: this.user, bufferString: JSON.stringify(bString)}}).subscribe(
-                data => {
-                  console.log("info created")
-                }
-              )
-              
-            }
-          )
-          console.log(this.data)
-          // console.log(data)
-        }
-      )
-
-
+      var accessToken = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.0379a201-001b-4010-9a04-93f4a2ca9370.accessToken")
+      var comparison = await this.compare(accessToken, postData).toPromise()
+      var n = file.name
+      var obj = {}
+      obj[n] = comparison 
+      // this.comps.push(obj)
+      this.data["comparisons"].push(obj)
+      var bString = {
+        text: postData.data1,
+        comp_score: data
+      }
+      await this.createInfoJson(folder, file, bString).toPromise()
+      completed += 1
+      this.msgFunction(completed)
     })
+
+    this.data["count"] = this.files.length + " Resumes"
+      this.http.createFolder("https://api.krownetwork.com/create-employer-folder", {folder: this.folder, id: this.user, bufferString: JSON.stringify(this.data)}).subscribe(
+        data => {
+        }
+      )
+    console.log("delay")
+    this.msgFunction(completed + 1)
+    await this.delay(1000)
+      // alert("Please wait while the job data gets saved")
+    this.router.navigate(["employer/manage-jobs"])
+
     // while (this.data["comparisons"].length != this.files.length) {
     //   console.log(this.data["comparisons"].length)
     // }
@@ -280,9 +325,12 @@ export class PostJobsComponent implements OnInit {
     //  = this.comps
     
     // this.files = event.target.files;
+
      return this.data
  }
-
+ async delay(ms: number) {
+  return new Promise( resolve => setTimeout(resolve, ms) );
+}
  back() {
    if (this.two == true) {
      // go back to one
@@ -406,11 +454,11 @@ export class PostJobsComponent implements OnInit {
       for (var i = 0; i < e.target["files"].length; i++) { 
         var f = e.target["files"][i]
         console.log(f)
-        // if (f.type.split("/")[0] != "application") {
-        //   console.log("oops")
-        // } else {
+        if (f.type != "application/pdf") {
+          alert("All files need to be PDFs")
+        } else {
           self.files.push(f);
-        // }
+        }
       }
       
     })

@@ -94,87 +94,158 @@ app.use(function(req, res, next) {
 //   app.use(bodyParser.json())
 
   //app.use(fileUpload({limits: { fileSize: 5 * 1024 * 1024 } })); //limits to 5MB
-  app.post('/ocr/getText/:filename', function (req, res) {
+  app.post('/ocr/getText/:filename', async function (req, res) {
+
       console.log("a")
-    var filename = path.basename(req.params.filename);
-    filename = path.resolve(__dirname, filename);
-    var form = new IncomingForm()
-    form.parse(req, async function (err, fields, files) {
-        // console.log(err)
-        // console.log(files)
+    // var filename = path.basename(req.params.filename);
+    // filename = path.resolve(__dirname, filename);
+    // var form = new IncomingForm()
+    console.log(req.body.params)
+    var folder = req.body.params.folder
+    var id = req.body.params.id   
+    var fileName = req.body.params.fileName
+    console.log(id, folder, fileName)
+    var gcsSourceUri = "gs://employer-accounts/" + id + "/" + folder + "/" + fileName
+    var gcsDestinationUri = "gs://employer-accounts/" + id + "/" + folder + "/" + fileName + "_output.json"
+    const inputConfig = {
+        // Supported mime_types are: 'application/pdf' and 'image/tiff'
+        mimeType: 'application/pdf',
+        gcsSource: {
+          uri: gcsSourceUri,
+        },
+      };
+      const outputConfig = {
+        gcsDestination: {
+          uri: gcsDestinationUri,
+        },
+      };
+    const features = [{type: 'DOCUMENT_TEXT_DETECTION'}];
+      const request = {
+        requests: [
+          {
+            inputConfig: inputConfig,
+            features: features,
+            outputConfig: outputConfig,
+          },
+        ],
+      };
+    const client = new vision.ImageAnnotatorClient();
+    const [result] = await client.asyncBatchAnnotateFiles(request);
+    console.log(result)
+    const [filesResponse] = await result.promise();
+    var uri = filesResponse.responses[0].outputConfig.gcsDestination.uri;
 
-        // console.log("imagePath:"+files.filepath.path);
-        const client = new vision.ImageAnnotatorClient();
-        const [result] = await client.documentTextDetection(files.filepath.path);
-        // const detections = result.textAnnotations;
-        var bounds = []
-        var document = result.fullTextAnnotation
-        var feature = 3
-        document.pages.forEach(page => {
-            page.blocks.forEach(block => {
-              block.paragraphs.forEach(paragraph => {
-                var para = ""
-                var line = ""
-      
-                paragraph.words.forEach(word => {
-                  word.symbols.forEach(symbol => {
-                    if (feature == 5)
-                        bounds.push(symbol.boundingBox)
-                    line += symbol.text 
-                    // console.log(symbol)
-                    // console.log(line)
-                    if (symbol.property !== null) {
-                      if (symbol.property.detectedBreak !== null) {
-                        
-                        if (symbol.property.detectedBreak.type == "SPACE") {
-                          // console.log("a " + line)                    
-                          line += " "
-                        //   console.log(line)
-                        }
-                        if (symbol.property.detectedBreak.type == "EOL_SURE_SPACE") {
-                            line += " "
-                            para += line
-                            line = ""
-                            // console.log(para)
-                        }
-                        if (symbol.property.detectedBreak.type == "LINE_BREAK") {
-                            line += ""
-                            para += line
-                            line = ""
-                        }
-                      }
-                    }
-                    
-                  })
-                  // console.log(para)
-                  if (feature == 4)
-                      bounds.push(word.boundingBox)
-                })
-                if (feature == 3)
-                    bounds.push(para.replace("•", ".").replace("•", ".").replace("..", "."))
-              })
-              if (feature == 2)
-                  bounds.push(block.boundingBox)
-            })
-            if (feature == 1)
-                bounds.push(page.boundingBox)
-          });
-        // res.send(result.fullTextAnnotation)
-        // console.log('Text:');
-        var p = bounds.join(" ")
-        res.send({res: p})
-        // detections.forEach(text => console.log(text));
-        //assume <input type = "file" name="filepath">
-        // res.send("file uploaded");
-
+    var projectId = "krow-network-1533419444055"
+    const storage = new Storage({
+        projectId: projectId,
     });
-    console.log("here")
-    form.on("file", (field, file) => {
-        // console.log(file)
+
+    // var folder = req.query.folder
+    // var id = req.query.id
+    // var filename = req.body.filename
+
+    // console.log(req.body)
+    // // console.log(req.params)
+    // console.log(id)
+    // console.log(folder)
+
+    const bucketName = 'employer-accounts';
+
+    var bucket = storage.bucket(bucketName)
+    results = []
+    bucket.getFiles({"prefix": id + "/" + folder + "/" + fileName}, function(err, files) {
+        files.forEach(f => {
+            // console.log(f.name)
+            if (f.name.includes('pdf_output.json')) {
+                f.download(function(err, contents) {
+                    var feature = 3
+                    var bounds = []
+                    // console.log(contents.toString())
+                    var document = JSON.parse(contents.toString()).responses[0].fullTextAnnotation
+                    // console.log(document)
+                    document.pages.forEach(page => {
+                        // console.log(page)
+                        page.blocks.forEach(block => {
+                          block.paragraphs.forEach(paragraph => {
+                            var para = ""
+                            var line = ""
+                  
+                            paragraph.words.forEach(word => {
+                              word.symbols.forEach(symbol => {
+                                if (feature == 5)
+                                    bounds.push(symbol.boundingBox)
+                                line += symbol.text 
+                                // console.log(symbol)
+                                // console.log(line)
+                                if (symbol.property !== undefined) {
+                                  if (symbol.property.detectedBreak !== undefined) {
+                                      if (symbol.property.detectedBreak.type !== undefined) {
+                                        if (symbol.property.detectedBreak.type == "SPACE") {
+                                            // console.log("a " + line)                    
+                                            line += " "
+                                          //   console.log(line)
+                                          }
+                                          if (symbol.property.detectedBreak.type == "EOL_SURE_SPACE") {
+                                              line += " "
+                                              para += line
+                                              line = ""
+                                              // console.log(para)
+                                          }
+                                          if (symbol.property.detectedBreak.type == "LINE_BREAK") {
+                                              line += "."
+                                              para += line
+                                              line = ""
+                                          }
+                                      }
+                                  }
+                                }
+                                
+                              })
+                              // console.log(para)
+                              if (feature == 4)
+                                  bounds.push(word.boundingBox)
+                            })
+                            if (feature == 3)
+                                bounds.push(para.replace("•", ".").replace("•", ".").replace("..", "."))
+                          })
+                          if (feature == 2)
+                              bounds.push(block.boundingBox)
+                        })
+                        if (feature == 1)
+                            bounds.push(page.boundingBox)
+                      });
+                    // res.send(result.fullTextAnnotation)
+                    // console.log('Text:');
+                    var p = bounds.join(" ")
+                    res.status(200).send({res: p})
+                    // detections.forEach(text => console.log(text));
+                    //assume <input type = "file" name="filepath">
+                    // res.send("file uploaded");
+                    // res.status(200).send({results: results})
+                })
+                
+            }
+        })
     })
-    form.on("end", () => {
-        // res.status(200)
-    })
+    // form.parse(req, async function (err, fields, files) {
+    //     // console.log(err)
+    //     // console.log(files)
+
+    //     // console.log("imagePath:"+files.filepath.path);
+    //     // const detections = result.textAnnotations;
+    //     var bounds = []
+    //     var document = result.fullTextAnnotation
+    //     var feature = 3
+    
+
+    // });
+    // console.log("here")
+    // form.on("file", (field, file) => {
+    //     // console.log(file)
+    // })
+    // form.on("end", () => {
+    //     // res.status(200)
+    // })
   });
 
 
@@ -341,6 +412,139 @@ app.get("/get-employer-folders", (req, res, next) => {
             
         })
         res.status(200).send({results: results})
+    })
+})
+async function asyncForEach(array, callback) {
+    for (var i = 0; i < array.length; i ++) {
+      await callback(array[i])
+    }
+  }
+
+ var downloadFct = async function(bucket, id, folder) {
+     
+    return new Promise(function(resolve, reject) {
+
+        var results = []
+        bucket.getFiles({"prefix": id + "/" + folder + "/"}, async function(err, files) {
+            for (var i = 0; i < files.length; i ++) {
+                var f = files[i]
+                if (f.name.endsWith(".pdf")) {
+                    await f.download().then(function(contents) {
+                        results.push(contents)
+                    })
+                    console.log(results)
+                }
+            }
+            console.log("done")
+            resolve(results)
+        })
+    })
+ }
+app.get("/get-employer-folder-data", async (req, res, next) => {
+    var projectId = "krow-network-1533419444055"
+    const storage = new Storage({
+        projectId: projectId,
+    });
+
+    var folder = req.query.folder
+    var id = req.query.id
+    console.log(id, folder)
+    // var filename = req.body.filename
+
+    // console.log(req.body)
+    // console.log(req.params)
+
+    const bucketName = 'employer-accounts';
+
+    var bucket = storage.bucket(bucketName)
+    results = []
+    // baseFileNames = []
+    // bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
+    //     // await asyncForEach(files, async f => {
+    //     //     if (f.name.endsWith(".pdf")) {
+    //     //         // console.log(f.name)
+    //     //         var content = await download(f)
+    //     //         console.log(content)
+    //     //         results.push(content)
+    //     //     } else if (f.name.endsWith("base.json")) {
+    //     //         var content = await download(f)
+    //     //         // results[f.name] = content
+    //     //     }
+            
+            
+    //     // })
+        downloadFct(bucket, id, folder).then(function(results) {
+            console.log(results)
+            res.status(200).send({results: results})
+            console.log("sent")
+        })
+    // })
+})
+
+
+
+
+app.get("/get-employer-folder-base", (req, res, next) => {
+    var projectId = "krow-network-1533419444055"
+    const storage = new Storage({
+        projectId: projectId,
+    });
+
+    var folder = req.query.folder
+    var id = req.query.id
+    // var filename = req.body.filename
+
+    // console.log(req.body)
+    // console.log(req.params)
+    console.log(id)
+    console.log(folder)
+
+    const bucketName = 'employer-accounts';
+
+    var bucket = storage.bucket(bucketName)
+    results = []
+    bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
+        files.forEach(f => {
+            console.log(f.name)
+            if (f.name == id + "/" + folder + "/base.json") {
+                f.download(function(err, contents) {
+                    results.push(contents)
+                    res.status(200).send({results: results})
+                })
+            }
+        })
+        
+    })
+})
+
+app.get("/get-employer-folder-resume-count", (req, res, next) => {
+    var projectId = "krow-network-1533419444055"
+    const storage = new Storage({
+        projectId: projectId,
+    });
+
+    var folder = req.query.folder
+    var id = req.query.id
+    // var filename = req.body.filename
+
+    // console.log(req.body)
+    // console.log(req.params)
+
+    const bucketName = 'employer-accounts';
+
+    var bucket = storage.bucket(bucketName)
+    results = []
+    bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
+        files.forEach(f => {
+            // if (f.name.split(".") == "base.json") {
+            //     results.push(f)
+            // }
+            if (f.name.endsWith(".pdf")) {
+
+                results.push(f.name)
+            }
+        })
+        res.status(200).send({results: results.length})
     })
 })
 
