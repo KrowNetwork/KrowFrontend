@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit } from '@angular/core';
 import { CustomHttpService } from "../../shared/service/custom-http.service";
 import { Router } from "../../../../node_modules/@angular/router";
@@ -16,18 +16,20 @@ export class PostJobsComponent implements OnInit {
   three = true
   files = []
   user = ""
+  token = ""
   constructor(
     public http: CustomHttpService,
     public http2: HttpClient,
     public router: Router
   ) {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
-   }
+    this.token = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.0379a201-001b-4010-9a04-93f4a2ca9370.accessToken")
+  }
 
   folders = []
   folder = ""
   ngOnInit() {
-    this.http2.get("https://api.krownetwork.com/get-employer-folders", {params: {id: this.user}}).subscribe(
+    this.http2.get("https://api.krownetwork.com/get-employer-folders", {params: {id: this.user, token: this.token}}).subscribe(
       data => {
         this.folders = data["results"]
       })
@@ -225,7 +227,7 @@ async asyncForEach(array, callback) {
 }
 
   uploadFile(formData, folder) {
-    return this.http2.post("https://api.krownetwork.com/upload-employer-file", formData, {params: {folder: folder, id: this.user}}).map(
+    return this.http2.post("https://api.krownetwork.com/upload-employer-file", formData, {params: {folder: folder, id: this.user, token: this.token}}).map(
       data => {
         return data
       }
@@ -241,8 +243,10 @@ async asyncForEach(array, callback) {
     console.log(folder)
     console.log(filename)
     console.log(this.user)
-    return this.http2.post("https://api.krownetwork.com/ocr/getText/test.jpg", {params:{folder: folder, id: this.user, fileName: filename}}).map( data =>{
+    return this.http2.post("https://api.krownetwork.com/ocr/getText/test.jpg", {params:{folder: folder, id: this.user, fileName: filename, token: this.token}}).map( data =>{
       return data
+    }, (e: HttpErrorResponse) => {
+      console.log(e)
     })
   }
 
@@ -255,7 +259,7 @@ async asyncForEach(array, callback) {
   }
 
   createInfoJson(folder, file, bString) {
-    return this.http2.get("https://api.krownetwork.com/create-employer-file", {params: {folder: folder, file: file.name + "info.json", id: this.user, bufferString: JSON.stringify(bString)}}).map(
+    return this.http2.get("https://api.krownetwork.com/create-employer-file", {params: {folder: folder, file: file.name + "info.json", id: this.user, bufferString: JSON.stringify(bString), token: this.token}}).map(
         data => {
           return data
         }
@@ -295,7 +299,8 @@ async asyncForEach(array, callback) {
       var comparison = await this.compare(accessToken, postData).toPromise()
       var n = file.name
       var obj = {}
-      obj[n] = comparison 
+      obj["score"] = comparison 
+      obj["title"] = file.name 
       // this.comps.push(obj)
       this.data["comparisons"].push(obj)
       var bString = {
@@ -308,8 +313,9 @@ async asyncForEach(array, callback) {
     })
 
     this.data["count"] = this.files.length + " Resumes"
-      this.http.createFolder("https://api.krownetwork.com/create-employer-folder", {folder: this.folder, id: this.user, bufferString: JSON.stringify(this.data)}).subscribe(
+      this.http2.get("https://api.krownetwork.com/create-employer-folder", {params: {folder: this.folder, id: this.user, bufferString: JSON.stringify(this.data), token: this.token}}).subscribe(
         data => {
+          console.log(data)
         }
       )
     console.log("delay")

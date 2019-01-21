@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomHttpService } from "../../shared/service/custom-http.service"
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { buffer } from '../../../../node_modules/rxjs-compat/operator/buffer';
 
 @Component({
@@ -10,6 +10,7 @@ import { buffer } from '../../../../node_modules/rxjs-compat/operator/buffer';
 })
 export class ManageJobsComponent implements OnInit {
   user: string
+  token = ""
   response = []
   bases = []
   dataForList = []
@@ -19,6 +20,7 @@ export class ManageJobsComponent implements OnInit {
     public http2: HttpClient
   ) { 
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")  
+    this.token = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.0379a201-001b-4010-9a04-93f4a2ca9370.accessToken")
   }
   done = false
 
@@ -57,7 +59,7 @@ export class ManageJobsComponent implements OnInit {
   // }
 
   getFolders() {
-    return this.http.rget("https://api.krownetwork.com/get-employer-folders?id=" + this.user).map(
+    return this.http.rget("https://api.krownetwork.com/get-employer-folders?id=" + this.user + "&token=" + this.token).map(
       data => {
         // console.log(data["results"])
         return Array.from(new Set(data["results"]));
@@ -66,7 +68,7 @@ export class ManageJobsComponent implements OnInit {
   }
 
   getCount(e) {
-    return this.http2.get("https://api.krownetwork.com/get-employer-folder-resume-count", {params: {folder: e, id: this.user}}).map(
+    return this.http2.get("https://api.krownetwork.com/get-employer-folder-resume-count", {params: {folder: e, id: this.user, token: this.token}}).map(
       data2 => {
         
         return data2
@@ -75,8 +77,9 @@ export class ManageJobsComponent implements OnInit {
   }
 
   getBase(e) {
-    return this.http2.get("https://api.krownetwork.com/get-employer-folder-base", {params: {folder: e, id: this.user}}).map(
+    return this.http2.get("https://api.krownetwork.com/get-employer-folder-base", {params: {folder: e, id: this.user, token: this.token}}).map(
       res => {
+        console.log(res)
         var obj = {}
         var buff = new Buffer(res["results"][0]["data"])
         var base = JSON.parse(buff.toString())
@@ -85,11 +88,14 @@ export class ManageJobsComponent implements OnInit {
         var d = new Date(base.date_posted.toString())
         var date = this.months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear()
         obj["title"] = base.title
+        obj["folder"] = e
         obj["location"] = base.location
         obj["date_created"] = date
         obj["type"] = base.type
         obj["counts"] = base.count
         return obj
+      }, (e: HttpErrorResponse) => {
+        console.log(e)
       }
     )
   }
@@ -113,60 +119,8 @@ export class ManageJobsComponent implements OnInit {
         // obj["counts"] = count["results"]
         this.dataForList.push(obj)
       })
-      // for (var i = 0; i < folders.length; i ++) {
+  
+  })
 
-      //   var folder = folders[i]
-      // // folders.forEach(async folder => {
-      //   // console.log(folder)
-        
-      //   // .subscribe(obj => {
-      //   //   console.log(obj)
-      //   // })
-      // }
-    })
-
-    // this.http.rget("https://api.krownetwork.com/get-employer-folders?id=" + this.user).subscribe(
-    //   data => {
-    //     console.log(data["results"])
-    //     this.response = Array.from(new Set(data["results"]));
-    //     console.log(this.response)
-    //     // this.response.filter(function(value, index){ return this.response.indexOf(value) == index });
-    //     this.response.forEach(e => {
-    //       var obj = {
-            
-    //       }
-
-    //       this.http2.get("https://api.krownetwork.com/get-employer-folder-base", {params: {folder: e, id: this.user}}).subscribe(
-    //         data1 => {
-    //           var buff = new Buffer(data1["results"][0]["data"])
-    //           var base = JSON.parse(buff.toString())
-    //           console.log(base)
-    //           this.bases.push(base)
-    //           var d = new Date(base.date_posted.toString())
-    //           var date = this.months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear()
-    //           obj["title"] = base.title
-    //           obj["location"] = base.location
-    //           obj["date_created"] = date
-    //           obj["type"] = base.type
-
-    //           this.http2.get("https://api.krownetwork.com/get-employer-folder-resume-count", {params: {folder: e, id: this.user}}).subscribe(
-    //             data2 => {
-    //               obj["counts"] = data2["results"] + " Resumes"
-    //               count += 1
-    //               if (count == this.response.length) {
-    //                 this.done = true
-    //               }
-    //             }
-    //           )
-
-    //           this.dataForList.push(obj)
-    //         }
-    //       )
-    //     })
-    //   }
-    // )
-    // this.done = true
-    
-  }
-
+}
 }
