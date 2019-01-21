@@ -155,7 +155,7 @@ app.use(function(req, res, next) {
               };
             const client = new vision.ImageAnnotatorClient();
             const [result] = await client.asyncBatchAnnotateFiles(request);
-            console.log(result)
+            // console.log(result)
             const [filesResponse] = await result.promise();
             var uri = filesResponse.responses[0].outputConfig.gcsDestination.uri;
         
@@ -476,7 +476,7 @@ app.get("/get-employer-folder-data", async (req, res, next) => {
 
     var folder = req.query.folder
     var id = req.query.id
-    console.log(id, folder)
+    // console.log(id, folder)
     // var filename = req.body.filename
 
     // console.log(req.body)
@@ -502,7 +502,7 @@ app.get("/get-employer-folder-data", async (req, res, next) => {
             
     //     // })
         downloadFct(bucket, id, folder).then(function(results) {
-            console.log(results)
+            // console.log(results)
             res.status(200).send({results: results})
             console.log("sent")
         })
@@ -524,8 +524,8 @@ app.get("/get-employer-folder-base", (req, res, next) => {
 
     // console.log(req.body)
     // console.log(req.params)
-    console.log(id)
-    console.log(folder)
+    // console.log(id)
+    // console.log(folder)
 
     const bucketName = 'employer-accounts';
 
@@ -533,7 +533,7 @@ app.get("/get-employer-folder-base", (req, res, next) => {
     results = []
     bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
         files.forEach(f => {
-            console.log(f.name)
+            // console.log(f.name)
             if (f.name == id + "/" + folder + "/base.json") {
                 f.download(function(err, contents) {
                     results.push(contents)
@@ -585,7 +585,7 @@ app.get("/create-employer-folder", (req, res, next) => {
     var folder = req.query.folder
     var id = req.query.id
     var bufferString = req.query.bufferString
-    console.log(bufferString)
+    // console.log(bufferString)
     // var filename = req.body.filename
 
     // console.log(req.body)
@@ -648,11 +648,11 @@ app.get("/create-employer-file", (req, res, next) => {
     var filen = req.query.file
     var id = req.query.id
     var bufferString = req.query.bufferString
-    console.log(folder)
-    console.log(filen)
-    console.log(id)
-    console.log(bufferString)
-    console.log(req.query.bufferString)
+    // console.log(folder)
+    // console.log(filen)
+    // console.log(id)
+    // console.log(bufferString)
+    // console.log(req.query.bufferString)
     // var filename = req.body.filename
 
     // console.log(req.body)
@@ -741,7 +741,7 @@ app.post("/upload-employer-file", (req, res, next) => {
     var form = new IncomingForm()
     form.parse(req, async function (err, fields, files) {
         // console.log(err)
-        console.log(files.filepath)
+        // console.log(files.filepath)
         var f = bucket.file(id + "/" + folder + "/" + files.filepath.name) 
 
 
