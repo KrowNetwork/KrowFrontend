@@ -5906,6 +5906,8 @@ aside .widget.border:first-child {
     float: left;
     width: 100%;
     border-bottom: 1px solid #e8ecec;
+    padding-left: 10px;
+    padding-top: 10px;  
 }
 .job-head-wide .apply-thisjob {
     background: #9fa4e1;
@@ -5931,6 +5933,7 @@ aside .widget.border:first-child {
 .job-wide-devider {
     float: left;
     width: 100%;
+    padding-left: 10px;
 }
 .job-wide-devider .job-overview {
     margin-top: 30px;

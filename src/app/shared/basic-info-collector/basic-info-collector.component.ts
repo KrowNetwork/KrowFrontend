@@ -161,8 +161,11 @@ export class BasicInfoCollectorComponent implements OnInit {
     }
 
     next(){
-        this.collectInfoOn = false;
-        this.uploadImageOn = true;
+        if(this.errorMessage==null){
+            this.collectInfoOn = false;
+            this.uploadImageOn = true;
+        }
+        
     }
 
     // activate(intent: string, user: string, router){

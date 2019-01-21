@@ -1,163 +1,169 @@
+<section>
+  <div class="block no-padding">
+    <div class="container">
+      <div class="row no-gape">
+        <aside class="col-lg-3 column border-right">
+          <div class="widget">
+            <div class="tree_widget-sec">
+              <ul>
+                <li class="inner-child">
+                  <a [routerLink]="['/employer/manage-jobs']" title=""><i class="la la-briefcase"></i>Manage Jobs</a>
+                </li>
+                <li class="inner-child">
+                  <a [routerLink]="['/employer']" title=""><i class="la la-file-text"></i>Company Profile</a>
+                </li>
+                <!-- <li class="inner-child">
+                  <a href="#" title=""><i class="la la-lock"></i>Settings</a>
+                </li> -->
+              </ul>
+            </div>
+          </div>
+        </aside>
+        <div class="col-lg-9 column">
+          <div class="padding-left">
+            <div class="profile-title" id="mp">
+              <h3>Company Profile</h3>
+              <div class="upload-img-bar">
+                <span><img src="{{ imgURL }}" alt="" /><i (click)="removeProfilePic()">x</i></span>
+                <div class="upload-info">
+                  <a [routerLink]="['/employer/upload']" title="">Upload Profile Picture</a>
+                  <span>Max file size is 1MB, Minimum dimension: 270x210 And Suitable files are .jpg & .png</span>
+                </div>
+              </div>
+            </div>
+            <div class="profile-form-edit">
+              <form [formGroup]="companyForm">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <span class="pf-title">Company Name</span>
+                    <div class="pf-field">
+                      <input type="text" placeholder="Company" formControlName="company" />
+                    </div>
+                  </div>
+                  <div class="col-lg-2">
+                    <span class="pf-title">Job(s) Offered</span>
+                    <div class="pf-field">
+                      <select (keydown)="changeHandler()" data-placeholder="Please Select the Types of Jobs your Company Offers"
+                        class="chosen" formControlName="jobType">
+                        <option value="1">Full Time</option>
+                        <option value="2">Part Time</option>
+                        <option value="3">Freelancing</option>
+                        <option value="4">Other</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <span class="pf-title">Team Size</span>
+                    <div class="pf-field">
+                      <select (keydown)="changeHandler()" id="team-size-select" formControlName="size">
+                        <option value="">-Choose an option-</option>
+                        <option value="1">1-10</option>
+                        <option value="2">11-100</option>
+                        <option value="3">101-1000</option>
+                        <option value="4">1001-5000</option>
+                        <option value="5">5001-10000</option>
+                        <option value="6">10000+</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <span class="pf-title">Year Established</span>
+                    <div class="pf-field">
+                      <input (keydown)="changeHandler()" type="text" formControlName="year" placeholder="2012" />
+                    </div>
+                  </div>
 
-	<section>
-		<div class="block no-padding">
-			<div class="container">
-				 <div class="row no-gape">
-					<aside class="col-lg-3 column border-right">
-						<div class="widget">
-							<div class="tree_widget-sec">
-								<ul>
-									<li class="inner-child">
-										<a [routerLink]="['/employer/manage-jobs']" title=""><i class="la la-briefcase"></i>Manage Jobs</a>
-									</li>
-									<li class="inner-child">
-										<a [routerLink]="['/employer']" title=""><i class="la la-file-text"></i>Company Profile</a>
-									</li>
-									<li class="inner-child">
-										<a href="#" title=""><i class="la la-lock"></i>Settings</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</aside>
-				 	<div class="col-lg-9 column">
-				 		<div class="padding-left">
-					 		<div class="profile-title" id="mp">
-					 			<h3>Company Profile</h3>
-					 			<div class="upload-img-bar">
-					 				<span><img src="{{ imgURL }}" alt="" /><i (click)="removeProfilePic()">x</i></span>
-					 				<div class="upload-info">
-					 					<a [routerLink]="['/employer/upload']" title="">Upload Profile Picture</a>
-					 					<span>Max file size is 1MB, Minimum dimension: 270x210 And Suitable files are .jpg & .png</span>
-					 				</div>
-					 			</div>
-					 		</div>
-					 		<div class="profile-form-edit">
-					 			<form [formGroup]="companyForm">
-					 				<div class="row">
-					 					<div class="col-lg-6">
-					 						<span class="pf-title">Company Name</span>
-					 						<div class="pf-field">
-					 							<input type="text" placeholder="Company" formControlName="company" />
-					 						</div>
-					 					</div>
-					 					<div class="col-lg-2">
-					 						<span class="pf-title">Job(s) Offered</span>
-					 						<div class="pf-field">
-					 							<select data-placeholder="Please Select the Types of Jobs your Company Offers" class="chosen" formControlName="jobType">
-													<option value="1">Full Time</option>
-													<option value="2">Part Time</option>
-													<option value="3">Freelancing</option>
-													<option value="4">Other</option>
-												</select>
-					 						</div>
-                     </div>
-                     <div class="col-lg-4">
-                        <span class="pf-title">Team Size</span>
-                        <div class="pf-field">
-                          <select id="team-size-select" formControlName="size">
-                             <option value="">-Choose an option-</option>
-                             <option value="1">1-10</option>
-                             <option value="2">11-100</option>
-                             <option value="3">101-1000</option>
-                             <option value="4">1001-5000</option>
-                             <option value="5">5001-10000</option>
-                             <option value="6">10000+</option>
-                         </select>
-                        </div>
-                      </div>
-					 					<div class="col-lg-6">
-					 						<span class="pf-title">Year Established</span>
-					 						<div class="pf-field">
-					 							<input type="text" formControlName="year" placeholder="2012" />
-					 						</div>
-					 					</div>
-					 				
-										<div class="col-lg-6">
-					 						<span class="pf-title" >Industry Keywords (Enter text and click enter)</span>
-					 						<div class="pf-field">
-						 						<ul class="tags">
-							            			<li class="tagAdd taglist">
-							              				 <input type="text" formControlName="keyWords" id="search-field">
-										            </li>
-												</ul>
-											</div>
-					 					</div>
-					 					<div class="col-lg-12">
-					 						<span class="pf-title">Description</span>
-					 						<div class="pf-field">
-					 							<textarea formControlName="description" placeholder="Describe your company as if your job depends on it"></textarea>
-					 						</div>
-					 					</div>
+                  <div class="col-lg-6">
+                    <span class="pf-title">Industry Keywords (Enter text and click enter)</span>
+                    <div class="pf-field">
+                      <ul class="tags" id="ulTags" style="margin-bottom: 15px" >
+                        <li class="addedTag" style="margin-bottom: 5px; margin-top: 5px" *ngFor="let keyWord of this.keyWords">
+                          {{ keyWord }}
+                          <span class="tagRemove" (click)="removeSkill($event);">x</span>
+                          <input type="hidden" name="tags[]" value="{{ keyWord }}" class="tagValue" >
+                        </li>
+                        <li class="tagAdd taglist" id="lastNode" style="margin-top: 5px">
+                          <input type="text" id="search-field" placeholder="Finance" (keydown)="changeHandler()"
+                            (keyup)="$event.keyCode == 13 ? submitHandler($event, data) : null">
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <span class="pf-title">Description</span>
+                    <div class="pf-field">
+                      <textarea (keydown)="changeHandler()" formControlName="description" placeholder="Describe your company as if your job depends on it"></textarea>
+                    </div>
+                  </div>
 
-					 				</div>
-					 			</form>
-					 		</div>
-					 		<div class="social-edit"  id="sn">
-					 			<h3>Social Edit</h3>
-					 			<form [formGroup]="socialForm">
-					 				<div class="row">
-					 					<div class="col-lg-6">
-					 						<span class="pf-title">Facebook</span>
-					 						<div class="pf-field">
-					 							<input type="text" formControlName="facebook" placeholder="www.facebook.com/KrowNetwork" />
-					 							<i class="fa fa-facebook"></i>
-					 						</div>
-					 					</div>
-					 					<div class="col-lg-6">
-					 						<span class="pf-title">Twitter</span>
-					 						<div class="pf-field">
-					 							<input type="text" formControlName="twitter" placeholder="www.twitter.com/KrowNetwork" />
-					 							<i class="fa fa-twitter"></i>
-					 						</div>
-					 					</div>
-					 					</div>
-					 					<div class="col-lg-6">
-					 						<span class="pf-title">Linkedin</span>
-					 						<div class="pf-field">
-					 							<input type="text" formControlName="linkedin" placeholder="www.Linkedin.com/TeraPlaner" />
-					 							<i class="la la-linkedin"></i>
-					 						</div>
-					 					</div>
-					 			</form>
-					 		</div>
-					 		<div class="contact-edit" id="ci">
-					 			<h3>Contact</h3>
-					 			<form [formGroup]="contactForm">
-					 				<div class="row">
-					 					<div class="col-lg-4">
-					 						<span class="pf-title">Phone Number</span>
-					 						<div class="pf-field">
-					 							<input type="text" formControlName="phoneNumber" placeholder="+123 456 7890" />
-					 						</div>
-					 					</div>
-					 					<div class="col-lg-4">
-					 						<span class="pf-title">Email</span>
-					 						<div class="pf-field">
-					 							<input type="text" formControlName="email" placeholder="help@krow.network" />
-					 						</div>
-					 					</div>
-					 					<div class="col-lg-4">
-					 						<span class="pf-title">Website</span>
-					 						<div class="pf-field">
-					 							<input type="text" formControlName="website" placeholder="www.krow.network" />
-					 						</div>
-					 					</div>
-										<div class="col-lg-12">
-					 						<span class="pf-title">Job Location</span>
-											<div class="pf-field">
-					 							<input type="text" formControlName="location" placeholder="New York City" />
-					 						</div>
-											</div>
-					 					<div class="col-lg-12">
-					 						<button type="submit" (click)="updateEmployer($event)">Update Profile</button>
-					 					</div>
-					 				</div>
-					 			</form>
-					 		</div>
-					 	</div>
-					</div>
-				 </div>
-			</div>
-		</div>
-	</section>
+                </div>
+              </form>
+            </div>
+            <div class="social-edit" id="sn">
+              <h3>Social Edit</h3>
+              <form [formGroup]="socialForm">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <span class="pf-title">Facebook</span>
+                    <div class="pf-field">
+                      <input (keydown)="changeHandler()" type="text" formControlName="facebook" placeholder="www.facebook.com/KrowNetwork" />
+                      <i class="fa fa-facebook"></i>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <span class="pf-title">Twitter</span>
+                    <div class="pf-field">
+                      <input (keydown)="changeHandler()" type="text" formControlName="twitter" placeholder="www.twitter.com/KrowNetwork" />
+                      <i class="fa fa-twitter"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <span class="pf-title">Linkedin</span>
+                  <div class="pf-field">
+                    <input (keydown)="changeHandler()" type="text" formControlName="linkedin" placeholder="www.Linkedin.com/TeraPlaner" />
+                    <i class="la la-linkedin"></i>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="contact-edit" id="ci">
+              <h3>Contact</h3>
+              <form [formGroup]="contactForm">
+                <div class="row">
+                  <div class="col-lg-4">
+                    <span class="pf-title">Phone Number</span>
+                    <div class="pf-field">
+                      <input (keydown)="changeHandler()" type="text" formControlName="phoneNumber" placeholder="+123 456 7890" />
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <span class="pf-title">Email</span>
+                    <div class="pf-field">
+                      <input (keydown)="changeHandler()" type="text" formControlName="email" placeholder="help@krow.network" />
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <span class="pf-title">Website</span>
+                    <div class="pf-field">
+                      <input (keydown)="changeHandler()" type="text" formControlName="website" placeholder="www.krow.network" />
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <span class="pf-title">Job Location</span>
+                    <div class="pf-field">
+                      <input (keydown)="changeHandler()" type="text" formControlName="location" placeholder="New York City" />
+                    </div>
+                  </div>
+                  <div *ngIf="isChanged" class="col-lg-12">
+                    <button type="submit" (click)="updateEmployer($event)">Update Profile</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
