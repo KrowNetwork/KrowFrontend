@@ -11,6 +11,8 @@ import html2canvas from 'html2canvas';
 /*
   VIVEK
 */
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+
 
 // Enable Http to get data from server
 import { HttpClientModule } from '@angular/common/http';
@@ -135,6 +137,7 @@ import { CandidateListComponent } from './employer/candidate-list/candidate-list
 import { EmployerEditComponent } from './employer/employer-edit/employer-edit.component';
 import { ResumeParserComponent } from './shared/resume-parser/resume-parser.component';
 import { EmployerProfileInfoComponent } from './employer/employer-profile-info/employer-profile-info.component';
+import { PdfViewerComponent } from './shared/pdf-viewer/pdf-viewer.component';
 // import { CompareService } from './service/compare.service'
 // import { EditJobComponent } from './shared/edit-job/edit-job.component';
 // import { HireRequestsComponent } from "./shared/profile-info2/applicant-profile-info/hire-requests/hire-requests.component"
@@ -208,6 +211,7 @@ import { EmployerProfileInfoComponent } from './employer/employer-profile-info/e
     EmployerEditComponent,
     ResumeParserComponent,
     EmployerProfileInfoComponent,
+    PdfViewerComponent,
     // EmployerPostJobsComponent,
     // EditJobComponent,
     // HireRequestsComponent
@@ -225,7 +229,8 @@ import { EmployerProfileInfoComponent } from './employer/employer-profile-info/e
     BootstrapModalModule,
     VirtualScrollModule,
     ContextMenuModule.forRoot(),
-    MarkdownModule.forRoot()
+    MarkdownModule.forRoot(),
+    PdfViewerModule
     // luegg.directives
     // Websocket
     // Modal,

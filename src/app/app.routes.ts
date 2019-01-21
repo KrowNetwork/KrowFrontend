@@ -73,6 +73,7 @@ import { SearchJobComponent } from './shared/search-job/search-job.component';
 import { EmployerProfileComponent } from "./employer/employer-profile/employer-profile.component"
 // import { EmployerEditComponent } from "./employer/employer-edit/employer-edit.component"
 import { ResumeParserComponent } from "./shared/resume-parser/resume-parser.component"
+import { PdfViewerComponent } from './shared/pdf-viewer/pdf-viewer.component';
 const appRoutes: Routes = [
     {
         path: '',
@@ -182,6 +183,10 @@ const secureHome: Routes = [
     {
         path: 'basicInfo',
         component: BasicInfoCollectorComponent   
+    },
+    {
+        path: "pdf-viewer/:url",
+        component: PdfViewerComponent
     },
     {
         path: 'applicant', 

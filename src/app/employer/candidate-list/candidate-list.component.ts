@@ -63,7 +63,7 @@ export class CandidateListComponent implements OnInit {
     await this.asyncForEach(comparisons, async element => {
       element.score = (element.score * 100).toString().substr(0, 5);
       var signed_url = await this.getUrl(folder, element.title).toPromise()
-      element.url = "https://docs.google.com/gview?url=" + signed_url
+      element.url = signed_url
       console.log(signed_url)
       this.candidate_data.push(element)
     });
