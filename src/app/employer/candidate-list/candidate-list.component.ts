@@ -9,15 +9,17 @@ import { ActivatedRoute } from '../../../../node_modules/@angular/router';
 })
 export class CandidateListComponent implements OnInit {
   user = ""
+  token = ""
   constructor(
     public http: HttpClient,
     private route: ActivatedRoute
   ) { 
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
+    this.token = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.0379a201-001b-4010-9a04-93f4a2ca9370.accessToken")
   }
 
   getBase(folder) {
-    return this.http.get("https://api.krownetwork.com/get-employer-folder-base", {params: {id: this.user, folder: folder}}).map(
+    return this.http.get("https://api.krownetwork.com/get-employer-folder-base", {params: {id: this.user, folder: folder, token: this.token}}).map(
       res => {
         var buff = new Buffer(res["results"][0]["data"])
         var base = JSON.parse(buff.toString())

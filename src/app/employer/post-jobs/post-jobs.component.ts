@@ -29,7 +29,7 @@ export class PostJobsComponent implements OnInit {
   folders = []
   folder = ""
   ngOnInit() {
-    this.http2.get("https://api.krownetwork.com/get-employer-folders", {params: {id: this.user}}).subscribe(
+    this.http2.get("https://api.krownetwork.com/get-employer-folders", {params: {id: this.user, token: this.token}}).subscribe(
       data => {
         this.folders = data["results"]
       })
@@ -227,7 +227,7 @@ async asyncForEach(array, callback) {
 }
 
   uploadFile(formData, folder) {
-    return this.http2.post("https://api.krownetwork.com/upload-employer-file", formData, {params: {folder: folder, id: this.user}}).map(
+    return this.http2.post("https://api.krownetwork.com/upload-employer-file", formData, {params: {folder: folder, id: this.user, token: this.token}}).map(
       data => {
         return data
       }
@@ -259,7 +259,7 @@ async asyncForEach(array, callback) {
   }
 
   createInfoJson(folder, file, bString) {
-    return this.http2.get("https://api.krownetwork.com/create-employer-file", {params: {folder: folder, file: file.name + "info.json", id: this.user, bufferString: JSON.stringify(bString)}}).map(
+    return this.http2.get("https://api.krownetwork.com/create-employer-file", {params: {folder: folder, file: file.name + "info.json", id: this.user, bufferString: JSON.stringify(bString), token: this.token}}).map(
         data => {
           return data
         }
@@ -313,7 +313,7 @@ async asyncForEach(array, callback) {
     })
 
     this.data["count"] = this.files.length + " Resumes"
-      this.http.createFolder("https://api.krownetwork.com/create-employer-folder", {folder: this.folder, id: this.user, bufferString: JSON.stringify(this.data)}).subscribe(
+      this.http.createFolder("https://api.krownetwork.com/create-employer-folder", {folder: this.folder, id: this.user, bufferString: JSON.stringify(this.data), token: this.token}).subscribe(
         data => {
         }
       )
