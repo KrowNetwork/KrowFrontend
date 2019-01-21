@@ -120,10 +120,11 @@ app.use(function(req, res, next) {
     var id = req.body.params.id   
     var fileName = req.body.params.fileName
     var token = req.body.params.token 
-    var c = await authenticationHandler(token, function(p) {console.log(p)})
-    console.log(c)
+    // var c = await authenticationHandler(token, function(p) {console.log(p)})
+    // console.log(c)
 
-    authenticationHandler(token, async function(authenticated) {
+    await authenticationHandler(token, async function(authenticated) {
+        console.log("Auth" + authenticated)
         if (authenticated) {
             res.status(401).send({"error": "incorrect access token"})
         } else {
