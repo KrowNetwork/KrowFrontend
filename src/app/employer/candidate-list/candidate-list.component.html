@@ -30,11 +30,11 @@
                     <div *ngFor="let item of candidate_data; let myIndex = index" class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                       <div class="emply-list box">
                         <div class="emply-list-thumb">
-                          <a href="#" title=""><img src="http://placehold.it/80x80" alt="" /></a>
+                          <a href="{{item.url}}" title="" target="_blank"><img src="http://placehold.it/80x80" alt="" /></a>
                         </div>
                         <div class="emply-list-info">
                           <div class="emply-pstn">{{ item.score }}% Match</div>
-                          <h3><a href="#" title="">{{ item.title }}</a></h3>
+                          <h3><a href="{{item.url}}" title="" target="_blank">{{ item.title }}</a></h3>
                           <!-- <span>Spreadsheets, Python, Java</span> -->
                           <!-- <h6><i class="la la-map-marker"></i> Toronto, Ontario</h6> -->
                         </div>

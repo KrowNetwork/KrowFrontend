@@ -27,6 +27,15 @@ export class CandidateListComponent implements OnInit {
       }
     )
   }
+
+  getUrl(folder, filename) {
+    return this.http.get("https://api.krownetwork.com/signed-url", {params: {id: this.user, folder: folder, token: this.token, filename: filename}}).map(
+      res => {
+        console.log(res)
+        return res["url"]
+      }
+    )
+  }
   
   compareSort(a, b) {
     if (a.score > b.score) {
@@ -35,6 +44,11 @@ export class CandidateListComponent implements OnInit {
       return 1
     } else {
       return 0
+    }
+  }
+  async asyncForEach(array, callback) {
+    for (var i = 0; i < array.length; i ++) {
+      await callback(array[i])
     }
   }
   candidate_data = []
@@ -46,9 +60,11 @@ export class CandidateListComponent implements OnInit {
     var comparisons = x.comparisons
     comparisons.sort(this.compareSort)
     console.log(comparisons)
-    comparisons.forEach(element => {
+    await this.asyncForEach(comparisons, async element => {
       element.score = (element.score * 100).toString().substr(0, 5);
-      element.url = "https://storage.googleapis.com"
+      var signed_url = await this.getUrl(folder, element.title).toPromise()
+      element.url = "https://docs.google.com/gview?url=" + signed_url
+      console.log(signed_url)
       this.candidate_data.push(element)
     });
 

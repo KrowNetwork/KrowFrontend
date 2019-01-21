@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomHttpService } from "../../shared/service/custom-http.service"
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { buffer } from '../../../../node_modules/rxjs-compat/operator/buffer';
 
 @Component({
@@ -79,6 +79,7 @@ export class ManageJobsComponent implements OnInit {
   getBase(e) {
     return this.http2.get("https://api.krownetwork.com/get-employer-folder-base", {params: {folder: e, id: this.user, token: this.token}}).map(
       res => {
+        console.log(res)
         var obj = {}
         var buff = new Buffer(res["results"][0]["data"])
         var base = JSON.parse(buff.toString())
@@ -93,6 +94,8 @@ export class ManageJobsComponent implements OnInit {
         obj["type"] = base.type
         obj["counts"] = base.count
         return obj
+      }, (e: HttpErrorResponse) => {
+        console.log(e)
       }
     )
   }
@@ -117,7 +120,7 @@ export class ManageJobsComponent implements OnInit {
         this.dataForList.push(obj)
       })
   
-  }
+  })
 
 }
 }
