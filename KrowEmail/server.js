@@ -79,16 +79,16 @@ function errorHandler(next, code, message) {
     return e
 }
 
-function authenticationHandler(token, callback) {
+function authenticationHandler(token, callback, failedCallback) {
     var accessTokenFromClient = token;
 
     return cognitoExpress.validate(accessTokenFromClient, function(err, response) {
         if (err) {
             // res.send(401, {error: "incorrect access token"})
             // res.CreateErrorResponse(401, "test")
-            return false
+            failedCallback(false)
         } else {
-            return true
+            callback()
         }
     });
 }
@@ -120,7 +120,7 @@ app.use(function(req, res, next) {
     var id = req.body.params.id   
     var fileName = req.body.params.fileName
     var token = req.body.params.token 
-    var c = await authenticationHandler(token, function(p) {})
+    var c = await authenticationHandler(token, function(p) {console.log(p)}, function(a) {console.log(a)})
     console.log(c)
 
     authenticationHandler(token, async function(authenticated) {
