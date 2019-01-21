@@ -125,7 +125,7 @@ app.use(function(req, res, next) {
 
     await authenticationHandler(token, async function(authenticated) {
         console.log("Auth" + authenticated)
-        if (authenticated) {
+        if (authenticated == false) {
             res.status(401).send({"error": "incorrect access token"})
         } else {
             console.log(id, folder, fileName)
