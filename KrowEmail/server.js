@@ -656,7 +656,7 @@ app.get("/create-employer-file", async (req, res, next) => {
     var filen = req.query.file
     var id = req.query.id
     var bufferString = req.query.bufferString
-    var token = req.body.params.token 
+    var token = req.query.token 
     await authenticationHandler(token, async function(authenticated) {
         // console.log("Auth" + authenticated)
         if (authenticated == false) {
