@@ -82,7 +82,7 @@ function errorHandler(next, code, message) {
 function authenticationHandler(token, callback) {
     var accessTokenFromClient = token;
 
-    cognitoExpress.validate(accessTokenFromClient, function(err, response) {
+    return cognitoExpress.validate(accessTokenFromClient, function(err, response) {
         if (err) {
             // res.send(401, {error: "incorrect access token"})
             // res.CreateErrorResponse(401, "test")
@@ -115,11 +115,13 @@ app.use(function(req, res, next) {
     // var filename = path.basename(req.params.filename);
     // filename = path.resolve(__dirname, filename);
     // var form = new IncomingForm()
-    console.log(req.body.params)
+    // console.log(req.body.params)
     var folder = req.body.params.folder
     var id = req.body.params.id   
     var fileName = req.body.params.fileName
     var token = req.body.params.token 
+    var c = await authenticationHandler(token, function(p) {})
+    console.log(c)
 
     authenticationHandler(token, async function(authenticated) {
         if (authenticated) {

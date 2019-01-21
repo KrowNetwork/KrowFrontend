@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit } from '@angular/core';
 import { CustomHttpService } from "../../shared/service/custom-http.service";
 import { Router } from "../../../../node_modules/@angular/router";
@@ -243,6 +243,8 @@ async asyncForEach(array, callback) {
     console.log(this.user)
     return this.http2.post("https://api.krownetwork.com/ocr/getText/test.jpg", {params:{folder: folder, id: this.user, fileName: filename}}).map( data =>{
       return data
+    }, (e: HttpErrorResponse) => {
+      console.log(e)
     })
   }
 
