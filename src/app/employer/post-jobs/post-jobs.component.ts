@@ -295,7 +295,8 @@ async asyncForEach(array, callback) {
       var comparison = await this.compare(accessToken, postData).toPromise()
       var n = file.name
       var obj = {}
-      obj[n] = comparison 
+      obj["score"] = comparison 
+      obj["title"] = file.name 
       // this.comps.push(obj)
       this.data["comparisons"].push(obj)
       var bString = {
