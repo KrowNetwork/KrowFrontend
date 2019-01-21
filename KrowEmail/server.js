@@ -121,7 +121,7 @@ app.use(function(req, res, next) {
     var fileName = req.body.params.fileName
     var token = req.body.params.token 
 
-    authenticationHandler(token, function(authenticated) {
+    authenticationHandler(token, async function(authenticated) {
         if (authenticated) {
             res.status(401).send({"error": "incorrect access token"})
         } else {
