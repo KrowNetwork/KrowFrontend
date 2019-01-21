@@ -120,3 +120,4 @@ export class ManageJobsComponent implements OnInit {
   }
 
 }
+}

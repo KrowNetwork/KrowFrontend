@@ -313,8 +313,9 @@ async asyncForEach(array, callback) {
     })
 
     this.data["count"] = this.files.length + " Resumes"
-      this.http.createFolder("https://api.krownetwork.com/create-employer-folder", {folder: this.folder, id: this.user, bufferString: JSON.stringify(this.data), token: this.token}).subscribe(
+      this.http2.get("https://api.krownetwork.com/create-employer-folder", {params: {folder: this.folder, id: this.user, bufferString: JSON.stringify(this.data), token: this.token}}).subscribe(
         data => {
+          console.log(data)
         }
       )
     console.log("delay")

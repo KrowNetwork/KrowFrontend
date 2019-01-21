@@ -519,7 +519,51 @@ app.get("/get-employer-folder-data", async (req, res, next) => {
     })
 
 
+app.get("/signed-url", (req, res, next) => {
+    var projectId = "krow-network-1533419444055"
+    const storage = new Storage({
+        projectId: projectId,
+    });
 
+    const bucketName = 'employer-accounts';
+    
+    var folder = req.query.folder
+    var id = req.query.id
+    var token = req.query.token 
+    var filename = req.query.filename
+    await authenticationHandler(token, async function(authenticated) {
+        if (authenticated == false) {
+            res.status(401).send({"error": "incorrect access token"})
+        } else {
+            var bucket = storage.bucket(bucketName)
+            results = []
+            bucket.getFiles({"prefix":  id + "/" + folder + "/"}, function(err, files) {
+            files.forEach(f => {
+                if (f.name.endsWith(filename)) {
+                    var date = new Date()
+                    date.setHours(date.getHours() + 1)
+                    console.log(date.toISOString())
+                    var config = {
+                        action: 'read',
+                        expires: date.toISOString()
+                    };
+                    f.getSignedUrl(config, function(err, url) {
+                        if (err) {
+                            console.log(err) 
+                        } else {
+                            res.status(200).send({url: url})
+                        }
+                    })
+                }
+                // results.push(f.name.split("/")[1])
+                
+            })
+        // res.status(200).send({results: results})
+            })
+        }
+    })
+    
+})
 
 app.get("/get-employer-folder-base", async (req, res, next) => {
     var projectId = "krow-network-1533419444055"
@@ -887,6 +931,8 @@ app.get("/get-job", (req, res, next) => {
             }
         })
     })
+
+    
   
 
   app.get("/g", (req, res, next) => {
