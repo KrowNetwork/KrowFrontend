@@ -519,7 +519,7 @@ app.get("/get-employer-folder-data", async (req, res, next) => {
     })
 
 
-app.get("/signed-url", (req, res, next) => {
+app.get("/signed-url", async (req, res, next) => {
     var projectId = "krow-network-1533419444055"
     const storage = new Storage({
         projectId: projectId,
