@@ -16,13 +16,15 @@ export class PostJobsComponent implements OnInit {
   three = true
   files = []
   user = ""
+  token = ""
   constructor(
     public http: CustomHttpService,
     public http2: HttpClient,
     public router: Router
   ) {
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
-   }
+    this.token = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.0379a201-001b-4010-9a04-93f4a2ca9370.accessToken")
+  }
 
   folders = []
   folder = ""
@@ -241,7 +243,7 @@ async asyncForEach(array, callback) {
     console.log(folder)
     console.log(filename)
     console.log(this.user)
-    return this.http2.post("https://api.krownetwork.com/ocr/getText/test.jpg", {params:{folder: folder, id: this.user, fileName: filename}}).map( data =>{
+    return this.http2.post("https://api.krownetwork.com/ocr/getText/test.jpg", {params:{folder: folder, id: this.user, fileName: filename, token: this.token}}).map( data =>{
       return data
     }, (e: HttpErrorResponse) => {
       console.log(e)

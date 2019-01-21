@@ -122,9 +122,9 @@ app.use(function(req, res, next) {
     var token = req.body.params.token 
     // var c = await authenticationHandler(token, function(p) {console.log(p)})
     // console.log(c)
-
+    
     await authenticationHandler(token, async function(authenticated) {
-        console.log("Auth" + authenticated)
+        // console.log("Auth" + authenticated)
         if (authenticated == false) {
             res.status(401).send({"error": "incorrect access token"})
         } else {
@@ -417,7 +417,7 @@ app.use(function(req, res, next) {
       });
 })
 
-app.get("/get-employer-folders", (req, res, next) => {
+app.get("/get-employer-folders", async (req, res, next) => {
     var projectId = "krow-network-1533419444055"
     const storage = new Storage({
         projectId: projectId,
@@ -425,22 +425,30 @@ app.get("/get-employer-folders", (req, res, next) => {
 
     // var folder = req.query.folder
     var id = req.query.id
+    var token = req.query.token 
+    await authenticationHandler(token, async function(authenticated) {
+        // console.log("Auth" + authenticated)
+        if (authenticated == false) {
+            res.status(401).send({"error": "incorrect access token"})
+        } else {
+
+            const bucketName = 'employer-accounts';
+        
+            var bucket = storage.bucket(bucketName)
+            results = []
+            bucket.getFiles({"prefix": id + "/"}, function(err, files) {
+                files.forEach(f => {
+                    results.push(f.name.split("/")[1])
+                    
+                })
+                res.status(200).send({results: results})
+            })
+        }})
     // var filename = req.body.filename
 
     // console.log(req.body)
     // console.log(req.params)
 
-    const bucketName = 'employer-accounts';
-
-    var bucket = storage.bucket(bucketName)
-    results = []
-    bucket.getFiles({"prefix": id + "/"}, function(err, files) {
-        files.forEach(f => {
-            results.push(f.name.split("/")[1])
-            
-        })
-        res.status(200).send({results: results})
-    })
 })
 async function asyncForEach(array, callback) {
     for (var i = 0; i < array.length; i ++) {
@@ -476,76 +484,44 @@ app.get("/get-employer-folder-data", async (req, res, next) => {
 
     var folder = req.query.folder
     var id = req.query.id
-    // console.log(id, folder)
-    // var filename = req.body.filename
-
-    // console.log(req.body)
-    // console.log(req.params)
-
-    const bucketName = 'employer-accounts';
-
-    var bucket = storage.bucket(bucketName)
-    results = []
-    // baseFileNames = []
-    // bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
-    //     // await asyncForEach(files, async f => {
-    //     //     if (f.name.endsWith(".pdf")) {
-    //     //         // console.log(f.name)
-    //     //         var content = await download(f)
-    //     //         console.log(content)
-    //     //         results.push(content)
-    //     //     } else if (f.name.endsWith("base.json")) {
-    //     //         var content = await download(f)
-    //     //         // results[f.name] = content
-    //     //     }
-            
-            
-    //     // })
-        downloadFct(bucket, id, folder).then(function(results) {
-            // console.log(results)
-            res.status(200).send({results: results})
-            console.log("sent")
-        })
-    // })
-})
-
-
-
-
-app.get("/get-employer-folder-base", (req, res, next) => {
-    var projectId = "krow-network-1533419444055"
-    const storage = new Storage({
-        projectId: projectId,
-    });
-
-    var folder = req.query.folder
-    var id = req.query.id
-    // var filename = req.body.filename
-
-    // console.log(req.body)
-    // console.log(req.params)
-    // console.log(id)
-    // console.log(folder)
-
-    const bucketName = 'employer-accounts';
-
-    var bucket = storage.bucket(bucketName)
-    results = []
-    bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
-        files.forEach(f => {
-            // console.log(f.name)
-            if (f.name == id + "/" + folder + "/base.json") {
-                f.download(function(err, contents) {
-                    results.push(contents)
+    var token = req.query.token 
+    await authenticationHandler(token, async function(authenticated) {
+        // console.log("Auth" + authenticated)
+        if (authenticated == false) {
+            res.status(401).send({"error": "incorrect access token"})
+        } else {
+            const bucketName = 'employer-accounts';
+        
+            var bucket = storage.bucket(bucketName)
+            results = []
+            // baseFileNames = []
+            // bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
+            //     // await asyncForEach(files, async f => {
+            //     //     if (f.name.endsWith(".pdf")) {
+            //     //         // console.log(f.name)
+            //     //         var content = await download(f)
+            //     //         console.log(content)
+            //     //         results.push(content)
+            //     //     } else if (f.name.endsWith("base.json")) {
+            //     //         var content = await download(f)
+            //     //         // results[f.name] = content
+            //     //     }
+                    
+                    
+            //     // })
+                downloadFct(bucket, id, folder).then(function(results) {
+                    // console.log(results)
                     res.status(200).send({results: results})
+                    console.log("sent")
                 })
             }
         })
-        
     })
-})
 
-app.get("/get-employer-folder-resume-count", (req, res, next) => {
+
+
+
+app.get("/get-employer-folder-base", async (req, res, next) => {
     var projectId = "krow-network-1533419444055"
     const storage = new Storage({
         projectId: projectId,
@@ -553,30 +529,69 @@ app.get("/get-employer-folder-resume-count", (req, res, next) => {
 
     var folder = req.query.folder
     var id = req.query.id
-    // var filename = req.body.filename
+    var token = req.query.token 
+    await authenticationHandler(token, async function(authenticated) {
+        // console.log("Auth" + authenticated)
+        if (authenticated == false) {
+            res.status(401).send({"error": "incorrect access token"})
+        } else {
 
-    // console.log(req.body)
-    // console.log(req.params)
-
-    const bucketName = 'employer-accounts';
-
-    var bucket = storage.bucket(bucketName)
-    results = []
-    bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
-        files.forEach(f => {
-            // if (f.name.split(".") == "base.json") {
-            //     results.push(f)
-            // }
-            if (f.name.endsWith(".pdf")) {
-
-                results.push(f.name)
-            }
-        })
-        res.status(200).send({results: results.length})
+            const bucketName = 'employer-accounts';
+        
+            var bucket = storage.bucket(bucketName)
+            results = []
+            bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
+                files.forEach(f => {
+                    // console.log(f.name)
+                    if (f.name == id + "/" + folder + "/base.json") {
+                        f.download(function(err, contents) {
+                            results.push(contents)
+                            res.status(200).send({results: results})
+                        })
+                    }
+                })
+                
+            })
+        }
     })
 })
 
-app.get("/create-employer-folder", (req, res, next) => {
+app.get("/get-employer-folder-resume-count", async (req, res, next) => {
+    var projectId = "krow-network-1533419444055"
+    const storage = new Storage({
+        projectId: projectId,
+    });
+
+    var folder = req.query.folder
+    var id = req.query.id
+    var token = req.query.token 
+    await authenticationHandler(token, async function(authenticated) {
+        // console.log("Auth" + authenticated)
+        if (authenticated == false) {
+            res.status(401).send({"error": "incorrect access token"})
+        } else {
+            const bucketName = 'employer-accounts';
+        
+            var bucket = storage.bucket(bucketName)
+            results = []
+            bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
+                files.forEach(f => {
+                    // if (f.name.split(".") == "base.json") {
+                    //     results.push(f)
+                    // }
+                    if (f.name.endsWith(".pdf")) {
+        
+                        results.push(f.name)
+                    }
+                })
+                res.status(200).send({results: results.length})
+            })
+
+        }
+    })
+})
+
+app.get("/create-employer-folder", async (req, res, next) => {
     var projectId = "krow-network-1533419444055"
     const storage = new Storage({
         projectId: projectId,
@@ -585,60 +600,53 @@ app.get("/create-employer-folder", (req, res, next) => {
     var folder = req.query.folder
     var id = req.query.id
     var bufferString = req.query.bufferString
-    // console.log(bufferString)
-    // var filename = req.body.filename
+    var token = req.query.token 
+    await authenticationHandler(token, async function(authenticated) {
+        // console.log("Auth" + authenticated)
+        if (authenticated == false) {
+            res.status(401).send({"error": "incorrect access token"})
+        } else {
 
-    // console.log(req.body)
-    // console.log(req.params)
+            const bucketName = 'employer-accounts';
+        
+            var bucket = storage.bucket(bucketName)
+            // bucket.upload('test/', function(err, file) {
+            //     if (err) throw new Error(err);
+            // });
+        
+            // bucket.get(function(err, bucket, apiResponse) {
+            //     console.log(err)
+            //     console.log(bucket)
+            //     console.log(apiResponse)
+            // })
+        
+            
+            const path = require('path');
+            // console.log(err)
+                // console.log(files.filepath)
+            var f = bucket.file(id + "/" + folder + "/base.json") 
+        
+            var buff = Buffer.from(bufferString, 'binary').toString('utf-8');
+        
+            const stream = f.createWriteStream({
+                metadata: {
+                    contentType: 'application/json'
+                }
+            });
+            stream.on('error', (err) => {
+                res.status(500).send({response: "err"})
+            });
+            stream.on('finish', () => {
+                res.status(200).send({response: "done"})
+            });
+            stream.end(new Buffer(buff).toString());
+        }})
 
-    const bucketName = 'employer-accounts';
-
-    var bucket = storage.bucket(bucketName)
-    // bucket.upload('test/', function(err, file) {
-    //     if (err) throw new Error(err);
-    // });
-
-    // bucket.get(function(err, bucket, apiResponse) {
-    //     console.log(err)
-    //     console.log(bucket)
-    //     console.log(apiResponse)
-    // })
-
-    
-    const path = require('path');
-    // console.log(err)
-        // console.log(files.filepath)
-    var f = bucket.file(id + "/" + folder + "/base.json") 
-
-    var buff = Buffer.from(bufferString, 'binary').toString('utf-8');
-
-	const stream = f.createWriteStream({
-		metadata: {
-			contentType: 'application/json'
-		}
-	});
-	stream.on('error', (err) => {
-		res.status(500).send({response: "err"})
-	});
-	stream.on('finish', () => {
-		res.status(200).send({response: "done"})
-	});
-	stream.end(new Buffer(buff).toString());
-
-
-    // f.createWriteStream()
-    // .on('error', function(err) {res.status(500).send({response: "err"})})
-    
-    // .on('finish', function() {
-    //     console.log("done")
-    //     res.status(200).send({response: "done"})
-    // // The file upload is complete.
-    // });
 
     
 })
 
-app.get("/create-employer-file", (req, res, next) => {
+app.get("/create-employer-file", async (req, res, next) => {
     var projectId = "krow-network-1533419444055"
     const storage = new Storage({
         projectId: projectId,
@@ -648,64 +656,51 @@ app.get("/create-employer-file", (req, res, next) => {
     var filen = req.query.file
     var id = req.query.id
     var bufferString = req.query.bufferString
-    // console.log(folder)
-    // console.log(filen)
-    // console.log(id)
-    // console.log(bufferString)
-    // console.log(req.query.bufferString)
-    // var filename = req.body.filename
-
-    // console.log(req.body)
-    // console.log(req.params)
-
-    const bucketName = 'employer-accounts';
-
-    var bucket = storage.bucket(bucketName)
-    // bucket.upload('test/', function(err, file) {
-    //     if (err) throw new Error(err);
-    // });
-
-    // bucket.get(function(err, bucket, apiResponse) {
-    //     console.log(err)
-    //     console.log(bucket)
-    //     console.log(apiResponse)
-    // })
-
-    
-    const path = require('path');
-    // console.log(err)
-        // console.log(files.filepath)
-    var f = bucket.file(id + "/" + folder + "/" + filen) 
-
-    var buff = Buffer.from(bufferString, 'binary').toString('utf-8');
-
-	const stream = f.createWriteStream({
-		metadata: {
-			contentType: 'application/json'
-		}
-	});
-	stream.on('error', (err) => {
-		res.status(500).send({response: "err"})
-	});
-	stream.on('finish', () => {
-		res.status(200).send({response: "done"})
-	});
-	stream.end(new Buffer(buff).toString());
-
-
-    // f.createWriteStream()
-    // .on('error', function(err) {res.status(500).send({response: "err"})})
-    
-    // .on('finish', function() {
-    //     console.log("done")
-    //     res.status(200).send({response: "done"})
-    // // The file upload is complete.
-    // });
-
+    var token = req.body.params.token 
+    await authenticationHandler(token, async function(authenticated) {
+        // console.log("Auth" + authenticated)
+        if (authenticated == false) {
+            res.status(401).send({"error": "incorrect access token"})
+        } else {
+            
+            const bucketName = 'employer-accounts';
+        
+            var bucket = storage.bucket(bucketName)
+            // bucket.upload('test/', function(err, file) {
+            //     if (err) throw new Error(err);
+            // });
+        
+            // bucket.get(function(err, bucket, apiResponse) {
+            //     console.log(err)
+            //     console.log(bucket)
+            //     console.log(apiResponse)
+            // })
+        
+            
+            const path = require('path');
+            // console.log(err)
+                // console.log(files.filepath)
+            var f = bucket.file(id + "/" + folder + "/" + filen) 
+        
+            var buff = Buffer.from(bufferString, 'binary').toString('utf-8');
+        
+            const stream = f.createWriteStream({
+                metadata: {
+                    contentType: 'application/json'
+                }
+            });
+            stream.on('error', (err) => {
+                res.status(500).send({response: "err"})
+            });
+            stream.on('finish', () => {
+                res.status(200).send({response: "done"})
+            });
+            stream.end(new Buffer(buff).toString());
+        }})
     
 })
 
-app.post("/upload-employer-file", (req, res, next) => {
+app.post("/upload-employer-file", async (req, res, next) => {
     var projectId = "krow-network-1533419444055"
     const storage = new Storage({
         projectId: projectId,
@@ -713,78 +708,41 @@ app.post("/upload-employer-file", (req, res, next) => {
 
     var folder = req.query.folder
     var id = req.query.id
-    // var bufferString = req.query.bufferString
-    // console.log(bufferString)
-    // var filename = req.body.filename
-
-    // console.log(req.body)
-    // console.log(req.params)
-
-    const bucketName = 'employer-accounts';
-
-    var bucket = storage.bucket(bucketName)
-    // bucket.upload('test/', function(err, file) {
-    //     if (err) throw new Error(err);
-    // });
-
-    // bucket.get(function(err, bucket, apiResponse) {
-    //     console.log(err)
-    //     console.log(bucket)
-    //     console.log(apiResponse)
-    // })
-
-    
-    const path = require('path');
-
-    // var filename = path.basename(req.params.filename);
-    // filename = path.resolve(__dirname, filename);
-    var form = new IncomingForm()
-    form.parse(req, async function (err, fields, files) {
-        // console.log(err)
-        // console.log(files.filepath)
-        var f = bucket.file(id + "/" + folder + "/" + files.filepath.name) 
-
-
-        fs.createReadStream(files.filepath.path)
-        .pipe(f.createWriteStream())
-        .on('error', function(err) {res.status(500).send({response: "err"})})
+    var token = req.query.token 
+    await authenticationHandler(token, async function(authenticated) {
+        // console.log("Auth" + authenticated)
+        if (authenticated == false) {
+            res.status(401).send({"error": "incorrect access token"})
+        } else {
+            
+            const bucketName = 'employer-accounts';
         
-        .on('finish', function() {
-            console.log("done")
-            res.status(200).send({response: "done"})
-        // The file upload is complete.
-        });
-    });
-    // console.log(err)
-        // console.log(files.filepath)
-    // var f = bucket.file(id + "/" + folder + "/base.json") 
+            var bucket = storage.bucket(bucketName)
+            // bucket.upload('test/', function(err, file) {
 
-    // var buff = Buffer.from(bufferString, 'binary').toString('utf-8');
-
-	// const stream = f.createWriteStream({
-	// 	metadata: {
-	// 		contentType: 'application/json'
-	// 	}
-	// });
-	// stream.on('error', (err) => {
-	// 	res.status(500).send({response: "err"})
-	// });
-	// stream.on('finish', () => {
-	// 	res.status(200).send({response: "done"})
-	// });
-	// stream.end(new Buffer(buff).toString());
-
-
-    // f.createWriteStream()
-    // .on('error', function(err) {res.status(500).send({response: "err"})})
-    
-    // .on('finish', function() {
-    //     console.log("done")
-    //     res.status(200).send({response: "done"})
-    // // The file upload is complete.
-    // });
-
-    
+            
+            const path = require('path');
+        
+            // var filename = path.basename(req.params.filename);
+            // filename = path.resolve(__dirname, filename);
+            var form = new IncomingForm()
+            form.parse(req, async function (err, fields, files) {
+                // console.log(err)
+                // console.log(files.filepath)
+                var f = bucket.file(id + "/" + folder + "/" + files.filepath.name) 
+        
+        
+                fs.createReadStream(files.filepath.path)
+                .pipe(f.createWriteStream())
+                .on('error', function(err) {res.status(500).send({response: "err"})})
+                
+                .on('finish', function() {
+                    console.log("done")
+                    res.status(200).send({response: "done"})
+                // The file upload is complete.
+                });
+            });
+        }})
 })
 
 app.get("/get-job", (req, res, next) => {
