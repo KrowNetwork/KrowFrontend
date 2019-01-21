@@ -79,6 +79,20 @@ function errorHandler(next, code, message) {
     return e
 }
 
+function authenticationHandler(token, callback) {
+    var accessTokenFromClient = token;
+
+    cognitoExpress.validate(accessTokenFromClient, function(err, response) {
+        if (err) {
+            // res.send(401, {error: "incorrect access token"})
+            // res.CreateErrorResponse(401, "test")
+            return false
+        } else {
+            return true
+        }
+    });
+}
+
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -96,6 +110,7 @@ app.use(function(req, res, next) {
   //app.use(fileUpload({limits: { fileSize: 5 * 1024 * 1024 } })); //limits to 5MB
   app.post('/ocr/getText/:filename', async function (req, res) {
 
+    
       console.log("a")
     // var filename = path.basename(req.params.filename);
     // filename = path.resolve(__dirname, filename);
@@ -104,129 +119,139 @@ app.use(function(req, res, next) {
     var folder = req.body.params.folder
     var id = req.body.params.id   
     var fileName = req.body.params.fileName
-    console.log(id, folder, fileName)
-    var gcsSourceUri = "gs://employer-accounts/" + id + "/" + folder + "/" + fileName
-    var gcsDestinationUri = "gs://employer-accounts/" + id + "/" + folder + "/" + fileName + "_output.json"
-    const inputConfig = {
-        // Supported mime_types are: 'application/pdf' and 'image/tiff'
-        mimeType: 'application/pdf',
-        gcsSource: {
-          uri: gcsSourceUri,
-        },
-      };
-      const outputConfig = {
-        gcsDestination: {
-          uri: gcsDestinationUri,
-        },
-      };
-    const features = [{type: 'DOCUMENT_TEXT_DETECTION'}];
-      const request = {
-        requests: [
-          {
-            inputConfig: inputConfig,
-            features: features,
-            outputConfig: outputConfig,
-          },
-        ],
-      };
-    const client = new vision.ImageAnnotatorClient();
-    const [result] = await client.asyncBatchAnnotateFiles(request);
-    console.log(result)
-    const [filesResponse] = await result.promise();
-    var uri = filesResponse.responses[0].outputConfig.gcsDestination.uri;
+    var token = req.body.params.token 
 
-    var projectId = "krow-network-1533419444055"
-    const storage = new Storage({
-        projectId: projectId,
-    });
-
-    // var folder = req.query.folder
-    // var id = req.query.id
-    // var filename = req.body.filename
-
-    // console.log(req.body)
-    // // console.log(req.params)
-    // console.log(id)
-    // console.log(folder)
-
-    const bucketName = 'employer-accounts';
-
-    var bucket = storage.bucket(bucketName)
-    results = []
-    bucket.getFiles({"prefix": id + "/" + folder + "/" + fileName}, function(err, files) {
-        files.forEach(f => {
-            // console.log(f.name)
-            if (f.name.includes('pdf_output.json')) {
-                f.download(function(err, contents) {
-                    var feature = 3
-                    var bounds = []
-                    // console.log(contents.toString())
-                    var document = JSON.parse(contents.toString()).responses[0].fullTextAnnotation
-                    // console.log(document)
-                    document.pages.forEach(page => {
-                        // console.log(page)
-                        page.blocks.forEach(block => {
-                          block.paragraphs.forEach(paragraph => {
-                            var para = ""
-                            var line = ""
-                  
-                            paragraph.words.forEach(word => {
-                              word.symbols.forEach(symbol => {
-                                if (feature == 5)
-                                    bounds.push(symbol.boundingBox)
-                                line += symbol.text 
-                                // console.log(symbol)
-                                // console.log(line)
-                                if (symbol.property !== undefined) {
-                                  if (symbol.property.detectedBreak !== undefined) {
-                                      if (symbol.property.detectedBreak.type !== undefined) {
-                                        if (symbol.property.detectedBreak.type == "SPACE") {
-                                            // console.log("a " + line)                    
-                                            line += " "
-                                          //   console.log(line)
+    authenticationHandler(token, function(authenticated) {
+        if (authenticated) {
+            res.status(401).send({"error": "incorrect access token"})
+        } else {
+            console.log(id, folder, fileName)
+            var gcsSourceUri = "gs://employer-accounts/" + id + "/" + folder + "/" + fileName
+            var gcsDestinationUri = "gs://employer-accounts/" + id + "/" + folder + "/" + fileName + "_output.json"
+            const inputConfig = {
+                // Supported mime_types are: 'application/pdf' and 'image/tiff'
+                mimeType: 'application/pdf',
+                gcsSource: {
+                  uri: gcsSourceUri,
+                },
+              };
+              const outputConfig = {
+                gcsDestination: {
+                  uri: gcsDestinationUri,
+                },
+              };
+            const features = [{type: 'DOCUMENT_TEXT_DETECTION'}];
+              const request = {
+                requests: [
+                  {
+                    inputConfig: inputConfig,
+                    features: features,
+                    outputConfig: outputConfig,
+                  },
+                ],
+              };
+            const client = new vision.ImageAnnotatorClient();
+            const [result] = await client.asyncBatchAnnotateFiles(request);
+            console.log(result)
+            const [filesResponse] = await result.promise();
+            var uri = filesResponse.responses[0].outputConfig.gcsDestination.uri;
+        
+            var projectId = "krow-network-1533419444055"
+            const storage = new Storage({
+                projectId: projectId,
+            });
+        
+            // var folder = req.query.folder
+            // var id = req.query.id
+            // var filename = req.body.filename
+        
+            // console.log(req.body)
+            // // console.log(req.params)
+            // console.log(id)
+            // console.log(folder)
+        
+            const bucketName = 'employer-accounts';
+        
+            var bucket = storage.bucket(bucketName)
+            results = []
+            bucket.getFiles({"prefix": id + "/" + folder + "/" + fileName}, function(err, files) {
+                files.forEach(f => {
+                    // console.log(f.name)
+                    if (f.name.includes('pdf_output.json')) {
+                        f.download(function(err, contents) {
+                            var feature = 3
+                            var bounds = []
+                            // console.log(contents.toString())
+                            var document = JSON.parse(contents.toString()).responses[0].fullTextAnnotation
+                            // console.log(document)
+                            document.pages.forEach(page => {
+                                // console.log(page)
+                                page.blocks.forEach(block => {
+                                  block.paragraphs.forEach(paragraph => {
+                                    var para = ""
+                                    var line = ""
+                          
+                                    paragraph.words.forEach(word => {
+                                      word.symbols.forEach(symbol => {
+                                        if (feature == 5)
+                                            bounds.push(symbol.boundingBox)
+                                        line += symbol.text 
+                                        // console.log(symbol)
+                                        // console.log(line)
+                                        if (symbol.property !== undefined) {
+                                          if (symbol.property.detectedBreak !== undefined) {
+                                              if (symbol.property.detectedBreak.type !== undefined) {
+                                                if (symbol.property.detectedBreak.type == "SPACE") {
+                                                    // console.log("a " + line)                    
+                                                    line += " "
+                                                  //   console.log(line)
+                                                  }
+                                                  if (symbol.property.detectedBreak.type == "EOL_SURE_SPACE") {
+                                                      line += " "
+                                                      para += line
+                                                      line = ""
+                                                      // console.log(para)
+                                                  }
+                                                  if (symbol.property.detectedBreak.type == "LINE_BREAK") {
+                                                      line += "."
+                                                      para += line
+                                                      line = ""
+                                                  }
+                                              }
                                           }
-                                          if (symbol.property.detectedBreak.type == "EOL_SURE_SPACE") {
-                                              line += " "
-                                              para += line
-                                              line = ""
-                                              // console.log(para)
-                                          }
-                                          if (symbol.property.detectedBreak.type == "LINE_BREAK") {
-                                              line += "."
-                                              para += line
-                                              line = ""
-                                          }
-                                      }
-                                  }
-                                }
-                                
-                              })
-                              // console.log(para)
-                              if (feature == 4)
-                                  bounds.push(word.boundingBox)
-                            })
-                            if (feature == 3)
-                                bounds.push(para.replace("•", ".").replace("•", ".").replace("..", "."))
-                          })
-                          if (feature == 2)
-                              bounds.push(block.boundingBox)
+                                        }
+                                        
+                                      })
+                                      // console.log(para)
+                                      if (feature == 4)
+                                          bounds.push(word.boundingBox)
+                                    })
+                                    if (feature == 3)
+                                        bounds.push(para.replace("•", ".").replace("•", ".").replace("..", "."))
+                                  })
+                                  if (feature == 2)
+                                      bounds.push(block.boundingBox)
+                                })
+                                if (feature == 1)
+                                    bounds.push(page.boundingBox)
+                              });
+                            // res.send(result.fullTextAnnotation)
+                            // console.log('Text:');
+                            var p = bounds.join(" ")
+                            res.status(200).send({res: p})
+                            // detections.forEach(text => console.log(text));
+                            //assume <input type = "file" name="filepath">
+                            // res.send("file uploaded");
+                            // res.status(200).send({results: results})
                         })
-                        if (feature == 1)
-                            bounds.push(page.boundingBox)
-                      });
-                    // res.send(result.fullTextAnnotation)
-                    // console.log('Text:');
-                    var p = bounds.join(" ")
-                    res.status(200).send({res: p})
-                    // detections.forEach(text => console.log(text));
-                    //assume <input type = "file" name="filepath">
-                    // res.send("file uploaded");
-                    // res.status(200).send({results: results})
+                        
+                    }
                 })
-                
-            }
-        })
+            })
+        }
     })
+
+    
     // form.parse(req, async function (err, fields, files) {
     //     // console.log(err)
     //     // console.log(files)
