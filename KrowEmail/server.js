@@ -610,10 +610,14 @@ app.get("/get-employer-folder-base", async (req, res, next) => {
                         f.download(function(err, contents) {
                             results.push(contents)
                             res.status(200).send({results: results}).end()
+                            return
                         })
                     }
                 })
-                res.status(500).send({err: "No base file"}).end()
+                if (results.length == 0) {
+                    res.status(500).send({err: "No base file"}).end()
+                    return
+                }
                 
             })
         }
