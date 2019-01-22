@@ -185,6 +185,7 @@ app.use(function(req, res, next) {
                             var feature = 3
                             var bounds = []
                             // console.log(contents.toString())
+                            var c = contents.toString("utf-8")
                             var document = JSON.parse(contents.toString()).responses[0].fullTextAnnotation
                             // console.log(document)
                             document.pages.forEach(page => {
