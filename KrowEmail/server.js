@@ -518,6 +518,25 @@ app.get("/get-employer-folder-data", async (req, res, next) => {
         })
     })
 
+async function getBaseFct(bucket, id, folder) {
+    return new Promise(function(resolve, reject) {
+
+        var results = []
+        bucket.getFiles({"prefix": id + "/" + folder + "/"}, async function(err, files) {
+            for (var i = 0; i < files.length; i ++) {
+                var f = files[i]
+                if (f.name.endsWith("base.json")) {
+                    await f.download().then(function(contents) {
+                        results.push(contents)
+                    })
+                    console.log(results)
+                }
+            }
+            console.log("done")
+            resolve(results)
+        })
+    })
+}
 
 app.get("/signed-url", async (req, res, next) => {
     var projectId = "krow-network-1533419444055"
@@ -594,6 +613,7 @@ app.get("/get-employer-folder-base", async (req, res, next) => {
                         })
                     }
                 })
+                res.status(500).send({err: "No base file"})
                 
             })
         }

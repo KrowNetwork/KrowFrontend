@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit } from '@angular/core';
 import { CustomHttpService } from "../../shared/service/custom-http.service";
 import { Router } from "../../../../node_modules/@angular/router";
+import { UserLoginService } from "../../shared/service/user-login.service";
 
 @Component({
   selector: 'app-post-jobs',
@@ -20,10 +21,20 @@ export class PostJobsComponent implements OnInit {
   constructor(
     public http: CustomHttpService,
     public http2: HttpClient,
-    public router: Router
+    public router: Router,
+    public userService: UserLoginService,
+    // private router: Router,
   ) {
+    this.userService.isAuthenticated(this);
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
     this.token = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.0379a201-001b-4010-9a04-93f4a2ca9370.accessToken")
+  }
+
+  isLoggedIn(message: string, isLoggedIn: boolean) {
+    if (!isLoggedIn) {
+      // sessionStorage.setItem("redirectBack", this.router.url)
+        this.router.navigate(['/login']);
+    }
   }
 
   folders = []
@@ -319,7 +330,7 @@ async asyncForEach(array, callback) {
         }
       )
     console.log("delay")
-    this.msgFunction(completed + 1)
+    // this.msgFunction(completed + 1)
     await this.delay(1000)
       // alert("Please wait while the job data gets saved")
     this.router.navigate(["employer/manage-jobs"])

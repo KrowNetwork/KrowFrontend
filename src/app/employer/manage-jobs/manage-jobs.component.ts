@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CustomHttpService } from "../../shared/service/custom-http.service"
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { buffer } from '../../../../node_modules/rxjs-compat/operator/buffer';
+import { UserLoginService } from "../../shared/service/user-login.service";
+import { Router } from '../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-manage-jobs',
@@ -17,13 +19,22 @@ export class ManageJobsComponent implements OnInit {
   months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
   constructor(
     public http: CustomHttpService,
-    public http2: HttpClient
+    public http2: HttpClient,
+    public userService: UserLoginService,
+    public router: Router
+
   ) { 
+    this.userService.isAuthenticated(this);
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")  
     this.token = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.0379a201-001b-4010-9a04-93f4a2ca9370.accessToken")
   }
   done = false
-
+  isLoggedIn(message: string, isLoggedIn: boolean) {
+    if (!isLoggedIn) {
+      // sessionStorage.setItem("redirectBack", this.router.url)
+        this.router.navigate(['/login']);
+    }
+  }
   // async pushToFront(data, counts) {
   //   // console.log(counts)
   //   counts = counts["results"]
