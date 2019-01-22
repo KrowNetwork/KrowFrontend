@@ -36,6 +36,11 @@ export class PostJobsComponent implements OnInit {
         this.router.navigate(['/login']);
     }
   }
+  unicodeEscape(str) {
+    return str.replace(/[\s\S]/g, function (escape) {
+      return '\\u' + ('0000' + escape.charCodeAt().toString(16)).slice(-4);
+    });
+  }
 
   folders = []
   folder = ""
@@ -74,18 +79,24 @@ export class PostJobsComponent implements OnInit {
       
     }
   }
+  escapeUnicode(str) {
+    return str.replace(/[^\0-~]/g, function(ch) {
+        return "\\u" + ("0000" + ch.charCodeAt().toString(16)).slice(-4);
+    });
+}
 
   submitOne() {
-    var title = document.getElementsByClassName("title")["0"]
-    var desc = document.getElementsByClassName("desc")["0"]
+    var title = this.escapeUnicode(document.getElementsByClassName("title")["0"].value)//.toString("utf-8")
+    var desc = this.escapeUnicode(document.getElementsByClassName("desc")["0"].value)//.toString("utf-8")
     var skills = document.getElementsByClassName("skills")["0"]
     var job_type = document.getElementsByClassName("job_type")["0"]
     var exp_lvl = document.getElementsByClassName("exp_lvl")["0"]
     var location = document.getElementsByClassName("location")["0"]
     var date = document.getElementsByClassName("date")["0"]
+    console.log(desc)
     this.data = {
-      title: title.value,
-      desc: desc.value,
+      title: title,
+      desc: desc,
       skills: skills.value.split(", "),
       job_type: job_type.value,
       exp_lvl: exp_lvl.value,

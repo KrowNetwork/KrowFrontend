@@ -106,7 +106,11 @@ app.use(function(req, res, next) {
 //   app.use(bodyParser.)
   // parse application/json
 //   app.use(bodyParser.json())
-
+function  escapeUnicode(str) {
+    return str.replace(/[^\0-~]/g, function(ch) {
+        return "\\u" + ("0000" + ch.charCodeAt().toString(16)).slice(-4);
+    });
+}
   //app.use(fileUpload({limits: { fileSize: 5 * 1024 * 1024 } })); //limits to 5MB
   app.post('/ocr/getText/:filename', async function (req, res) {
 
@@ -185,8 +189,9 @@ app.use(function(req, res, next) {
                             var feature = 3
                             var bounds = []
                             // console.log(contents.toString())
-                            var c = contents.toString("utf-8")
-                            var document = JSON.parse(contents.toString()).responses[0].fullTextAnnotation
+                            var c = contents.toString()
+                            c = escapeUnicode(c)
+                            var document = JSON.parse(c).responses[0].fullTextAnnotation
                             // console.log(document)
                             document.pages.forEach(page => {
                                 // console.log(page)
