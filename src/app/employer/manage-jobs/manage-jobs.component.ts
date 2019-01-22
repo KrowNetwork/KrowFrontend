@@ -106,7 +106,7 @@ export class ManageJobsComponent implements OnInit {
         obj["counts"] = base.count
         return obj
       }, (e: HttpErrorResponse) => {
-        console.log(e)
+        return e
       }
     )
   }
