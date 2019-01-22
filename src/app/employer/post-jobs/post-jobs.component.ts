@@ -27,7 +27,7 @@ export class PostJobsComponent implements OnInit {
   ) {
     this.userService.isAuthenticated(this);
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
-    this.token = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.0379a201-001b-4010-9a04-93f4a2ca9370.accessToken")
+    this.token = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt." + this.user + ".accessToken")
   }
 
   isLoggedIn(message: string, isLoggedIn: boolean) {
@@ -93,7 +93,9 @@ export class PostJobsComponent implements OnInit {
     var exp_lvl = document.getElementsByClassName("exp_lvl")["0"]
     var location = document.getElementsByClassName("location")["0"]
     var date = document.getElementsByClassName("date")["0"]
-    console.log(desc)
+    // title = title.replace(/[\u0000-\u9999]/g, '');
+    // desc.replace(/[\u0000-\u9999]/g, '');
+    // console.log(desc)
     this.data = {
       title: title,
       desc: desc,
