@@ -64,8 +64,7 @@ export class BasicInfoCollectorComponent implements OnInit {
     async submitInfo(){
         console.log('edit', this.edit);
         var updateButton = document.getElementById("submitButton");
-        updateButton.style.pointerEvents = 'none';
-        updateButton.innerText = "Updating...";
+    
         if(!this.user || !this.intent){
             this.errorMessage = "Something went wrong, please go back.";
             return;
@@ -125,26 +124,6 @@ export class BasicInfoCollectorComponent implements OnInit {
                 await this.initializeUser.initializeUser(employerObj, this.intent, null, this.router);
                 var x = this;
                 x.next();
-                //console.log(this.edit)
-                
-                // await setTimeout(async function(){ 
-                //     await document.getElementById("experience-button").click();
-                //     // await document.getElementById("education-button").click();
-                //     // await document.getElementById("volunteers-button").click();
-                //     // await document.getElementById("achievement-button").click();
-                    
-                // }, 7000);
-
-                // await setTimeout(async function(){ 
-                //     await document.getElementById("education-button").click();
-                // }, 10000);
-
-                // await setTimeout(async function(){ 
-                //     await document.getElementById("volunteers-button").click()
-                //     await document.getElementById("achievement-button").click();
-                    
-                //     x.next();
-                // }, 14000);
             }
             
             //this.initializeUser.initializeUser(obj, this.intent, this.activate, this.router);
