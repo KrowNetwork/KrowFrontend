@@ -319,7 +319,7 @@ async asyncForEach(array, callback) {
         data2: this.data["title"] + " " + this.data["desc"]
       }
 
-      var accessToken = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.0379a201-001b-4010-9a04-93f4a2ca9370.accessToken")
+      var accessToken = this.token//localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.0379a201-001b-4010-9a04-93f4a2ca9370.accessToken")
       var comparison = await this.compare(accessToken, postData).toPromise()
       var n = file.name
       var obj = {}
