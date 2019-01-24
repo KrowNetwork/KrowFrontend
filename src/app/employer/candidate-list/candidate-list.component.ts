@@ -72,6 +72,8 @@ export class CandidateListComponent implements OnInit {
     comparisons.sort(this.compareSort)
     console.log(comparisons)
     await this.asyncForEach(comparisons, async element => {
+      // element.title.match(/.{1,10}/g).join("\n")
+      // console.log(element.title)
       element.score = (element.score * 100).toString().substr(0, 5);
       var signed_url = await this.getUrl(folder, element.title).toPromise()
       element.url = signed_url
