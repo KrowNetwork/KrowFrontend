@@ -4,11 +4,14 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { buffer } from '../../../../node_modules/rxjs-compat/operator/buffer';
 import { UserLoginService } from "../../shared/service/user-login.service";
 import { Router } from '../../../../node_modules/@angular/router';
+import { ModalService } from '../../shared/service/modal.service'; 
+import { TutorialComponent } from '../../shared/tutorial/tutorial.component';
 
 @Component({
   selector: 'app-manage-jobs',
   templateUrl: './manage-jobs.component.html',
-  styleUrls: ['./manage-jobs.component.css']
+  styleUrls: ['./manage-jobs.component.css'],
+  providers: [TutorialComponent]
 })
 export class ManageJobsComponent implements OnInit {
   user: string
@@ -21,7 +24,9 @@ export class ManageJobsComponent implements OnInit {
     public http: CustomHttpService,
     public http2: HttpClient,
     public userService: UserLoginService,
-    public router: Router
+    public router: Router,
+    public modalService: ModalService,
+    public tutorialComponent: TutorialComponent
 
   ) { 
     this.userService.isAuthenticated(this);
@@ -86,6 +91,11 @@ export class ManageJobsComponent implements OnInit {
       }
     )
   }
+
+  pop(){
+    this.modalService.init(TutorialComponent, {}, {})
+  }
+
 
   getBase(e) {
     return this.http2.get("https://api.krownetwork.com/get-employer-folder-base", {params: {folder: e, id: this.user, token: this.token}}).map(

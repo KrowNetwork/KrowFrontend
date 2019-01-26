@@ -22,7 +22,7 @@
 				 	<div class="col-lg-9 column">
 				 		<div class="padding-left">
 					 		<div class="manage-jobs-sec">
-					 			<h3>Manage Jobs</h3>
+					 			<h3>Manage Jobs <i class="la la-info-circle"(mouseenter) ="$event.target.style.color='#fb236a'" (mouseleave) ="$event.target.style.color='rgb(85, 85, 85)'" (click)="pop()"></i></h3>
 								<div class="col-lg-12">
 									<button [routerLink]="['/employer/post-jobs']">Create Job</button>
 								</div>
@@ -72,3 +72,5 @@
 			</div>
 		</div>
 	</section>
+
+	

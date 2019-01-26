@@ -127,9 +127,6 @@ export class BasicInfoCollectorComponent implements OnInit {
             }
             
             //this.initializeUser.initializeUser(obj, this.intent, this.activate, this.router);
-            
-
-            
              
             // this.edit.edu.updateResume(document.getElementById("education-button"))
             // this.edit.achieve.updateResume(document.getElementById("achievement-button"))

@@ -138,6 +138,7 @@ import { EmployerEditComponent } from './employer/employer-edit/employer-edit.co
 import { ResumeParserComponent } from './shared/resume-parser/resume-parser.component';
 import { EmployerProfileInfoComponent } from './employer/employer-profile-info/employer-profile-info.component';
 import { PdfViewerComponent } from './shared/pdf-viewer/pdf-viewer.component';
+import { TutorialComponent } from './shared/tutorial/tutorial.component';
 // import { CompareService } from './service/compare.service'
 // import { EditJobComponent } from './shared/edit-job/edit-job.component';
 // import { HireRequestsComponent } from "./shared/profile-info2/applicant-profile-info/hire-requests/hire-requests.component"
@@ -212,6 +213,7 @@ import { PdfViewerComponent } from './shared/pdf-viewer/pdf-viewer.component';
     ResumeParserComponent,
     EmployerProfileInfoComponent,
     PdfViewerComponent,
+    TutorialComponent,
     // EmployerPostJobsComponent,
     // EditJobComponent,
     // HireRequestsComponent

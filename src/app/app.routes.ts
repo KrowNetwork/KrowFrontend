@@ -74,6 +74,7 @@ import { EmployerProfileComponent } from "./employer/employer-profile/employer-p
 // import { EmployerEditComponent } from "./employer/employer-edit/employer-edit.component"
 import { ResumeParserComponent } from "./shared/resume-parser/resume-parser.component"
 import { PdfViewerComponent } from './shared/pdf-viewer/pdf-viewer.component';
+import { TutorialComponent } from './shared/tutorial/tutorial.component';
 const appRoutes: Routes = [
     {
         path: '',
@@ -346,6 +347,10 @@ const secureHome: Routes = [
             {
                 path: "candidate-list",
                 component: CandidateListComponent
+            },
+            {
+                path: "tutorial",
+                component: TutorialComponent
             },
             // {
     //             path: "create",
