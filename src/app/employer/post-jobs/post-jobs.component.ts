@@ -55,6 +55,12 @@ export class PostJobsComponent implements OnInit {
   msgFunction(count) {
     this.msg = "Do not leave this page. The page will auto-redirect when done. Resumes completed: " + count
   }
+
+  escapeUnicode(str) {
+    return str.replace(/[^\0-~]/g, function(ch) {
+        return "\\u" + ("0000" + ch.charCodeAt().toString(16)).slice(-4);
+    });
+  }
   async submitHandler() {
     if (this.one) {
       this.submitOne()
@@ -79,11 +85,7 @@ export class PostJobsComponent implements OnInit {
       
     }
   }
-  escapeUnicode(str) {
-    return str.replace(/[^\0-~]/g, function(ch) {
-        return "\\u" + ("0000" + ch.charCodeAt().toString(16)).slice(-4);
-    });
-}
+
 
   submitOne() {
     var title = this.escapeUnicode(document.getElementsByClassName("title")["0"].value)//.toString("utf-8")
@@ -302,6 +304,7 @@ async asyncForEach(array, callback) {
     var folder = this.folder
     
     var completed = 0
+    var self = this
     await this.asyncForEach(this.files, async file => {
       const formData = new FormData();
       formData.append('filepath', file, file.name);
@@ -325,6 +328,7 @@ async asyncForEach(array, callback) {
       var obj = {}
       obj["score"] = comparison 
       obj["title"] = file.name 
+      obj["display"] = self.escapeUnicode(postData.data1)
       // this.comps.push(obj)
       this.data["comparisons"].push(obj)
       var bString = {
