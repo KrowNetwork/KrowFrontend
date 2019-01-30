@@ -692,7 +692,7 @@ label::after {
 }
 .menu-sec nav {
     float: right;
-    margin-right: 20px;
+    margin-right: -50px;
 }
 .menu-sec nav > ul {
     float: left;
