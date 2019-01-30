@@ -108,7 +108,8 @@ export class ManageJobsComponent implements OnInit {
         this.bases.push(base)
         var d = new Date(base.date_posted.toString())
         var date = this.months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear()
-        obj["title"] = base.title
+        obj["title"] = base.title.substring(0, 20) + "..."
+        obj["full_title"] = base.title
         obj["folder"] = e
         obj["location"] = base.location
         obj["date_created"] = date
