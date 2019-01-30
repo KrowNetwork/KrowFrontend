@@ -78,8 +78,8 @@ export class TopBarComponent implements OnInit {
             this.resume_text = "Company"
           } else {
             this.is_applicant = false
-            this.btnText = "PLACEHOLDER"
-            this.resume_text = "PLACEHOLDER"
+            this.btnText = "Edit"
+            this.resume_text = "Profile"
           }
           sessionStorage.setItem("accountType", res)
         }

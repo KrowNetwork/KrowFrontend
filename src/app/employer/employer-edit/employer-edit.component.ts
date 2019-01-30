@@ -41,6 +41,8 @@ export class EmployerEditComponent implements OnInit {
 
   isChanged = false;
 
+  data: any
+
   constructor(
     private router: Router,
     public s3service: S3Service,
