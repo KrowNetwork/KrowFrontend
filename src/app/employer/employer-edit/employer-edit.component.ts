@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { S3Service } from "../../shared/service/s3.service"
 import { FormControl, FormGroup } from '@angular/forms';
 import { CustomHttpService } from '../../shared/service/custom-http.service';
+import { e } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-employer-edit',
@@ -179,24 +180,43 @@ export class EmployerEditComponent implements OnInit {
         data['email'] = x.contactForm.get('email').value;
         data['location'] = x.contactForm.get('location').value;
 
-        data['links'] = [
-          {
+        if(data['links'].length == 0){
+          data['links'] = [{
             type: 'FACEBOOK',
-            url: x.socialForm.get('facebook').value
+            url: ''
           },
           {
             type: 'TWITTER',
-            url: x.socialForm.get('twitter').value
+            url: ''
           },
           {
             type: 'LINKEDIN',
-            url: x.socialForm.get('linkedin').value
+            url: ''
           },
           {
             type: 'WEBSITE',
-            url: x.contactForm.get('website').value
-          }
-        ]
+            url: ''
+          }]
+        } else {
+          data['links'] = [
+            {
+              type: 'FACEBOOK',
+              url: x.socialForm.get('facebook').value
+            },
+            {
+              type: 'TWITTER',
+              url: x.socialForm.get('twitter').value
+            },
+            {
+              type: 'LINKEDIN',
+              url: x.socialForm.get('linkedin').value
+            },
+            {
+              type: 'WEBSITE',
+              url: x.contactForm.get('website').value
+            }
+          ]
+        }
 
 
         x.http.put(url, data).subscribe(

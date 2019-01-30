@@ -33,9 +33,12 @@ export class EmployerProfileInfoComponent implements OnInit {
 
   size: number;
   jobType: number;
+  numberOfJobs: number;
   keywords = [];
   companySize: string;
   companyJobType: string;
+
+  token = ""
 
   owner= false;
   forceLogin=false;
@@ -47,6 +50,7 @@ export class EmployerProfileInfoComponent implements OnInit {
     public http: CustomHttpService,
   ) { 
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+    this.token = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt." + this.user + ".accessToken")
     console.log(this.router.url.split("/"))
     if (this.router.url.split("/")[3] != undefined) {
       this.id = this.router.url.split("/")[3]
@@ -138,7 +142,20 @@ export class EmployerProfileInfoComponent implements OnInit {
           }
         }
       );
+
+      this.getFolders().subscribe(async folders => {
+        this.numberOfJobs = folders.length;
+      })
     
+  }
+
+  getFolders() {
+    return this.http.rget("https://api.krownetwork.com/get-employer-folders?id=" + this.user + "&token=" + this.token).map(
+      data => {
+        //console.log(data["results"])
+        return Array.from(new Set(data["results"]));
+      }
+    )
   }
 
 }

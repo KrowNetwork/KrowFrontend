@@ -65,7 +65,7 @@
                             </form>	
                         </div>
                             <div class="col-md-6 offset-md-3" *ngIf="this.intent== 'Employer'">
-                            <h1 style="color: #fb236a">Welcome to the Krow Network Applicant Experience!</h1>	
+                            <h1 style="color: #fb236a">Welcome to the Krow Network Employer Experience!</h1>	
                             <h3>We just need some basic info to get you started:</h3>
                             <div *ngIf="errorMessage!=null" class="alert alert-danger" style="color: #fb236a">
                                 {{ errorMessage }}
@@ -149,7 +149,7 @@
 
                         
 
-                        <div class="account-popup" *ngIf="uploadImageOn">	
+                        <div div class="col-md-6 offset-md-3" *ngIf="uploadImageOn">	
                             <h1 style="color: #fb236a">Welcome to the Krow Network Employer Experience!</h1>	
                             <h3>Upload a personal image:</h3>
                             <div *ngIf="errorMessage!=null" class="alert alert-danger" style="color: #fb236a">

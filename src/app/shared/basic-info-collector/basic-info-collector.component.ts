@@ -117,9 +117,28 @@ export class BasicInfoCollectorComponent implements OnInit {
                     company: this.company,
                     email: this.email,
                     bio: this.bio,
-                    location: this.location,
-                    year: this.year,
-                    phoneNumber: this.phoneNumber,
+                    location: this.location || '',
+                    year: this.year || '',
+                    phoneNumber: this.phoneNumber || '',
+                    links: [{
+                        type: 'FACEBOOK',
+                        url: ''
+                      },
+                      {
+                        type: 'TWITTER',
+                        url: ''
+                      },
+                      {
+                        type: 'LINKEDIN',
+                        url: ''
+                      },
+                      {
+                        type: 'WEBSITE',
+                        url: ''
+                      }],
+                    jobType: 0,
+                    size: 0,
+                    keyWords: [],
                 }
                 await this.initializeUser.initializeUser(employerObj, this.intent, null, this.router);
                 var x = this;

@@ -1554,6 +1554,47 @@ app.post("/accept-hire", (req, res, next) => {
     })
 })
 
+
+app.post("/contact-company", (req, res, next) => {
+    // // console.log(req.body)
+    var body = ""
+    req.on("data", function(chunk) {
+        body += chunk
+    })
+    // // console.log(body)
+    var name = req.body.name;
+    var subject = req.body.phoneNumber;
+    var email = req.body.email;
+    var msg = req.body.msg;
+    
+
+    var sender = nodeMailer.createTransport({
+        host: "smtp.1and1.com",
+        port: 587,
+        secure: false,
+        requireTLS: true,
+        auth: {
+            user: "notifications@krow.network",
+            pass: "rfk-Coz-CJp-2Ey"
+        }
+    });
+    ejs.renderFile(__dirname + "/templates/contact-company.ejs", { name: name, email: email, phoneNumber: phoneNumber, msg: msg }, function (err, data) {
+        var mailOptions = {
+            from: "Krow Network No-Reply <notifications@krow.network>",
+            to: "qxl2@njit.edu",
+            subject: name + "Contacted You From Krow!",
+            html: data
+        }
+        sender.sendMail(mailOptions, function (err, info) {
+            if (err) {
+                errorHandler(next, 500, err)
+            } else {
+                res.send(200, {success: "sent"})
+            }
+        });
+    })
+})
+
 https.createServer(options, app).listen(443, function (err) {
     if (err) {
       throw err

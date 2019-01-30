@@ -55,7 +55,7 @@
 
                     </div>
 
-                    <div class="recent-jobs">
+                    <!-- <div class="recent-jobs">
                       <h3>Top Recruits</h3>
                       <div class="job-list-modern">
                         <div class="job-listings-sec no-border">
@@ -74,25 +74,25 @@
                                 <div class="shortlists">
                                   <a href="#" title="">Download CV <i class="la la-plus"></i></a>
                                 </div>
-                              </div><!-- Emply List -->
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                   <div class="col-lg-4 column">
                     <div class="job-overview">
                       <h3>Company Information</h3>
                       <ul>
                         <li><i class="la la-file-text"></i>
-                          <h3>Jobs Created</h3><span>4</span>
+                          <h3>Jobs Created</h3><span>{{ numberOfJobs }}</span>
                         </li>
-                        <li><i class="la la-map"></i>
+                        <!-- <li><i class="la la-map"></i>
                           <h3>Headquarters</h3><span>United States, San Diego</span>
-                        </li>
+                        </li> -->
                         <li><i class="la la-bars"></i>
-                          <h3>Market Type</h3><span>Arts, Design, Media</span>
+                          <h3>Market Type</h3><span>{{ keywords }}</span>
                         </li>
                         <li><i class="la la-clock-o"></i>
                           <h3>Founded</h3><span>{{ year }}</span>
@@ -102,17 +102,17 @@
                         </li>
                       </ul>
                     </div><!-- Job Overview -->
-                    <div class="quick-form-job">
+                    <!-- <div class="quick-form-job">
                       <h3>Contact Company</h3>
                       <form>
                         <input type="text" placeholder="Enter your Name*" />
                         <input type="text" placeholder="Email Address*" />
                         <input type="text" placeholder="Phone Number" />
                         <textarea placeholder="Message should have more than 50 characters"></textarea>
-                        <button class="submit">Send Email</button>
+                        <button class="submit" (click)=>Send Email</button>
                         <span>You accept our <a href="#" title="">Terms and Conditions</a></span>
                       </form>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
