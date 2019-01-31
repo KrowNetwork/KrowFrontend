@@ -611,9 +611,10 @@ app.get("/get-employer-folder-base", async (req, res, next) => {
             results = []
             bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
                 files.forEach(f => {
-                    // console.log(f.name)
+                    console.log(f.name)
                     if (f.name == id + "/" + folder + "/base.json") {
                         f.download(function(err, contents) {
+                            console.log(err)
                             if (err) {
                                 console.log(err)
                                 res.status(500).send({err: "No base file"}).end()
