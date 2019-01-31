@@ -6,6 +6,7 @@ import { UserLoginService } from "../../shared/service/user-login.service";
 import { Router } from '../../../../node_modules/@angular/router';
 import { ModalService } from '../../shared/service/modal.service'; 
 import { TutorialComponent } from '../../shared/tutorial/tutorial.component';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-manage-jobs',
@@ -98,6 +99,7 @@ export class ManageJobsComponent implements OnInit {
 
 
   getBase(e) {
+    console.log(e)
     return this.http2.get("https://api.krownetwork.com/get-employer-folder-base", {params: {folder: e, id: this.user, token: this.token}}).map(
       res => {
         console.log(res)
@@ -117,9 +119,15 @@ export class ManageJobsComponent implements OnInit {
         obj["counts"] = base.count
         return obj
       }, (e: HttpErrorResponse) => {
+        console.log(e)
         return e
       }
+    ).catch(
+      (e: any) => Observable.throw(e)
     )
+        
+  
+    // return "rip"
   }
   async asyncForEach(array, callback) {
     for (var i = 0; i < array.length; i ++) {

@@ -615,6 +615,7 @@ app.get("/get-employer-folder-base", async (req, res, next) => {
                     if (f.name == id + "/" + folder + "/base.json") {
                         f.download(function(err, contents) {
                             if (err) {
+                                console.log(err)
                                 res.status(500).send({err: "No base file"}).end()
                                 return
                             } else {
