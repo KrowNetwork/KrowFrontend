@@ -627,7 +627,8 @@ app.get("/get-employer-folder-base", async (req, res, next) => {
                         })
                     }
                 })
-                
+                res.status(500).send({err: "No base file"}).end()
+                return
                 
             })
         }
