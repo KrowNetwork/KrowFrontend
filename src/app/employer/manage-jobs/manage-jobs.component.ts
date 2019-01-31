@@ -103,6 +103,9 @@ export class ManageJobsComponent implements OnInit {
     return this.http2.get("https://api.krownetwork.com/get-employer-folder-base", {params: {folder: e, id: this.user, token: this.token}}).map(
       res => {
         console.log(res)
+        if (res["err"]) {
+          return false
+        }
         var obj = {}
         var buff = new Buffer(res["results"][0]["data"])
         var base = JSON.parse(buff.toString())
@@ -122,9 +125,10 @@ export class ManageJobsComponent implements OnInit {
         console.log(e)
         return e
       }
-    ).catch(
-      (e: any) => Observable.throw(e)
-    )
+    ).catch(function(e) {
+      var a = e
+      return Observable.of(false)
+    })
         
   
     // return "rip"
@@ -144,10 +148,11 @@ export class ManageJobsComponent implements OnInit {
       await this.asyncForEach(folders, async folder => {
         console.log(folder)
         var obj = await this.getBase(folder).toPromise()
-        console.log(obj)
+        if (obj != false)
+          this.dataForList.push(obj)
+        // if ()
         // var count = await this.getCount(folder).toPromise()
         // obj["counts"] = count["results"]
-        this.dataForList.push(obj)
       })
   
   })
