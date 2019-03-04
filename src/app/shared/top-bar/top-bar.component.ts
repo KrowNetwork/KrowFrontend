@@ -39,7 +39,7 @@ export class TopBarComponent implements OnInit {
     gtag('js', new Date());
     gtag('set', {'user_id': this.user}); // Set the user ID using signed-in user_id.
     
-    // this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
+    // this.http.head("http://18.216.142.100:3000/api/Applicant/" + user).subscribe(
     // data => {
     //             sessionStorage.setItem("accountType", "applicant")
     //             // this.router.navigate(['/applicant']);
@@ -49,7 +49,7 @@ export class TopBarComponent implements OnInit {
         
     // }, // Catch Errors
     // (err = HttpErrorResponse) => {      
-    //   this.http.head("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
+    //   this.http.head("http://18.216.142.100:3000/api/Employer/" + user).subscribe(
     //     data => {
     //             sessionStorage.setItem("accountType", "employer")
     //       }

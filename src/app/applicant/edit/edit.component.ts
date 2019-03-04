@@ -83,7 +83,7 @@ export class EditComponent implements OnInit {
 
 
     // Url to API
-    var url = "http://18.220.46.51:3000/api/" + this.profileType + "/" + this.user;
+    var url = "http://18.216.142.100:3000/api/" + this.profileType + "/" + this.user;
 
     // Get current Data
     this.http.get(url).subscribe(
@@ -264,7 +264,7 @@ export class EditComponent implements OnInit {
       description.children[1].children[0].attributes[2].value = "Company Description";
       description.children[1].children[0].attributes[1].value = "description";
 
-      var url = "http://18.220.46.51:3000/api/Employer/" + this.user;
+      var url = "http://18.216.142.100:3000/api/Employer/" + this.user;
 
       // Get Data
       this.http.get(url).subscribe(
@@ -338,7 +338,7 @@ export class EditComponent implements OnInit {
       lastName.children[1].children[0].attributes[2].value = "Smith";
       lastName.children[1].children[0].attributes[1].value = "lastName";
 
-      var url = "http://18.220.46.51:3000/api/Applicant/" + this.id;
+      var url = "http://18.216.142.100:3000/api/Applicant/" + this.id;
 
 
       
@@ -439,11 +439,11 @@ export class EditComponent implements OnInit {
 
   requestToHire() {
     // // console.log(this.profileType)
-    var url = "http://18.220.46.51:3000/api/RequestHireApplicant"
+    var url = "http://18.216.142.100:3000/api/RequestHireApplicant"
     // console.log(this.id )
-    // var applicantUrl = "http://18.220.46.51:3000/api/Applicant/" + this.id 
-    // var jobUrl = "http://18.220.46.51:3000/api/Job/" + sessionStorage.getItem("fromJob")
-    // var employerUrl = "http://18.220.46.51:3000/api/Employer/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
+    // var applicantUrl = "http://18.216.142.100:3000/api/Applicant/" + this.id 
+    // var jobUrl = "http://18.216.142.100:3000/api/Job/" + sessionStorage.getItem("fromJob")
+    // var employerUrl = "http://18.216.142.100:3000/api/Employer/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
 
     // // console.log(applicantUrl)
     // // console.log(jobUrl)
@@ -464,9 +464,9 @@ export class EditComponent implements OnInit {
     this.http.post(url, data).subscribe(
       data => {
         alert("Success!")
-        this.http.get("http://18.220.46.51:3000/api/Employer/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
+        this.http.get("http://18.216.142.100:3000/api/Employer/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
           emp_data => {
-            this.http.get("http://18.220.46.51:3000/api/Job/" + sessionStorage.getItem("fromJob")).subscribe(
+            this.http.get("http://18.216.142.100:3000/api/Job/" + sessionStorage.getItem("fromJob")).subscribe(
               job_data => {
                 var mailData = {
                   to: this.email,

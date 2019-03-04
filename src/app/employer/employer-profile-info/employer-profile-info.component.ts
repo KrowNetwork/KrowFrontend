@@ -70,7 +70,7 @@ export class EmployerProfileInfoComponent implements OnInit {
   ngOnInit() {
     this.imgURL = "https://krow-network-profile-pics.s3.us-east-2.amazonaws.com/pics/" + this.id +".png"
 
-    var url = "http://18.220.46.51:3000/api/Employer/" + this.user;
+    var url = "http://18.216.142.100:3000/api/Employer/" + this.user;
 
       // Get Data
       this.http.get(url).subscribe(

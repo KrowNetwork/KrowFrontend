@@ -156,11 +156,11 @@ export class JobProfileComponent implements OnInit {
 
   requestToHire(applicant) {
     // // console.log(this.profileType)
-    var url = "http://18.220.46.51:3000/api/RequestHireApplicant"
+    var url = "http://18.216.142.100:3000/api/RequestHireApplicant"
     // console.log(this.id )
-    // var applicantUrl = "http://18.220.46.51:3000/api/Applicant/" + this.id 
-    // var jobUrl = "http://18.220.46.51:3000/api/Job/" + sessionStorage.getItem("fromJob")
-    // var employerUrl = "http://18.220.46.51:3000/api/Employer/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
+    // var applicantUrl = "http://18.216.142.100:3000/api/Applicant/" + this.id 
+    // var jobUrl = "http://18.216.142.100:3000/api/Job/" + sessionStorage.getItem("fromJob")
+    // var employerUrl = "http://18.216.142.100:3000/api/Employer/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
 
     // // console.log(applicantUrl)
     // // console.log(jobUrl)
@@ -181,9 +181,9 @@ export class JobProfileComponent implements OnInit {
     this.http.post(url, data).subscribe(
       data => {
         // alert("Success!")
-        this.http.get("http://18.220.46.51:3000/api/Employer/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
+        this.http.get("http://18.216.142.100:3000/api/Employer/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
           emp_data => {
-            this.http.get("http://18.220.46.51:3000/api/Applicant/" + applicant).subscribe(
+            this.http.get("http://18.216.142.100:3000/api/Applicant/" + applicant).subscribe(
               app_data => {
                 var mailData = {
                   to: app_data["email"],
@@ -244,7 +244,7 @@ export class JobProfileComponent implements OnInit {
     
 
     // Url to API
-    // this.url = "http://18.220.46.51:3000/api/" + profileType + "/" + this.user;
+    // this.url = "http://18.216.142.100:3000/api/" + profileType + "/" + this.user;
 
     // Get current Data
     this.http.get(this.url).subscribe(
@@ -354,7 +354,7 @@ export class JobProfileComponent implements OnInit {
   hire_requests = []
   h_data = []
   load(jobID) {
-    this.url = "http://18.220.46.51:3000/api/Job/" + this.jobID
+    this.url = "http://18.216.142.100:3000/api/Job/" + this.jobID
     // Set Company/Name 
     // document.getElementById("app-responsive-component-profile").innerText = "Job";
 
@@ -464,7 +464,7 @@ export class JobProfileComponent implements OnInit {
           this.hasEmp = true
           // // console.log(this.applicants[0])
           // for (var i = 0; i <= this.applicants.length; i++){
-            var url = "http://18.220.46.51:3000/api/Applicant/" + employeeID
+            var url = "http://18.216.142.100:3000/api/Applicant/" + employeeID
             this.http.get(url).subscribe(
               data => {
                 this.employee = {
@@ -498,7 +498,7 @@ export class JobProfileComponent implements OnInit {
           // this.show_applicants = false
           // // console.log(this.applicants[0])
           for (var i = 0; i < this.applicants.length; i++){
-            var url = "http://18.220.46.51:3000/api/Applicant/" + this.applicants[i].split("#")[1]
+            var url = "http://18.216.142.100:3000/api/Applicant/" + this.applicants[i].split("#")[1]
             this.http.get(url).subscribe(
               data => {
                 // // console.log((data["applicantID"]))
@@ -532,7 +532,7 @@ export class JobProfileComponent implements OnInit {
           // this.show_applicants = false
           // // console.log(this.applicants[0])
           for (var i = 0; i < this.hire_requests.length; i++){
-            var url = "http://18.220.46.51:3000/api/Applicant/" + this.hire_requests[i].split("#")[1]
+            var url = "http://18.216.142.100:3000/api/Applicant/" + this.hire_requests[i].split("#")[1]
             this.http.get(url).subscribe(
               data => {
                 // // console.log((data["applicantID"]))
@@ -568,7 +568,7 @@ export class JobProfileComponent implements OnInit {
           // // console.log(this.applicants[0])
           for (var i = 0; i < this.deniedApplicants.length; i++){
 
-            var url = "http://18.220.46.51:3000/api/Applicant/" + this.deniedApplicants[i].applicantID
+            var url = "http://18.216.142.100:3000/api/Applicant/" + this.deniedApplicants[i].applicantID
             this.http.get(url).subscribe(
               data => {
                 this.denied.push(data)
@@ -679,7 +679,7 @@ export class JobProfileComponent implements OnInit {
   async apply(event){
     // // console.log(this.profileType)
 
-    var url = "http://18.220.46.51:3000/api/RequestJob"
+    var url = "http://18.216.142.100:3000/api/RequestJob"
     var data = {
       "applicant": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
       "job": this.jobID
@@ -688,10 +688,10 @@ export class JobProfileComponent implements OnInit {
     this.http.post(url, data).subscribe(
       data => {
         console.log(1)
-        this.http.get("http://18.220.46.51:3000/api/Employer/" + this.employerID).subscribe(
+        this.http.get("http://18.216.142.100:3000/api/Employer/" + this.employerID).subscribe(
           data => {
             console.log(2)
-            this.http.get("http://18.220.46.51:3000/api/Applicant/" +localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") ).subscribe(
+            this.http.get("http://18.216.142.100:3000/api/Applicant/" +localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") ).subscribe(
               appData => {
                 var email_data = {
                   "applicant_name": appData["firstName"] + " " + appData["lastName"],
@@ -731,7 +731,7 @@ export class JobProfileComponent implements OnInit {
   }
 
   async deapply(event) {
-    var url = "http://18.220.46.51:3000/api/UnrequestJob"
+    var url = "http://18.216.142.100:3000/api/UnrequestJob"
     var data = {
       "applicant": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
       "job": this.jobID
@@ -739,9 +739,9 @@ export class JobProfileComponent implements OnInit {
     this.msg = "Please wait"
     this.http.post(url, data).subscribe(
       data => {
-        this.http.get("http://18.220.46.51:3000/api/Employer/" + this.employerID).subscribe(
+        this.http.get("http://18.216.142.100:3000/api/Employer/" + this.employerID).subscribe(
           data => {
-            this.http.get("http://18.220.46.51:3000/api/Applicant/" +localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") ).subscribe(
+            this.http.get("http://18.216.142.100:3000/api/Applicant/" +localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser") ).subscribe(
               appData => {
                 var email_data = {
                   "applicant_name": appData["firstName"] + " " + appData["lastName"],
@@ -791,7 +791,7 @@ export class JobProfileComponent implements OnInit {
     this.confirmResign = true
   }
   resignp2() {
-    var url = "http://18.220.46.51:3000/api/ResignJob"
+    var url = "http://18.216.142.100:3000/api/ResignJob"
     var data = {
       "applicant": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
       "job": this.jobID,
@@ -824,7 +824,7 @@ export class JobProfileComponent implements OnInit {
     var experience = {
 
     }
-    var url = "http://18.220.46.51:3000/api/AcceptHire"
+    var url = "http://18.216.142.100:3000/api/AcceptHire"
     var data = {
       job: this.jobID,
       applicant: localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
@@ -837,9 +837,9 @@ export class JobProfileComponent implements OnInit {
         // mailData = {
         //   applicant_name: 
         // }
-        this.http.get("http://18.220.46.51:3000/api/Applicant/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
+        this.http.get("http://18.216.142.100:3000/api/Applicant/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
           applicantData => {
-            this.http.get("http://18.220.46.51:3000/api/Employer/" + this.employerID).subscribe(
+            this.http.get("http://18.216.142.100:3000/api/Employer/" + this.employerID).subscribe(
               empdata => {
                 var mailData = {
                   applicant_name: applicantData["firstName"] + " " + applicantData["lastName"],
@@ -892,7 +892,7 @@ export class JobProfileComponent implements OnInit {
   }
 
   firep2() {
-    var url = "http://18.220.46.51:3000/api/FireApplicant"
+    var url = "http://18.216.142.100:3000/api/FireApplicant"
     // // console.log(this.employee)
     var data = {
       "applicant": this.employee["applicantID"],
@@ -938,7 +938,7 @@ export class JobProfileComponent implements OnInit {
 
     this.msg = "Please wait" 
 
-    this.http.post("http://18.220.46.51:3000/api/DenyApplicant", data).subscribe(
+    this.http.post("http://18.216.142.100:3000/api/DenyApplicant", data).subscribe(
       ret => {
         this.msg = "Success"
         location.reload()
@@ -956,7 +956,7 @@ export class JobProfileComponent implements OnInit {
   }
 
   unRequestHire(ID) {
-    var url = 'http://18.220.46.51:3000/api/UnrequestHireApplicant'
+    var url = 'http://18.216.142.100:3000/api/UnrequestHireApplicant'
     var data = {
       "applicant": ID,
       "job": this.jobID,
@@ -980,7 +980,7 @@ export class JobProfileComponent implements OnInit {
 }
 
 requestComplete() {
-  var url = "http://18.220.46.51:3000/api/RequestCompleteJob"
+  var url = "http://18.216.142.100:3000/api/RequestCompleteJob"
   var data = {
     "applicant": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
     "job": this.jobID
@@ -1003,7 +1003,7 @@ requestComplete() {
 }
 
 complete() {
-  var url = "http://18.220.46.51:3000/api/CompleteJob"
+  var url = "http://18.216.142.100:3000/api/CompleteJob"
   var data = {
     "employer": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
     "job": this.jobID
@@ -1027,7 +1027,7 @@ complete() {
 }
 
 denyCompletion() {
-  var url = "http://18.220.46.51:3000/api/DenyRequestCompleteJob"
+  var url = "http://18.216.142.100:3000/api/DenyRequestCompleteJob"
   var data = {
     "employer": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
     "job": this.jobID
@@ -1057,11 +1057,11 @@ monthNames = ["January", "February", "March", "April", "May", "June",
 "July", "August", "September", "October", "November", "December"
 ];
 addToResume() {
-  this.http.get("http://18.220.46.51:3000/api/Applicant/" + this.id).subscribe(
+  this.http.get("http://18.216.142.100:3000/api/Applicant/" + this.id).subscribe(
     data => {
-      this.http.get("http://18.220.46.51:3000/api/Job/" + this.jobID).subscribe(
+      this.http.get("http://18.216.142.100:3000/api/Job/" + this.jobID).subscribe(
         job => {
-          this.http.get("http://18.220.46.51:3000/api/Employer/" + this.employerID).subscribe(
+          this.http.get("http://18.216.142.100:3000/api/Employer/" + this.employerID).subscribe(
             emp => {
               console.log(job["startDate"])
               console.log(data)
@@ -1080,7 +1080,7 @@ addToResume() {
                 "link": "/job/" + this.jobID
               }
               data["resume"]["experience"].push(exp)
-              this.http.put("http://18.220.46.51:3000/api/Applicant/" + this.id, data).subscribe(
+              this.http.put("http://18.216.142.100:3000/api/Applicant/" + this.id, data).subscribe(
                 data => {
                   console.log(data)
                 }
@@ -1103,7 +1103,7 @@ changeSalaryP2() {
 
   // console.log(data)
   this.msg = "Please wait"
-  var url = 'http://18.220.46.51:3000/api/ChangeSalary'
+  var url = 'http://18.216.142.100:3000/api/ChangeSalary'
   this.http.post(url, data).subscribe(
     data=>{
       this.msg = "Success"
@@ -1143,7 +1143,7 @@ comparisons = [[]]
 total_resume_score = 0
 get_comparison(desc) {
 
-  this.http.get("http://18.220.46.51:3000/api/Applicant/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
+  this.http.get("http://18.216.142.100:3000/api/Applicant/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
     data => {
       console.log(data)
       // var comp = []

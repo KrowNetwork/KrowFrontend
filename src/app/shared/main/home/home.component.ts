@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
                 }
             
         })
-        // this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).subscribe(
+        // this.http.head("http://18.216.142.100:3000/api/Applicant/" + this.user).subscribe(
         //     data => {
         //         if (data["error"] !== undefined) {
         //             this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });                     

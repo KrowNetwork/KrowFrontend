@@ -76,7 +76,7 @@ export class CreateUserService {
             console.log("here")
             obj = this.createUserEmployerObj(userObj);
         }
-        var url = "http://18.220.46.51:3000/api/" + intent;
+        var url = "http://18.216.142.100:3000/api/" + intent;
         // console.log(intent.toLowerCase());
         
         this.http.post(url, obj).subscribe(

@@ -49,6 +49,7 @@ import { EditComponent } from "./applicant/edit/edit.component";
 import { EmployerEditComponent } from './employer/employer-edit/employer-edit.component';
 import { EmployerProfileInfoComponent } from './employer/employer-profile-info/employer-profile-info.component';
 import { ManageJobsComponent } from './employer/manage-jobs/manage-jobs.component';
+import { NewPostJobsComponent } from './employer/new-post-jobs/new-post-jobs.component';
 import { PostJobsComponent } from './employer/post-jobs/post-jobs.component';
 import { CandidateListComponent } from './employer/candidate-list/candidate-list.component';
 
@@ -343,6 +344,10 @@ const secureHome: Routes = [
             {
                 path: "post-jobs",
                 component: PostJobsComponent
+            },
+            {
+                path: "new-post-jobs",
+                component: NewPostJobsComponent
             },
             {
                 path: "candidate-list",
