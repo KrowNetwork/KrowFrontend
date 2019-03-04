@@ -215,7 +215,7 @@ export class CalendarComponent implements OnInit {
 
           current_event.date = date
 
-          // var c = this.http.get("http://18.216.142.100:3000/api/Applicant/" +  data[z].M.createdBy.S).toPromise()
+          // var c = this.http.get("http://18.216.142.10:3000/api/Applicant/" +  data[z].M.createdBy.S).toPromise()
           // await c
           var self = this
           await this.getApplicant(data[z].M.createdBy.S).then(function(user) {
@@ -237,7 +237,7 @@ export class CalendarComponent implements OnInit {
           //     current_event.createdBy = user["firstName"] + " " + user["lastName"]
           //     this.current_events[z] = current_event
           //   } else {
-          //     this.http.get("http://18.216.142.100:3000/api/Employer/" +  data[z].M.createdBy.S).subscribe(user => {
+          //     this.http.get("http://18.216.142.10:3000/api/Employer/" +  data[z].M.createdBy.S).subscribe(user => {
           //       current_event.createdBy = user["employerName"]
           //       this.current_events[z] = current_event
           //     })
@@ -261,11 +261,11 @@ export class CalendarComponent implements OnInit {
   }
 
   async getApplicant(id) {
-    let res = await this.http.get("http://18.216.142.100:3000/api/Applicant/" +  id).toPromise();
+    let res = await this.http.get("http://18.216.142.10:3000/api/Applicant/" +  id).toPromise();
     return res;
   }
   async getEmployer(id) {
-    let res = await this.http.get("http://18.216.142.100:3000/api/Employer/" +  id).toPromise();
+    let res = await this.http.get("http://18.216.142.10:3000/api/Employer/" +  id).toPromise();
     return res;
   }
 

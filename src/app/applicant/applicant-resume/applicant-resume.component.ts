@@ -48,7 +48,7 @@ export class ApplicantResumeComponent {
 
 
   loadJobs() {
-    var url = "http://18.216.142.100:3000/api/Applicant/" + this.id 
+    var url = "http://18.216.142.10:3000/api/Applicant/" + this.id 
     this.http.get(url).subscribe(
       data => {
         var x = [data["completedJobs"],  data["terminatedJobs"], data["inprogressJobs"]]
@@ -57,7 +57,7 @@ export class ApplicantResumeComponent {
           var d = []
           arr.forEach(job =>{
             job = job.split("#")[1]
-            this.http.get("http://18.216.142.100:3000/api/Job/" + job).subscribe(
+            this.http.get("http://18.216.142.10:3000/api/Job/" + job).subscribe(
               z => {
                 d.push({
                   title: z["title"],

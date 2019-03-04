@@ -127,7 +127,7 @@ export class MessagingComponent implements OnInit {
     }
 
   loadUserData(id, chat_id) {
-    this.http.get("http://18.216.142.100:3000/api/Applicant/" + id).subscribe(
+    this.http.get("http://18.216.142.10:3000/api/Applicant/" + id).subscribe(
       data => {
         // console.log(data["error"])
 
@@ -145,7 +145,7 @@ export class MessagingComponent implements OnInit {
   }
 
   loadEmployerData(id, chat_id) {
-    this.http.get("http://18.216.142.100:3000/api/Employer/" + id).subscribe(
+    this.http.get("http://18.216.142.10:3000/api/Employer/" + id).subscribe(
       data => {
             // console.log(data)
             var uData = {}
@@ -173,13 +173,13 @@ export class MessagingComponent implements OnInit {
           self.loadUserData(element.S, chatName)
           // console.log(element)
           if (current) {
-            self.http.get("http://18.216.142.100:3000/api/Employer/" + element.S).subscribe(
+            self.http.get("http://18.216.142.10:3000/api/Employer/" + element.S).subscribe(
               data => {
                 if (data["error"] === undefined) {
 
                   self.loadChat(chatName, data["employerName"])
                 } else {
-                  self.http.get("http://18.216.142.100:3000/api/Applicant/" + element.S).subscribe(
+                  self.http.get("http://18.216.142.10:3000/api/Applicant/" + element.S).subscribe(
                     data => {
                       self.loadChat(chatName, data["firstName"] + " " + data["lastName"])
                     }

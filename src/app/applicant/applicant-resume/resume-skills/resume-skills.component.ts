@@ -78,7 +78,7 @@ export class ResumeSkillsComponent implements OnInit {
 		} else {
 			var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
 		}
-    this.http.get("http://18.216.142.100:3000/api/Applicant/" + user).subscribe(
+    this.http.get("http://18.216.142.10:3000/api/Applicant/" + user).subscribe(
       data => {
         var skills = data["resume"]["skills"];
         var skillList = new Array<ItemType>();

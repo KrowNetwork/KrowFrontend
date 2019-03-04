@@ -24,7 +24,7 @@ export class UserSearchComponent implements OnInit {
 
   search() {
     var f = {
-      url: "http://18.216.142.100:3000/api/queries/GetUsersByName?fn=" + this.fname + "&ln=" + this.lname
+      url: "http://18.216.142.10:3000/api/queries/GetUsersByName?fn=" + this.fname + "&ln=" + this.lname
     }
     console.log("ye")
     console.log(f)
@@ -46,7 +46,7 @@ export class UserSearchComponent implements OnInit {
   }
 
   searchID() {
-    this.http.get("http://18.216.142.100:3000/api/Applicant/" + this.userID).subscribe(
+    this.http.get("http://18.216.142.10:3000/api/Applicant/" + this.userID).subscribe(
       data => {
         this.users = []
         console.log(data)

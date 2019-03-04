@@ -35,7 +35,7 @@ export class HomepageComponent implements OnInit {
     this.userService.isAuthenticated(this);
 
     var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
-    // this.http.head("http://18.216.142.100:3000/api/Applicant/" + user).subscribe(
+    // this.http.head("http://18.216.142.10:3000/api/Applicant/" + user).subscribe(
     // data => {
     //             sessionStorage.setItem("accountType", "applicant")
     //             // this.router.navigate(['/applicant']);
@@ -45,7 +45,7 @@ export class HomepageComponent implements OnInit {
         
     // }, // Catch Errors
     // (err = HttpErrorResponse) => {      
-    //   this.http.head("http://18.216.142.100:3000/api/Employer/" + user).subscribe(
+    //   this.http.head("http://18.216.142.10:3000/api/Employer/" + user).subscribe(
     //     data => {
     //             sessionStorage.setItem("accountType", "employer")
     //       }
