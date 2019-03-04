@@ -908,7 +908,7 @@ app.get("/get-job", (req, res, next) => {
                 res.send(200, {success: "the applicant was deleted"})
             }
         })
-        request.delete("http://18.216.142.10:3000/api/Applicant/" + id, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
+        request.delete("http://18.220.46.51:3000/api/Applicant/" + id, {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
             if (err) {
                 // // console.log(err)
                 errorHandler(next, 400, err)
@@ -924,7 +924,7 @@ app.get("/get-job", (req, res, next) => {
   app.get("/search", (req, res, next) => {
     var term = req.query.term;
     var key = req.query.key;
-    request.get("http://18.216.142.10:4200/search?term=" + term + "&key=" + key, function(err, res2) {
+    request.get("http://18.220.46.51:4200/search?term=" + term + "&key=" + key, function(err, res2) {
         if (err) {
             // // console.log(err)
             errorHandler(next, 400, err)
@@ -1133,7 +1133,7 @@ app.get("/get-job", (req, res, next) => {
             verificationEmail: verificationEmail
         }
 
-        request.post("http://18.216.142.10:3000/api/VerifyJobExp",  {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}, json: data}, function(err, res2) {
+        request.post("http://18.220.46.51:3000/api/VerifyJobExp",  {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}, json: data}, function(err, res2) {
             if (err) {
                 // console.log(err)
                 errorHandler(next, 400, err)
@@ -1155,11 +1155,11 @@ app.get("/get-job", (req, res, next) => {
         //     verificationEmail: verificationEmail
         // }
 
-        request.head("http://18.216.142.10:3000/api/Applicant/" + id,  {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
+        request.head("http://18.220.46.51:3000/api/Applicant/" + id,  {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res2) {
             if (res2.statusCode == 200) {
                 res.status(200).send({response: "applicant"})
             } else if (res2.statusCode == 404) {
-                request.head("http://18.216.142.10:3000/api/Employer/" + id,  {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res3) { 
+                request.head("http://18.220.46.51:3000/api/Employer/" + id,  {headers: {"x-api-key": "qLBrEwIv690nAbMfVHB965WC3KfoC1VpvkBjDUiBfVOG5mTzlUlwkckKLerAUxxv"}}, function(err, res3) { 
 
                     if (res3.statusCode == 200) {
                         res.status(200).send({response: "employer"})
