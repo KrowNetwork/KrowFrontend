@@ -609,25 +609,24 @@ app.get("/get-employer-folder-base", async (req, res, next) => {
         
             var bucket = storage.bucket(bucketName)
             results = []
-            bucket.getFiles({"prefix": id + "/" + folder + "/"}, function(err, files) {
-                files.forEach(f => {
-                    // console.log(f.name)
-                    if (f.name == id + "/" + folder + "/base.json") {
-                        f.download(function(err, contents) {
-                            if (err) {
-                                res.status(500).send({err: "No base file"}).end()
-                                return
-                            } else {
-                                results.push(contents)
-                                res.status(200).send({results: results}).end()
-                                return
-                            }
-                        })
-                    }
-                })
+
+            var file = bucket.file(id + "/" + folder + "/base.json")
+            file.exists(function(err, exists) {
+                if (err) {
+                    res.status(500).send({err: "No base file"}).end()
+                    return
+                } else {
+                    file.download(function(err, contents) {
+             
                 
-                
+                        results.push(contents)
+                        res.status(200).send({results: results}).end()
+                        return
+                    
+                    })
+                }
             })
+           
         }
     })
 })

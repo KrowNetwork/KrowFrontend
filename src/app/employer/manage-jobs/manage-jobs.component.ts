@@ -6,6 +6,7 @@ import { UserLoginService } from "../../shared/service/user-login.service";
 import { Router } from '../../../../node_modules/@angular/router';
 import { ModalService } from '../../shared/service/modal.service'; 
 import { TutorialComponent } from '../../shared/tutorial/tutorial.component';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-manage-jobs',
@@ -98,9 +99,13 @@ export class ManageJobsComponent implements OnInit {
 
 
   getBase(e) {
+    console.log(e)
     return this.http2.get("https://api.krownetwork.com/get-employer-folder-base", {params: {folder: e, id: this.user, token: this.token}}).map(
       res => {
         console.log(res)
+        if (res["err"]) {
+          return false
+        }
         var obj = {}
         var buff = new Buffer(res["results"][0]["data"])
         var base = JSON.parse(buff.toString())
@@ -117,9 +122,16 @@ export class ManageJobsComponent implements OnInit {
         obj["counts"] = base.count
         return obj
       }, (e: HttpErrorResponse) => {
+        console.log(e)
         return e
       }
-    )
+    ).catch(function(e) {
+      var a = e
+      return Observable.of(false)
+    })
+        
+  
+    // return "rip"
   }
   async asyncForEach(array, callback) {
     for (var i = 0; i < array.length; i ++) {
@@ -136,10 +148,11 @@ export class ManageJobsComponent implements OnInit {
       await this.asyncForEach(folders, async folder => {
         console.log(folder)
         var obj = await this.getBase(folder).toPromise()
-        console.log(obj)
+        if (obj != false)
+          this.dataForList.push(obj)
+        // if ()
         // var count = await this.getCount(folder).toPromise()
         // obj["counts"] = count["results"]
-        this.dataForList.push(obj)
       })
   
   })
