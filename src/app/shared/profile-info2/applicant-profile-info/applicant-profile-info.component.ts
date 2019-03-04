@@ -125,7 +125,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
     
     // )
     
-    this.http.get("http://18.216.142.10:3000/api/Applicant/" + this.id).subscribe(
+    this.http.get("http://18.220.46.51:3000/api/Applicant/" + this.id).subscribe(
       data => {
         if (data["error"] !== undefined) {
           // sessionStorage.setItem("accountType", "employer")
@@ -303,7 +303,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           for (var i = 0; i < data["inprogressJobs"].length; i++){
 
             var id = data["inprogressJobs"][i].split("#")[1].toString()
-            var n_url = "http://18.216.142.10:3000/api/Job/" + id 
+            var n_url = "http://18.220.46.51:3000/api/Job/" + id 
             this.http.get(n_url).subscribe(
               n_data => {
                 var start = new Date(n_data["startDate"])
@@ -324,7 +324,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
           for (var i = 0; i < data["completedJobs"].length; i++){
 
             var id = data["completedJobs"][i].split("#")[1].toString()
-            var n_url = "http://18.216.142.10:3000/api/Job/" + id 
+            var n_url = "http://18.220.46.51:3000/api/Job/" + id 
             this.http.get(n_url).subscribe(
               n_data => {
                 var start = new Date(n_data["startDate"])
@@ -359,7 +359,7 @@ export class ApplicantProfileInfoPrivateComponent implements OnInit {
             var id = data["terminatedJobs"][i].split("#")[1].toString()
             // // console.log("id" + id)
             // // console.log(data["terminateReasons"][i])
-            var n_url = "http://18.216.142.10:3000/api/Job/" + id 
+            var n_url = "http://18.220.46.51:3000/api/Job/" + id 
             this.http.get(n_url).subscribe(
               n_data => {
                 // // console.log(n_data)

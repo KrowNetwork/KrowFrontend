@@ -85,7 +85,7 @@ export class ResumeEducationComponent implements OnInit {
     }
     
     if(this.isSignup != 'true'){
-      this.http.get("http://18.216.142.10:3000/api/Applicant/" + user).subscribe(
+      this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
         data => {
           
           var resumeEducations = data["resume"]["education"];

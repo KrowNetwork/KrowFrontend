@@ -84,7 +84,7 @@ export class ResumeVolunteerComponent implements OnInit {
 			var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     }
     if(this.isSignup != 'true'){
-      this.http.get("http://18.216.142.10:3000/api/Applicant/" + user).subscribe(
+      this.http.get("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
         data => {
           
           var resumeVolunteer = data["resume"]["volunteers"];

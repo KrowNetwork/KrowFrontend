@@ -63,7 +63,7 @@ export class NewPostJobsComponent implements OnInit {
   }
 
   getInfo() {
-    var url = "http://18.216.142.10:3000/api/Job/filter=%7B%22employerID%22%3A%20%224bb9bc44-5730-42e3-8d-2e14009b22db%22%7D";
+    var url = "http://18.220.46.51:3000/api/Job/filter=%7B%22employerID%22%3A%20%224bb9bc44-5730-42e3-8d-2e14009b22db%22%7D";
 
     let x = this;
     this.http.get(url).subscribe(
