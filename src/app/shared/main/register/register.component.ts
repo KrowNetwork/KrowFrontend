@@ -85,7 +85,7 @@ export class RegisterComponent implements CognitoCallback {
           user: result.userSub,
           first: '',
           second: '',
-          email: '',
+          email: this.registrationUser.email,
           bio: '',
           address: '',
           state: '',
@@ -100,7 +100,7 @@ export class RegisterComponent implements CognitoCallback {
         var employerObj = {
           user: result.userSub,
           company: '',
-          email: '',
+          email: this.registrationUser.email,
           bio: '',
           location: '',
           year: '',
