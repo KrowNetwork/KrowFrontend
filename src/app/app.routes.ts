@@ -80,6 +80,7 @@ import { JobInfoComponent } from './shared/job-info/job-info.component';
 import { NewManageJobsComponent } from './employer/new-manage-jobs/new-manage-jobs.component';
 import { NewCandidateListComponent } from './employer/new-candidate-list/new-candidate-list.component';
 import { MyJobsComponent } from './applicant/my-jobs/my-jobs.component';
+import { JobEditComponent } from './employer/job-edit/job-edit.component';
 const appRoutes: Routes = [
     {
         path: '',
@@ -376,6 +377,11 @@ const secureHome: Routes = [
             {
                 path: "tutorial",
                 component: TutorialComponent
+            },
+            { 
+                path: 'job/edit', 
+                component: JobEditComponent
+                //component: ComingSoonComponent
             },
             // {
     //             path: "create",

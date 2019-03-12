@@ -173,6 +173,10 @@ export class JobInfoComponent implements OnInit {
     }
   }
 
+  edit(){
+    this.router.navigate(['/employer/job/edit'], { queryParams: { jobID: this.jobId } })
+  }
+
   getEmployerInfo() {
     this.imgURL = "https://krow-network-profile-pics.s3.us-east-2.amazonaws.com/pics/" + this.employerID + ".png"
     var url = "http://18.220.46.51:3000/api/Employer/" + this.employerID;

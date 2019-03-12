@@ -146,6 +146,7 @@ import { NewManageJobsComponent } from './employer/new-manage-jobs/new-manage-jo
 import { NewCandidateListComponent } from './employer/new-candidate-list/new-candidate-list.component';
 import { SideBarComponent } from './shared/side-bar/side-bar.component';
 import { MyJobsComponent } from './applicant/my-jobs/my-jobs.component';
+import { JobEditComponent } from './employer/job-edit/job-edit.component';
 
 // import { CompareService } from './service/compare.service'
 // import { EditJobComponent } from './shared/edit-job/edit-job.component';
@@ -228,6 +229,7 @@ import { MyJobsComponent } from './applicant/my-jobs/my-jobs.component';
     NewCandidateListComponent,
     SideBarComponent,
     MyJobsComponent,
+    JobEditComponent,
 
     // EmployerPostJobsComponent,
     // EditJobComponent,
