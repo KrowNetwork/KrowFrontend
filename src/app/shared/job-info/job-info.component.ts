@@ -1,7 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import {ActivatedRoute,Router} from '@angular/router';
 import {CustomHttpService} from '../../shared/service/custom-http.service';
-import { CognitoUtil, LoggedInCallback } from "../../shared/service/cognito.service";
 import {HttpErrorResponse} from '@angular/common/http';
 import { UserLoginService } from "../../shared/service/user-login.service";
 
@@ -91,7 +90,6 @@ export class JobInfoComponent implements OnInit {
           if (this.id == this.employerID) {
             this.isOwner = true
           }
-
 
           var employeeID = ""
           if (data["employee"] !== undefined && data["employee"] != "") {

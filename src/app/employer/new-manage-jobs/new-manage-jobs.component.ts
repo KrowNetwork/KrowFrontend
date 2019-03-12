@@ -114,9 +114,6 @@ export class NewManageJobsComponent implements OnInit {
       }
     );
 
-    // this.getFolders().subscribe(async folders => {
-    //   this.numberOfJobs = folders.length;
-    // })
   }
 
   getJobs(){
@@ -158,6 +155,12 @@ export class NewManageJobsComponent implements OnInit {
               data.status = "Expired"
             } else {
               data.status = "Active"
+            }
+
+            if(data.applicantRequests != null && data.applicantRequests != undefined && data.applicantRequests != ""){
+              data.applied = data.applicantRequests.length;
+            } else {
+              data.applied = 0;
             }
 
             if(data.paymentType === "ONETIME") {
