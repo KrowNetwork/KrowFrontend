@@ -79,6 +79,7 @@ import { TutorialComponent } from './shared/tutorial/tutorial.component';
 import { JobInfoComponent } from './shared/job-info/job-info.component';
 import { NewManageJobsComponent } from './employer/new-manage-jobs/new-manage-jobs.component';
 import { NewCandidateListComponent } from './employer/new-candidate-list/new-candidate-list.component';
+import { MyJobsComponent } from './applicant/my-jobs/my-jobs.component';
 const appRoutes: Routes = [
     {
         path: '',
@@ -229,6 +230,10 @@ const secureHome: Routes = [
             {
                 path: "upload",
                 component: UploadPicComponent
+            },
+            {
+                path: "my-jobs",
+                component: MyJobsComponent
             }
             // {
             //     path: "hire-requests",

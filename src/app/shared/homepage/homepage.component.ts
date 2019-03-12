@@ -42,6 +42,7 @@ export class HomepageComponent implements OnInit {
   email: String
   location: String;
   jobList = [];
+  id:string;
   constructor(
     public http: CustomHttpService,
     public http2: HttpClient,
@@ -55,7 +56,7 @@ export class HomepageComponent implements OnInit {
     console.log("y")
     this.userService.isAuthenticated(this);
 
-    var user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+    this.id = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
     // this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
     // data => {
     //             sessionStorage.setItem("accountType", "applicant")
@@ -243,14 +244,27 @@ export class HomepageComponent implements OnInit {
             } else if (job.paymentType === "CONTRACT") {
               job.pay = "contract";
             }
-
+            job.applied = this.hasApplied(job.applicantRequests);
+            
             this.jobList.push(job);
+            console.log('job2', job)
 
           }
         });
       });
+  }
 
+  hasApplied(applicantRequests){
+    var isApplicant = false;
+    if(applicantRequests != null && applicantRequests != undefined && applicantRequests != ""){
+      applicantRequests.forEach(applicant => {
 
+         if(this.id === applicant.split('#')[1]){
+           isApplicant = true;
+         }
+      });
+    } 
+    return isApplicant
   }
 
   goToJobPage(jobID){

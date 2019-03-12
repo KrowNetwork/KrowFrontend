@@ -7,12 +7,16 @@
         <div class="col-lg-8 column">
           <div class="job-single-sec">
             <div class="job-single-head2">
+              <div *ngIf="msg!=null" class="alert alert-danger" style="color: #fb236a">
+                {{ msg }}
+              </div>
               <div class="job-title2">
                 <h3>{{ title }}</h3><span class="job-is ft">Coding & IT</span><i class="la la-heart-o"></i>
               </div>
               <ul class="tags-jobs">
                 <li><i class="la la-money"></i> Pay: <span>{{ pay }}</span></li>
-                <li><i class="la la-calendar-o"></i> Post Date: {{ dateString }}</li>
+                <li><i class="la la-calendar-o"></i> Post Date: {{ dateString }} </li>
+                <li><i class="la la-calendar-o"></i> Last Updated: {{ lastUpdated }}</li>
               </ul>
               <span><strong>Tags</strong> {{ tags }}</span>
             </div><!-- Job Head -->
@@ -42,8 +46,16 @@
                   class="fa fa-twitter"></i></a>
             </div>
             <div class="emply-btns">
-			  <a class="followus" href="#" title=""><i class="la la-paper-plane"></i> Message Us</a>
-			  <a *ngIf="!curr_emp" class="followus" href="#" title=""><i class="la la-paper-plane"></i> Apply</a>
+              <a *ngIf="!isOwner" class="followus" href="#" title=""><i class="la la-paper-plane"></i> Message Us</a>
+              <a *ngIf="!isOwner && canAcceptJob" class="followus" (click)="openNewDialog()" title="" style="margin-top: 5px;"><i
+                  class="la la-check"></i>Accept this job</a>
+              <a *ngIf="!isOwner && canApply" class="followus" (click)="apply()" title="" style="margin-top: 5px;"><i
+                  class="la la-paper-plane"></i>Apply
+                for job</a>
+              <a *ngIf="!isOwner && canDeApply" class="followus" (click)="deapply()" title="" style="margin-top: 5px;"><i
+                  class="la la-close"></i>Remove Application</a>
+              <a *ngIf="isOwner" class="followus" (click)="edit()" title="" style="margin-top: 5px;"><i
+                  class="la la-close"></i>Edit</a>
             </div>
           </div><!-- Job Head -->
         </div>
@@ -51,6 +63,9 @@
     </div>
   </div>
 </section>
+
+
+
 
 
 <app-bottom-bar></app-bottom-bar>

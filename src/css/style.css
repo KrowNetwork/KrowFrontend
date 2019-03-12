@@ -1561,6 +1561,10 @@ label::after {
     float: left;
     margin-right: 7px;
 }
+/* .job-apply {
+    margin-left:20px;
+    display: block;
+} */
 .fav-job {
     display: table-cell;
     vertical-align: middle;

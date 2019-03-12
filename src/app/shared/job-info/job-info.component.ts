@@ -1,7 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CustomHttpService } from '../../shared/service/custom-http.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
+import {
+  CustomHttpService
+} from '../../shared/service/custom-http.service';
+import {
+  HttpErrorResponse
+} from '@angular/common/http';
 
 @Component({
   selector: 'app-job-info',
@@ -15,6 +25,7 @@ export class JobInfoComponent implements OnInit {
   job: any;
 
   employerID: string;
+  msg = undefined;
   website: string;
   facebook: string;
   twitter: string;
@@ -23,77 +34,142 @@ export class JobInfoComponent implements OnInit {
   description: string;
   email: string;
 
-  title:string;
+  title: string;
   jobDescription: string;
   tags: any;
   pay: string;
   dateString: string;
+  lastUpdated: string;
 
-  curr_emp =false;
-  
+  canEdit = false;
+  canApply = true;
+  canDeApply = false;
+  isOwner = false;
+  requestCompleteB = false;
+  isTheApplicant = false;
+  id: string;
+
+  curr_emp = false;
+
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     public http: CustomHttpService,
-  ) { }
+  ) {}
 
   ngOnInit() {
-
+    this.id = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
     if (sessionStorage.getItem("accountType") == "employer") {
       this.curr_emp = true
     }
 
-    this.jobId = this.route.snapshot.queryParams['jobID'];
-    console.log(this.jobId)
 
+    this.getJobInfo();
+
+  }
+
+  getJobInfo() {
+    this.jobId = this.route.snapshot.queryParams['jobID'];
 
     var url = "http://18.220.46.51:3000/api/Job/" + this.jobId;
 
-      this.http.get(url).subscribe(
-        (data: any) => {
-          if(!data.hasOwnProperty('error')){
-            var days = Math.round(Math.abs((new Date(data.created).getTime() - new Date().getTime())/(24*60*60*1000)));
+    this.http.get(url).subscribe(
+      (data: any) => {
+        console.log('job', data)
+        if (!data.hasOwnProperty('error')) {
 
-            if(data.tags.length === 0){
-              this.tags = 'No Tags'
-            }
-
-            this.title = data.title;
-            this.jobDescription = data.description;
-            this.employerID = data.employerID;
-
-            var date = new Date(data.created);
-            this.dateString = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
-
-            if(data.paymentType === "ONETIME") {
-              this.pay = "$"+ data.payment;
-            } else if(data.paymentType === "DAILY") {
-              this.pay = "$"+ data.payment + "/day";
-            } else if(data.paymentType === "HOURLY") {
-              this.pay = "$"+ data.payment + "/hour";
-            } else if(data.paymentType === "WEEKLY") {
-              this.pay = "$"+ data.payment + "/week";
-            } else if(data.paymentType === "BIWEEKLY") {
-              this.pay = "$"+ data.payment + "/2 weeks";
-            } else if(data.paymentType === "MONTHLY") {
-              this.pay = "$"+ data.payment + "/month";
-            } else if(data.paymentType === "OTHER") {
-              this.pay = "other";
-            } else if(data.paymentType === "CONTRACT") {
-              this.pay = "contract";
-            } 
-
-            this.getEmployerInfo();
-          
+          this.setValues(data);
+          this.isApplicant(data.applicantRequests);
+          if (this.id == this.employerID) {
+            this.isOwner = true
           }
+
+
+          var employeeID = ""
+          if (data["employee"] !== undefined && data["employee"] != "") {
+            employeeID = data["employee"].split("#")[1]
+          }
+
+          if (employeeID !== undefined && employeeID != "") {
+            this.canApply = false
+          }
+
+          if (this.id == employeeID) {
+            this.isTheApplicant = true
+          }
+
+          // // console.log(employeeID)
+          if (data["requestCompletedDate"] !== undefined && data["requestCompletedDate"] != "") {
+            this.requestCompleteB = true
+          }
+
+          this.getEmployerInfo();
+
+        }
       });
 
-     
   }
 
-  getEmployerInfo(){
-    this.imgURL = "https://krow-network-profile-pics.s3.us-east-2.amazonaws.com/pics/" + this.employerID +".png"
+  setValues(data) {
+
+    this.title = data.title;
+    this.jobDescription = data.description;
+    this.employerID = data.employerID;
+
+    if (data.tags.length === 0) {
+      this.tags = 'No Tags'
+    }
+
+    var created = new Date(data.created);
+    this.dateString = (created.getMonth() + 1) + '/' + created.getDate() + '/' + created.getFullYear();
+
+    if (data["lastUpdated"] !== undefined) {
+      var updatedDate = new Date(data.lastUpdated);
+      this.lastUpdated = (updatedDate.getMonth() + 1) + '/' + updatedDate.getDate() + '/' + updatedDate.getFullYear();;
+    } else {
+      this.lastUpdated = this.dateString
+    }
+
+    if (data.paymentType === "ONETIME") {
+      this.pay = "$" + data.payment;
+    } else if (data.paymentType === "DAILY") {
+      this.pay = "$" + data.payment + "/day";
+    } else if (data.paymentType === "HOURLY") {
+      this.pay = "$" + data.payment + "/hour";
+    } else if (data.paymentType === "WEEKLY") {
+      this.pay = "$" + data.payment + "/week";
+    } else if (data.paymentType === "BIWEEKLY") {
+      this.pay = "$" + data.payment + "/2 weeks";
+    } else if (data.paymentType === "MONTHLY") {
+      this.pay = "$" + data.payment + "/month";
+    } else if (data.paymentType === "OTHER") {
+      this.pay = "other";
+    } else if (data.paymentType === "CONTRACT") {
+      this.pay = "contract";
+    }
+
+
+  }
+
+  isApplicant(applicantRequests){
+    if(applicantRequests != null && applicantRequests != undefined && applicantRequests != ""){
+       applicantRequests.forEach(applicant => {
+          console.log('applicant ',applicant);
+          console.log('applicant id', applicant.split('#')[1]);
+
+          if(this.id === applicant.split('#')[1]){
+            this.canDeApply = true;
+            this.canApply = false;
+
+            return;
+          }
+       });
+    }
+  }
+
+  getEmployerInfo() {
+    this.imgURL = "https://krow-network-profile-pics.s3.us-east-2.amazonaws.com/pics/" + this.employerID + ".png"
     var url = "http://18.220.46.51:3000/api/Employer/" + this.employerID;
     // Get Data
     this.http.get(url).subscribe(
@@ -109,14 +185,11 @@ export class JobInfoComponent implements OnInit {
           var curr = data["links"][i];
           if (curr["type"] == "FACEBOOK") {
             this.facebook = "https://" + curr["url"];
-          }
-          else if (curr["type"] == "TWITTER") {
+          } else if (curr["type"] == "TWITTER") {
             this.twitter = "https://" + curr["url"];
-          }
-          else if (curr["type"] == "LINKEDIN") {
+          } else if (curr["type"] == "LINKEDIN") {
             this.linkedin = "https://" + curr["url"];
-          }
-          else if (curr["type"] == "WEBSITE") {
+          } else if (curr["type"] == "WEBSITE") {
             this.website = curr["url"];
           }
         }
@@ -135,5 +208,111 @@ export class JobInfoComponent implements OnInit {
     //   this.numberOfJobs = folders.length;
     // })
   }
+
+  async apply() {
+    // // console.log(this.profileType)
+
+    var url = "http://18.220.46.51:3000/api/RequestJob"
+    var data = {
+      "applicant": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
+      "job": this.jobId
+    }
+    this.msg = "Please wait"
+    this.http.post(url, data).subscribe(
+      data => {
+        console.log(1)
+        this.http.get("http://18.220.46.51:3000/api/Employer/" + this.employerID).subscribe(
+          data => {
+            console.log(2)
+            this.http.get("http://18.220.46.51:3000/api/Applicant/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
+              appData => {
+                var email_data = {
+                  "applicant_name": appData["firstName"] + " " + appData["lastName"],
+                  to: data["email"],
+                  job_name: this.title
+                }
+                this.http.post("https://api.krownetwork.com/applicant-request", email_data).subscribe(
+                  data => {
+                    // alert("Congratulations! You've successfully applied!")
+                    this.msg = "Congratulations! You've successfully applied!"
+                    this.canApply = false
+                    this.canDeApply = true
+                    // location.reload()
+                  },
+                  (err: HttpErrorResponse) => {
+                    if (err.error instanceof Error) {
+                      // console.log("Client-side error occured.");
+                    } else {
+                      // console.log("Server-side error occured.");
+                      // console.log(err);
+                    }
+                    this.msg = "There was an error. Please try again"
+                  })
+              })
+          })
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // console.log("Client-side error occured.");
+        } else {
+          // console.log("Server-side error occured.");
+          // console.log(err);
+        }
+        this.msg = "There was an error. Please try again"
+      }
+    )
+  }
+
+  async deapply() {
+    var url = "http://18.220.46.51:3000/api/UnrequestJob"
+    var data = {
+      "applicant": localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"),
+      "job": this.jobId
+    }
+    this.msg = "Please wait"
+    this.http.post(url, data).subscribe(
+      data => {
+        this.http.get("http://18.220.46.51:3000/api/Employer/" + this.employerID).subscribe(
+          data => {
+            this.http.get("http://18.220.46.51:3000/api/Applicant/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
+              appData => {
+                var email_data = {
+                  "applicant_name": appData["firstName"] + " " + appData["lastName"],
+                  to: data["email"],
+                  job_name: this.title
+                }
+                this.http.post("https://api.krownetwork.com/applicant-unrequest", email_data).subscribe(
+                  data => {
+                    // alert("Congratulations! You've successfully applied!")
+                    this.msg = "You've successfully removed your application"
+                    // console.log("Success")
+                    this.canApply = true
+                    this.canDeApply = false
+                  },
+                  (err: HttpErrorResponse) => {
+                    if (err.error instanceof Error) {
+                      // console.log("Client-side error occured.");
+                    } else {
+                      // console.log("Server-side error occured.");
+                      // console.log(err);
+                    }
+                    this.msg = "There was an error. Please try again"
+                  })
+              })
+          })
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // console.log("Client-side error occured.");
+        } else {
+          // console.log("Server-side error occured.");
+          // console.log(err);
+        }
+        this.msg = "There was an error. Please try again"
+      }
+    )
+  }
+
+
 
 }

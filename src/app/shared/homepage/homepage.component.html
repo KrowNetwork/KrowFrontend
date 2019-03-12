@@ -27,9 +27,6 @@
                     <div class="widget">
                       <h3 class="sb-title">My Jobs</h3>
                     </div>
-                    <div class="widget">
-                      <h3 class="sb-title">Settings</h3>
-                    </div>
                   </aside>
                   <div class="col-lg-8 column">
                     <div class="padding-left">
@@ -46,7 +43,8 @@
                                   <span class="fav-job"><i class="la la-heart-o"></i></span>
                                 </div>
                                 <span class="job-lctn">{{ job.pay }}</span>
-                                <a (click)="goToJobPage(job.jobID);" title="">APPLY NOW</a>
+																<a class="job-apply" *ngIf="!job.applied" (click)="goToJobPage(job.jobID);" title="">APPLY NOW</a>
+																<a class="job-apply" *ngIf="job.applied" (click)="goToJobPage(job.jobID);" title="">APPLIED</a>
                               </div><!-- JOB Grid -->
                             </div>
                           </div>
