@@ -46,16 +46,18 @@
                   class="fa fa-twitter"></i></a>
             </div>
             <div class="emply-btns">
-              <a *ngIf="!isOwner" class="followus" href="#" title=""><i class="la la-paper-plane"></i> Message Us</a>
-              <a *ngIf="!isOwner && canAcceptJob" class="followus" (click)="openNewDialog()" title="" style="margin-top: 5px;"><i
-                  class="la la-check"></i>Accept this job</a>
-              <a *ngIf="!isOwner && canApply" class="followus" (click)="apply()" title="" style="margin-top: 5px;"><i
-                  class="la la-paper-plane"></i>Apply
-                for job</a>
-              <a *ngIf="!isOwner && canDeApply" class="followus" (click)="deapply()" title="" style="margin-top: 5px;"><i
+              <a *ngIf="userLoggedIn && !isOwner" class="followus" href="#" title=""><i class="la la-paper-plane"></i>
+                Message Us</a>
+              <a *ngIf="userLoggedIn && !isOwner && canAcceptJob" class="followus" (click)="openNewDialog()" title=""
+                style="margin-top: 5px;"><i class="la la-check"></i>Accept this job</a>
+              <a *ngIf="userLoggedIn && !isOwner && canApply" class="followus" (click)="apply()" title="" style="margin-top: 5px;"><i
+                  class="la la-paper-plane"></i>Apply for job</a>
+              <a *ngIf="userLoggedIn && !isOwner && canDeApply" class="followus" (click)="deapply()" title="" style="margin-top: 5px;"><i
                   class="la la-close"></i>Remove Application</a>
-              <a *ngIf="isOwner" class="followus" (click)="edit()" title="" style="margin-top: 5px;"><i
+              <a *ngIf="userLoggedIn && isOwner" class="followus" (click)="edit()" title="" style="margin-top: 5px;"><i
                   class="la la-close"></i>Edit</a>
+              <a *ngIf="!userLoggedIn" class="followus" (click)="login()" title="" style="margin-top: 5px;"><i class="la la-paper-plane"></i>Log
+                In</a>
             </div>
           </div><!-- Job Head -->
         </div>

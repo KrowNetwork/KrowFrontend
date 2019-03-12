@@ -1,17 +1,9 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router
-} from '@angular/router';
-import {
-  CustomHttpService
-} from '../../shared/service/custom-http.service';
-import {
-  HttpErrorResponse
-} from '@angular/common/http';
+import { Component, OnInit} from '@angular/core';
+import {ActivatedRoute,Router} from '@angular/router';
+import {CustomHttpService} from '../../shared/service/custom-http.service';
+import { CognitoUtil, LoggedInCallback } from "../../shared/service/cognito.service";
+import {HttpErrorResponse} from '@angular/common/http';
+import { UserLoginService } from "../../shared/service/user-login.service";
 
 @Component({
   selector: 'app-job-info',
@@ -49,6 +41,8 @@ export class JobInfoComponent implements OnInit {
   isTheApplicant = false;
   id: string;
 
+  userLoggedIn = false;
+
   curr_emp = false;
 
 
@@ -56,7 +50,10 @@ export class JobInfoComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public http: CustomHttpService,
-  ) {}
+    public userService: UserLoginService,
+  ) {
+    this.userService.isAuthenticated(this);
+  }
 
   ngOnInit() {
     this.id = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
@@ -67,6 +64,16 @@ export class JobInfoComponent implements OnInit {
 
     this.getJobInfo();
 
+  }
+
+  isLoggedIn(message: string, isLoggedIn: boolean) {
+    if (isLoggedIn) {
+      this.userLoggedIn = true;
+    }
+  }
+
+  login(){
+    this.router.navigate(['/login']);
   }
 
   getJobInfo() {
