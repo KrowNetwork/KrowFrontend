@@ -76,6 +76,9 @@ import { EmployerProfileComponent } from "./employer/employer-profile/employer-p
 import { ResumeParserComponent } from "./shared/resume-parser/resume-parser.component"
 import { PdfViewerComponent } from './shared/pdf-viewer/pdf-viewer.component';
 import { TutorialComponent } from './shared/tutorial/tutorial.component';
+import { JobInfoComponent } from './shared/job-info/job-info.component';
+import { NewManageJobsComponent } from './employer/new-manage-jobs/new-manage-jobs.component';
+import { NewCandidateListComponent } from './employer/new-candidate-list/new-candidate-list.component';
 const appRoutes: Routes = [
     {
         path: '',
@@ -134,6 +137,10 @@ const appRoutes: Routes = [
     {
         path: "privacypolicy",
         component: PrivacypolicyComponent
+    },
+    {
+        path: "job",
+        component: JobInfoComponent
     },
     // {
     //     path: "sitemap.xml"
@@ -249,8 +256,8 @@ const secureHome: Routes = [
         path: 'job', 
         children: [
             { 
-                path: ':jobID', 
-                component: JobProfileComponent
+                path: 'info', 
+                component: JobInfoComponent
             },
             // { 
             //     path: ':jobID/edit', 
@@ -342,6 +349,10 @@ const secureHome: Routes = [
                 component: ManageJobsComponent
             },
             {
+                path: "new-manage-jobs",
+                component: NewManageJobsComponent
+            },
+            {
                 path: "post-jobs",
                 component: PostJobsComponent
             },
@@ -352,6 +363,10 @@ const secureHome: Routes = [
             {
                 path: "candidate-list",
                 component: CandidateListComponent
+            },
+            {
+                path: "new-candidate-list",
+                component: NewCandidateListComponent
             },
             {
                 path: "tutorial",

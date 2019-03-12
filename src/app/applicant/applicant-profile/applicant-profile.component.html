@@ -7,35 +7,19 @@
 
 <app-top-bar></app-top-bar>
 
-		
 
-	<section class="overlape">
-		<div class="block no-padding">
-			<div data-velocity="-.1" class="parallax scrolly-invisible no-parallax"></div>
-			<div class="container fluid">
-				<div class="row">
-					<div class="col-lg-12">
-							<div class="inner-header" id="responsive-title">
-									<h3>Resume</h3>
-								</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+<section>
+  <div class="block no-padding">
+    <div class="container">
+      <div class="row no-gape">
+        <div class="col-lg-1 column"></div>
+        <div class="col-lg-10 column">
+          <router-outlet></router-outlet>
+        </div>
+        <div class="col-lg-1 column"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-	<section>
-		<div class="block no-padding">
-			<div class="container">
-				 <div class="row no-gape">
-					<div class="col-lg-1 column"></div>
-					<div class="col-lg-10 column">
-						<router-outlet ></router-outlet>
-					</div>
-					<div class="col-lg-1 column"></div>
-				 </div>
-			</div>
-		</div>
-	</section>
-
-	<app-bottom-bar></app-bottom-bar>
+<app-bottom-bar></app-bottom-bar>

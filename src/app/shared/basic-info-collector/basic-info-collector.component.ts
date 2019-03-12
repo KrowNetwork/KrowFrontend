@@ -79,15 +79,15 @@ export class BasicInfoCollectorComponent implements OnInit {
             if (this.intent == "Applicant") {
                 var obj = {
                     user: this.user,
-                    first: this.edit.first,
-                    second: this.edit.second,
-                    email: this.edit.email,
-                    bio: this.edit.bio,
-                    address: this.edit.address,
-                    state: this.edit.state,
-                    city: this.edit.city,
-                    country: this.edit.country,
-                    phoneNumber: this.edit.phoneNumber
+                    first: this.edit.first || '',
+                    second: this.edit.second || '',
+                    email: this.edit.email || '',
+                    bio: this.edit.bio || '',
+                    address: this.edit.address || '',
+                    state: this.edit.state || '',
+                    city: this.edit.city || '',
+                    country: this.edit.country || '',
+                    phoneNumber: this.edit.phoneNumber || ''
                     
                 }
                 await this.initializeUser.initializeUser(obj, this.intent, null, this.router);
@@ -113,10 +113,10 @@ export class BasicInfoCollectorComponent implements OnInit {
                 }, 14000);
             } else {
                 var employerObj = {
-                    user: this.user,
-                    company: this.company,
-                    email: this.email,
-                    bio: this.bio,
+                    user: this.user || '',
+                    company: this.company || '',
+                    email: this.email || '',
+                    bio: this.bio || '',
                     location: this.location || '',
                     year: this.year || '',
                     phoneNumber: this.phoneNumber || '',

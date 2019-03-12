@@ -1,24 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { S3Service } from "../../shared/service/s3.service"
 import { FormControl, FormGroup } from '@angular/forms';
 import { CustomHttpService } from '../../shared/service/custom-http.service';
 
 @Component({
-  selector: 'app-employer-profile-info',
-  templateUrl: './employer-profile-info.component.html',
-  styleUrls: ['./employer-profile-info.component.css']
+  selector: 'app-new-manage-jobs',
+  templateUrl: './new-manage-jobs.component.html',
+  styleUrls: ['./new-manage-jobs.component.css']
 })
-export class EmployerProfileInfoComponent implements OnInit {
+export class NewManageJobsComponent implements OnInit {
 
-  imgURL: string;
+  token = ""
   user: string;
   id: string;
-
-  companyForm: FormGroup;
-  contactForm: FormGroup;
-  socialForm: FormGroup;
+  owner= false;
+  forceLogin=false;
+  curr_emp = false;
 
   company: string;
   location: string;
@@ -40,12 +39,6 @@ export class EmployerProfileInfoComponent implements OnInit {
   companyJobType: string;
 
   jobList = [];
-
-  token = ""
-
-  owner= false;
-  forceLogin=false;
-  curr_emp = false;
 
   constructor(
     private router: Router,
@@ -71,8 +64,6 @@ export class EmployerProfileInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.imgURL = "https://krow-network-profile-pics.s3.us-east-2.amazonaws.com/pics/" + this.id +".png"
-
     this.getEmployerInfo();
   }
 
@@ -111,7 +102,6 @@ export class EmployerProfileInfoComponent implements OnInit {
           }
         }
 
-
         this.getJobs();
 
       }, // Catch Errors
@@ -130,7 +120,6 @@ export class EmployerProfileInfoComponent implements OnInit {
   }
 
   getJobs(){
-
     this.availableJobs.forEach((job) => {
 
       var jobId = job.split('#')[1];
@@ -140,6 +129,7 @@ export class EmployerProfileInfoComponent implements OnInit {
         (data: any) => {
           console.log('job', data)
           if(!data.hasOwnProperty('error')){
+            
             var days = Math.round(Math.abs((new Date(data.created).getTime() - new Date().getTime())/(24*60*60*1000)));
 
             if(days === 0){
@@ -152,6 +142,22 @@ export class EmployerProfileInfoComponent implements OnInit {
 
             if(data.tags.length === 0){
               data.tags = 'No Tags'
+            }
+
+            if(data.expiration === 1){
+              data.expire = 7;
+            } else if(data.expiration === 2){
+              data.expire = 14;
+            } else if(data.expiration === 3){
+              data.expire = 28;
+            } else {
+              data.expire = -1;
+            }
+
+            if(days > data.expire){
+              data.status = "Expired"
+            } else {
+              data.status = "Active"
             }
 
             if(data.paymentType === "ONETIME") {
@@ -179,17 +185,12 @@ export class EmployerProfileInfoComponent implements OnInit {
   }
 
   goToJobPage(jobID){
-    console.log('lalall')
     this.router.navigate(['/job/info'], { queryParams: { jobID: jobID } })
   }
 
-  getFolders() {
-    return this.http.rget("https://api.krownetwork.com/get-employer-folders?id=" + this.user + "&token=" + this.token).map(
-      data => {
-        //console.log(data["results"])
-        return Array.from(new Set(data["results"]));
-      }
-    )
+  goToCandidateListPage(jobID){
+    this.router.navigate(['/employer/new-candidate-list'], { queryParams: { jobID: jobID } })
   }
+
 
 }

@@ -78,67 +78,67 @@
 				</div>
 			</div>
 
+			<header class="gradient">
+					<div class="menu-sec">
+						<div class="container">
+							<!-- <header class="navbar navbar-light">
+								<button class="navbar-toggler sidebar-toggler" type="button" data-toggle="sidebar-show">
+									<span class="navbar-toggler-icon"></span>
+								</button>
+							</header> -->
+							<div class="logo">
+								<a href="https://www.krownetwork.com/" title=""><img src="assets/images/top-bar-logo.png" alt="" /></a>
+							</div><!-- Logo -->
+							<div class="btn-extars">
+								<!-- <a href="#" title="" class="post-job-btn"><i class="la la-plus"></i>Post Jobs</a>
+								<ul class="account-btns">
+									<li class="signup-popup"><a title=""><i class="la la-key"></i> Sign Up</a></li>
+									<li class="signin-popup"><a title=""><i class="la la-external-link-square"></i> Login</a></li>
+								</ul> -->
+							</div><!-- Btn Extras -->
+							<nav class="nav">
+									<ul>
+										<!--<li *ngIf="allowSearchBarDisplay()">
+												<input class="top-bar-search" type="text" placeholder="Search Full Name" [(ngModel)]="term" [ngModelOptions]="{standalone: true}" (keydown)="keyDown($event)"/>
+										</li> -->
+										<li>
+											<a [routerLink]="['/']" routerLinkActive="active">Home</a>
+										</li>
+										<li>
+											<!-- <a role="button" (click)="switchSession()">Switch to {{switchTo}}</a> -->
+										</li>
+										<li *ngIf="isLoggedInB">
+											<!-- <a role="button" (click)="goToProfile()" style="color:#ffffff">Profile</a> -->
+											<a role="button" [routerLink]="['/secureHome']" style="color:#ffffff;">{{ resume_text }}</a>
+										</li>
+										<li *ngIf="isLoggedInB">
+											<!-- <a role="button" (click)="goToProfile()" style="color:#ffffff">Profile</a> -->
+											<a role="button" [routerLink]="['/search-job']" style="color:#ffffff;">Search</a>
+										</li>
+										<li *ngIf="isLoggedInB">
+											<a role="button" (click)="goToFeedback()" style="color:#ffffff">Feedback</a>
+										</li>
+										<!-- <li> -->
+			
+										<li>
+											<div class="btn-extars">
+													<a *ngIf="isLoggedInB" (click)="bigBtn()" class="post-job-btn" >{{btnText}}</a>
+													<a *ngIf="!isLoggedInB" href="login" class="post-job-btn">Log In/Sign Up</a>
+											</div>
+			
+										</li>
+										<li>
+												<a *ngIf="isLoggedInB" [routerLink]="['/logout']" routerLinkActive="active"  title=""><i class="la la-external-link-square"></i>LogOut</a>
+										</li>
+			
+									</ul>
+								</nav><!-- Menus -->
+							
+						</div>
+					</div>
+				</header>
 
-    <header class="stick-top">
-			<!-- <div class="feedback-top" *ngIf="!isFeedbackOn">
-					<a role="button" (click)="goToFeedback()">Do you have any feedback? Click here to get in contact with us!</a>
-					<a role="button" (click)="hideFeedback()" style="float:right">x</a>
-			</div>
--->
-      <div class="menu-sec">
-        <div class="container">
-          <div class="logo">
-            <a href="https://www.krownetwork.com/" title="">
-              <!-- <img src="{{KROW_HEADER_2}}" alt="" /> -->
-              <img src="assets/images/top-bar-logo.png" alt="Krow Network Logo" />
-            </a>
-          </div><!-- Logo -->
-          <!-- <div class="btn-extars"> -->
-            <!-- <a [routerLink]="['employer-post-jobs']" routerLinkActive="active" class="post-job-btn"><i class="la la-plus"></i>Post Jobs</a> -->
-            <!-- <div *ngIf="isLoggedInB"> -->
 
-						<!-- </div> -->
-					<!-- </div>Btn Extras -->
-          <nav class="nav">
-            <ul>
-							<!--<li *ngIf="allowSearchBarDisplay()">
-									<input class="top-bar-search" type="text" placeholder="Search Full Name" [(ngModel)]="term" [ngModelOptions]="{standalone: true}" (keydown)="keyDown($event)"/>
-							</li> -->
-              <li>
-                <a [routerLink]="['/']" routerLinkActive="active">Home</a>
-              </li>
-              <li>
-                <!-- <a role="button" (click)="switchSession()">Switch to {{switchTo}}</a> -->
-              </li>
-              <li *ngIf="isLoggedInB">
-                <!-- <a role="button" (click)="goToProfile()" style="color:#ffffff">Profile</a> -->
-								<a role="button" [routerLink]="['/secureHome']" style="color:#ffffff;">{{ resume_text }}</a>
-							</li>
-							<li *ngIf="isLoggedInB">
-								<!-- <a role="button" (click)="goToProfile()" style="color:#ffffff">Profile</a> -->
-								<a role="button" [routerLink]="['/search-job']" style="color:#ffffff;">Search</a>
-							</li>
-							<li *ngIf="isLoggedInB">
-                <a role="button" (click)="goToFeedback()" style="color:#ffffff">Feedback</a>
-              </li>
-							<!-- <li> -->
-
-              <li>
-								<div class="btn-extars">
-										<a *ngIf="isLoggedInB" (click)="bigBtn()" class="post-job-btn" >{{btnText}}</a>
-										<a *ngIf="!isLoggedInB" href="login" class="post-job-btn">Log In/Sign Up</a>
-								</div>
-
-							</li>
-							<li>
-									<a *ngIf="isLoggedInB" [routerLink]="['/logout']" routerLinkActive="active"  title=""><i class="la la-external-link-square"></i>LogOut</a>
-							</li>
-
-            </ul>
-          </nav><!-- Menus -->
-        </div>
-			</div>
-
-    </header>
+    
 <div id="modal-container" class="hidden"></div>
 <div id="overlay" (click)="removeModal()" class="hidden"></div>

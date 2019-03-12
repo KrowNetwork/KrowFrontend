@@ -113,6 +113,10 @@ body{
 button,a,input[type="submit"], input[type="button"]{
     cursor: pointer;
 }
+ng-sidebar-container {
+    height: 100vh;
+    background-color: #113344
+}
 w{outline:none!important}
 h1, h2, h3, h4, h5, h6{
     margin-bottom:20px;
@@ -5138,7 +5142,7 @@ aside .widget.border:first-child {
 .job-thumb {
     display: table-cell;
     vertical-align: top;
-    width: 107px;
+    width: auto;
 }
 .job-thumb img {
     float: left;
@@ -5194,6 +5198,14 @@ aside .widget.border:first-child {
     float: left;
     width: 100%;
     padding-top: 20px;
+}
+#job-description {
+    width: 100%;
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    
 }
 .job-details h3 {
     float: left;
@@ -5702,7 +5714,7 @@ aside .widget.border:first-child {
 .job-single-head.style2 .job-thumb img {
     float: none;
     display: inline-block;
-    width: auto;
+    width: 200px;
     border: none;
 
     -webkit-box-shadow: 0px 0px 30px rgba(0,0,0,0.1);
@@ -6470,6 +6482,7 @@ aside .widget.border:first-child {
 .job-listing.wtabs.noimg {
     padding-left: 30px;
     padding-right: 30px;
+    
 }
 .job-overview.divide ul {
     margin: 0;
@@ -11391,6 +11404,7 @@ footer.ft .scrollup {
 .res-logo {
     float: left;
 }
+
 .menu-resaction {
     float: right;
     position: relative;

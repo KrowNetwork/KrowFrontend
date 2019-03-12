@@ -1,3 +1,13 @@
+<header class="gradient">
+		<div class="menu-sec">
+			<div class="container">
+				<div class="logo">
+					<a href="index.html" title=""><img src="assets/images/top-bar-logo.png" alt="" /></a>
+				</div><!-- Logo -->
+			</div>
+		</div>
+	</header>
+
 <section>
     <div class="block remove-bottom">
         <div class="container">
@@ -5,10 +15,16 @@
                 <div class="col-lg-12">
                     <div class="account-popup-area signin-popup-box static">
                         <div class="account-popup">	
-                            <h1 style="color: #fb236a">Welcome to the Krow Network!</h1>	
                             <div *ngIf="errorMessage!=null" class="alert alert-danger" style="color: #fb236a">
-                                {{ errorMessage }}
+                                    {{ errorMessage }}
                             </div>	
+                            <h3>Sign Up</h3>
+                            <span>Select Employer to post jobs | Select candidate to find jobs</span>
+                            <div class="select-user">
+                                <span (click)="isEmployer()">Employer</span>
+                                <span (click)="isCandidate()">Candidate</span>
+                            </div>	
+                           
                             <form class="form-signin" method="POST" action="#" role="form">
                                 <div class="cfield">
                                     <input id="signupEmail" required type="email" placeholder="Email" class="form-control" 
@@ -31,17 +47,17 @@
                                 </div>
                                 
                                 <button (click)="onRegister()">
-                                      Create your account
+                                      Register
                                 </button>
                                 <p>Already have an account? <a [routerLink]="['/login']"> <i class="fa fa-fw fa-lock"></i>Login</a></p>
                             </form>	
-                            <!-- <div class="extra-login">
-                                <span>Or (Coming Soon!)</span>
-                                <div class="login-social">
-                                    <a class="fb-login" href="#" title=""><i class="fa fa-facebook"></i></a>
-                                    <a class="goo-login" href="#" title=""><i class="fa fa-google"></i></a>
-                                </div>
-                            </div> -->
+                            <div class="extra-login">
+									<span>Or</span>
+									<div class="login-social">
+										<a class="tw-login" href="#" title=""><i class="fa fa-google"></i></a>
+										<a class="fb-login" href="#" title=""><i class="fa fa-linkedin"></i></a>
+									</div>
+								</div>
                         </div>
                     </div>
                 </div>
@@ -49,3 +65,5 @@
         </div>
     </div>
 </section>
+
+<app-bottom-bar></app-bottom-bar>

@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppComponent } from './app.component';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { SidebarModule } from 'ng-sidebar';
 
 
 // UI Materials
@@ -140,6 +141,12 @@ import { EmployerProfileInfoComponent } from './employer/employer-profile-info/e
 import { PdfViewerComponent } from './shared/pdf-viewer/pdf-viewer.component';
 import { TutorialComponent } from './shared/tutorial/tutorial.component';
 import { NewPostJobsComponent } from './employer/new-post-jobs/new-post-jobs.component';
+import { JobInfoComponent } from './shared/job-info/job-info.component';
+import { NewManageJobsComponent } from './employer/new-manage-jobs/new-manage-jobs.component';
+import { NewCandidateListComponent } from './employer/new-candidate-list/new-candidate-list.component';
+import { SideBarComponent } from './shared/side-bar/side-bar.component';
+import { MyJobsComponent } from './applicant/my-jobs/my-jobs.component';
+
 // import { CompareService } from './service/compare.service'
 // import { EditJobComponent } from './shared/edit-job/edit-job.component';
 // import { HireRequestsComponent } from "./shared/profile-info2/applicant-profile-info/hire-requests/hire-requests.component"
@@ -216,6 +223,12 @@ import { NewPostJobsComponent } from './employer/new-post-jobs/new-post-jobs.com
     PdfViewerComponent,
     TutorialComponent,
     NewPostJobsComponent,
+    JobInfoComponent,
+    NewManageJobsComponent,
+    NewCandidateListComponent,
+    SideBarComponent,
+    MyJobsComponent,
+
     // EmployerPostJobsComponent,
     // EditJobComponent,
     // HireRequestsComponent
@@ -234,7 +247,8 @@ import { NewPostJobsComponent } from './employer/new-post-jobs/new-post-jobs.com
     VirtualScrollModule,
     ContextMenuModule.forRoot(),
     MarkdownModule.forRoot(),
-    PdfViewerModule
+    PdfViewerModule,
+    SidebarModule.forRoot()
     // luegg.directives
     // Websocket
     // Modal,
@@ -270,7 +284,8 @@ import { NewPostJobsComponent } from './employer/new-post-jobs/new-post-jobs.com
     GoogleAnalyticsService
   ],
   bootstrap: [ 
-    AppComponent 
+    AppComponent,
+    SideBarComponent
   ],
   
 })

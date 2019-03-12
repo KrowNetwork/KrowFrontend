@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { UserLoginService } from "../../service/user-login.service";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { CustomHttpService } from "../../service/custom-http.service"
+import { CognitoCallback, CognitoUtil } from "../../service/cognito.service";
 import { log } from "util";
 
 declare let AWS: any;
@@ -18,7 +19,8 @@ export class HomeComponent implements OnInit {
     constructor(
         public router: Router, 
         public userService: UserLoginService,
-        private http: CustomHttpService
+        private http: CustomHttpService,
+        private cognitoUtil: CognitoUtil
         // private http: CustomHttpService
     ) {
         // console.log("Secure Home Component: constructor");
@@ -45,7 +47,8 @@ export class HomeComponent implements OnInit {
 
     // }
 
-    ngOnInit() {
+    async ngOnInit() {
+
         this.http.post("https://api.krownetwork.com/check-user", {id: this.user}).subscribe(
             data => {
                 console.log(data["response"])

@@ -64,6 +64,7 @@ export class CustomHttpService{
 
   get(url, data=undefined) {
     // console.log(this.token)
+    //console.log('token',this.token)
     var oUrl = "https://api.krownetwork.com/g?url=" + url + "&token=" + this.token
     console.log(oUrl)
     // let headers = new Headers();
