@@ -1,8 +1,4 @@
 
-
-
-
-
 		<div class="responsive-header">
 
 			<script async src="https://www.googletagmanager.com/gtag/js?id=UA-123402433-1"></script>
@@ -40,10 +36,10 @@
 								<li>
 										<a [routerLink]="['/']" routerLinkActive="active">Home</a>
 								</li>
-								<li *ngIf="isLoggedInB">
-										<!-- <a (click)="goToProfile()" style="color:#96a0bd">Profile</a> -->
+								<!--<li *ngIf="isLoggedInB">
+										<!- - <a (click)="goToProfile()" style="color:#96a0bd">Profile</a> - ->
 										<a [routerLink]="['/secureHome']" style="color:#96a0bd">Profile</a>
-								</li>
+								</li> -->
 								<li *ngIf="isLoggedInB">
 										<a role="button" (click)="goToFeedback()" style="color:#96a0bd">Feedback</a>
 
@@ -87,7 +83,7 @@
 								</button>
 							</header> -->
 							<div class="logo">
-								<a href="https://www.krownetwork.com/" title=""><img src="assets/images/top-bar-logo.png" alt="" /></a>
+								<a href="index.html" title=""><img src="assets/images/top-bar-logo.png" alt="" /></a>
 							</div><!-- Logo -->
 							<div class="btn-extars">
 								<!-- <a href="#" title="" class="post-job-btn"><i class="la la-plus"></i>Post Jobs</a>
@@ -107,38 +103,38 @@
 										<li>
 											<!-- <a role="button" (click)="switchSession()">Switch to {{switchTo}}</a> -->
 										</li>
-										<li *ngIf="isLoggedInB">
-											<!-- <a role="button" (click)="goToProfile()" style="color:#ffffff">Profile</a> -->
+										 <!-- <li *ngIf="isLoggedInB">
+											<!- - <a role="button" (click)="goToProfile()" style="color:#ffffff">Profile</a> - ->
 											<a role="button" [routerLink]="['/secureHome']" style="color:#ffffff;">{{ resume_text }}</a>
 										</li>
 										<li *ngIf="isLoggedInB">
-											<!-- <a role="button" (click)="goToProfile()" style="color:#ffffff">Profile</a> -->
+											<!- - <a role="button" (click)="goToProfile()" style="color:#ffffff">Profile</a> - ->
 											<a role="button" [routerLink]="['/search-job']" style="color:#ffffff;">Search</a>
-										</li>
+										</li> -->
 										<li *ngIf="isLoggedInB">
 											<a role="button" (click)="goToFeedback()" style="color:#ffffff">Feedback</a>
 										</li>
 										<!-- <li> -->
-			
+
 										<li>
 											<div class="btn-extars">
 													<a *ngIf="isLoggedInB" (click)="bigBtn()" class="post-job-btn" >{{btnText}}</a>
 													<a *ngIf="!isLoggedInB" href="login" class="post-job-btn">Log In/Sign Up</a>
 											</div>
-			
+
 										</li>
 										<li>
 												<a *ngIf="isLoggedInB" [routerLink]="['/logout']" routerLinkActive="active"  title=""><i class="la la-external-link-square"></i>LogOut</a>
 										</li>
-			
+
 									</ul>
 								</nav><!-- Menus -->
-							
+
 						</div>
 					</div>
 				</header>
 
 
-    
+
 <div id="modal-container" class="hidden"></div>
 <div id="overlay" (click)="removeModal()" class="hidden"></div>
