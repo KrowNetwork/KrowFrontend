@@ -330,14 +330,14 @@ const secureHome: Routes = [
                 path: '', 
                 component: EmployerProfileInfoComponent
             },
-    //         { 
-    //             path: 'profile-info',
-    //             component: EmployerProfileInfoComponent
-    //         },
-    //         { 
-    //             path: 'profile-info/:employerID',
-    //             component: EmployerProfileInfoComponent
-    //         },
+            { 
+                path: 'profile-info',
+                component: EmployerProfileInfoComponent
+            },
+            { 
+                path: 'profile-info/:employerID',
+                component: EmployerProfileInfoComponent
+            },
             {
                 path: 'edit',
                 component: EmployerEditComponent,

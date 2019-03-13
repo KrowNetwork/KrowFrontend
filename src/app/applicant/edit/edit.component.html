@@ -10,8 +10,8 @@
         <button *ngIf="profileType == 'Applicant' && isSignup == 'false'" [routerLink]="['/applicant/upload']">Upload Profile Picture</button>
         <!-- <button *ngIf="profileType != 'Applicant' && isSignup == 'false'" [routerLink]="['/employer/upload']">Upload Profile Picture</button> -->
 
-        <input hidden type="file" class="upload-and-parse" name="resumeFile" #uploader (change)="uploadAndParseResume($event)"/>
-        <button *ngIf="profileType == 'Applicant'" (click)="uploader.click()">Upload Resume</button>
+        <!-- <input hidden type="file" class="upload-and-parse" name="resumeFile" #uploader (change)="uploadAndParseResume($event)"/>
+        <button *ngIf="profileType == 'Applicant'" (click)="uploader.click()">Upload Resume</button> -->
         <!-- <button *ngIf="profileType != 'Applicant'" (click)="uploader.click()">Upload Resume</button> -->
     </div>
     

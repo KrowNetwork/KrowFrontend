@@ -38,6 +38,9 @@ export class JobInfoComponent implements OnInit {
   isOwner = false;
   requestCompleteB = false;
   isTheApplicant = false;
+  isDenied = false;
+  canAcceptJob = false;
+  isAccepted = false;
   id: string;
 
   userLoggedIn = false;
@@ -86,7 +89,10 @@ export class JobInfoComponent implements OnInit {
         if (!data.hasOwnProperty('error')) {
 
           this.setValues(data);
+          this.isDeniedApplicant(data.deniedApplicants);
           this.isApplicant(data.applicantRequests);
+          this.canAccept(data.hireRequests);
+          this.isEmployee(data.employee);
           if (this.id == this.employerID) {
             this.isOwner = true
           }
@@ -166,15 +172,67 @@ export class JobInfoComponent implements OnInit {
           if(this.id === applicant.split('#')[1]){
             this.canDeApply = true;
             this.canApply = false;
-
+            this.isDenied = false;
+            this.canAcceptJob = false;
             return;
           }
        });
     }
   }
 
+  isDeniedApplicant(deniedApplicants){
+    if(deniedApplicants != null && deniedApplicants != undefined && deniedApplicants != ""){
+       deniedApplicants.forEach(applicant => {
+          console.log('applicant ',applicant);
+          console.log('applicant id', applicant.applicantID);
+
+          if(this.id === applicant.applicantID){
+            this.canDeApply = false;
+            this.canApply = false;
+            this.isDenied = true;
+            this.canAcceptJob = false;
+            return;
+          }
+       });
+    }
+  }
+
+  canAccept(hireRequests){
+    if(hireRequests != null && hireRequests != undefined && hireRequests != ""){
+       hireRequests.forEach(applicant => {
+          console.log('applicant ',applicant);
+          console.log('applicant id', applicant.applicantID);
+
+          if(this.id === applicant.split('#')[1]){
+            this.canDeApply = false;
+            this.canApply = false;
+            this.isDenied = false;
+            this.canAcceptJob = true;
+            return;
+          }
+       });
+    }
+  }
+
+  isEmployee(employeeId){
+    if(employeeId != null && employeeId != undefined && employeeId != ""){
+       if(this.id === employeeId.split('#')[1]){
+        this.canDeApply = false;
+        this.canApply = false;
+        this.isDenied = false;
+        this.canAcceptJob = false;
+        this.isAccepted = true;
+       }
+    }
+  }
+  
+
   edit(){
     this.router.navigate(['/employer/job/edit'], { queryParams: { jobID: this.jobId } })
+  }
+
+  profile(){
+    this.router.navigate(['/employer/profile-info/' , this.employerID])
   }
 
   getEmployerInfo() {
@@ -321,6 +379,70 @@ export class JobInfoComponent implements OnInit {
       }
     )
   }
+
+  acceptJob() {
+    var url = "http://18.220.46.51:3000/api/AcceptHire"
+    var data = {
+      job: this.jobId,
+      applicant: localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")
+    }
+    this.msg = "Please wait"
+    this.http.post(url, data).subscribe(
+      data =>{
+        this.msg = "Congratulations! You've successfully accepted the job!"
+        // alert("Congratulations! You have successfully accepted the job!")
+        // mailData = {
+        //   applicant_name: 
+        // }
+        this.isAccepted = true;
+        this.http.get("http://18.220.46.51:3000/api/Applicant/" + localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser")).subscribe(
+          applicantData => {
+            this.http.get("http://18.220.46.51:3000/api/Employer/" + this.employerID).subscribe(
+              empdata => {
+                var mailData = {
+                  applicant_name: applicantData["firstName"] + " " + applicantData["lastName"],
+                  job_name: this.title,
+                  to: empdata["email"]
+                }
+                this.http.post("https://api.krownetwork.com/accept-hire", mailData).subscribe(
+                  x => {
+                    // console.log("success")
+                  },
+                  (err: HttpErrorResponse) => {
+                    if (err.error instanceof Error) {
+                      // console.log("Client-side error occured.");
+                    } else {
+                      // console.log("Server-side error occured.");
+                      // console.log(err);
+                    }
+                    this.msg = "There was an error. Please try again"})
+
+              },
+            )
+            
+
+            
+          },
+          (err: HttpErrorResponse) => {
+            if (err.error instanceof Error) {
+              // console.log("Client-side error occured.");
+            } else {
+            }
+            this.msg = "There was an error. Please try again"
+          })
+        
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        // console.log("Client-side error occured.");
+      } else {
+        // console.log("Server-side error occured.");
+        // console.log(err);
+      }
+      this.msg = "There was an error. Please try again"
+    })
+  }
+
 
 
 

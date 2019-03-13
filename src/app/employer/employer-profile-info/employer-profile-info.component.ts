@@ -77,7 +77,7 @@ export class EmployerProfileInfoComponent implements OnInit {
   }
 
   getEmployerInfo(){
-    var url = "http://18.220.46.51:3000/api/Employer/" + this.user;
+    var url = "http://18.220.46.51:3000/api/Employer/" + this.id;
     // Get Data
     this.http.get(url).subscribe(
       data => {
@@ -183,13 +183,13 @@ export class EmployerProfileInfoComponent implements OnInit {
     this.router.navigate(['/job/info'], { queryParams: { jobID: jobID } })
   }
 
-  getFolders() {
-    return this.http.rget("https://api.krownetwork.com/get-employer-folders?id=" + this.user + "&token=" + this.token).map(
-      data => {
-        //console.log(data["results"])
-        return Array.from(new Set(data["results"]));
-      }
-    )
-  }
+  // getFolders() {
+  //   return this.http.rget("https://api.krownetwork.com/get-employer-folders?id=" + this.user + "&token=" + this.token).map(
+  //     data => {
+  //       //console.log(data["results"])
+  //       return Array.from(new Set(data["results"]));
+  //     }
+  //   )
+  // }
 
 }

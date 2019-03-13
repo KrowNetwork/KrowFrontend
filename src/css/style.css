@@ -7013,7 +7013,7 @@ aside .widget.border:first-child {
 }
 .action_job > li > a {
     float: left;
-    font-size: 16px;
+    font-size: 14px;
     color: #9c9c9c;
     padding: 0 6px;
 }
@@ -10948,6 +10948,11 @@ header.style5 .post-job-btn:hover {
     color: #ffffff;
     border-color: #8b91dd;
 }
+.select-user > span:hover{
+    background: #fb236a;
+    color: #ffffff;
+}
+
 .pf-map #map_div {
     height: 300px;
 

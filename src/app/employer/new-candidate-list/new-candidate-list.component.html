@@ -42,9 +42,15 @@
 											<h3><a (click)="goToResume(applicant.applicantID)" title="">{{ applicant.firstName}} {{ applicant.lastName}}</a></h3>
 											<!-- <span><i>UX / UI Designer</i> at Atract Solutions</span> -->
 										</div>
-										<div class="shortlists">
-											<a  title="">Accept</a>
-											<a  title="">Decline</a>
+										<div *ngIf="!applicant.isDenied && !applicant.isRequested" class="shortlists">
+											<a (click)="requestToHire(applicant.applicantID)" title="">Accept</a>
+											<a (click)="denyApplicant(applicant.applicantID)" title="">Decline</a>
+										</div>
+										<div *ngIf="!applicant.isDenied && applicant.isRequested" class="shortlists">
+											<a (click)="unRequestHire(applicant.applicantID)" title="">Unrequest</a>
+										</div>
+										<div *ngIf="applicant.isDenied" class="shortlists">
+											<a (click)="unRequestHire(applicant.applicantID)" title="">Denied</a>
 										</div>
 									</div><!-- Emply List -->
 								</div>

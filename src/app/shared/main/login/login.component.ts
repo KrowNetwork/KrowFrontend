@@ -32,7 +32,7 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
         this.userService.isAuthenticated(this);
         if (localStorage.getItem("confirmed") == "true") {
             localStorage.removeItem("confirmed")
-            this.confirmedMessage = "Please login to continue registration"
+            this.confirmedMessage = "Please login using your credentials"
             
         }
     }

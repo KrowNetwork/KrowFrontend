@@ -35,6 +35,7 @@ export class NewManageJobsComponent implements OnInit {
   numberOfJobs: number;
   keywords = [];
   availableJobs = [];
+  inprogressJobs = [];
   companySize: string;
   companyJobType: string;
 
@@ -85,6 +86,7 @@ export class NewManageJobsComponent implements OnInit {
         this.phoneNumber = data["phoneNumber"];
         this.email = data["email"];
         this.availableJobs = data["availableJobs"];
+        this.inprogressJobs = data["inprogressJobs"];
         // Split url links
         for (var i = 0; i < data["links"].length; i++) {
           var curr = data["links"][i];
@@ -157,11 +159,86 @@ export class NewManageJobsComponent implements OnInit {
               data.status = "Active"
             }
 
+            data.applied = 0;
+            data.isInProgress = false;
+
             if(data.applicantRequests != null && data.applicantRequests != undefined && data.applicantRequests != ""){
-              data.applied = data.applicantRequests.length;
+              data.applied += data.applicantRequests.length;
+            } 
+
+            if(data.deniedApplicants != null && data.deniedApplicants != undefined && data.deniedApplicants != ""){
+              data.applied += data.deniedApplicants.length;
+            } 
+
+            if(data.hireRequests != null && data.hireRequests != undefined && data.hireRequests != ""){
+              data.applied += data.hireRequests.length;
+            } 
+
+            if(data.paymentType === "ONETIME") {
+              data.pay = "$"+ data.payment;
+            } else if(data.paymentType === "DAILY") {
+              data.pay = "$"+ data.payment + "/day";
+            } else if(data.paymentType === "HOURLY") {
+              data.pay = "$"+ data.payment + "/hour";
+            } else if(data.paymentType === "WEEKLY") {
+              data.pay = "$"+ data.payment + "/week";
+            } else if(data.paymentType === "BIWEEKLY") {
+              data.pay = "$"+ data.payment + "/2 weeks";
+            } else if(data.paymentType === "MONTHLY") {
+              data.pay = "$"+ data.payment + "/month";
+            } else if(data.paymentType === "OTHER") {
+              data.pay = "other";
+            } else if(data.paymentType === "CONTRACT") {
+              data.pay = "contract";
+            } 
+          
+          this.jobList.push(data);
+          }
+      });
+    });
+
+    this.inprogressJobs.forEach((job) => {
+
+      var jobId = job.split('#')[1];
+      var url = "http://18.220.46.51:3000/api/Job/" + jobId;
+
+      this.http.get(url).subscribe(
+        (data: any) => {
+          console.log('job', data)
+          if(!data.hasOwnProperty('error')){
+            
+            var days = Math.round(Math.abs((new Date(data.created).getTime() - new Date().getTime())/(24*60*60*1000)));
+
+            if(days === 0){
+              data.dayString = 'Today';
+            } else if( days == 1){
+              data.dayString = '1 Day Ago';
             } else {
-              data.applied = 0;
+              data.dayString = days + ' Days Ago';
             }
+
+            if(data.tags.length === 0){
+              data.tags = 'No Tags'
+            }
+
+            if(data.expiration === 1){
+              data.expire = 7;
+            } else if(data.expiration === 2){
+              data.expire = 14;
+            } else if(data.expiration === 3){
+              data.expire = 28;
+            } else {
+              data.expire = -1;
+            }
+
+            if(days > data.expire){
+              data.status = "Expired"
+            } else {
+              data.status = "Active"
+            }
+
+            data.applied = 0;
+            data.isInProgress = true;
 
             if(data.paymentType === "ONETIME") {
               data.pay = "$"+ data.payment;
@@ -195,5 +272,12 @@ export class NewManageJobsComponent implements OnInit {
     this.router.navigate(['/employer/new-candidate-list'], { queryParams: { jobID: jobID } })
   }
 
+  goToEmployeePage(employeeId){
+    this.router.navigate(['/applicant/profile-info/' + employeeId.split('#')[1]])
+  }
+
+  edit(jobID){
+    this.router.navigate(['/employer/job/edit'], { queryParams: { jobID: jobID } })
+  }
 
 }

@@ -38,6 +38,11 @@ export class RegisterComponent implements CognitoCallback {
   confirmPassword: string;
   intent: string;
   user: string;
+  bgColor = 'none';
+  bgColor2 = 'none';
+  color = '#202020';
+  color2 = '#202020';
+
 
   constructor(
     public userRegistration: UserRegistrationService,
@@ -134,11 +139,19 @@ export class RegisterComponent implements CognitoCallback {
 
   isEmployer() {
     this.intent = "Employer";
+    this.bgColor = '#fb236a';
+    this.bgColor2 = 'none';
+    this.color = '#ffffff';
+    this.color2 = '#202020';
     console.log(this.intent);
   }
 
   isCandidate() {
     this.intent = "Applicant";
+    this.bgColor = 'none';
+    this.bgColor2 = '#fb236a';
+    this.color = '#202020';
+    this.color2 = '#ffffff';
     console.log(this.intent);
   }
 }

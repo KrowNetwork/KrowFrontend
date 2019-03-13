@@ -30,7 +30,7 @@
                                                                 <!-- {{ confirmedMessage }} -->
                                                                 <div *ngIf="confirmedMessage!=null" class="alert alert-success">
                                                                         <i class="la la-exclamation"></i>
-                                                                        <!-- {{ confirmedMessage }} -->
+                                                                        {{ confirmedMessage }}
                                                             </div>
                                                             <form>
                                                                 <div class="cfield">
@@ -48,14 +48,14 @@
                                                                 </p>
                                                                 <a [routerLink]="['/forgotPassword']" title="">Forgot Password?</a>
                                                                 <button (click)="onLogin()" type="submit">Login</button>
-                                                                <button [routerLink]="['/register']">Register</button>
+                                                                <!-- <button [routerLink]="['/register']">Register</button> -->
                                                             </form>
                                                             <div class="extra-login">
                                                                 <span>Or</span>
                                                                 <div class="login-social">
                                                                     <a class="tw-login" href="#" title=""><i class="fa fa-google"></i></a>
                                                                     <a class="fb-login" href="#" title=""><i class="fa fa-linkedin"></i></a>
-                                                                    <p> Don't Have an Account? Click Here</p>
+                                                                    <p> Don't Have an Account? <u [routerLink]="['/register']">Click Here</u></p>
                                                                 </div>
                                                             </div>
                                                         </div>

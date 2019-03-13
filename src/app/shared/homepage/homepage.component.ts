@@ -245,6 +245,9 @@ export class HomepageComponent implements OnInit {
               job.pay = "contract";
             }
             job.applied = this.hasApplied(job.applicantRequests);
+            job.denied = this.hasDenied(job.deniedApplicants);
+            job.requestedToHire = this.hasRequestedToHire(job.hireRequests);
+            job.isEmployee = this.isEmployee(job.employee);
             
             this.jobList.push(job);
             console.log('job2', job)
@@ -265,6 +268,45 @@ export class HomepageComponent implements OnInit {
       });
     } 
     return isApplicant
+  }
+
+  hasDenied(deniedApplicants){
+    var isDenied = false;
+    if(deniedApplicants != null && deniedApplicants != undefined && deniedApplicants != ""){
+       deniedApplicants.forEach(applicant => {
+
+          if(this.id === applicant.applicantID){
+            isDenied = true;
+          }
+       });
+    }
+
+    return isDenied;
+  }
+
+  hasRequestedToHire(requestedApplicants){
+    var isRequested = false;
+    if(requestedApplicants != null && requestedApplicants != undefined && requestedApplicants != ""){
+       requestedApplicants.forEach(applicant => {
+
+          if(this.id === applicant.split('#')[1]){
+            isRequested = true;
+          }
+       });
+    }
+
+    return isRequested;
+  }
+
+  isEmployee(employeeId){
+    var isEmployee = false;
+    if(employeeId != null && employeeId != undefined && employeeId != ""){
+      if(this.id === employeeId.split('#')[1]){
+        isEmployee = true;
+      }
+    }
+
+    return isEmployee;
   }
 
   goToJobPage(jobID){

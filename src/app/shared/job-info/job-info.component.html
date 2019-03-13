@@ -46,15 +46,17 @@
                   class="fa fa-twitter"></i></a>
             </div>
             <div class="emply-btns">
-              <a *ngIf="userLoggedIn && !isOwner" class="followus" href="#" title=""><i class="la la-paper-plane"></i>
-                Message Us</a>
-              <a *ngIf="userLoggedIn && !isOwner && !curr_emp && canAcceptJob" class="followus" (click)="openNewDialog()" title=""
+              <a *ngIf="!isOwner" (click)="profile()" class="followus" title=""><i class="la la-paper-plane"></i>
+                View Profile</a>
+              <a *ngIf="userLoggedIn && !isOwner && !curr_emp && canAcceptJob && !isAccepted" class="followus" (click)="acceptJob()" title=""
                 style="margin-top: 5px;"><i class="la la-check"></i>Accept this job</a>
-              <a *ngIf="userLoggedIn && !isOwner && !curr_emp && canApply" class="followus" (click)="apply()" title="" style="margin-top: 5px;"><i
+                <a *ngIf="userLoggedIn && !isOwner && !curr_emp && isAccepted " class="followus" title=""
+                style="margin-top: 5px;"><i class="la la-check"></i>Accepted</a>
+              <a *ngIf="userLoggedIn && !isOwner && !curr_emp && canApply && !isDenied && !canAcceptJob && !isAccepted" class="followus" (click)="apply()" title="" style="margin-top: 5px;"><i
                   class="la la-paper-plane"></i>Apply for job</a>
-              <a *ngIf="userLoggedIn && !isOwner && !curr_emp && canDeApply" class="followus" (click)="deapply()" title="" style="margin-top: 5px;"><i
+              <a *ngIf="userLoggedIn && !isOwner && !curr_emp && canDeApply && !isDenied && !canAcceptJob && !isAccepted" class="followus" (click)="deapply()" title="" style="margin-top: 5px;"><i
                   class="la la-close"></i>Remove Application</a>
-              <a *ngIf="userLoggedIn && isOwner" class="followus" (click)="edit()" title="" style="margin-top: 5px;"><i
+              <a *ngIf="userLoggedIn && isOwner " class="followus" (click)="edit()" title="" style="margin-top: 5px;"><i
                   class="la la-close"></i>Edit</a>
               <a *ngIf="!userLoggedIn" class="followus" (click)="login()" title="" style="margin-top: 5px;"><i class="la la-paper-plane"></i>Log
                 In</a>

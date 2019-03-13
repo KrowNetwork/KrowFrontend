@@ -34,7 +34,7 @@
           <div class="col-lg-8 column">
             <div class="padding-left">
               <div class="manage-jobs-sec">
-                <h3>My Jobs</h3>
+                <h3>Manage Jobs</h3>
                 <table>
                   <thead>
                     <tr>
@@ -61,8 +61,12 @@
                         <span *ngIf="job.status == 'Expired'" class="status expire">Expired</span>
                       </td>
                       <td>
-                        <ul class="action_job">
+                        <ul class="action_job" *ngIf="!job.isInProgress">
                           <a (click)="goToCandidateListPage(job.jobID);" title="" class="post-job-btn"><i class=""></i>View Candidates</a>
+                          <a (click)="edit(job.jobID);" title="" class="post-job-btn"><i class=""></i>Edit</a>
+                        </ul>
+                        <ul class="action_job" *ngIf="job.isInProgress">
+                          <a (click)="goToEmployeePage(job.employee);" title="" class="post-job-btn"><i class=""></i>View Employee</a>
                         </ul>
                       </td>
                     </tr>

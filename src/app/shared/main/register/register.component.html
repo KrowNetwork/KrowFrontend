@@ -21,8 +21,8 @@
                             <h3>Sign Up</h3>
                             <span>Select Employer to post jobs | Select candidate to find jobs</span>
                             <div class="select-user">
-                                <span (click)="isEmployer()">Employer</span>
-                                <span (click)="isCandidate()">Candidate</span>
+                                <span [ngStyle]="{'background': bgColor, 'color': color}" (click)="isEmployer()">Employer</span>
+                                <span [ngStyle]="{'background': bgColor2, 'color': color2}" (click)="isCandidate()">Candidate</span>
                             </div>	
                            
                             <form class="form-signin" method="POST" action="#" role="form">

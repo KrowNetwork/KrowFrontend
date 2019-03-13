@@ -35,7 +35,7 @@
                         <div class="job-grid-sec">
                           <div class="row" >
                             <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" *ngFor="let job of jobList" id="jobList">
-                              <div class="job-grid border">
+                              <div class="job-grid border" (click)="goToJobPage(job.jobID);">
                                 <div class="job-title-sec">
                                   <div class="c-logo"> <img src={{job.imgURL}} alt="" /> </div>
                                   <h3><a href="#" title="">{{ job.title }}</a></h3>
@@ -43,8 +43,11 @@
                                   <span class="fav-job"><i class="la la-heart-o"></i></span>
                                 </div>
                                 <span class="job-lctn">{{ job.pay }}</span>
-																<a class="job-apply" *ngIf="!job.applied" (click)="goToJobPage(job.jobID);" title="">APPLY NOW</a>
-																<a class="job-apply" *ngIf="job.applied" (click)="goToJobPage(job.jobID);" title="">APPLIED</a>
+																<a class="job-apply" *ngIf="!job.applied && !job.denied && !job.requestedToHire && !job.isEmployee" (click)="goToJobPage(job.jobID);" title="">APPLY NOW</a>
+																<a class="job-apply" *ngIf="job.applied && !job.denied && !job.requestedToHire && !job.isEmployee" (click)="goToJobPage(job.jobID);" title="">APPLIED</a>
+																<a class="job-apply" *ngIf="!job.applied && job.denied && !job.requestedToHire && !job.isEmployee" (click)="goToJobPage(job.jobID);" title="">DENIED</a>
+																<a class="job-apply" *ngIf="!job.applied && !job.denied && job.requestedToHire && !job.isEmployee" (click)="goToJobPage(job.jobID);" title="">ACCEPT THE JOB</a>
+																<a class="job-apply" *ngIf="!job.applied && !job.denied && !job.requestedToHire && job.isEmployee" (click)="goToJobPage(job.jobID);" title="">ACCEPTED</a>
                               </div><!-- JOB Grid -->
                             </div>
                           </div>
