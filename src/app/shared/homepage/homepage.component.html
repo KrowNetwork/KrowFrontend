@@ -43,8 +43,8 @@
                                   <span class="fav-job"><i class="la la-heart-o"></i></span>
                                 </div>
                                 <span class="job-lctn">{{ job.pay }}</span>
-																<a class="job-apply" *ngIf="!job.applied" (click)="goToJobPage(job.jobID);" title="">APPLY NOW</a>
-																<a class="job-apply" *ngIf="job.applied" (click)="goToJobPage(job.jobID);" title="">APPLIED</a>
+																<a class="job-apply pull-right" *ngIf="!job.applied" (click)="goToJobPage(job.jobID);" title="">APPLY NOW</a>
+																<a class="job-apply pull-right" *ngIf="job.applied" (click)="goToJobPage(job.jobID);" title="">APPLIED</a>
                               </div><!-- JOB Grid -->
                             </div>
                           </div>
@@ -618,6 +618,6 @@
 
 -->
 
- 
+
 
   <app-bottom-bar></app-bottom-bar>
