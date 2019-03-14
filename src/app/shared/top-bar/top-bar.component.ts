@@ -98,6 +98,7 @@ export class TopBarComponent implements OnInit {
         this.is_applicant = false
         this.btnText = "PLACEHOLDER"
         this.resume_text = "PLACEHOLDER"
+        //location.reload();
       }
     }
   

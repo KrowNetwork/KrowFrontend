@@ -17,7 +17,7 @@ export class UserRegistrationService {
 
     register(user: RegistrationUser, callback: CognitoCallback): void {
         // console.log("UserRegistrationService: user is " + user);
-
+        user.email = user.email.toLowerCase();
         let attributeList = [];
 
         let dataEmail = {

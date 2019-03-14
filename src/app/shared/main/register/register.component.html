@@ -18,6 +18,10 @@
                             <div *ngIf="errorMessage!=null" class="alert alert-danger" style="color: #fb236a">
                                     {{ errorMessage }}
                             </div>	
+                            <div *ngIf="confirmedMessage!=null" class="alert alert-success">
+                                <i class="la la-exclamation"></i>
+                                {{ confirmedMessage }}
+                            </div>
                             <h3>Sign Up</h3>
                             <span>Select Employer to post jobs | Select candidate to find jobs</span>
                             <div class="select-user">

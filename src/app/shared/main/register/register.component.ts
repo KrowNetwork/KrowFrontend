@@ -35,6 +35,7 @@ export class RegisterComponent implements CognitoCallback {
   registrationUser: RegistrationUser;
   router: Router;
   errorMessage: string;
+  confirmedMessage:string;
   confirmPassword: string;
   intent: string;
   user: string;
@@ -80,6 +81,7 @@ export class RegisterComponent implements CognitoCallback {
     }
 
     this.errorMessage = null;
+    this.confirmedMessage = 'Please wait...'
     await this.userRegistration.register(this.registrationUser, this);
   }
 
@@ -92,12 +94,15 @@ export class RegisterComponent implements CognitoCallback {
     } else { //success
       //move to the next step
       // console.log("redirecting");
+
+      this.confirmedMessage = 'Redirecting to confirmation page...  If the page is not redirecting, please go to login page and sign in...'
+      var email = this.registrationUser.email.toLowerCase()
       if (this.intent == "Applicant") {
         var obj = {
           user: result.userSub,
           first: '',
           second: '',
-          email: this.registrationUser.email,
+          email: email,
           bio: '',
           address: '',
           state: '',
@@ -105,14 +110,15 @@ export class RegisterComponent implements CognitoCallback {
           country: '',
           phoneNumber: ''
 
-        }
+        } 
+        console.log('applicant', obj)
         await this.initializeUser.initializeUser(obj, this.intent, null, this.router);
 
       } else {
         var employerObj = {
           user: result.userSub,
           company: '',
-          email: this.registrationUser.email,
+          email: email,
           bio: '',
           location: '',
           year: '',
@@ -138,9 +144,10 @@ export class RegisterComponent implements CognitoCallback {
           size: 0,
           keyWords: [],
         }
+        console.log('employer', obj);
         await this.initializeUser.initializeUser(employerObj, this.intent, null, this.router);
       }
-      this.router.navigate(['/confirmRegistration', result.user.username, ]);
+      
       // window.location.href = '/secureHome';
     }
   }

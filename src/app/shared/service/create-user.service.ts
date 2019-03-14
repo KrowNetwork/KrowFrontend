@@ -1,13 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { CustomHttpService } from './custom-http.service';
+import {
+    Router
+  } from "@angular/router";
+
 import * as AWS from "aws-sdk"
 
 @Injectable()
 export class CreateUserService {
     user = undefined
     ddb = undefined
-    constructor(private http: CustomHttpService) { }
+    constructor(
+        private router: Router,
+        private http: CustomHttpService,
+        
+    ) { }
         
     createUserApplicantObj(userObj) {
         var obj = new Object();
@@ -82,39 +90,7 @@ export class CreateUserService {
         this.http.post(url, obj).subscribe(
             data => {
                 console.log(data);
-
-        //         if (obj["class"] == "network.krow.participants.Applicant") {
-                    
-        //             AWS.config.update({region: "us-east-2"})
-    
-        //             AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-        //             IdentityPoolId : 'us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88', // your identity pool id here
-        //                 Logins : {
-        //                     'cognito-idp.us-east-2.amazonaws.com/us-east-2:d7bb8495-a1a4-4280-be12-9af389a16f88' : obj["applicantID"]
-        //                 }
-        //             });
-                    
-    
-        //             this.user = obj["applicantID"]
-        //             this.ddb = new AWS.DynamoDB({apiVersion: '2012-10-08'})
-        //             var params = {
-        //                 TableName: "user_calendars",
-        //                 Item: {
-        //                     userID: {S: this.user},
-        //                     calendar: {M: {}}
-        //                 }
-        //             }
-
-        //             this.ddb.putItem(params, function(err, data) {
-        //                 console.log(err)
-        //             })
-        //         }
-
-
-        //         // console.log(intent + " account sucessfuly initialized for user " + userObj.user);
-        //         //callback(intent.toLowerCase(), userObj.user, router);
-                
-            //router.navigate(["/" + intent.toLowerCase() + ""]);
+                this.router.navigate(['/confirmRegistration', userObj.user ]);
             }, // Catch Errors
             (err = HttpErrorResponse) => {
                 if (err instanceof Error) {
@@ -122,7 +98,7 @@ export class CreateUserService {
                 } else {
                     // console.log("Server-side error occured.");
                 }
-                // console.log(err);
+                 console.log(err);
             }
         );
     }
