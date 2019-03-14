@@ -12,53 +12,31 @@
                                 {{ errorMessage }}
                             </div>	
                             <form class="form-signin" method="POST" action="#" role="form">
-                                <!-- <div class="cfield">
+                                <div class="cfield">
+                                    <i class="la la-user"></i>
                                     <input id="biaFirst" required type="text" placeholder="First Name" class="form-control" 
                                         [(ngModel)]="first" [ngModelOptions]="{standalone: true}">
-                                    <i class="la la-user"></i>
                                 </div>
-                                <div class="cfield">                                
+                                <div class="cfield"> 
+                                    <i class="la la-user"></i>                               
                                     <input id="biaLast" required type="text" placeholder="Last Name" class="form-control"
                                         [(ngModel)]="second" [ngModelOptions]="{standalone: true}">
-                                    <i class="la la-user"></i>
+                                    
                                 </div>
-                                <div class="cfield">                                
-                                    <input id="biaPhone" required type="tel" placeholder="Phone Number" class="form-control"
+                                <div class="cfield">  
+                                    <i class="la la-phone"></i>                              
+                                    <input id="biaPhone" required type="text" placeholder="Phone Number" class="form-control"
                                         [(ngModel)]="phoneNumber" [ngModelOptions]="{standalone: true}">
-                                    <i class="la la-phone"></i>
+                                    
                                 </div>
-                                <div class="cfield">                                
-                                    <input id="biaEmail" required type="email" placeholder="Professional Email" class="form-control"
-                                        [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
-                                    <i class="la la-envelope"></i>
-                                </div>
-                                <span style="font-size: 10px; font-weight: 500">Each box is optional. We respect your privacy so you may choose to have no location at all if necessary</span>
-                                <div class="cfield">                                
-                                    <input id="biaAddr" required type="text" placeholder="Address (optional)" class="form-control"
-                                        [(ngModel)]="address" [ngModelOptions]="{standalone: true}">
-                                    <i class="la la-map-marker"></i>
-                                </div>
-                                <div class="cfield">                                
-                                    <input id="biaCity" required type="text" placeholder="City (optional)" class="form-control"
-                                        [(ngModel)]="city" [ngModelOptions]="{standalone: true}">
-                                    <i class="la la-map-marker"></i>
-                                </div>
-                                <div class="cfield">                                
-                                    <input id="biaState" required type="text" placeholder="State (optional)" class="form-control"
-                                        [(ngModel)]="state" [ngModelOptions]="{standalone: true}">
-                                    <i class="la la-map-marker"></i>
-                                </div>
-                                <div class="cfield">                                
-                                    <input id="biaCountry" required type="text" placeholder="Country (optional)" class="form-control"
-                                        [(ngModel)]="country" [ngModelOptions]="{standalone: true}">
-                                    <i class="la la-globe"></i>
-                                </div>
-                                <div class="cfield">                                
+                                <!-- <span style="font-size: 10px; font-weight: 500">Each box is optional. We respect your privacy so you may choose to have no location at all if necessary</span> -->
+                                <div class="cfield"> 
+                                    <i class="la la-biography"></i>                               
                                     <textarea id="biaBio" required type="text" placeholder="Short Bio. Don't worry, you can change it later" class="form-control"
                                         [(ngModel)]="bio" [ngModelOptions]="{standalone: true}"></textarea>
-                                    <i class="la la-biography"></i>
-                                </div> -->
-                                <app-edit (sendCount)="getData($event)"></app-edit>
+                                    
+                                </div>
+                                <!-- <app-edit (sendCount)="getData($event)"></app-edit> -->
                                 <button id="submitButton" (click)="submitInfo()">
                                     Next
                                 </button>
@@ -101,12 +79,12 @@
                                                 </select>
                                             <br>
                                         </div> -->
-                                    <div class="cfield"> 
+                                    <!-- <div class="cfield"> 
                                             <i class="la la-envelope"></i>                               
                                             <input id="biaEmail" required type="email" placeholder="Company Email" class="form-control"
                                                 [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
                                             
-                                    </div>
+                                    </div> -->
                                     <div class="cfield">    
                                         <i class="la la-phone"></i>                            
                                         <input id="biaPhone" required type="text" placeholder="Phone Number (Optional)" class="form-control"
@@ -115,11 +93,11 @@
                                     </div>
                                     
                                     <!-- <span style="font-size: 10px; font-weight: 500">Each box is optional. We respect your privacy so you may choose to have no location at all if necessary</span> -->
-                                    <div class="cfield"> 
+                                    <!-- <div class="cfield"> 
                                         <i class="la la-map-marker"></i>                               
                                         <input required type="text" placeholder="Year Established (Optional)" class="form-control"
                                             [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
-                                    </div>
+                                    </div> -->
                                     <!-- <div class="cfield">
                                         <i class="la la-check-square" ></i>  
                                         <span style="font-size: 10px; font-weight: 500">Key Words</span>                                
@@ -129,12 +107,12 @@
                                             </li>
                                         </ul>
                                     </div> -->
-                                    <div class="cfield">    
+                                    <!-- <div class="cfield">    
                                         <i class="la la-compass"></i>                            
                                         <input id="biaLocation" required type="text" placeholder="Location (Optional)" class="form-control"
                                             [(ngModel)]="location" [ngModelOptions]="{standalone: true}">
                                         
-                                    </div>
+                                    </div> -->
                                     <div class="cfield"> 
                                         <i class="la la-biography"></i>                               
                                         <textarea id="biaBio" required type="text" placeholder="Description of your company" class="form-control"

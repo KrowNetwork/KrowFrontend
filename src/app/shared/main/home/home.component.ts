@@ -16,6 +16,7 @@ declare let AWSCognito: any;
 export class HomeComponent implements OnInit {
     show=false;
     user: String
+    info: any;
     constructor(
         public router: Router, 
         public userService: UserLoginService,
@@ -50,14 +51,17 @@ export class HomeComponent implements OnInit {
     async ngOnInit() {
 
         this.http.post("https://api.krownetwork.com/check-user", {id: this.user}).subscribe(
-            data => {
+           async data => {
                 console.log(data["response"])
                 if (data["response"] == "applicant") {
                     sessionStorage.setItem("accountType", "applicant")
-                    this.router.navigate(['/applicant']);
+                    await this.getApplicantInfo();
+                    
+                    // this.router.navigate(['/applicant']);  
                 } else if (data["response"] == "employer") {
                     sessionStorage.setItem("accountType", "employer")
-                    this.router.navigate(['/employer']);
+                    this.getEmployerInfo();
+                    // this.router.navigate(['/employer']);
                 
                 } else {
                    this.show = true 
@@ -78,6 +82,36 @@ export class HomeComponent implements OnInit {
             // this.initializeApplicant()
             
 
+    }
+
+    getApplicantInfo(){
+        var url = "http://18.220.46.51:3000/api/Applicant/" + this.user;
+        // Get Data
+        this.http.get(url).subscribe(
+            (data:any) => {
+                console.log('applicant', data)
+                this.info = data;
+                if(this.info.firstName === "" && this.info.lastName === "" && this.info["resume"].biography ===""){
+                    this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" }});
+                } else {
+                    this.router.navigate(['/applicant']);  
+                }
+        });
+    }
+
+    getEmployerInfo(){
+        var url = "http://18.220.46.51:3000/api/Employer/" + this.user;
+        // Get Data
+        this.http.get(url).subscribe(
+            (data:any) => {
+                console.log('employer', data)
+                this.info = data;
+                if(this.info.employerName === "" && this.info.description === ""){
+                    this.router.navigate(['/basicInfo'], { queryParams: { as: "Employer" }});
+                } else {
+                    this.router.navigate(['/employer']);
+                }
+        });
     }
 
     initializeApplicant(){
