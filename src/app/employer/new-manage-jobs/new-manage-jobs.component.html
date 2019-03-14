@@ -40,9 +40,11 @@
                         <ul class="action_job" *ngIf="!job.isInProgress">
                           <a (click)="goToCandidateListPage(job.jobID);" title="" class="post-job-btn"><i class=""></i>View Candidates</a>
                           <a (click)="edit(job.jobID);" title="" class="post-job-btn"><i class=""></i>Edit</a>
+                          <!-- <a (click)="delete(job.jobID);" title="" class="post-job-btn"><i class=""></i>Delete</a> -->
                         </ul>
                         <ul class="action_job" *ngIf="job.isInProgress">
                           <a (click)="goToEmployeePage(job.employee);" title="" class="post-job-btn"><i class=""></i>View Employee</a>
+                          <!-- <a (click)="delete(job.jobID);" title="" class="post-job-btn"><i class=""></i>Delete</a> -->
                         </ul>
                       </td>
                     </tr>

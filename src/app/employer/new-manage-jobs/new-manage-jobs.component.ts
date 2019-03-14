@@ -280,4 +280,27 @@ export class NewManageJobsComponent implements OnInit {
     this.router.navigate(['/employer/job/edit'], { queryParams: { jobID: jobID } })
   }
 
+  delete(jobID) {
+    var url = "http://18.220.46.51:3000/api/DeleteJob"
+    var data = {
+      job: jobID
+    }
+    //this.msg = "Please wait"
+    this.http.post(url, data).subscribe(
+      data =>{
+        //this.msg = "Deletion Successful"
+        console.log(data);
+       // location.reload();
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        // console.log("Client-side error occured.");
+      } else {
+        // console.log("Server-side error occured.");
+        // console.log(err);
+      }
+      //this.msg = "There was an error. Please try again"
+    })
+  }
+
 }
