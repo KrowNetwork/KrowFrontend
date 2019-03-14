@@ -20,7 +20,7 @@ export class EmployerPostJobsComponent implements OnInit {
   
   title: string;
   description: string;
-  // location: string;
+   location: string;
   tags: [string];
   payment: any;
   paymentType: string;
@@ -104,7 +104,7 @@ export class EmployerPostJobsComponent implements OnInit {
 
     this.jobObject.newJob.title = this.title;
     this.jobObject.newJob.description = this.description;
-    // this.jobObject.newJob.location = this.location;
+    this.jobObject.newJob.location = "";
     this.jobObject.newJob.payment = this.payment;
     this.jobObject.newJob.paymentType = this.paymentType;
     this.jobObject.newJob.jobType = this.jobType;
@@ -118,6 +118,7 @@ export class EmployerPostJobsComponent implements OnInit {
   postJob(){
     this.msg = "Please wait"
     var url = "http://18.220.46.51:3000/api/NewJob";
+    console.log(this.jobObject)
     this.http.post(url, this.jobObject).subscribe(
       data => {
         console.log(data)
@@ -150,7 +151,7 @@ export class EmployerPostJobsComponent implements OnInit {
         $class: "network.krow.assets.IntermediateJob",
         title: "", 
         description: "", 
-        // location: "", 
+        location: "", 
         tags: [], 
         payment: "",
         paymentType: "",
