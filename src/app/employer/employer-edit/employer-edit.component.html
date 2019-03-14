@@ -3,25 +3,7 @@
     <div class="container">
       <div class="row no-gape">
         <aside class="col-lg-3 column border-right">
-          <div class="widget">
-            <div class="tree_widget-sec">
-              <ul>
-                
-                <li class="inner-child">
-                  <a [routerLink]="['/employer']" title=""><i class="la la-file-text"></i>Company Profile</a>
-                </li>
-                <li class="inner-child">
-                  <a [routerLink]="['/employer/new-manage-jobs']" title=""><i class="la la-briefcase"></i>Manage Jobs</a>
-                </li>
-                <li class="inner-child">
-                    <a [routerLink]="['/employer/new-post-jobs']" title=""><i class="la la-file-text"></i>Post a New Job</a>
-                </li>
-                <!-- <li class="inner-child">
-                  <a href="#" title=""><i class="la la-lock"></i>Settings</a>
-                </li> -->
-              </ul>
-            </div>
-          </div>
+            <app-side-bar></app-side-bar>
         </aside>
         <div class="col-lg-9 column">
           <div class="padding-left">

@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import {
+  Router,
+  ActivatedRoute
+} from '@angular/router';
+import {
+  UserLoginService
+} from '../service/user-login.service';
 
 
 @Component({
@@ -9,108 +16,30 @@ import { Component, OnInit } from '@angular/core';
 export class SideBarComponent implements OnInit {
   private _opened: boolean = false;
 
-  constructor() { }
+  id: string;
+  loggedIn = false;
+  userType: string;
+
+  constructor(
+    private router: Router,
+    public userService: UserLoginService,
+  ) { 
+    this.userService.isAuthenticated(this);
+  }
 
   ngOnInit() {
+    this.id = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+    this.userType = sessionStorage.getItem("accountType");
   }
 
-  private _modeNum: number = 0;
-  private _positionNum: number = 0;
-  private _dock: boolean = false;
-  private _closeOnClickOutside: boolean = false;
-  private _closeOnClickBackdrop: boolean = false;
-  private _showBackdrop: boolean = false;
-  private _animate: boolean = true;
-  private _trapFocus: boolean = true;
-  private _autoFocus: boolean = true;
-  private _keyClose: boolean = false;
-  private _autoCollapseHeight: number = null;
-  private _autoCollapseWidth: number = null;
-
-  private _MODES: Array<string> = ['over', 'push', 'slide'];
-  private _POSITIONS: Array<string> = ['left', 'right', 'top', 'bottom'];
-
-  _toggleOpened(): void {
-    this._opened = !this._opened;
-  }
-
-  _toggleMode(): void {
-    this._modeNum++;
-
-    if (this._modeNum === this._MODES.length) {
-      this._modeNum = 0;
+  isLoggedIn(message: string, isLoggedIn: boolean) {
+    if (isLoggedIn) {
+      this.loggedIn = true
+      console.log(this.loggedIn)
+      // sessionStorage.setItem("redirectBack", this.router.url)
+      //   // this.router.navigate(['/login']);
     }
-  }
+}
 
-  _toggleAutoCollapseHeight(): void {
-    this._autoCollapseHeight = this._autoCollapseHeight ? null : 500;
-  }
-
-  _toggleAutoCollapseWidth(): void {
-    this._autoCollapseWidth = this._autoCollapseWidth ? null : 500;
-  }
-
-  _togglePosition(): void {
-    this._positionNum++;
-
-    if (this._positionNum === this._POSITIONS.length) {
-      this._positionNum = 0;
-    }
-  }
-
-  _toggleDock(): void {
-    this._dock = !this._dock;
-  }
-
-  _toggleCloseOnClickOutside(): void {
-    this._closeOnClickOutside = !this._closeOnClickOutside;
-  }
-
-  _toggleCloseOnClickBackdrop(): void {
-    this._closeOnClickBackdrop = !this._closeOnClickBackdrop;
-  }
-
-  _toggleShowBackdrop(): void {
-    this._showBackdrop = !this._showBackdrop;
-  }
-
-  _toggleAnimate(): void {
-    this._animate = !this._animate;
-  }
-
-  _toggleTrapFocus(): void {
-    this._trapFocus = !this._trapFocus;
-  }
-
-  _toggleAutoFocus(): void {
-    this._autoFocus = !this._autoFocus;
-  }
-
-  _toggleKeyClose(): void {
-    this._keyClose = !this._keyClose;
-  }
-
-  _onOpenStart(): void {
-    console.info('Sidebar opening');
-  }
-
-  _onOpened(): void {
-    console.info('Sidebar opened');
-  }
-
-  _onCloseStart(): void {
-    console.info('Sidebar closing');
-  }
-
-  _onClosed(): void {
-    console.info('Sidebar closed');
-  }
-
-  _onTransitionEnd(): void {
-    console.info('Transition ended');
-  }
-
-  _onBackdropClicked(): void {
-    console.info('Backdrop clicked');
-  }
+ 
 }

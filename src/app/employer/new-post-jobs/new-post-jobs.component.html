@@ -3,39 +3,9 @@
 	<div class="block no-padding">
 		<div class="container">
 			 <div class="row no-gape">
-				 <aside class="col-lg-3 column border-right">
-					 <div class="widget">
-						 <div class="tree_widget-sec">
-							 <ul>
-								 <li class="inner-child">
-									 <a [routerLink]="['/employer']" title=""><i class="la la-file-text"></i>Company Profile</a>
-								 </li>
-								 <li class="inner-child">
-									 <a [routerLink]="['/employer/new-manage-jobs']" title=""><i class="la la-briefcase"></i>Manage Jobs</a>
-								 </li>
-								 <!-- <li class="inner-child">
-									 <a href="#" title=""><i class="la la-money"></i>Transactions</a>
-								 </li>
-								 <li class="inner-child">
-									 <a href="#" title=""><i class="la la-paper-plane"></i>Resumes</a>
-								 </li>
-								 <li class="inner-child">
-									 <a href="#" title=""><i class="la la-user"></i>Packages</a>
-								 </li> -->
-								 <li class="inner-child">
-									 <a [routerLink]="['/employer/new-post-jobs']" title=""><i class="la la-file-text"></i>Post a New Job</a>
-								 </li>
-								 <!-- <li class="inner-child">
-									 <a href="#" title=""><i class="la la-flash"></i>Job Alerts</a>
-								 </li>
-								 <li class="inner-child">
-									 <a href="#" title=""><i class="la la-lock"></i>Change Password</a>
-								 </li>
-								 <li><a href="#" title=""><i class="la la-unlink"></i>Logout</a></li> -->
-							 </ul>
-						 </div>
-					 </div>
-				 </aside>
+					<aside class="col-lg-3 column border-right">
+							<app-side-bar></app-side-bar>
+						</aside>
 
 				 <div *ngIf="errorMessage!=null" class="alert alert-danger" style="margin: 15px">
 						<i class="la la-exclamation"></i>

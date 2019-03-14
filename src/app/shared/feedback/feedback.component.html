@@ -1,25 +1,12 @@
 <app-top-bar></app-top-bar>
-
-	<section class="overlape">
-		<div class="block no-padding">
-			<div data-velocity="-.1" class="parallax scrolly-invisible no-parallax"></div>
-			<div class="container fluid">
-				<div class="row">
-					<div class="col-lg-12">
-							<div class="inner-header" id="responsive-title">
-									<h3>Feedback</h3>
-								</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
 	<section>
 		<div class="block">
 			<div class="container">
-				 <div class="row">
-				 	<div class="col-lg-12 column">
+				 <div class="row ">
+						<aside class="col-lg-3 column border-right">		
+							<app-side-bar></app-side-bar>
+						</aside>
+				 	<div class="col-lg-9 column">
 						<div *ngIf="errorMessage!=null" class="alert alert-danger">
 								<i class="la la-exclamation"></i>
 								{{ errorMessage }}
