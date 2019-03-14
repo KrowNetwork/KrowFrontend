@@ -42,6 +42,7 @@ export class RegisterComponent implements CognitoCallback {
   bgColor2 = 'none';
   color = '#202020';
   color2 = '#202020';
+  agreed = false;
 
 
   constructor(
@@ -72,6 +73,12 @@ export class RegisterComponent implements CognitoCallback {
       this.errorMessage = "Please select you're an Applicant or an Employer";
       return;
     }
+
+    if (!this.agreed) {
+      this.errorMessage = "Please agree to terms and conditions before move on";
+      return;
+    }
+
     this.errorMessage = null;
     await this.userRegistration.register(this.registrationUser, this);
   }
@@ -134,6 +141,7 @@ export class RegisterComponent implements CognitoCallback {
         await this.initializeUser.initializeUser(employerObj, this.intent, null, this.router);
       }
       this.router.navigate(['/confirmRegistration', result.user.username, ]);
+      // window.location.href = '/secureHome';
     }
   }
 
@@ -153,5 +161,9 @@ export class RegisterComponent implements CognitoCallback {
     this.color = '#202020';
     this.color2 = '#ffffff';
     console.log(this.intent);
+  }
+
+  agreedToTerms(){
+    this.agreed = !this.agreed
   }
 }
