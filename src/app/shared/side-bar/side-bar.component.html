@@ -3,8 +3,8 @@
     <div class="widget">
       <div class="search_widget_job">
         <div class="field_w_search">
-          <input type="text" placeholder="Search Jobs" />
-          <i class="la la-search"></i>
+          <input type="text" placeholder="Job Title" [(ngModel)]="term" [ngModelOptions]="{standalone: true}"/>
+          <i (click)="go(term)" class="la la-search"></i>
         </div><!-- Search Widget -->
       </div>
     </div>
@@ -27,8 +27,8 @@
     <div class="widget">
       <div class="search_widget_job">
         <div class="field_w_search">
-          <input type="text" placeholder="Search Jobs" />
-          <i class="la la-search"></i>
+          <input type="text" placeholder="Job Title" [(ngModel)]="term" [ngModelOptions]="{standalone: true}"/>
+          <i (click)="go(term)" class="la la-search"></i>
         </div><!-- Search Widget -->
       </div>
     </div>
@@ -50,9 +50,8 @@
         <div class="widget">
           <div class="search_widget_job">
             <div class="field_w_search">
-              <input type="text" placeholder="Search Jobs" />
-              <i class="la la-search"></i>
-            </div><!-- Search Widget -->
+              <input type="text" placeholder="Job Title" [(ngModel)]="term" [ngModelOptions]="{standalone: true}"/>
+              <i (click)="go(term)" class="la la-search"></i>           </div><!-- Search Widget -->
           </div>
         </div>
         <a [routerLink]="['/']" title=""><i class="la la-file-text"></i>Home</a>
