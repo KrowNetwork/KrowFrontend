@@ -14,6 +14,7 @@ declare var gtag: Function
 })
 export class TopBarComponent implements OnInit {
   is_applicant = false;
+  hasAccountType = true;
   isLoggedInB = false;
   isFeedbackOn = false;
   btnText: string;
@@ -90,12 +91,15 @@ export class TopBarComponent implements OnInit {
         this.is_applicant = true
         this.btnText = "Edit Resume"
         this.resume_text = "Resume"
+        this.hasAccountType = true;
       } else if (res == "employer") {
         this.is_applicant = false
         this.btnText = "Edit Profile"
         this.resume_text = "Company"
+        this.hasAccountType = true;
       } else {
         this.is_applicant = false
+        this.hasAccountType = false;
         this.btnText = "PLACEHOLDER"
         this.resume_text = "PLACEHOLDER"
         //location.reload();
