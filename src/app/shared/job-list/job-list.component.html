@@ -1,0 +1,40 @@
+<app-top-bar></app-top-bar>
+<div class="block">
+  <div class="container">
+    <div class="row">
+      <aside class="col-lg-3 column border-right">
+        <app-side-bar></app-side-bar>
+      </aside>
+      <div class="col-lg-8 column">
+        <div class="job-single-sec style3">
+          <div class="job-wide-devider">
+            <div class="job-overview divide">
+            </div><!-- Job Overview -->
+            <div class="job-details">
+              <div class="recent-jobs">
+                <h3>Jobs</h3>
+                <div class="job-list-modern">
+                  <div class="job-listings-sec no-border" *ngFor="let job of jobList" id="jobList">
+                    <div class="job-listing wtabs noimg" (click)="goToJobPage(job.jobID);">
+                      <div class="job-title-sec">
+                        <h3><a title="">{{ job.title }}</a></h3>
+                        <span id="job-description">{{ job.description }}</span>
+                        <div class="job-lctn"><i class="la la-map-marker"></i>{{ job.tags }}</div>
+                      </div>
+                      <div class="job-style-bx">
+                        <span class="job-is pt ">{{ job.pay }}</span>
+                        <span class="fav-job"><i class="la la-heart-o"></i></span>
+                        <i>{{ job.dayString }}</i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-bottom-bar></app-bottom-bar>

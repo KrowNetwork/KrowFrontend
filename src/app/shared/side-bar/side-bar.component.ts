@@ -6,6 +6,8 @@ import {
 import {
   UserLoginService
 } from '../service/user-login.service';
+import { CustomHttpService } from '../../shared/service/custom-http.service';
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 
 
 @Component({
@@ -19,10 +21,13 @@ export class SideBarComponent implements OnInit {
   id: string;
   loggedIn = false;
   userType: string;
+  term: string;
 
   constructor(
     private router: Router,
     public userService: UserLoginService,
+    public http: CustomHttpService,
+    public http2: HttpClient,
   ) { 
     this.userService.isAuthenticated(this);
   }
@@ -39,7 +44,11 @@ export class SideBarComponent implements OnInit {
       // sessionStorage.setItem("redirectBack", this.router.url)
       //   // this.router.navigate(['/login']);
     }
-}
+  } 
+
+  search() {
+    this.router.navigate(["/job/list"], { queryParams: { search: this.term } })
+  }
 
  
 }
