@@ -201,19 +201,19 @@ export class HomepageComponent implements OnInit {
     )
   }
 
-  getJobs() {
+  async getJobs() {
     var url = "http://18.220.46.51:3000/api/Job/";
 
-    this.http.get(url).subscribe(
-      (data: any) => {
+    await this.http.get(url).subscribe(
+      async (data: any) => {
 
         console.log('data back', data)
 
-        data.forEach((job) => {
+        await data.forEach(async (job) => {
           job.imgURL = "https://krow-network-profile-pics.s3.us-east-2.amazonaws.com/pics/" + job.employerID+".png"
 
           if (!job.hasOwnProperty('error')) {
-            var days = Math.round(Math.abs((new Date(job.created).getTime() - new Date().getTime()) / (24 * 60 * 60 * 1000)));
+            var days = await Math.round(Math.abs((new Date(job.created).getTime() - new Date().getTime()) / (24 * 60 * 60 * 1000)));
 
             if (days === 0) {
               job.dayString = 'Today';
@@ -244,10 +244,11 @@ export class HomepageComponent implements OnInit {
             } else if (job.paymentType === "CONTRACT") {
               job.pay = "contract";
             }
-            job.applied = this.hasApplied(job.applicantRequests);
-            job.denied = this.hasDenied(job.deniedApplicants);
-            job.requestedToHire = this.hasRequestedToHire(job.hireRequests);
-            job.isEmployee = this.isEmployee(job.employee);
+            job.applied = await this.hasApplied(job.applicantRequests);
+            job.denied = await this.hasDenied(job.deniedApplicants);
+            job.requestedToHire = await this.hasRequestedToHire(job.hireRequests);
+            job.isEmployee = await this.isEmployee(job.employee);
+            job.company = await this.getEmployerName(job.employerID);
             
             this.jobList.push(job);
             console.log('job2', job)
@@ -256,6 +257,16 @@ export class HomepageComponent implements OnInit {
         });
       });
   }
+
+  async getEmployerName(employerID) {
+    var company;
+    var url = "http://18.220.46.51:3000/api/Employer/" + employerID;
+    // Get Data
+    var data = await this.http.get(url).toPromise();
+
+    return data["employerName"];
+  }
+
 
   hasApplied(applicantRequests){
     var isApplicant = false;

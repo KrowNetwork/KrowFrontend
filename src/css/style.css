@@ -11034,6 +11034,10 @@ header.style5 .post-job-btn:hover {
     border-color: #fb236a;
     color: #ffffff;
 }
+#my-job-no-job {
+    padding-left: 20px;
+    padding-top: 20px;
+}
 .contact-form > form button:hover {
     background: transparent;
     border: 2px solid #fb236a;

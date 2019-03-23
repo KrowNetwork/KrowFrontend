@@ -25,17 +25,28 @@ export class HomeComponent implements OnInit {
         // private http: CustomHttpService
     ) {
         // console.log("Secure Home Component: constructor");
-        this.userService.isAuthenticated(this)
+        this.userService.isAuthenticated(this);
+
+        // FB.login((response)=>
+        //     {
+        //       console.log('submitLogin',response);
+        //       if (response.authResponse)
+        //       {
+        //         //login success
+        //         //login success code here
+        //         //redirect to home page
+        //        }
+        //        else
+        //        {
+        //        console.log('User login failed');
+        //      }
+        //   });
 
         this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
         // if(!user){
         //     this.router.navigate(['/login']);
         // }
         console.log(this.user)
-
-            
-            
-        
         }
     
         

@@ -1,5 +1,5 @@
 <section>
-  <div class="block">
+  <div class="block remove-top">
     <div class="container">
       <div class="row">
         <aside class="col-lg-3 column border-right">
@@ -13,6 +13,9 @@
               <div class="job-details">
                 <div class="recent-jobs">
                   <h3>Jobs</h3>
+                  <div class="job-listings-sec no-border" *ngIf="jobList.length === 0">
+                      <p id="my-job-no-job">No Jobs</p>
+                  </div>
                   <div class="job-list-modern">
                     <div class="job-listings-sec no-border" *ngFor="let job of jobList" id="jobList">
                       <div class="job-listing wtabs noimg" (click)="goToJobPage(job.jobID);">
@@ -34,7 +37,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4 column">
+        <div class="col-lg-4 column" id="employer-profile-info">
           <div class="job-single-head style2">
             <div class="job-thumb"> <img src="{{ imgURL }}" alt="" /> </div>
             <div class="job-head-info">

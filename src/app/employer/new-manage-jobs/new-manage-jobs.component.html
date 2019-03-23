@@ -11,6 +11,7 @@
             <div class="padding-left">
               <div class="manage-jobs-sec">
                 <h3>Manage Jobs</h3>
+                
                 <table>
                   <thead>
                     <tr>
@@ -20,6 +21,9 @@
                       <td>Action</td>
                     </tr>
                   </thead>
+                  <div class="job-listings-sec no-border" *ngIf="jobList.length === 0">
+                      <p id="my-job-no-job">No Jobs</p>
+                    </div>
                   <tbody *ngFor="let job of jobList" id="jobList">
                     <tr>
                       <td>

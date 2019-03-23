@@ -30,11 +30,27 @@ export class SideBarComponent implements OnInit {
     public http2: HttpClient,
   ) { 
     this.userService.isAuthenticated(this);
+
+    this.id = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+    this.userType = sessionStorage.getItem("accountType");
+
+    if (sessionStorage.getItem("accountType") === undefined || sessionStorage.getItem("accountType") === null) {
+      this.http.post("https://api.krownetwork.com/check-user", {id: this.id}).subscribe(
+        data => {
+          var res = data["response"]
+          console.log('res', res)
+          this.userType = res;
+          sessionStorage.setItem("accountType", res)
+        }
+      )
+    } else {
+      var res = sessionStorage.getItem("accountType")
+      this.userType = res;
+    }
   }
 
   ngOnInit() {
-    this.id = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
-    this.userType = sessionStorage.getItem("accountType");
+    
   }
 
   isLoggedIn(message: string, isLoggedIn: boolean) {

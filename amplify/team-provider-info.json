@@ -1,0 +1,14 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "krowfrontend-20190322201147-authRole",
+            "UnauthRoleArn": "arn:aws:iam::599179145875:role/krowfrontend-20190322201147-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::599179145875:role/krowfrontend-20190322201147-authRole",
+            "Region": "us-east-2",
+            "DeploymentBucketName": "krowfrontend-20190322201147-deployment",
+            "UnauthRoleName": "krowfrontend-20190322201147-unauthRole",
+            "StackName": "krowfrontend-20190322201147",
+            "StackId": "arn:aws:cloudformation:us-east-2:599179145875:stack/krowfrontend-20190322201147/400e0470-4d00-11e9-b70e-06ba3123ae48"
+        }
+    }
+}

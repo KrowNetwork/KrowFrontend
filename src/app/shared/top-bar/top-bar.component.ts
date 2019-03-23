@@ -37,6 +37,7 @@ export class TopBarComponent implements OnInit {
     this.userService.isAuthenticated(this);
 
     this.user = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
+    console.log('user', this.user)
     gtag('js', new Date());
     gtag('set', {'user_id': this.user}); // Set the user ID using signed-in user_id.
     
@@ -65,10 +66,11 @@ export class TopBarComponent implements OnInit {
       
     // this.userService.verifyUserType(localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"))
     // console.log("Applicant Component: constructor");
-    if (sessionStorage.getItem("accountType") === undefined) {
-      this.http.get("https://api.krownetwork.com/check-user", {id: this.user}).subscribe(
+    if (sessionStorage.getItem("accountType") === undefined || sessionStorage.getItem("accountType") === null) {
+      this.http.post("https://api.krownetwork.com/check-user", {id: this.user}).subscribe(
         data => {
           var res = data["response"]
+          console.log('res', res)
           if (res == "applicant") {
             this.is_applicant = true
             this.btnText = "Edit Resume"

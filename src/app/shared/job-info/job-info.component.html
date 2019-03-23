@@ -11,7 +11,8 @@
                 {{ msg }}
               </div>
               <div class="job-title2">
-                <h3>{{ title }}</h3><span class="job-is ft">Coding & IT</span><i class="la la-heart-o"></i>
+                <h3>{{ title }}</h3><span class="job-is ft">Coding & IT</span>
+                <!-- <i class="la la-heart-o"></i> -->
               </div>
               <ul class="tags-jobs">
                 <li><i class="la la-money"></i> Pay: <span>{{ pay }}</span></li>
@@ -25,15 +26,15 @@
               <p>{{ jobDescription }}</p>
             </div>
             <div class="share-bar">
-              <span>Share</span><a href="#" title="" class="share-fb"><i class="fa fa-facebook"></i></a><a href="#"
+              <!-- <span>Share</span><a href="#" title="" class="share-fb"><i class="fa fa-facebook"></i></a><a href="#"
                 title="" class="share-twitter"><i class="fa fa-twitter"></i></a><a href="#" title="" class="share-link"><i
-                  class="fa fa-link"></i></a>
+                  class="fa fa-link"></i></a> -->
             </div>
           </div>
         </div>
         <div class="col-lg-4 column">
           <div class="job-single-head style2">
-            <div class="job-thumb"> <img src="{{ imgURL }}" alt="" /> </div>
+            <div class="job-thumb"> <img src="{{ imgURL }}" onerror="this.src='assets/images/default_profile_pic.png'" /> </div>
             <div class="job-head-info">
               <h4>{{ company }}</h4>
               <p>{{ description }}</p>

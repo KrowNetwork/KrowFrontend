@@ -277,8 +277,6 @@ export class UserLoginService {
             sessionStorage.setItem("accountType", "employer")
 
           }
-
-        
       }
     )
     }
