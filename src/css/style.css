@@ -894,6 +894,11 @@ label::after {
     display: block;
     width: 100%;
 }
+
+#employer-profile-info{
+    padding-top: 30px;
+}
+
 .select-user {
     width: 100%;
     text-align: center;
