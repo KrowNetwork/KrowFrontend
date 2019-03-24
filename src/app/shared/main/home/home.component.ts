@@ -75,24 +75,10 @@ export class HomeComponent implements OnInit {
                     // this.router.navigate(['/employer']);
                 
                 } else {
-                   this.show = true 
+                    this.router.navigate(['/basicInfo'], { queryParams: { as: "None" }});
                 }
             
         })
-        // this.http.head("http://18.220.46.51:3000/api/Applicant/" + this.user).subscribe(
-        //     data => {
-        //         if (data["error"] !== undefined) {
-        //             this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });                     
-        //         } else {
-        //             console.log(data)
-        //             sessionStorage.setItem("accountType", "applicant")
-        //             this.router.navigate(['/applicant']);
-        //         }
-                
-        //     })
-            // this.initializeApplicant()
-            
-
     }
 
     getApplicantInfo(){

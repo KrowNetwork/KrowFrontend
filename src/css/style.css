@@ -889,11 +889,16 @@ label::after {
     color: #888888;
     margin-top: 20px;
 }
+.select-user-text{
+    text-align: center;
+    display: block;
+    width: 100%;
+}
 .select-user {
-    float: left;
     width: 100%;
     text-align: center;
     margin-top: 10px;
+    display: block;
 }
 .select-user > span {
     float: none;
@@ -2276,6 +2281,7 @@ header.style2 nav {
     float: left;
     width: 100%;
     margin-top: -30px;
+    padding-top: 20px;
 }
 .job-grid {
     float: left;

@@ -33,6 +33,7 @@ declare var $: any;
   styleUrls: ['./homepage.component.css'],
 })
 export class HomepageComponent implements OnInit {
+
   is_applicant = false;
   isLoggedInB = false;
   btnText: string;
@@ -43,65 +44,18 @@ export class HomepageComponent implements OnInit {
   location: String;
   jobList = [];
   id:string;
+
   constructor(
     public http: CustomHttpService,
     public http2: HttpClient,
-    private createUser: CreateUserService,
-    private activatedRoute: ActivatedRoute,
     public userService: UserLoginService,
     private router: Router,
   ) {
-    // console.log("f")
     // todo - private v public
-    console.log("y")
     this.userService.isAuthenticated(this);
-
     this.id = localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser");
-    // this.http.head("http://18.220.46.51:3000/api/Applicant/" + user).subscribe(
-    // data => {
-    //             sessionStorage.setItem("accountType", "applicant")
-    //             // this.router.navigate(['/applicant']);
-
-
-
-
-    // }, // Catch Errors
-    // (err = HttpErrorResponse) => {      
-    //   this.http.head("http://18.220.46.51:3000/api/Employer/" + user).subscribe(
-    //     data => {
-    //             sessionStorage.setItem("accountType", "employer")
-    //       }
-    //     )  
-    //             // this.router.navigate(['/employer']);        
-    // } 
-    // console.log("User does not have an applicant acco        // this.router.navigate(['/basicInfo'], { queryParams: { as: "Applicant" } });
-
-
-
-
-
-    // this.userService.verifyUserType(localStorage.getItem("CognitoIdentityServiceProvider.7tvb9q2vkudvr2a2q18ib0o5qt.LastAuthUser"))
-    // console.log("Applicant Component: constructor");
-
-    if (sessionStorage.getItem("accountType") == "applicant") {
-      this.is_applicant = true
-      this.btnText = "Find Job"
-      // var x = document.getElementById("btn")
-      // console.log(x)
-      // x.setAttribute("class", "la la-search")
-    } else {
-      this.is_applicant = false
-      this.btnText = "Post Jobs"
-      // var x = document.getElementById("btn")
-      // console.log(x)
-      // x.setAttribute("class", "la la-plus")
-    }
-
-    // // console.log(this.is_applicant)
-
-
-
   }
+
   isLoggedIn(message: string, isLoggedIn: boolean) {
     if (isLoggedIn) {
       this.isLoggedInB = true
@@ -109,6 +63,7 @@ export class HomepageComponent implements OnInit {
       //   // this.router.navigate(['/login']);
     }
   }
+
   openMenu() {
     $('.res-openmenu').on('click', function () {
       $('.responsive-header').addClass('active');
@@ -182,25 +137,6 @@ export class HomepageComponent implements OnInit {
 
   }
 
-  submit() {
-    var d = {
-      "email_address": this.email,
-      "status": "subscribed",
-      "merge_fields": {
-        "FNAME": this.firstName,
-        "LNAME": this.lastName
-      }
-    }
-    this.http2.post("https://api.krownetwork.com/new-member", d).subscribe(
-      data => {
-        console.log(data)
-        this.email = ""
-        this.firstName = ""
-        this.lastName = ""
-      }
-    )
-  }
-
   async getJobs() {
     var url = "http://18.220.46.51:3000/api/Job/";
 
@@ -251,7 +187,7 @@ export class HomepageComponent implements OnInit {
             job.company = await this.getEmployerName(job.employerID);
             
             this.jobList.push(job);
-            console.log('job2', job)
+            console.log('job', job)
 
           }
         });

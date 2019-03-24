@@ -193,9 +193,11 @@ export class UserLoginService {
     
     isAuthenticated(callback: LoggedInCallback, force = false) {
         var CognitoRefreshToken = require('amazon-cognito-identity-js').CognitoRefreshToken;
-        if (callback == null)
-            throw("UserLoginService: Callback in isAuthenticated() cannot be null");
 
+        if (callback == null){
+            throw("UserLoginService: Callback in isAuthenticated() cannot be null");
+        }
+            
         let cognitoUser = this.cognitoUtil.getCurrentUser();
         var createNewToken=false;
         console.log(cognitoUser)
@@ -212,11 +214,11 @@ export class UserLoginService {
                 if (err) {
                     // cognitoUser.refreshSession(refreshToken, (err, session) => {
                     //     if (err) {
-                        console.log(err)
-                        cognitoUser.signOut()
-                        localStorage.clear()
-                        sessionStorage.clear()
-                        callback.isLoggedIn(err, false)
+                    console.log(err)
+                    cognitoUser.signOut()
+                    localStorage.clear()
+                    sessionStorage.clear()
+                    callback.isLoggedIn(err, false)
                     //     } else {
                     //         callback.isLoggedIn(session, true)
                     //         console.log(session)google clpoo
@@ -230,14 +232,8 @@ export class UserLoginService {
                                 console.log(data["response"])
                                 if (data["response"] == "applicant") {
                                     sessionStorage.setItem("accountType", "applicant")
-                                    // this.router.navigate(['/applicant']);
                                 } else if (data["response"] == "employer") {
                                     sessionStorage.setItem("accountType", "employer")
-                                    // this.router.navigate(['/employer']);
-                                
-                                // } else {
-                                //     // sessionStorage.setItem("accountType", "")
-                                // }
                                 }
                             }
                             
@@ -245,10 +241,6 @@ export class UserLoginService {
                         });
                         callback.isLoggedIn(err, true)
                     }})
-
-                    // console.log("UserLoginService: Couldn't get the session: " + err, err.stack);
-                    // callback.isLoggedIn("cant get user", false);
-                    // return
                 }
                 else {
 

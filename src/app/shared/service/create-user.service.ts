@@ -90,7 +90,8 @@ export class CreateUserService {
         this.http.post(url, obj).subscribe(
             data => {
                 console.log(data);
-                this.router.navigate(['/confirmRegistration', userObj.user ]);
+                //this.router.navigate(['/confirmRegistration', userObj.user ]);
+                this.router.navigate(['/secureHome']);
             }, // Catch Errors
             (err = HttpErrorResponse) => {
                 if (err instanceof Error) {

@@ -70,10 +70,10 @@ export class RegisterComponent implements CognitoCallback {
       return;
     }
 
-    if (this.intent !== "Applicant" && this.intent !== "Employer") {
-      this.errorMessage = "Please select you're an Applicant or an Employer";
-      return;
-    }
+    // if (this.intent !== "Applicant" && this.intent !== "Employer") {
+    //   this.errorMessage = "Please select you're an Applicant or an Employer";
+    //   return;
+    // }
 
     if (!this.agreed) {
       this.errorMessage = "Please agree to terms and conditions before move on";
@@ -95,60 +95,60 @@ export class RegisterComponent implements CognitoCallback {
       //move to the next step
       // console.log("redirecting");
 
-      this.confirmedMessage = 'Redirecting to confirmation page...  If the page is not redirecting, please go to login page and sign in...'
-      var email = this.registrationUser.email.toLowerCase()
-      if (this.intent == "Applicant") {
-        var obj = {
-          user: result.userSub,
-          first: '',
-          second: '',
-          email: email,
-          bio: '',
-          address: '',
-          state: '',
-          city: '',
-          country: '',
-          phoneNumber: ''
+      this.confirmedMessage = 'Redirecting...'
+      // var email = this.registrationUser.email.toLowerCase()
+      // if (this.intent == "Applicant") {
+      //   var obj = {
+      //     user: result.userSub,
+      //     first: '',
+      //     second: '',
+      //     email: email,
+      //     bio: '',
+      //     address: '',
+      //     state: '',
+      //     city: '',
+      //     country: '',
+      //     phoneNumber: ''
 
-        } 
-        console.log('applicant', obj)
-        await this.initializeUser.initializeUser(obj, this.intent, null, this.router);
+      //   } 
+      //   console.log('applicant', obj)
+      //   await this.initializeUser.initializeUser(obj, this.intent, null, this.router);
 
-      } else {
-        var employerObj = {
-          user: result.userSub,
-          company: '',
-          email: email,
-          bio: '',
-          location: '',
-          year: '',
-          phoneNumber: '',
-          links: [{
-              type: 'FACEBOOK',
-              url: ''
-            },
-            {
-              type: 'TWITTER',
-              url: ''
-            },
-            {
-              type: 'LINKEDIN',
-              url: ''
-            },
-            {
-              type: 'WEBSITE',
-              url: ''
-            }
-          ],
-          jobType: 0,
-          size: 0,
-          keyWords: [],
-        }
-        console.log('employer', obj);
-        await this.initializeUser.initializeUser(employerObj, this.intent, null, this.router);
-      }
+      // } else {
+      //   var employerObj = {
+      //     user: result.userSub,
+      //     company: '',
+      //     email: email,
+      //     bio: '',
+      //     location: '',
+      //     year: '',
+      //     phoneNumber: '',
+      //     links: [{
+      //         type: 'FACEBOOK',
+      //         url: ''
+      //       },
+      //       {
+      //         type: 'TWITTER',
+      //         url: ''
+      //       },
+      //       {
+      //         type: 'LINKEDIN',
+      //         url: ''
+      //       },
+      //       {
+      //         type: 'WEBSITE',
+      //         url: ''
+      //       }
+      //     ],
+      //     jobType: 0,
+      //     size: 0,
+      //     keyWords: [],
+      //   }
+      //   console.log('employer', obj);
+      //   await this.initializeUser.initializeUser(employerObj, this.intent, null, this.router);
+      // }
       
-      // window.location.href = '/secureHome';
+      window.location.href = '/secureHome';
     }
   }
 
