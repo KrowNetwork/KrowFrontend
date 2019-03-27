@@ -128,6 +128,7 @@ export class JobInfoComponent implements OnInit {
     this.title = data.title;
     this.jobDescription = data.description;
     this.employerID = data.employerID;
+    this.tags = data.tags
 
     if (data.tags.length === 0) {
       this.tags = 'No Tags'
