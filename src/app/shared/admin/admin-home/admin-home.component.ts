@@ -32,5 +32,8 @@ export class AdminHomeComponent implements OnInit {
   goPostJob() {
     this.router.navigate(['/admin/post-job'])
   }
+  goDeleteJob() {
+    this.router.navigate(['/admin/delete-job'])
+  }
 
 }

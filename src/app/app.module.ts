@@ -149,6 +149,7 @@ import { MyJobsComponent } from './applicant/my-jobs/my-jobs.component';
 import { JobEditComponent } from './employer/job-edit/job-edit.component';
 import { JobListComponent } from './shared/job-list/job-list.component';
 import { AdminPostJobComponent } from './shared/admin/admin-post-job/admin-post-job.component';
+import { AdminDeleteJobComponent } from './shared/admin/admin-delete-job/admin-delete-job.component';
 
 // import { CompareService } from './service/compare.service'
 // import { EditJobComponent } from './shared/edit-job/edit-job.component';
@@ -234,6 +235,7 @@ import { AdminPostJobComponent } from './shared/admin/admin-post-job/admin-post-
     JobEditComponent,
     JobListComponent,
     AdminPostJobComponent,
+    AdminDeleteJobComponent,
 
     // EmployerPostJobsComponent,
     // EditJobComponent,

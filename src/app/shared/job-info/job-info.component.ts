@@ -24,6 +24,7 @@ export class JobInfoComponent implements OnInit {
   company: string;
   description: string;
   email: string;
+  category: string;
 
   title: string;
   jobDescription: string;
@@ -158,6 +159,45 @@ export class JobInfoComponent implements OnInit {
       this.pay = "other";
     } else if (data.paymentType === "CONTRACT") {
       this.pay = "contract";
+    }
+
+    if (data.paymentType === "ONETIME") {
+      this.pay = "$" + data.payment;
+    } else if (data.paymentType === "DAILY") {
+      this.pay = "$" + data.payment + "/day";
+    } else if (data.paymentType === "HOURLY") {
+      this.pay = "$" + data.payment + "/hour";
+    } else if (data.paymentType === "WEEKLY") {
+      this.pay = "$" + data.payment + "/week";
+    } else if (data.paymentType === "BIWEEKLY") {
+      this.pay = "$" + data.payment + "/2 weeks";
+    } else if (data.paymentType === "MONTHLY") {
+      this.pay = "$" + data.payment + "/month";
+    } else if (data.paymentType === "OTHER") {
+      this.pay = "other";
+    } else if (data.paymentType === "CONTRACT") {
+      this.pay = "contract";
+    }
+
+
+    if (data.category === 1) {
+      this.category = "Advertising";
+    } else if (data.category === 2) {
+      this.category = "Coding & IT";
+    } else if (data.category === 3) {
+      this.category = "Literature";
+    } else if (data.category === 4) {
+      this.category = "Video Editing";
+    } else if (data.category === 5) {
+      this.category = "Web Designing";
+    } else if (data.category === 6) {
+      this.category = "Business";
+    } else if (data.category === 7) {
+      this.category = "Lifestyle";
+    } else if (data.category === 8) {
+      this.category = "Music/Audio";
+    } else if (data.category === 9) {
+      this.category = "Other";
     }
 
 
