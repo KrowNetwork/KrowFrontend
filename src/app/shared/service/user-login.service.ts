@@ -167,6 +167,7 @@ export class UserLoginService {
                     //     }
 
                     } else {
+                        console.log('group')
                         if (session.getIdToken().payload['cognito:groups'][0] == "Admin")
                             callback.isLoggedIn(err, true)
                         else {

@@ -82,6 +82,7 @@ import { NewCandidateListComponent } from './employer/new-candidate-list/new-can
 import { MyJobsComponent } from './applicant/my-jobs/my-jobs.component';
 import { JobEditComponent } from './employer/job-edit/job-edit.component';
 import { JobListComponent } from './shared/job-list/job-list.component';
+import { AdminPostJobComponent } from './shared/admin/admin-post-job/admin-post-job.component';
 const appRoutes: Routes = [
     {
         path: '',
@@ -324,6 +325,10 @@ const secureHome: Routes = [
                 path: "user-search",
                 component: UserSearchComponent
 
+            },
+            {
+                path: "post-job",
+                component: AdminPostJobComponent
             }
         ]
     },

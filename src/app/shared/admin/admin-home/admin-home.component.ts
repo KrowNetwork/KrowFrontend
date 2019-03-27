@@ -29,4 +29,8 @@ export class AdminHomeComponent implements OnInit {
     this.router.navigate(['/admin/user-search'])
   }
 
+  goPostJob() {
+    this.router.navigate(['/admin/post-job'])
+  }
+
 }

@@ -125,7 +125,7 @@ export class BasicInfoCollectorComponent implements OnInit {
       if (this.intent == "Applicant") {
 
 
-        var obj = {
+        this.obj = {
           user: this.user,
           first: this.first || '',
           second: this.second || '',
