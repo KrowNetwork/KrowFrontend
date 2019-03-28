@@ -18,6 +18,7 @@ export class NewPostJobsComponent implements OnInit {
   owner= false;
   forceLogin=false;
   curr_emp = false;
+  isSubmitting = false;
 
   jobObject: any;
 
@@ -111,6 +112,7 @@ export class NewPostJobsComponent implements OnInit {
 
   submitJob(){
     let x = this;
+    this.isSubmitting = true;
     this.errorMessage = null;
 
     if(isNaN(x.jobForm.get('payment').value)){
@@ -197,7 +199,7 @@ export class NewPostJobsComponent implements OnInit {
         setTimeout(() => 
         {
           this.router.navigate(["/employer"])
-        }, 3000);
+        }, 1000);
       }, // Catch Errors
       (err: HttpErrorResponse) => {
           alert("Could not post job!");

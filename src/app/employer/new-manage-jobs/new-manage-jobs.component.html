@@ -7,11 +7,13 @@
             <aside class="col-lg-3 column border-right">
                 <app-side-bar></app-side-bar>
               </aside>
-          <div class="col-lg-8 column">
+          <div class="col-lg-9 column">
             <div class="padding-left">
               <div class="manage-jobs-sec">
                 <h3>Manage Jobs</h3>
-                
+                <div *ngIf="msg!=null" class="alert alert-danger" style="color: #fb236a">
+                    {{ msg }}
+                </div>
                 <table>
                   <thead>
                     <tr>
@@ -41,15 +43,19 @@
                         <span *ngIf="job.status == 'Expired'" class="status expire">Expired</span>
                       </td>
                       <td>
-                        <ul class="action_job" *ngIf="!job.isInProgress">
+                        <ul class="action_job" *ngIf="!job.isInProgress && !confirmDelete">
                           <a (click)="goToCandidateListPage(job.jobID);" title="" class="post-job-btn"><i class=""></i>View Candidates</a>
                           <a (click)="edit(job.jobID);" title="" class="post-job-btn"><i class=""></i>Edit</a>
-                          <!-- <a (click)="delete(job.jobID);" title="" class="post-job-btn"><i class=""></i>Delete</a> -->
+                          <a (click)="confirm();" title="" class="post-job-btn"><i class=""></i>Delete</a>
                         </ul>
-                        <ul class="action_job" *ngIf="job.isInProgress">
+                        <ul class="action_job" *ngIf="job.isInProgress && !confirmDelete">
                           <a (click)="goToEmployeePage(job.employee);" title="" class="post-job-btn"><i class=""></i>View Employee</a>
-                          <!-- <a (click)="delete(job.jobID);" title="" class="post-job-btn"><i class=""></i>Delete</a> -->
+                          <a (click)="confirm();" title="" class="post-job-btn"><i class=""></i>Delete</a>
                         </ul>
+                        <ul class="action_job" *ngIf="confirmDelete">
+                            <a (click)="delete(job.jobID);" title="" class="post-job-btn"><i class=""></i>Confirm</a>
+                            <a (click)="cancel();" title="" class="post-job-btn"><i class=""></i>Cancel</a>
+                          </ul>
                       </td>
                     </tr>
                   </tbody>

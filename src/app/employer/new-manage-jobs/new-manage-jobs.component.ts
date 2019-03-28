@@ -39,6 +39,9 @@ export class NewManageJobsComponent implements OnInit {
   companySize: string;
   companyJobType: string;
 
+  confirmDelete = false;
+  msg = null;
+
   jobList = [];
 
   constructor(
@@ -280,7 +283,16 @@ export class NewManageJobsComponent implements OnInit {
     this.router.navigate(['/employer/job/edit'], { queryParams: { jobID: jobID } })
   }
 
+  confirm(){
+    this.confirmDelete = true;
+  }
+
+  cancel(){
+    this.confirmDelete = false;
+  }
+
   delete(jobID) {
+    this.msg = "Deleting job... Please wait."
     var url = "http://18.220.46.51:3000/api/DeleteJob"
     var data = {
       job: jobID
@@ -290,7 +302,8 @@ export class NewManageJobsComponent implements OnInit {
       data =>{
         //this.msg = "Deletion Successful"
         console.log(data);
-       // location.reload();
+        // this.router.navigate(["/employer/new-manage-jobs"]); 
+       location.reload();
     },
     (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {

@@ -45,7 +45,7 @@ export class AdminDeleteJobComponent implements OnInit {
         await data.forEach(async (job) => {
           job.imgURL = "https://krow-network-profile-pics.s3.us-east-2.amazonaws.com/pics/" + job.employerID+".png"
 
-          if (!job.hasOwnProperty('error')) {
+          if (!job.hasOwnProperty('error') && job.flags !== 16) {
             var days = await Math.round(Math.abs((new Date(job.created).getTime() - new Date().getTime()) / (24 * 60 * 60 * 1000)));
 
             if (days === 0) {
