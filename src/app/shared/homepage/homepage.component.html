@@ -53,10 +53,10 @@
                                   <!-- <span class="fav-job"><i class="la la-heart-o"></i></span> -->
                                 </div>
                                 <span class="job-lctn">{{ job.pay }}</span>
-																<a class="job-apply pull-right" *ngIf="!job.applied && !job.denied && !job.requestedToHire && !job.isEmployee" (click)="goToJobPage(job.jobID);" title="">APPLY NOW</a>
+																<a class="job-apply pull-right" *ngIf="!job.applied && !job.denied && !job.requestedToHire && !job.isEmployee" (click)="goToJobPage(job.jobID);" title="">APPLY</a>
 																<a class="job-apply pull-right" *ngIf="job.applied && !job.denied && !job.requestedToHire && !job.isEmployee" (click)="goToJobPage(job.jobID);" title="">APPLIED</a>
 																<a class="job-apply pull-right" *ngIf="!job.applied && job.denied && !job.requestedToHire && !job.isEmployee" (click)="goToJobPage(job.jobID);" title="">DENIED</a>
-																<a class="job-apply pull-right" *ngIf="!job.applied && !job.denied && job.requestedToHire && !job.isEmployee" (click)="goToJobPage(job.jobID);" title="">ACCEPT THE JOB</a>
+																<a class="job-apply pull-right" *ngIf="!job.applied && !job.denied && job.requestedToHire && !job.isEmployee" (click)="goToJobPage(job.jobID);" title="">ACCEPT JOB</a>
 																<a class="job-apply pull-right" *ngIf="!job.applied && !job.denied && !job.requestedToHire && job.isEmployee" (click)="goToJobPage(job.jobID);" title="">ACCEPTED</a>
                               </div><!-- JOB Grid -->
                             </div>
